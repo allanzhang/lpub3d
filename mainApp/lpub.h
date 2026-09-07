@@ -1918,7 +1918,7 @@ private slots:
 
     void visitHomepage()
     {
-        QDesktopServices::openUrl(QUrl(VER_HOMEPAGE_GITHUB_STR));
+        QDesktopServices::openUrl(QUrl(VER_MYLPUB3D_HOMEPAGE_STR));
     }
 
     void openTicket()

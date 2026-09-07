@@ -361,7 +361,7 @@ QString Preferences::plugImage                  = QString(":/resources/LPub64.pn
 QString Preferences::plug                       = QString(QObject::tr("Instructions configured and generated using %1 %2\nDownload %1 at %3\n")
                                                           .arg(QString::fromLatin1(VER_PRODUCTNAME_STR),
                                                                QString::fromLatin1(VER_FILEVERSION_STR).replace("\"",""),
-                                                               QString::fromLatin1(VER_HOMEPAGE_GITHUB_STR)));
+                                                               QString::fromLatin1(VER_MYLPUB3D_HOMEPAGE_STR)));
 QString Preferences::systemTheme                = THEME_DEFAULT;
 QString Preferences::displayTheme               = THEME_DEFAULT;
 

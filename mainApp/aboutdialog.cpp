@@ -53,7 +53,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
                                               QString::fromLatin1(VER_LEGALCOPYRIGHT_STR)));
 
     ui->url->setTextFormat(Qt::RichText);
-    ui->url->setText(tr("Homepage: <a href=\"%1\">%1</a>").arg(QString::fromLatin1(VER_HOMEPAGE_GITHUB_STR)));
+    ui->url->setText(tr("Homepage: <a href=\"%1\">%1</a>").arg(QString::fromLatin1(VER_MYLPUB3D_HOMEPAGE_STR)));
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QString AboutFormat = tr("<table style=\"width:100%\">"

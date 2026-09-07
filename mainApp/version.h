@@ -212,6 +212,7 @@
 // ~~~~~~ Resource Locators ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
 #define VER_HOMEPAGE_GITHUB_STR             "https://trevorsandy.github.io/lpub3d/"
+#define VER_MYLPUB3D_HOMEPAGE_STR        "https://github.com/allanzhang/lpub3d"
 #define VER_SOURCE_GITHUB_STR               VER_GITHUB_USER_STR "/lpub3d/"
 #define VER_BLENDER_ADDON_STR               VER_GITHUB_USER_STR "/blenderldrawrender/"
 #define VER_BLENDER_ADDON_API_STR           VER_GITHUB_API_STR "/blenderldrawrender/"
