@@ -291,6 +291,7 @@ public:
 	std::vector<lcObject*> FindObjectsInBox(float x1, float y1, float x2, float y2) const;
 
 	lcVector3 ProjectPoint(const lcVector3& Point) const;
+	lcVector3 ProjectPointFullImage(const lcVector3& Point) const;
 	lcVector3 UnprojectPoint(const lcVector3& Point) const;
 	void UnprojectPoints(lcVector3* Points, int NumPoints) const;
 	lcMatrix44 GetProjectionMatrix() const;

@@ -8,11 +8,11 @@ system( $$PLIST_COMMAND \"Set :CFBundleVersion $${VERSION}.$${VER_COMMIT}-$${VER
 system( $$PLIST_COMMAND \"Set :CFBundleExecutable $${TARGET}\" \"$${INFO_PLIST_FILE}\" )
 system( $$PLIST_COMMAND \"Set :CFBundleName $${TARGET}\" \"$${INFO_PLIST_FILE}\" )
 system( $$PLIST_COMMAND \"Set :CFBundleDisplayName $${TARGET}\" \"$${INFO_PLIST_FILE}\" )
-system( $$PLIST_COMMAND \"Set :CFBundleIdentifier com.trevorsandy.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
+system( $$PLIST_COMMAND \"Set :CFBundleIdentifier com.doubleeagle.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
 system( $$PLIST_COMMAND \"Set :CFBundleGetInfoString $${TARGET} $${VERSION} https://trevorsandy.github.io/lpub3d\" \"$${INFO_PLIST_FILE}\" )
-system( $$PLIST_COMMAND \"Set :UTExportedTypeDeclarations:0:UTTypeIdentifier com.trevorsandy.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
-system( $$PLIST_COMMAND \"Set :UTExportedTypeDeclarations:1:UTTypeIdentifier com.trevorsandy.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
-system( $$PLIST_COMMAND \"Set :UTExportedTypeDeclarations:2:UTTypeIdentifier com.trevorsandy.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
+system( $$PLIST_COMMAND \"Set :UTExportedTypeDeclarations:0:UTTypeIdentifier com.doubleeagle.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
+system( $$PLIST_COMMAND \"Set :UTExportedTypeDeclarations:1:UTTypeIdentifier com.doubleeagle.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
+system( $$PLIST_COMMAND \"Set :UTExportedTypeDeclarations:2:UTTypeIdentifier com.doubleeagle.$$lower($$TARGET)\" \"$${INFO_PLIST_FILE}\" )
 
 BUILD_CODE = $${option}
 isEmpty(BUILD_CODE): BUILD_CODE = dmg

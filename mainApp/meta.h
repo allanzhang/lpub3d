@@ -91,6 +91,8 @@ enum Rc {
          IllustrationPointerRc,
 
          AssemAnnotationIconRc,
+         AssemAnnotationArrowRc,
+         AssemAnnotationBadgeRc,
          InsertFinalModelRc,
          InsertDisplayModelRc,
 
@@ -2793,6 +2795,54 @@ public:
 
  /*------------------------*/
 
+class CsiAnnotationArrowMeta : public LeafMeta
+{
+private:
+  CsiAnnotationIconData _value[2];
+public:
+  CsiAnnotationIconData &value()
+  {
+    return _value[pushed];
+  }
+  void setValue(CsiAnnotationIconData &rhs)
+  {
+    _value[pushed] = rhs;
+  }
+  CsiAnnotationArrowMeta()
+  {
+  }
+  Rc parse(QStringList &argv, int index, Where &here);
+  QString format(bool,bool);
+  virtual void doc(QStringList &out, QString preamble);
+  virtual void metaKeywords(QStringList &out, QString preamble);
+};
+
+ /*------------------------*/
+
+class CsiAnnotationBadgeMeta : public LeafMeta
+{
+private:
+  CsiAnnotationIconData _value[2];
+public:
+  CsiAnnotationIconData &value()
+  {
+    return _value[pushed];
+  }
+  void setValue(CsiAnnotationIconData &rhs)
+  {
+    _value[pushed] = rhs;
+  }
+  CsiAnnotationBadgeMeta()
+  {
+  }
+  Rc parse(QStringList &argv, int index, Where &here);
+  QString format(bool,bool);
+  virtual void doc(QStringList &out, QString preamble);
+  virtual void metaKeywords(QStringList &out, QString preamble);
+};
+
+ /*------------------------*/
+
  /*
   * Resolution meta
   */
@@ -3427,6 +3477,8 @@ public:
 
 /*------------------------*/
 
+enum CsiAnnotationKind { CsiAnnotationIcon, CsiAnnotationArrow, CsiAnnotationBadge };
+
 class CsiAnnotationMeta  : public BranchMeta
 {
 public:
@@ -3440,6 +3492,8 @@ public:
   BoolMeta              hoseDisplay;
   BoolMeta              panelDisplay;
   CsiAnnotationIconMeta icon;
+  CsiAnnotationArrowMeta arrow;
+  CsiAnnotationBadgeMeta stepBadge;
 
   CsiAnnotationMeta();
   virtual void init(BranchMeta *parent, QString name);

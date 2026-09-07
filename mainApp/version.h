@@ -25,9 +25,9 @@
 
 #define VER_COMPILE_DATE_STR                DATE_YY " " DATE_MM " " DATE_DD " " BUILD_TIME
 #define VER_PRODUCTVERSION_STR              VER_MAJOR "." VER_MINOR "." VER_PATCH
-#define VER_PRODUCTNAME_STR                 "LPub3D"
-#define VER_COMPANYDOMAIN_STR               "io.github.trevorsandy.LPub3D"
-#define VER_COMPANYNAME_BLD_STR             "LPub3D Software"
+#define VER_PRODUCTNAME_STR                 "myLPub3D"
+#define VER_COMPANYDOMAIN_STR               "doubleeagle.com"
+#define VER_COMPANYNAME_BLD_STR             "DoubleEagle"
 #define VER_FILEDESCRIPTION_STR             "LPub3D - An LDraw Building Instruction Editor"
 #define VER_LEGALCOPYRIGHT_STR              "Copyright &copy; 2015 - 2025 by Trevor SANDY"
 #define VER_LEGALTRADEMARKS1_STR            "All Rights Reserved"
@@ -47,11 +47,11 @@
   #define VER_INSTALL_PREFIX_STR            ""
 #endif
 #ifdef QT_DEBUG_MODE
-  #define COMPANYNAME_STR                   "LPub3D Software Maint"
+  #define COMPANYNAME_STR                   "DoubleEagle Maint"
 #else
-  #define COMPANYNAME_STR                   "LPub3D Software"
+  #define COMPANYNAME_STR                   "DoubleEagle"
 #endif
-#define VER_COMPANYNAME_STR                 COMPANYNAME_STR                  // "LPub3D Software Maint"
+#define VER_COMPANYNAME_STR                 COMPANYNAME_STR                  // "DoubleEagle Maint"
 #define VER_CHIPSET_STR                     VER_CHIPSET
 #define VER_BUILD_ARCH_STR                  VER_ARCH
 #ifdef VER_DISTRO_PACKAGE

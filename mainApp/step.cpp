@@ -1472,9 +1472,11 @@ int Step::setCsiAnnotationMetas(Meta &_meta, int &_adjust, bool force)
 
 void Step::appendCsiAnnotation(
      const Where           &_here,
-     CsiAnnotationMeta     &_caMeta)
+     const Where           &_partLine,
+     CsiAnnotationMeta     &_caMeta,
+     CsiAnnotationKind      _kind)
 {
-  CsiAnnotation *ca = new CsiAnnotation(_here,_caMeta);
+  CsiAnnotation *ca = new CsiAnnotation(_here,_partLine,_caMeta,_kind);
   csiAnnotations.append(ca);
 }
 

@@ -1454,20 +1454,7 @@ void Gui::exportAsPdf()
 
   if (Preferences::modeGUI && box.exec() == QMessageBox::Yes) {
       const QString CommandPath = fileName;
-#ifdef Q_OS_WIN
-      QDesktopServices::openUrl((QUrl("file:///"+CommandPath, QUrl::TolerantMode)));
-#else
-      QProcess *Process = new QProcess(gui);
-      Process->setWorkingDirectory(QFileInfo(CommandPath).absolutePath() + QDir::separator());
-      QStringList arguments = QStringList() << CommandPath;
-      Process->start(UNIX_SHELL, arguments);
-      Process->waitForFinished();
-      if (Process->exitStatus() != QProcess::NormalExit || Process->exitCode() != 0) {
-          QErrorMessage *m = new QErrorMessage(gui);
-          m->showMessage(tr("Failed to launch PDF document.\n%1\n%2")
-                             .arg(CommandPath).arg(QString(Process->readAllStandardError())));
-      }
-#endif
+      QDesktopServices::openUrl(QUrl::fromLocalFile(CommandPath));
   } else {
       LogType logType = Preferences::modeGUI ? LOG_INFO_STATUS : LOG_INFO;
       emit gui->messageSig(logType, tr("Export to pdf completed! %1").arg(exportTime));
@@ -2445,20 +2432,7 @@ void Gui::showExportedFile()
 
     if (box.exec() == QMessageBox::Yes) {
       const QString CommandPath = exportedFile;
-#ifdef Q_OS_WIN
-      QDesktopServices::openUrl((QUrl("file:///"+CommandPath, QUrl::TolerantMode)));
-#else
-      QProcess *Process = new QProcess(gui);
-      Process->setWorkingDirectory(QFileInfo(CommandPath).absolutePath() + QDir::separator());
-      QStringList arguments = QStringList() << CommandPath;
-      Process->start(UNIX_SHELL, arguments);
-      Process->waitForFinished();
-      if (Process->exitStatus() != QProcess::NormalExit || Process->exitCode() != 0) {
-        QErrorMessage *m = new QErrorMessage(gui);
-        m->showMessage(tr("Failed to launch exported document.\n%1\n%2")
-                           .arg(CommandPath).arg(QString(Process->readAllStandardError())));
-      }
-#endif
+      QDesktopServices::openUrl(QUrl::fromLocalFile(CommandPath));
     } else
        emitCompleted = true;
   } else

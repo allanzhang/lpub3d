@@ -489,6 +489,11 @@ int Gui::drawPage(
 
     Where topOfStep = opts.current;
 
+    // most recent part line per type base name - CSI annotations reference
+    // the part they annotate via this line instead of assuming the previous
+    // line is the part (comment lines may sit between part and annotation).
+    QHash<QString, Where> lastPartLineByType;
+
     enum draw_page_stat { begin, end };
 
     steps->setTopOfSteps(topOfStep/*opts.current*/);
@@ -792,6 +797,8 @@ int Gui::drawPage(
 
             QString color = tokens[1];
             QString type  = tokens[tokens.size()-1];
+
+            lastPartLineByType.insert(QFileInfo(type).completeBaseName(), opts.current);
 
             if (color == LDRAW_MAIN_MATERIAL_COLOUR) {
                 QStringList addTokens;
@@ -1230,11 +1237,9 @@ int Gui::drawPage(
                 }
                 break;
             case EnableFadeStepsRc:
-                if (!step)
-                    break;
                 if (!curMeta.LPub.fadeSteps.enable.global &&
                         !curMeta.LPub.fadeSteps.setup.value() &&
-                        step->csiStepMeta.fadeSteps.lpubFade.value()) {
+                        (step ? step->csiStepMeta.fadeSteps.lpubFade.value() : curMeta.LPub.fadeSteps.lpubFade.value())) {
                     emit gui->parseErrorSig(tr("Fade previous steps command IGNORED."
                                                "<br>FADE_STEPS SETUP must be set to TRUE."
                                                "<br>FADE_STEPS SETUP must precede FADE_STEPS ENABLED."
@@ -1242,8 +1247,8 @@ int Gui::drawPage(
                     break;
                 }
                 curMeta.LPub.fadeSteps.setPreferences();
+                curMeta.LPub.assem.fadeSteps = curMeta.LPub.fadeSteps;
                 if (step) {
-                    curMeta.LPub.assem.fadeSteps = curMeta.LPub.fadeSteps;
                     step->csiStepMeta.fadeSteps = curMeta.LPub.fadeSteps;
                     if (!opts.displayModel) {
                         Gui::suspendFileDisplay = true;
@@ -1287,11 +1292,9 @@ int Gui::drawPage(
                 }
                 break;
             case EnableHighlightStepRc:
-                if (!step)
-                    break;
                 if (!curMeta.LPub.highlightStep.enable.global &&
                         !curMeta.LPub.highlightStep.setup.value() &&
-                        step->csiStepMeta.highlightStep.lpubHighlight.value()) {
+                        (step ? step->csiStepMeta.highlightStep.lpubHighlight.value() : curMeta.LPub.highlightStep.lpubHighlight.value())) {
                     emit gui->parseErrorSig(tr("Highlight current step command IGNORED."
                                                "<br>HIGHLIGHT_STEP SETUP must be set to TRUE."
                                                "<br>HIGHLIGHT_STEP SETUP must precede HIGHLIGHT_STEP ENABLED."
@@ -1299,8 +1302,8 @@ int Gui::drawPage(
                     break;
                 }
                 curMeta.LPub.highlightStep.setPreferences();
+                curMeta.LPub.assem.highlightStep = curMeta.LPub.highlightStep;
                 if (step) {
-                    curMeta.LPub.assem.highlightStep = curMeta.LPub.highlightStep;
                     step->csiStepMeta.highlightStep = curMeta.LPub.highlightStep;
                     if (!opts.displayModel) {
                         Gui::suspendFileDisplay = true;
@@ -1318,35 +1321,49 @@ int Gui::drawPage(
             case LPubHighlightGroupAssemRc:
             case LPubHighlightAssemRc:
             case LPubHighlightRc:
-                if (!step)
-                    break;
                 if (rc == LPubFadeCalloutAssemRc) {
-                    step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.callout.csi.fadeSteps.lpubFade;
+                    if (step)
+                        step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.callout.csi.fadeSteps.lpubFade;
                 } else if (rc == LPubFadeGroupAssemRc) {
-                    step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.multiStep.csi.fadeSteps.lpubFade;
+                    if (step)
+                        step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.multiStep.csi.fadeSteps.lpubFade;
                 } else if (rc == LPubFadeAssemRc) {
                     curMeta.LPub.fadeSteps.lpubFade = curMeta.LPub.assem.fadeSteps.lpubFade;
-                    step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.assem.fadeSteps.lpubFade;
+                    if (step)
+                        step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.assem.fadeSteps.lpubFade;
                 } else if (rc == LPubFadeRc) {
                     curMeta.LPub.assem.fadeSteps.lpubFade = curMeta.LPub.fadeSteps.lpubFade;
-                    step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.fadeSteps.lpubFade;
+                    if (step)
+                        step->csiStepMeta.fadeSteps.lpubFade = curMeta.LPub.fadeSteps.lpubFade;
                 } else if (rc == LPubHighlightCalloutAssemRc) {
-                    step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.callout.csi.highlightStep.lpubHighlight;
+                    if (step)
+                        step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.callout.csi.highlightStep.lpubHighlight;
                 } else if (rc == LPubHighlightGroupAssemRc) {
-                    step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.multiStep.csi.highlightStep.lpubHighlight;
+                    if (step)
+                        step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.multiStep.csi.highlightStep.lpubHighlight;
                 } else if (rc == LPubHighlightAssemRc) {
                     curMeta.LPub.highlightStep.lpubHighlight = curMeta.LPub.assem.highlightStep.lpubHighlight;
-                    step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.assem.highlightStep.lpubHighlight;
+                    if (step)
+                        step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.assem.highlightStep.lpubHighlight;
                 } else if (rc == LPubHighlightRc) {
                     curMeta.LPub.assem.highlightStep.lpubHighlight = curMeta.LPub.highlightStep.lpubHighlight;
-                    step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.highlightStep.lpubHighlight;
+                    if (step)
+                        step->csiStepMeta.highlightStep.lpubHighlight = curMeta.LPub.highlightStep.lpubHighlight;
                 }
                 if (Preferences::preferredRenderer != RENDERER_NATIVE) {
                     bool error = false;
-                    if ((error |= !step->csiStepMeta.fadeSteps.lpubFade.value()))
-                        step->csiStepMeta.fadeSteps.lpubFade.setValue(true);
-                    if ((error |= !step->csiStepMeta.highlightStep.lpubHighlight.value()))
-                        step->csiStepMeta.highlightStep.lpubHighlight.setValue(true);
+                    if ((error |= !(step ? step->csiStepMeta.fadeSteps.lpubFade.value() : curMeta.LPub.assem.fadeSteps.lpubFade.value()))) {
+                        if (step)
+                            step->csiStepMeta.fadeSteps.lpubFade.setValue(true);
+                        else
+                            curMeta.LPub.assem.fadeSteps.lpubFade.setValue(true);
+                    }
+                    if ((error |= !(step ? step->csiStepMeta.highlightStep.lpubHighlight.value() : curMeta.LPub.assem.highlightStep.lpubHighlight.value()))) {
+                        if (step)
+                            step->csiStepMeta.highlightStep.lpubHighlight.setValue(true);
+                        else
+                            curMeta.LPub.assem.highlightStep.lpubHighlight.setValue(true);
+                    }
                     if (error) {
                         QString const command = line.contains("LPUB_FADE") ? QLatin1String("LPUB_FADE") : QLatin1String("LPUB_HIGHLIGHT");
                         emit gui->parseErrorSig(tr("%1 command IGNORED."
@@ -1537,8 +1554,48 @@ int Gui::drawPage(
                     emit gui->parseErrorSig(tr("Nested ASSEM ANNOTATION ICON not allowed"),opts.current, Preferences::ParseErrors, false, true);
                     return static_cast<int>(HitInvalidLDrawLine);
                 } else {
-                    if (step && ! Gui::exportingObjects())
-                        step->appendCsiAnnotation(opts.current,curMeta.LPub.assem.annotation/*,view*/);
+                    if (step && ! Gui::exportingObjects()) {
+                        Where partLine = lastPartLineByType.value(
+                                             curMeta.LPub.assem.annotation.icon.value().typeBaseName);
+                        if (partLine.modelName == "undefined")
+                            partLine = opts.current - 1;
+                        step->appendCsiAnnotation(opts.current,partLine,
+                                                  curMeta.LPub.assem.annotation,CsiAnnotationIcon/*,view*/);
+                    }
+                    assemAnnotation = false;
+                }
+                break;
+
+            case AssemAnnotationArrowRc:
+                if (assemAnnotation) {
+                    emit gui->parseErrorSig(tr("Nested ASSEM ANNOTATION ARROW not allowed"),opts.current, Preferences::ParseErrors, false, true);
+                    return static_cast<int>(HitInvalidLDrawLine);
+                } else {
+                    if (step && ! Gui::exportingObjects()) {
+                        Where partLine = lastPartLineByType.value(
+                                             curMeta.LPub.assem.annotation.arrow.value().typeBaseName);
+                        if (partLine.modelName == "undefined")
+                            partLine = opts.current - 1;
+                        step->appendCsiAnnotation(opts.current,partLine,
+                                                  curMeta.LPub.assem.annotation,CsiAnnotationArrow);
+                    }
+                    assemAnnotation = false;
+                }
+                break;
+
+            case AssemAnnotationBadgeRc:
+                if (assemAnnotation) {
+                    emit gui->parseErrorSig(tr("Nested ASSEM ANNOTATION STEP_BADGE not allowed"),opts.current, Preferences::ParseErrors, false, true);
+                    return static_cast<int>(HitInvalidLDrawLine);
+                } else {
+                    if (step && ! Gui::exportingObjects()) {
+                        Where partLine = lastPartLineByType.value(
+                                             curMeta.LPub.assem.annotation.stepBadge.value().typeBaseName);
+                        if (partLine.modelName == "undefined")
+                            partLine = opts.current - 1;
+                        step->appendCsiAnnotation(opts.current,partLine,
+                                                  curMeta.LPub.assem.annotation,CsiAnnotationBadge);
+                    }
                     assemAnnotation = false;
                 }
                 break;

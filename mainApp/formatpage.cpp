@@ -47,6 +47,7 @@
 #include "calloutbackgrounditem.h"
 #include "textitem.h"
 #include "rotateiconitem.h"
+#include "arrowitem.h"
 #include "paths.h"
 #include "pagepointer.h"
 #include "lgraphicsscene.h"
@@ -505,10 +506,11 @@ int Gui::addGraphicsPageItems(
 
                         PlacementData pld;
 
-                        pld.placement      = TopLeft;
-                        pld.justification  = Center;
-                        pld.relativeTo     = PageType;
-                        pld.preposition    = Inside;
+                        pld.placement      = insert.placementCommand ? insert.placement     : TopLeft;
+                        pld.justification  = insert.placementCommand ? insert.justification : Center;
+                        pld.relativeTo     = insert.placementCommand ? insert.relativeTo    : PageType;
+                        pld.preposition    = insert.placementCommand ? insert.preposition   : Inside;
+                        pld.rectPlacement  = insert.placementCommand ? insert.rectPlacement : TopLeftInsideCorner;
                         pld.offsets[0]     = insert.offsets[0];
                         pld.offsets[1]     = insert.offsets[1];
 
@@ -516,10 +518,20 @@ int Gui::addGraphicsPageItems(
 
                         int margin[2] = {0, 0};
 
-                        plPage.placeRelative(pixmap, margin);
+                        if (insert.placementCommand &&
+                            pixmap->placement.value().relativeTo == PageHeaderType) {
+                            pageHeader->appendRelativeTo(pixmap);
+                            pageHeader->placeRelative(pixmap);
+                        } else if (insert.placementCommand &&
+                                   pixmap->placement.value().relativeTo == PageFooterType) {
+                            pageFooter->appendRelativeTo(pixmap);
+                            pageFooter->placeRelative(pixmap);
+                        } else {
+                            plPage.placeRelative(pixmap, margin);
+                            pixmap->relativeToSize[0] = plPage.size[XX];
+                            pixmap->relativeToSize[1] = plPage.size[YY];
+                        }
                         pixmap->setPos(pixmap->loc[XX],pixmap->loc[YY]);
-                        pixmap->relativeToSize[0] = plPage.size[XX];
-                        pixmap->relativeToSize[1] = plPage.size[YY];
                     } else {
                         emit gui->messageSig(LOG_WARNING, tr("Unable to locate image %1. Be sure image file is located "
                                                              "relative to the model file or use an absolute path.")
@@ -616,6 +628,46 @@ int Gui::addGraphicsPageItems(
             }
                 break;
             case InsertData::InsertArrow:
+            {
+                ArrowItem *arrow = new ArrowItem(page->inserts[i],pageBkGrndItem);
+
+                PlacementData pld;
+
+                pld.placement      = insert.placementCommand ? insert.placement     : TopLeft;
+                pld.justification  = insert.placementCommand ? insert.justification : Center;
+                pld.relativeTo     = insert.placementCommand ? insert.relativeTo    : PageType;
+                pld.preposition    = insert.placementCommand ? insert.preposition   : Inside;
+                pld.rectPlacement  = insert.placementCommand ? insert.rectPlacement : TopLeftInsideCorner;
+                pld.offsets[0]     = insert.offsets[0];
+                pld.offsets[1]     = insert.offsets[1];
+
+                arrow->placement.setValue(pld);
+
+                int margin[2] = {0, 0};
+
+                if (insert.placementCommand &&
+                    arrow->placement.value().relativeTo == PageHeaderType) {
+                    pageHeader->appendRelativeTo(arrow);
+                    pageHeader->placeRelative(arrow);
+                } else if (insert.placementCommand &&
+                           arrow->placement.value().relativeTo == PageFooterType) {
+                    pageFooter->appendRelativeTo(arrow);
+                    pageFooter->placeRelative(arrow);
+                } else {
+                    plPage.placeRelative(arrow, margin);
+                    arrow->relativeToSize[0] = plPage.size[XX];
+                    arrow->relativeToSize[1] = plPage.size[YY];
+                }
+                arrow->setPos(arrow->loc[XX],arrow->loc[YY]);
+
+                if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                    fprintf(stderr, "INSERTARROW_PLACE loc=(%d,%d) off=(%.1f,%.1f) size=(%.1f,%.1f) rel=%d cmd=%d\n",
+                            arrow->loc[XX], arrow->loc[YY],
+                            insert.offsets[0], insert.offsets[1],
+                            arrow->relativeToSize[0], arrow->relativeToSize[1],
+                            int(arrow->placement.value().relativeTo),
+                            int(insert.placementCommand));
+            }
                 break;
             case InsertData::InsertBom:
             {
@@ -1316,6 +1368,18 @@ bool Gui::getSceneObject(QGraphicsItem *selectedItem, Where &itemTop, int &stepN
         if (csiAnnotationItem) {
             itemTop = csiAnnotationItem->topOf;
             stepNumber = csiAnnotationItem->stepNumber;
+        } else {
+            CsiAnnotationArrowItem *arrowItem = dynamic_cast<CsiAnnotationArrowItem *>(selectedItem);
+            if (arrowItem) {
+                itemTop = arrowItem->topOf;
+                stepNumber = arrowItem->stepNumber;
+            } else {
+                CsiAnnotationBadgeItem *badgeItem = dynamic_cast<CsiAnnotationBadgeItem *>(selectedItem);
+                if (badgeItem) {
+                    itemTop = badgeItem->topOf;
+                    stepNumber = badgeItem->stepNumber;
+                }
+            }
         }
     }
         break;

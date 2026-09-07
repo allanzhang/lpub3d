@@ -42,6 +42,9 @@
 #include "meta.h"
 #include "math.h"
 #include "step.h"
+#include "csiannotation.h"
+#include "annotations.h"
+#include "ranges.h"
 #include "lpub_preferences.h"
 #include "application.h"
 
@@ -54,6 +57,7 @@
 #include "pieceinf.h"
 #include "lc_profile.h"
 #include "lc_model.h"
+#include "piece.h"
 #include "lc_view.h"
 #include "camera.h"
 #include "lc_qhtmldialog.h"
@@ -2852,6 +2856,8 @@ int Native::renderCsi(
         Meta        &meta,
   int                nType)
 {
+  if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+      fprintf(stderr, "BADGEDBG_CALL renderCsi step=%p ann=%d\n", (void*)lpub->currentStep, (lpub->currentStep ? (int)lpub->currentStep->csiAnnotations.size() : -1));
   QString ldrName     = QDir::currentPath() + "/" + Paths::tmpDir + "/csi.ldr";
 
   // process native settings
@@ -3283,6 +3289,8 @@ float Render::ViewerCameraDistance(
 
 bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 {
+  if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+      fprintf(stderr, "BADGEDBG_CALL RenderNativeView\n");
     lcModel* ActiveModel = lcGetActiveProject()->GetMainModel();
 
     if (!ActiveModel)
@@ -3562,12 +3570,676 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 
             CalculateImageBounds(Image);
 
+            if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                fprintf(stderr, "BADGEDBG_PRE imgtype=%d badgeEnv=%d step=%p\n",
+                        (int)O->ImageType, qEnvironmentVariableIsSet("LPUB_STEP_BADGE") ? 1 : 0, (void*)lpub->currentStep);
+
+            QImage FinalImage = Image.RenderedImage.copy(Image.Bounds);
+
+            /*** A-Path Spike: same-frame anchor projection verification ***/
+            /*** Enable with env LPUB_ANCHOR_SPIKE=1; log to LPUB_ANCHOR_SPIKE_LOG (default /tmp/anchor-spike.log) ***/
+            if (qEnvironmentVariableIsSet("LPUB_ANCHOR_SPIKE"))
+            {
+                lcVector3 BMin, BMax;
+                if (ActiveModel->GetVisiblePiecesBoundingBox(BMin, BMax))
+                {
+                    QByteArray SpikeLogPath = qgetenv("LPUB_ANCHOR_SPIKE_LOG");
+                    const char* SpikeLogFile = SpikeLogPath.isEmpty() ? "/tmp/anchor-spike.log" : SpikeLogPath.constData();
+                    FILE* SpikeLog = fopen(SpikeLogFile, "a");
+                    if (SpikeLog)
+                        fprintf(SpikeLog, "=== PAGE %s img=%dx%d cam=%s bounds=(%d,%d,%d,%d) ===\n",
+                                qPrintable(O->OutputFileName),
+                                Image.RenderedImage.width(), Image.RenderedImage.height(),
+                                qPrintable(O->CameraName),
+                                Image.Bounds.left(), Image.Bounds.top(), Image.Bounds.width(), Image.Bounds.height());
+
+                    QPainter SpikePainter(&FinalImage);
+                    SpikePainter.setRenderHint(QPainter::Antialiasing, false);
+                    SpikePainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
+                    auto SpikeDrawCross = [&SpikePainter, &Image, &ImageView, SpikeLog](const lcVector3& World, int Size, const QColor& Color, const char* Tag)
+                    {
+                        const lcVector3 Screen = ImageView->ProjectPointFullImage(World);
+                        const QPoint P(int(Screen[0] - Image.Bounds.left()), int(Screen[1] - Image.Bounds.top()));
+                        SpikePainter.setPen(QPen(Color, 2));
+                        SpikePainter.drawLine(P.x() - Size, P.y(), P.x() + Size, P.y());
+                        SpikePainter.drawLine(P.x(), P.y() - Size, P.x(), P.y() + Size);
+                        if (SpikeLog)
+                            fprintf(SpikeLog, "%s W=(%.3f,%.3f,%.3f) S=(%.3f,%.3f) page=(%d,%d)\n",
+                                    Tag, World[0], World[1], World[2], Screen[0], Screen[1], P.x(), P.y());
+                    };
+
+                    const lcVector3 SpikeCenter = (BMin + BMax) * 0.5f;
+                    SpikeDrawCross(SpikeCenter, 7, QColor(255, 0, 0), "CENTER");
+
+                    for (int SpikeI = 0; SpikeI < 8; SpikeI++)
+                    {
+                        lcVector3 SpikeCorner;
+                        SpikeCorner[0] = (SpikeI & 1) ? BMax[0] : BMin[0];
+                        SpikeCorner[1] = (SpikeI & 2) ? BMax[1] : BMin[1];
+                        SpikeCorner[2] = (SpikeI & 4) ? BMax[2] : BMin[2];
+                        char SpikeTag[32];
+                        snprintf(SpikeTag, sizeof(SpikeTag), "CORNER%d", SpikeI);
+                        SpikeDrawCross(SpikeCorner, 5, QColor(0, 255, 0), SpikeTag);
+                    }
+
+                    SpikePainter.end();
+
+                    if (SpikeLog)
+                        fclose(SpikeLog);
+                }
+                else
+                    fprintf(stderr, "LPUB_ANCHOR_SPIKE: bbox guard failed\n");
+            }
+            /*** A-Path Spike end ***/
+
+            /*** A-Path CSI annotations: bake STEP_BADGE / ARROW / ICON into the
+                 rendered CSI image.  Reads the current step's CSI annotations
+                 (parsed from ASSEM ANNOTATION STEP_BADGE|ARROW|ICON metas), finds
+                 the annotated part by type base name, projects its world-space
+                 bounding box through the same full-image camera/projection used for
+                 the render, and draws the annotation (circular badge / leader arrow
+                 / text icon) at the placement-relative anchor on the final image.
+                 Disable with env LPUB_CSI_ANNOT=0 (badges alone: LPUB_STEP_BADGE=0).
+                 Because the GUI page is composed from exactly this CSI image, what
+                 you see in the GUI is byte-for-byte what the exported PNG contains. ***/
+            if (O->ImageType == Options::CSI && lpub->currentStep &&
+                qgetenv("LPUB_CSI_ANNOT") != "0")
+            {
+                const float Dpi = O->Resolution > 0 ? float(O->Resolution) : 96.0f;
+
+                // badge metrics (mirror the Qt badge: bold >=20pt text, padX 8 padY 4)
+                const int FontPx = qMax(24, qRound(20.0f * Dpi / 72.0f));
+                QFont BadgeFont;
+                BadgeFont.setFamily(QStringLiteral("Arial"));
+                BadgeFont.setBold(true);
+                BadgeFont.setPixelSize(FontPx);
+                const qreal PadX = qMax(6.0, 8.0 * Dpi / 96.0);
+                const qreal PadY = qMax(3.0, 4.0 * Dpi / 96.0);
+                const qreal BadgeGap = qMax(2.0, 3.0 * Dpi / 96.0);
+                const qreal ArrowGap = qMax(4.0, 6.0 * Dpi / 96.0);
+                const qreal IconGap  = qMax(4.0, 6.0 * Dpi / 96.0);
+                const qreal MinShaft = 0.8 * Dpi;      // mirror CsiAnnotationArrowItem
+                const qreal HeadLen   = 10.0 * Dpi / 96.0;
+                const qreal HeadHalfW = 6.0  * Dpi / 96.0;
+
+                // Per-annotation draw record. Coordinates are in FinalImage space
+                // (i.e. full render image minus Image.Bounds), before any canvas
+                // expansion; Pass 2 shifts them after symmetric padding.
+                struct AnnotDraw
+                {
+                    enum Kind { Badge, Arrow, Icon };
+                    Kind    kind;
+                    QPointF P;          // badge centre / arrow tail / icon centre
+                    QPointF Tip;        // arrow tip (part boundary intersection)
+                    QPointF Dir;        // arrow unit direction (tail -> tip)
+                    qreal   D;          // badge diameter
+                    QString Text;
+                    QColor  TextColor;
+                    QFont   Font;
+                    QRectF  Bounds;     // approximate paint bounds (canvas expansion)
+                    bool    IconBg;     // icon: solid background
+                    QColor  BgColor;
+                    bool    IconBorder; // icon: border rect
+                    QColor  BorderColor;
+                    qreal   BorderWidth;
+                    QRectF  IconRect;   // icon text box centred on P
+                };
+                QVector<AnnotDraw> Draws;
+
+                qreal NeedLeft = 0, NeedTop = 0, NeedRight = 0, NeedBottom = 0;
+                int   BadgeOrdinal = 0;
+
+                const QList<CsiAnnotation*>& Annotations = lpub->currentStep->csiAnnotations;
+                if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                    fprintf(stderr, "BADGEDBG0 imgtype=%d ann=%d currentStep=%p\n", (int)O->ImageType, (int)Annotations.size(), (void*)lpub->currentStep);
+
+                // PLI parts, used only for ICON text labels (same gate as the GUI
+                // overlay: an ICON renders only when its part has annotation text).
+                QHash<QString, PliPart*> PliParts;
+                bool PliLoaded = false;
+
+                // Shared part matcher + projector: world bbox of the annotated part
+                // (matched by type base name across all pieces, preferring the last
+                // file line) and its projected full-image screen box.
+                auto ProjectPart = [&](const CsiAnnotationIconData& Data,
+                                       lcVector3& BMin, lcVector3& BMax,
+                                       lcVector3& SMin, lcVector3& SMax,
+                                       QString* OutDescription = nullptr) -> bool
+                {
+                    BMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+                    BMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                    int BestLine = -1;
+                    bool Found = false;
+                    for (const std::unique_ptr<lcPiece>& Piece : ActiveModel->GetPieces())
+                    {
+                        PieceInfo* Info = Piece->mPieceInfo;
+                        if (!Info)
+                            continue;
+                        QString PieceName = QString::fromLatin1(Info->mFileName);
+                        int Slash = PieceName.lastIndexOf('/');
+                        if (Slash >= 0)
+                            PieceName = PieceName.mid(Slash + 1);
+                        int Dot = PieceName.lastIndexOf('.');
+                        if (Dot > 0)
+                            PieceName = PieceName.left(Dot);
+                        if (PieceName.compare(Data.typeBaseName, Qt::CaseInsensitive) != 0)
+                            continue;
+                        if (Piece->GetFileLine() < BestLine)
+                            continue;
+                        lcVector3 PMin(FLT_MAX, FLT_MAX, FLT_MAX), PMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                        Piece->CompareBoundingBox(PMin, PMax);
+                        BMin = lcMin(BMin, PMin);
+                        BMax = lcMax(BMax, PMax);
+                        BestLine = Piece->GetFileLine();
+                        Found = true;
+                        if (OutDescription)
+                            *OutDescription = QString::fromLatin1(Info->m_strDescription);
+                    }
+                    if (!Found)
+                        return false;
+
+                    SMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+                    SMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                    for (int Corner = 0; Corner < 8; Corner++)
+                    {
+                        lcVector3 CornerP;
+                        CornerP[0] = (Corner & 1) ? BMax[0] : BMin[0];
+                        CornerP[1] = (Corner & 2) ? BMax[1] : BMin[1];
+                        CornerP[2] = (Corner & 4) ? BMax[2] : BMin[2];
+                        const lcVector3 S = ImageView->ProjectPointFullImage(CornerP);
+                        SMin = lcMin(SMin, S);
+                        SMax = lcMax(SMax, S);
+                    }
+                    if (SMin[0] > SMax[0] || SMin[1] > SMax[1])
+                    {
+                        SMin = lcVector3(0.0f, 0.0f, 0.0f);
+                        SMax = lcVector3(0.0f, 0.0f, 0.0f);
+                    }
+                    return true;
+                };
+
+                // Shared placement -> screen anchor.  The placement words come from
+                // the META command (Data.placements), NOT from a hard-coded centre:
+                //   [0]=PlacementEnc, [1]=justification, [2]=PrepositionEnc.
+                // H/V pick the bbox edge/corner, then OUTSIDE/INSIDE offsets it.
+                auto PlacementAnchor = [&](const CsiAnnotationIconData& Data,
+                                           const lcVector3& SMin, const lcVector3& SMax,
+                                           qreal OffsetX, qreal OffsetY,
+                                           float& AnchorX, float& AnchorY) -> void
+                {
+                    // Data.placements layout is the canonical meta table (see
+                    // CsiAnnotation::setPlacement / PlacementMeta::parse):
+                    //   size==2 -> [ PlacementEnc, PrepositionEnc ]                    e.g. "TOP OUTSIDE"
+                    //   size==3 -> [ PlacementEnc, JustificationEnc, PrepositionEnc ]  e.g. "TOP LEFT OUTSIDE"
+                    int PlacementId = Center, JustifyId = Center, PrepositionId = Inside;
+                    if (Data.placements.size() == 2)
+                    {
+                        PlacementId   = Data.placements.at(0).toInt();
+                        JustifyId     = Center;   // 2-token form has no justification -> CENTER
+                        PrepositionId = Data.placements.at(1).toInt();
+                    }
+                    else if (Data.placements.size() >= 3)
+                    {
+                        PlacementId   = Data.placements.at(0).toInt();
+                        JustifyId     = Data.placements.at(1).toInt();
+                        PrepositionId = Data.placements.at(2).toInt();
+                    }
+                    else if (Data.placements.size() == 1)
+                    {
+                        PlacementId = Data.placements.at(0).toInt();
+                    }
+                    const bool IsOutside = (PrepositionId == Outside); // enum PrepositionEnc::Outside
+
+                    int H = 0, V = 0;
+                    switch (PlacementId)
+                    {
+                        case TopLeft:     H = -1; V = -1; break;
+                        case Top:         H =  0; V = -1; break;
+                        case TopRight:    H =  1; V = -1; break;
+                        case Right:       H =  1; V =  0; break;
+                        case BottomRight: H =  1; V =  1; break;
+                        case Bottom:      H =  0; V =  1; break;
+                        case BottomLeft:  H = -1; V =  1; break;
+                        case Left:        H = -1; V =  0; break;
+                        case Center:      H =  0; V =  0; break;
+                        default:          H =  0; V =  0; break;
+                    }
+                    // justification refines the corner along the edge
+                    if (JustifyId >= 0)
+                    {
+                        if (PlacementId == Top || PlacementId == Bottom)
+                        {
+                            if (JustifyId == Left)        H = -1;
+                            else if (JustifyId == Center) H =  0;
+                            else if (JustifyId == Right)  H =  1;
+                        }
+                        else if (PlacementId == Left || PlacementId == Right)
+                        {
+                            if (JustifyId == Top)         V = -1;
+                            else if (JustifyId == Center) V =  0;
+                            else if (JustifyId == Bottom) V =  1;
+                        }
+                    }
+
+                    AnchorX = (SMin[0] + SMax[0]) * 0.5f;
+                    AnchorY = (SMin[1] + SMax[1]) * 0.5f;
+                    if (H < 0) AnchorX = SMin[0];
+                    else if (H > 0) AnchorX = SMax[0];
+                    if (V < 0) AnchorY = SMin[1];
+                    else if (V > 0) AnchorY = SMax[1];
+
+                    if (H < 0) AnchorX = IsOutside ? float(AnchorX - OffsetX) : float(AnchorX + OffsetX);
+                    if (H > 0) AnchorX = IsOutside ? float(AnchorX + OffsetX) : float(AnchorX - OffsetX);
+                    if (V < 0) AnchorY = IsOutside ? float(AnchorY - OffsetY) : float(AnchorY + OffsetY);
+                    if (V > 0) AnchorY = IsOutside ? float(AnchorY + OffsetY) : float(AnchorY - OffsetY);
+                };
+
+                // Liang-Barsky: clip segment A->B to an axis-aligned rect; Out is
+                // the intersection point nearest A.  Returns false on no hit.
+                auto SegmentRectHit = [](const QPointF& A, const QPointF& B, const QRectF& R, QPointF& Out) -> bool
+                {
+                    const double dx = B.x() - A.x();
+                    const double dy = B.y() - A.y();
+                    double t0 = 0.0, t1 = 1.0;
+                    const double p[4] = { -dx, dx, -dy, dy };
+                    const double q[4] = { A.x() - R.left(), R.right() - A.x(),
+                                          A.y() - R.top(),  R.bottom() - A.y() };
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        if (qAbs(p[i]) < 1e-9)
+                        {
+                            if (q[i] < 0.0)
+                                return false;
+                        }
+                        else
+                        {
+                            const double r = q[i] / p[i];
+                            if (p[i] < 0.0)
+                                t0 = qMax(t0, r);
+                            else
+                                t1 = qMin(t1, r);
+                        }
+                    }
+                    if (t0 > t1)
+                        return false;
+                    Out = A + (B - A) * t0;
+                    return true;
+                };
+
+                // ---- Pass 1: compute anchors, geometry and required canvas margins ----
+                for (int AnnIdx = 0; AnnIdx < Annotations.size(); ++AnnIdx)
+                {
+                    CsiAnnotation* Ca = Annotations.at(AnnIdx);
+                    if (!Ca || Ca->hidden)
+                        continue;
+
+                    const CsiAnnotationIconData& Data = Ca->activeData();
+                    if (Data.typeBaseName.isEmpty())
+                        continue;
+
+                    if (Ca->kind == CsiAnnotationBadge && qgetenv("LPUB_STEP_BADGE") == "0")
+                        continue;
+                    if (Ca->kind == CsiAnnotationBadge)
+                        ++BadgeOrdinal;
+
+                    lcVector3 BMin, BMax, SMin, SMax;
+                    QString PartDescription;
+                    if (!ProjectPart(Data, BMin, BMax, SMin, SMax, &PartDescription))
+                        continue;
+
+                    if (Ca->kind == CsiAnnotationBadge)
+                    {
+                        const QString BadgeText = QString::number(BadgeOrdinal);
+                        QFontMetricsF BadgeFm(BadgeFont);
+                        QRectF BadgeTextRect = BadgeFm.boundingRect(BadgeText);
+                        const qreal BadgeD = qMax(BadgeTextRect.width() + 2.0 * PadX,
+                                                  BadgeTextRect.height() + 2.0 * PadY);
+                        const qreal Offset = BadgeD / 2.0 + BadgeGap;
+                        float AnchorX, AnchorY;
+                        PlacementAnchor(Data, SMin, SMax, Offset, Offset, AnchorX, AnchorY);
+                        const QPointF P(AnchorX - Image.Bounds.left(), AnchorY - Image.Bounds.top());
+
+                        AnnotDraw Dr;
+                        Dr.kind = AnnotDraw::Badge;
+                        Dr.P = P;
+                        Dr.D = BadgeD;
+                        Dr.Text = BadgeText;
+                        Dr.Bounds = QRectF(P.x() - BadgeD/2.0 - 2.0, P.y() - BadgeD/2.0 - 2.0,
+                                           BadgeD + 4.0, BadgeD + 4.0);
+
+                        if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "BADGEDBG type=%s ordinal=%d place=[%s] prep=%s bbox=(%.2f,%.2f,%.2f)-(%.2f,%.2f,%.2f) sb=(%.1f,%.1f)-(%.1f,%.1f) anchor=(%.1f,%.1f) P=(%d,%d)\n",
+                                    qPrintable(Data.typeBaseName), BadgeOrdinal,
+                                    qPrintable(Data.placements.join(",")),
+                                    ((Data.placements.size() == 2 && Data.placements.at(1).toInt() == Outside) ||
+                                     (Data.placements.size() >= 3 && Data.placements.at(2).toInt() == Outside)) ? "OUTSIDE" : "INSIDE",
+                                    BMin[0], BMin[1], BMin[2], BMax[0], BMax[1], BMax[2],
+                                    SMin[0], SMin[1], SMax[0], SMax[1],
+                                    AnchorX, AnchorY, int(P.x()), int(P.y()));
+
+                        Draws.append(Dr);
+                    }
+                    else if (Ca->kind == CsiAnnotationArrow)
+                    {
+                        // Arrow tail = placement anchor just clear of the part;
+                        // tip = where the ray (tail -> part centre) enters the part
+                        // screen box.  When the shaft would be too short to see,
+                        // pull the tail back (mirrors CsiAnnotationArrowItem).
+                        const QPointF Centre((SMin[0] + SMax[0]) * 0.5f - Image.Bounds.left(),
+                                             (SMin[1] + SMax[1]) * 0.5f - Image.Bounds.top());
+                        const QRectF PartRect(SMin[0] - Image.Bounds.left(),
+                                              SMin[1] - Image.Bounds.top(),
+                                              SMax[0] - SMin[0], SMax[1] - SMin[1]);
+                        float AnchorX, AnchorY;
+                        PlacementAnchor(Data, SMin, SMax, ArrowGap, ArrowGap, AnchorX, AnchorY);
+                        QPointF Tail(AnchorX - Image.Bounds.left(), AnchorY - Image.Bounds.top());
+
+                        QPointF Tip;
+                        if (!SegmentRectHit(Tail, Centre, PartRect, Tip))
+                            Tip = Centre;
+                        QLineF Shaft(Tail, Tip);
+                        qreal ShaftLen = Shaft.length();
+                        if (ShaftLen < 1.0)
+                        {
+                            // Degenerate: the tail sits inside the part (INSIDE
+                            // placement), so the ray never crosses the boundary and
+                            // the tip collapses onto the tail. Point the head at the
+                            // part centre instead (mirrors the GUI arrow item's
+                            // fallback) so INSIDE arrows stay visible.
+                            Tip = Centre;
+                            Shaft = QLineF(Tail, Tip);
+                            ShaftLen = Shaft.length();
+                            if (ShaftLen < 1.0)
+                                continue;   // still degenerate (e.g. CENTER anchor)
+                        }
+                        const QPointF Dir(Shaft.dx() / ShaftLen, Shaft.dy() / ShaftLen);
+                        if (ShaftLen < MinShaft)
+                            Tail = Tail - Dir * (MinShaft - ShaftLen);
+
+                        AnnotDraw Dr;
+                        Dr.kind = AnnotDraw::Arrow;
+                        Dr.P = Tail;
+                        Dr.Tip = Tip;
+                        Dr.Dir = Dir;
+                        Dr.Bounds = QRectF(qMin(Tail.x(), Tip.x()), qMin(Tail.y(), Tip.y()),
+                                           qMax(qAbs(Tip.x() - Tail.x()), qAbs(Tip.y() - Tail.y())),
+                                           qMax(qAbs(Tip.x() - Tail.x()), qAbs(Tip.y() - Tail.y())));
+                        Dr.Bounds = Dr.Bounds.adjusted(-HeadLen, -HeadLen, HeadLen, HeadLen);
+
+                        if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "ARROWDBG type=%s place=[%s] prep=%s sb=(%.1f,%.1f)-(%.1f,%.1f) tail=(%.1f,%.1f) tip=(%.1f,%.1f) len=%.1f\n",
+                                    qPrintable(Data.typeBaseName),
+                                    qPrintable(Data.placements.join(",")),
+                                    ((Data.placements.size() == 2 && Data.placements.at(1).toInt() == Outside) ||
+                                     (Data.placements.size() >= 3 && Data.placements.at(2).toInt() == Outside)) ? "OUTSIDE" : "INSIDE",
+                                    SMin[0], SMin[1], SMax[0], SMax[1],
+                                    Tail.x(), Tail.y(), Tip.x(), Tip.y(), ShaftLen);
+
+                        Draws.append(Dr);
+                    }
+                    else if (Ca->kind == CsiAnnotationIcon)
+                    {
+                        // Icon text from the step PLI part (same gate as the GUI
+                        // overlay: only render when the part has annotation text).
+                        if (!PliLoaded)
+                        {
+                            lpub->currentStep->pli.getParts(PliParts);
+                            PliLoaded = true;
+                        }
+                        const QString Key = QString("%1_%2").arg(Data.typeBaseName).arg(Data.typeColor);
+                        PliPart* Part = PliParts.value(Key);
+                        if (!Part)
+                        {
+                            const QString Base = Data.typeBaseName + "_";
+                            for (auto It = PliParts.constBegin(); It != PliParts.constEnd(); ++It)
+                                if (It.key().startsWith(Base)) { Part = It.value(); break; }
+                        }
+                        // Icon text: prefer the step PLI part text.  The step PLI is
+                        // composed after the CSI image is rendered, so at render time
+                        // PliParts is usually empty; derive the label exactly like
+                        // Pli::getAnnotation (title -> freeform -> description) so the
+                        // baked icon matches what the parts list would show.
+                        QString IconText;
+                        // GUI composes the step PLI with setParts(steps->meta); the step
+                        // pliMeta copy is only populated then, so read the file-level
+                        // meta (same source) for the annotation display/freeform gates.
+                        Steps *AnnoSteps = lpub->currentStep ? lpub->currentStep->grandparent() : nullptr;
+                        PliAnnotationMeta& AM = (AnnoSteps ? AnnoSteps->meta.LPub.pli.annotation
+                                                          : lpub->currentStep->pli.pliMeta.annotation);
+                        if (Part && !Part->text.isEmpty())
+                            IconText = Part->text;
+                        if (IconText.isEmpty())
+                        {
+                            if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                                fprintf(stderr, "ICONRAW type=%s AnnoSteps=%p display=%d title=%d freeform=%d taf=%d pliMeta.display=%d cur=%p model=%s\n",
+                                        qPrintable(Data.typeBaseName), (void*)AnnoSteps, (int)AM.display.value(),
+                                        (int)AM.titleAnnotation.value(), (int)AM.freeformAnnotation.value(),
+                                        (int)AM.titleAndFreeformAnnotation.value(),
+                                        (int)lpub->currentStep->pli.pliMeta.annotation.display.value(),
+                                        (void*)lpub->currentStep,
+                                        qPrintable(AnnoSteps ? AnnoSteps->modelName() : QStringLiteral("<null>")));
+                            if (AM.display.value() || lpub->currentStep->pli.pliMeta.annotation.display.value())
+                            {
+                                const bool title = AM.titleAnnotation.value();
+                                const bool freeform = AM.freeformAnnotation.value();
+                                const bool titleAndFreeform = AM.titleAndFreeformAnnotation.value();
+                                const QString lowerName = QString("%1.dat").arg(Data.typeBaseName).toLower();
+                                if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                                    fprintf(stderr, "ICONMETA type=%s display=%d title=%d freeform=%d taf=%d lower=%s ffExists=%d ffFile=%s\n",
+                                            qPrintable(Data.typeBaseName), (int)AM.display.value(), (int)title, (int)freeform,
+                                            (int)titleAndFreeform, qPrintable(lowerName),
+                                            (int)QFileInfo::exists(Preferences::freeformAnnotationsFile),
+                                            qPrintable(Preferences::freeformAnnotationsFile));
+                                if (title || titleAndFreeform)
+                                {
+                                    const QList<QString> titleAnnotations = Annotations::getTitleAnnotations();
+                                    if (titleAnnotations.isEmpty() && !titleAndFreeform)
+                                        IconText = PartDescription;   // no title source -> part description
+                                    else if (!titleAnnotations.isEmpty())
+                                    {
+                                        QRegularExpression rx;
+                                        for (const QString& annotation : titleAnnotations)
+                                        {
+                                            rx.setPattern(annotation);
+                                            QRegularExpressionMatch match = rx.match(PartDescription);
+                                            if (match.hasMatch())
+                                            {
+                                                QString sClean = match.captured(1);
+                                                sClean.remove(QRegularExpression(QStringLiteral("\\s")));
+                                                IconText = sClean;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (IconText.isEmpty() && titleAndFreeform)
+                                        IconText = Annotations::freeformAnnotation(lowerName);
+                                }
+                                else if (freeform)
+                                    IconText = Annotations::freeformAnnotation(lowerName);
+                            }
+                        }
+                        if (IconText.isEmpty())
+                        {
+                            if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                                fprintf(stderr, "ICONDBG type=%s key=%s parts=%d found=%d text='' (empty)\n",
+                                        qPrintable(Data.typeBaseName), qPrintable(Key), (int)PliParts.size(), Part ? 1 : 0);
+                            continue;
+                        }
+                        if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "ICONDBG type=%s key=%s parts=%d found=%d text='%s'\n",
+                                    qPrintable(Data.typeBaseName), qPrintable(Key), (int)PliParts.size(),
+                                    Part ? 1 : 0, qPrintable(IconText));
+
+                        // Style: prefer the matched step PLI part; when the CSI image is
+                        // rendered before the PLI is composed (CLI export), fall back to
+                        // the file-level PLI default style so the baked icon matches the
+                        // parts list appearance.
+                        AnnotationStyleMeta& IconStyle =
+                            (Part ? Part->styleMeta
+                                  : (AnnoSteps ? AnnoSteps->meta.LPub.pli.defaultStyle
+                                               : lpub->currentStep->pli.pliMeta.defaultStyle));
+                        QFont IconFont;
+                        const QString FontStr = IconStyle.font.valueFoo();
+                        IconFont.fromString(FontStr.isEmpty() ? QStringLiteral("Arial,24,-1,5,50,0,0,0,0,0") : FontStr);
+                        if (IconFont.pointSizeF() < 10.0 && IconFont.pixelSize() < 14)
+                            IconFont.setPointSizeF(12.0);
+                        QFontMetricsF IconFm(IconFont);
+                        const QRectF TextRect = IconFm.boundingRect(QRectF(0, 0, 100000, 100000),
+                                                                    Qt::AlignLeft | Qt::AlignTop,
+                                                                    IconText);
+                        const qreal iPx = qMax(6.0, 8.0 * Dpi / 96.0);
+                        const qreal iPy = qMax(3.0, 4.0 * Dpi / 96.0);
+                        const QSizeF IconSize(TextRect.width() + 2.0 * iPx,
+                                              TextRect.height() + 2.0 * iPy);
+                        const qreal Offset = qMax(IconSize.width(), IconSize.height()) / 2.0 + IconGap;
+                        float AnchorX, AnchorY;
+                        PlacementAnchor(Data, SMin, SMax, Offset, Offset, AnchorX, AnchorY);
+                        const QPointF P(AnchorX - Image.Bounds.left(), AnchorY - Image.Bounds.top());
+
+                        AnnotDraw Dr;
+                        Dr.kind = AnnotDraw::Icon;
+                        Dr.P = P;
+                        Dr.Font = IconFont;
+                        Dr.Text = IconText;
+                        QColor TextColor(IconStyle.color.value());
+                        Dr.TextColor = TextColor.isValid() ? TextColor : QColor(0, 0, 0);
+                        Dr.IconRect = QRectF(-IconSize.width() / 2.0, -IconSize.height() / 2.0,
+                                             IconSize.width(), IconSize.height());
+                        Dr.IconBg = false;
+                        Dr.IconBorder = false;
+                        if (IconStyle.style.value() != AnnotationStyle::none)
+                        {
+                            const BackgroundData& Bg = IconStyle.background.value();
+                            if (Bg.type == BackgroundData::BgColor)
+                            {
+                                Dr.IconBg = true;
+                                Dr.BgColor = LDrawColor::color(Bg.string);
+                            }
+                            const BorderData& Bdr = IconStyle.border.valuePixels();
+                            if (Bdr.type != BorderData::BdrNone && Bdr.line != BorderData::BdrLnNone)
+                            {
+                                Dr.IconBorder = true;
+                                Dr.BorderColor = LDrawColor::color(Bdr.color);
+                                Dr.BorderWidth = qMax(1.0, qreal(Bdr.thickness));
+                            }
+                        }
+                        Dr.Bounds = QRectF(P.x() - IconSize.width() / 2.0 - 2.0,
+                                           P.y() - IconSize.height() / 2.0 - 2.0,
+                                           IconSize.width() + 4.0, IconSize.height() + 4.0);
+
+                        if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "ICONDBG type=%s text=\"%s\" place=[%s] anchor=(%.1f,%.1f) P=(%d,%d) size=(%.0f,%.0f)\n",
+                                    qPrintable(Data.typeBaseName), qPrintable(IconText),
+                                    qPrintable(Data.placements.join(",")),
+                                    AnchorX, AnchorY, int(P.x()), int(P.y()),
+                                    IconSize.width(), IconSize.height());
+
+                        Draws.append(Dr);
+                    }
+                }
+
+                // ---- Pass 2: expand the canvas symmetrically so every draw fits ----
+                for (const AnnotDraw& Dr : Draws)
+                {
+                    const qreal M = 4.0;   // bleed
+                    if (Dr.Bounds.left() - M < 0)          NeedLeft   = qMax(NeedLeft,   M - Dr.Bounds.left());
+                    if (Dr.Bounds.top() - M < 0)           NeedTop    = qMax(NeedTop,    M - Dr.Bounds.top());
+                    if (Dr.Bounds.right() + M > FinalImage.width())  NeedRight  = qMax(NeedRight,  Dr.Bounds.right() + M - FinalImage.width());
+                    if (Dr.Bounds.bottom() + M > FinalImage.height()) NeedBottom = qMax(NeedBottom, Dr.Bounds.bottom() + M - FinalImage.height());
+                }
+                const int PadH = int(qCeil(qMax(NeedLeft, NeedRight)));
+                const int PadV = int(qCeil(qMax(NeedTop, NeedBottom)));
+                if (PadH > 0 || PadV > 0)
+                {
+                    QImage Expanded(FinalImage.width() + 2 * PadH, FinalImage.height() + 2 * PadV, FinalImage.format());
+                    Expanded.fill(Qt::transparent);
+                    QPainter CopyPainter(&Expanded);
+                    CopyPainter.drawImage(PadH, PadV, FinalImage);
+                    CopyPainter.end();
+                    FinalImage = Expanded;
+                    for (AnnotDraw& Dr : Draws)
+                    {
+                        Dr.P += QPointF(PadH, PadV);
+                        Dr.Tip += QPointF(PadH, PadV);
+                        Dr.Bounds.translate(PadH, PadV);
+                    }
+                    if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                        fprintf(stderr, "BADGEDBG_PAD img=%dx%d padH=%d padV=%d draws=%d\n", FinalImage.width(), FinalImage.height(), PadH, PadV, (int)Draws.size());
+                }
+
+                // ---- Pass 3: draw the annotations onto the (possibly expanded) image ----
+                QPainter AnnotPainter(&FinalImage);
+                AnnotPainter.setRenderHint(QPainter::Antialiasing, true);
+                AnnotPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+                for (const AnnotDraw& Dr : Draws)
+                {
+                    if (Dr.kind == AnnotDraw::Badge)
+                    {
+                        AnnotPainter.setFont(BadgeFont);
+                        const QRectF BadgeRect(Dr.P.x() - Dr.D / 2.0, Dr.P.y() - Dr.D / 2.0, Dr.D, Dr.D);
+                        QPen BorderPen(QColor(0, 0, 0));
+                        BorderPen.setWidthF(1.5 * Dpi / 96.0);
+                        AnnotPainter.setPen(BorderPen);
+                        AnnotPainter.setBrush(QColor(255, 255, 255));
+                        AnnotPainter.drawEllipse(BadgeRect);
+                        AnnotPainter.setPen(QColor(0, 0, 0));
+                        AnnotPainter.drawText(BadgeRect, Qt::AlignCenter, Dr.Text);
+                    }
+                    else if (Dr.kind == AnnotDraw::Arrow)
+                    {
+                        const QPointF HeadBase = Dr.Tip - Dr.Dir * HeadLen;
+                        const QPointF Perp(-Dr.Dir.y(), Dr.Dir.x());
+                        QPainterPath Path;
+                        Path.moveTo(Dr.P);
+                        Path.lineTo(HeadBase);
+                        Path.moveTo(Dr.Tip);
+                        Path.lineTo(HeadBase + Perp * HeadHalfW);
+                        Path.lineTo(HeadBase - Perp * HeadHalfW);
+                        Path.closeSubpath();
+                        QPen ArrowPen(QColor(0, 0, 0));
+                        ArrowPen.setWidthF(2.0 * Dpi / 96.0);
+                        ArrowPen.setCapStyle(Qt::SquareCap);
+                        ArrowPen.setJoinStyle(Qt::MiterJoin);
+                        AnnotPainter.setPen(ArrowPen);
+                        AnnotPainter.setBrush(QColor(0, 0, 0));
+                        AnnotPainter.drawPath(Path);
+                    }
+                    else if (Dr.kind == AnnotDraw::Icon)
+                    {
+                        AnnotPainter.setFont(Dr.Font);
+                        const QRectF IconRect(Dr.P.x() + Dr.IconRect.left(),
+                                              Dr.P.y() + Dr.IconRect.top(),
+                                              Dr.IconRect.width(), Dr.IconRect.height());
+                        if (Dr.IconBg)
+                        {
+                            AnnotPainter.setPen(Qt::NoPen);
+                            AnnotPainter.setBrush(Dr.BgColor);
+                            AnnotPainter.drawRect(IconRect);
+                        }
+                        if (Dr.IconBorder)
+                        {
+                            QPen BPen(Dr.BorderColor);
+                            BPen.setWidthF(Dr.BorderWidth);
+                            AnnotPainter.setPen(BPen);
+                            AnnotPainter.setBrush(Qt::NoBrush);
+                            AnnotPainter.drawRect(IconRect);
+                        }
+                        AnnotPainter.setPen(Dr.TextColor);
+                        AnnotPainter.drawText(IconRect, Qt::AlignCenter, Dr.Text);
+                    }
+                }
+                AnnotPainter.end();
+            }
+            /*** A-Path CSI annotations end ***/
+
+
             QImageWriter Writer(O->OutputFileName);
 
             if (Writer.format().isEmpty())
                 Writer.setFormat("PNG");
 
-            if (!Writer.write(QImage(Image.RenderedImage.copy(Image.Bounds))))
+            if (!Writer.write(FinalImage))
             {
                 QString const message = QObject::tr("Could not write to Native %1 %2 file:<br>[%3].<br>Reason: %4.")
                                             .arg(ImageType,
@@ -3744,6 +4416,8 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 
 bool Render::RenderNativeImage(const NativeOptions *Options)
 {
+  if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+      fprintf(stderr, "BADGEDBG_CALL RenderNativeImage\n");
 
     bool IsHighContrastStudStyle = Options->StudStyle >= static_cast<int>(lcStudStyle::HighContrast);
     //bool StudStyleChanged = (Options->StudStyle != lpub->GetStudStyle() ||

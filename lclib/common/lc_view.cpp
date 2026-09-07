@@ -242,6 +242,52 @@ lcVector3 lcView::ProjectPoint(const lcVector3& Point) const
 	return lcProjectPoint(Point, mCamera->mWorldView, GetProjectionMatrix(), Viewport);
 }
 
+// A-Path spike: project a world point to full render-image pixel coords,
+// independent of tile size (handles tiled renders of large images).
+lcVector3 lcView::ProjectPointFullImage(const lcVector3& Point) const
+{
+	if (mRenderImage.isNull())
+		return ProjectPoint(Point);
+
+	int ImageWidth = mRenderImage.width();
+	int ImageHeight = mRenderImage.height();
+	int Viewport[4] = { 0, 0, ImageWidth, ImageHeight };
+
+	float AspectRatio = (float)ImageWidth / (float)ImageHeight;
+
+	lcMatrix44 Projection;
+
+	if (mCamera->IsOrtho())
+	{
+		float OrthoHeight = mCamera->GetOrthoHeight() / 2.0f;
+		float OrthoWidth = OrthoHeight * AspectRatio;
+
+		Projection = lcMatrix44Ortho(-OrthoWidth, OrthoWidth, -OrthoHeight, OrthoHeight, mCamera->m_zNear, mCamera->m_zFar * 4);
+	}
+	else
+		Projection = lcMatrix44Perspective(mCamera->m_fovy, AspectRatio, mCamera->m_zNear, mCamera->m_zFar);
+
+	lcVector3 Result = lcProjectPoint(Point, mCamera->mWorldView, Projection, Viewport);
+
+	// Convert from GL-style bottom-left origin (NDC y-up) to Qt image
+	// coordinates (top-left origin): y_img = ImageHeight - y_proj.
+	Result[1] = ImageHeight - Result[1];
+
+	if (qEnvironmentVariableIsSet("LPUB_PROJ_DEBUG"))
+	{
+		const lcVector3 CamTarget = mCamera->mTargetPosition;
+		const lcVector3 CamPos = mCamera->mPosition;
+		fprintf(stderr, "PROJDBG in=(%.3f,%.3f,%.3f) img=%dx%d tile=%dx%d ortho=%d orthoH=%.4f fovy=%.4f out=(%.3f,%.3f,%.3f) target=(%.3f,%.3f,%.3f) pos=(%.3f,%.3f,%.3f)\n",
+			Point[0], Point[1], Point[2], ImageWidth, ImageHeight, mWidth, mHeight,
+			mCamera->IsOrtho() ? 1 : 0, mCamera->GetOrthoHeight(), mCamera->m_fovy,
+			Result[0], Result[1], Result[2],
+			CamTarget[0], CamTarget[1], CamTarget[2],
+			CamPos[0], CamPos[1], CamPos[2]);
+	}
+
+	return Result;
+}
+
 lcVector3 lcView::UnprojectPoint(const lcVector3& Point) const
 {
 	int Viewport[4] = { 0, 0, mWidth, mHeight };
@@ -850,9 +896,11 @@ bool lcView::BeginRenderToImage(int Width, int Height)
 
 	MaxTexture = qMin(MaxTexture, 2048);
 
-	const int Samples = QSurfaceFormat::defaultFormat().samples();
+/*** DoubleEagle Mod - disable MSAA for native image renders: crisp sharp jagged outlines (interactive viewer keeps AA) ***/
+	const int Samples = 1;
 	if (Samples > 1)
 		MaxTexture /= Samples;
+/*** DoubleEagle Mod end ***/
 
 	int TileWidth = qMin(Width, MaxTexture);
 	int TileHeight = qMin(Height, MaxTexture);
@@ -864,8 +912,8 @@ bool lcView::BeginRenderToImage(int Width, int Height)
 	QOpenGLFramebufferObjectFormat Format;
 	Format.setAttachment(QOpenGLFramebufferObject::Depth);
 
-	if (QSurfaceFormat::defaultFormat().samples() > 1)
-		Format.setSamples(QSurfaceFormat::defaultFormat().samples());
+	if (Samples > 1)
+		Format.setSamples(Samples);
 
 	mRenderFramebuffer = std::unique_ptr<QOpenGLFramebufferObject>(new QOpenGLFramebufferObject(QSize(TileWidth, TileHeight), Format));
 

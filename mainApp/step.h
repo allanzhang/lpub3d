@@ -153,7 +153,9 @@ class Step : public AbstractRangeElement
 
     void appendCsiAnnotation(
             const Where       &here,
-            CsiAnnotationMeta &caMeta);
+            const Where       &partLine,
+            CsiAnnotationMeta &caMeta,
+            CsiAnnotationKind  kind = CsiAnnotationIcon);
 
     int  createCsi(
            QString      const &addLine,

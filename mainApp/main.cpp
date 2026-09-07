@@ -11,6 +11,7 @@ int main(int argc, char** argv)
 {
 	QCoreApplication::setOrganizationDomain(QLatin1String(VER_COMPANYDOMAIN_STR));
 	QCoreApplication::setOrganizationName(  QLatin1String(VER_COMPANYNAME_STR));
+	QCoreApplication::setApplicationName(   QLatin1String(VER_PRODUCTNAME_STR));
 	QCoreApplication::setApplicationVersion(QLatin1String(VER_PRODUCTVERSION_STR));
 
 	lcCommandLineOptions Options;

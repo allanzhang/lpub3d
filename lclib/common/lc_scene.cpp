@@ -228,10 +228,13 @@ void lcScene::DrawOpaqueMeshes(lcContext* Context, bool DrawLit, int PrimitiveTy
 				case lcRenderMeshState::Default:
 					if (mShadingMode != lcShadingMode::Wireframe)
 					{
-						if (ColorIndex != gEdgeColor)
-							Context->SetColorIndex(ColorIndex);
+/*** DoubleEagle Mod - force outline color on ALL edge lines: white for target dark colors, soft dark for all others ***/
+						const lcColor& PartColor = gColorList[RenderMesh.ColorIndex];
+						if (PartColor.Code == 272 || PartColor.Code == 288 || PartColor.Code == 308 || PartColor.Code == 330)
+							Context->SetColor(lcVector4(1.0f, 1.0f, 1.0f, 1.0f));
 						else
-							Context->SetEdgeColorIndex(RenderMesh.ColorIndex);
+							Context->SetColor(lcVector4(0.0f, 0.0f, 0.0f, 1.0f));
+/*** DoubleEagle Mod end ***/
 					}
 					else
 					{

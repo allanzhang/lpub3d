@@ -42,15 +42,18 @@ DialogExportPages::DialogExportPages(QWidget *parent) :
     connect(ui->lineEditPageRange, SIGNAL(textEdited(const QString&)), this, SLOT(enableLineEditPageRangeReset(const QString&)));
     connect(setLineEditResetAct, SIGNAL(triggered()), this, SLOT(lineEditPageRangeReset()));
     bool ok[2] = {false, false};
-    QString const cleanRange = gui->setPageLineEdit->displayText().trimmed().replace(" ", "");
-    bool multiRange = cleanRange.contains(',');
-    bool ofPages = cleanRange.contains("of",Qt::CaseInsensitive);
+    bool multiRange = gui->setPageLineEdit->displayText().contains(',');
+    bool ofPages = gui->setPageLineEdit->displayText().contains("of", Qt::CaseInsensitive);
     static QRegularExpression startRx;
     static QRegularExpression endRx;
+    static QRegularExpression ofToRx;
     QRegularExpressionMatch match;
     startRx.setPattern("^(\\d+)(?:[\\w\\-\\,\\s]*)$");
     startRx.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-    endRx.setPattern("([^\\s|^,|^\\-|^a-zA-Z]\\d+)$");
+    endRx.setPattern("(?:[^\\w\\-\\,\\s]*)(\\d+)$");
+    ofToRx.setPattern("of|to");
+    ofToRx.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+    QString cleanRange = gui->setPageLineEdit->displayText().trimmed().replace(ofToRx, "-").replace(" ", "");
     match = startRx.match(cleanRange);
     if (match.hasMatch()) {
         rangeMin = match.captured(1).toInt(&ok[0]);

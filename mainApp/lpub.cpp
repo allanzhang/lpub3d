@@ -36,6 +36,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QProgressDialog>
+#include <QThread>
+#include <QApplication>
 #include <ui_progress_dialog.h>
 
 #include <LDVQt/LDVWidget.h>
@@ -3872,7 +3874,8 @@ void Gui::ldrawColorPartsLoad()
                     .arg(Preferences::validLDrawLibrary, Preferences::ldrawColourPartsFile, result);
             emit gui->messageSig(LOG_NOTICE, message);
             bool prompt = false;
-            if (Preferences::modeGUI) {
+            const bool onGuiThread = QThread::currentThread() == qApp->thread();
+            if (Preferences::modeGUI && onGuiThread) {
                 QMessageBoxResizable box;
                 box.setWindowIcon(QIcon());
                 box.setIconPixmap (QPixmap(LPUB3D_MESSAGE_ICON));
@@ -3890,6 +3893,15 @@ void Gui::ldrawColorPartsLoad()
                 if (box.exec() == QMessageBox::Yes) {
                     gui->generateCustomColourPartsList(prompt); /* false */
                 }
+            } else if (Preferences::modeGUI) {
+                // Background thread (QtConcurrent in enableLPubFadeOrHighlight):
+                // macOS/Qt6 forbids instantiating an NSWindow off the main thread, so
+                // a modal prompt here would abort the app. Generate the color parts file
+                // without prompting - generation is asynchronous and reports back to the
+                // GUI thread when finished.
+                emit gui->messageSig(LOG_NOTICE, tr("Generating the %1 LDraw color parts file on the background thread...")
+                                     .arg(Preferences::validLDrawLibrary));
+                gui->generateCustomColourPartsList(prompt); /* false */
             } else {
                 gui->generateCustomColourPartsList(prompt); /* false */
             }

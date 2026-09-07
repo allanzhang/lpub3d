@@ -435,10 +435,11 @@ void lcContext::SetOffscreenContext()
 
 void lcContext::SetDefaultState()
 {
+/*** DoubleEagle Mod - disable GL_LINE_SMOOTH: it blurs thin outline lines (crisp sharp jagged outlines) ***/
 #ifndef LC_OPENGLES
-	if (QSurfaceFormat::defaultFormat().samples() > 1)
-		glEnable(GL_LINE_SMOOTH);
+	/* glEnable(GL_LINE_SMOOTH) intentionally disabled */
 #endif
+/*** DoubleEagle Mod end ***/
 
 	glEnable(GL_DEPTH_TEST);
 	mDepthTest = true;

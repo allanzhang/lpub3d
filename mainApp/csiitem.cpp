@@ -1,4 +1,3 @@
- 
 /****************************************************************************
 **
 ** Copyright (C) 2007-2009 Kevin Clague. All rights reserved.
@@ -191,26 +190,85 @@ void CsiItem::placeCsiPartAnnotations()
     if (!pliParts.size())
         return;
 
+    // A-Path: with the native renderer, STEP_BADGE / ARROW / ICON are baked
+    // directly into the CSI PNG by Render::RenderNativeView using the same
+    // full-image projection as the render, so the GUI page (which is composed
+    // from exactly that PNG) shows what the exported file contains. The legacy
+    // overlay items anchored at the part centre and ignored the META placement
+    // words, so they must not be drawn on top (they would double-draw and
+    // misplace every annotation).
+    const bool ApathBake = (Render::getRenderer() == RENDERER_NATIVE);
+
+    auto addAnnotationItem = [&](CsiAnnotation *ca, PliPart *part) {
+        if (ApathBake)
+            return;
+        switch (ca->kind) {
+          case CsiAnnotationArrow:
+          {
+              CsiAnnotationArrowItem *arrowItem = new CsiAnnotationArrowItem();
+              arrowItem->addGraphicsItems(ca,step,part,this);
+          }
+              break;
+          case CsiAnnotationBadge:
+              // STEP_BADGE is baked into the CSI PNG by the A-Path renderer
+              // (placement-aware anchor, same-frame projection), so the GUI
+              // page shows exactly what the exported file shows. Do not
+              // overlay a second badge here - the legacy item anchored at
+              // the part centre and ignored the META placement words.
+              break;
+          case CsiAnnotationIcon:
+          default:
+              if (part->text.size()) {
+                  CsiAnnotationItem *caItem = new CsiAnnotationItem();
+                  caItem->addGraphicsItems(ca,step,part,this,true);
+              }
+              break;
+        }
+    };
+
     for (int i = 0; i < step->csiAnnotations.size(); ++i) {
         CsiAnnotation *ca = step->csiAnnotations[i];
         if (!hiddenAnnotations)
-            hiddenAnnotations = ca->caMeta.icon.value().hidden;
-        if (!ca->caMeta.icon.value().hidden) {
-            QString key       = QString("%1_%2")
-                                        .arg(ca->caMeta.icon.value().typeBaseName)
-                                        .arg(ca->caMeta.icon.value().typeColor);
-            PliPart *part     = pliParts[key];
+            hiddenAnnotations = ca->hidden;
+        if (ca->hidden)
+            continue;
 
-            if (!part)
-                continue;
+        QString key       = QString("%1_%2")
+                                    .arg(ca->activeData().typeBaseName)
+                                    .arg(ca->activeData().typeColor);
+        PliPart *part     = pliParts.value(key);
 
-            for (int i = 0; i < part->instances.size(); ++i) {
-                if (ca->partLine == part->instances[i] && part->text.size()) {
-                    CsiAnnotationItem *caItem = new CsiAnnotationItem();
-                    caItem->addGraphicsItems(ca,step,part,this,true);
+        // ARROW/STEP_BADGE identify the annotated part by type; if the
+        // annotation colour does not exactly match the part line colour,
+        // fall back to the first step PLI part of the same base name so the
+        // annotation still renders.
+        if (!part && ca->kind != CsiAnnotationIcon) {
+            const QString baseName = ca->activeData().typeBaseName + "_";
+            for (auto it = pliParts.constBegin(); it != pliParts.constEnd(); ++it) {
+                if (it.key().startsWith(baseName)) {
+                    part = it.value();
+                    break;
                 }
             }
         }
+
+        if (!part)
+            continue;
+
+        bool matchedInstance = false;
+        for (int j = 0; j < part->instances.size(); ++j) {
+            if (ca->partLine != part->instances[j])
+                continue;
+            matchedInstance = true;
+            addAnnotationItem(ca, part);
+        }
+
+        // ARROW/STEP_BADGE render even when no instance matches the part
+        // line (e.g. a comment line sits between the part and its
+        // annotation): fall back to the first instance of the part in the
+        // step so the annotation is still drawn.
+        if (!matchedInstance && ca->kind != CsiAnnotationIcon && part->instances.size())
+            addAnnotationItem(ca, part);
     }
 }
 

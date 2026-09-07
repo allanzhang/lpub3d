@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET   = LPub3D
+TARGET   = myLPub3D
 QT      += core
 QT      += gui
 QT      += widgets
@@ -439,6 +439,7 @@ HEADERS += \
     annotations.h \
     application.h \
     archiveparts.h \
+    arrowitem.h \
     backgrounddialog.h \
     backgrounditem.h \
     blenderpreferences.h \
@@ -563,6 +564,7 @@ SOURCES += \
     annotations.cpp \
     application.cpp \
     archiveparts.cpp \
+    arrowitem.cpp \
     assemglobals.cpp \
     backgrounddialog.cpp \
     backgrounditem.cpp \

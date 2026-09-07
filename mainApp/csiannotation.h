@@ -24,7 +24,9 @@
 #define CSIANNOTATION_H
 
 #include <QGraphicsRectItem>
+#include <QGraphicsPathItem>
 #include <QGraphicsTextItem>
+#include <QLineF>
 #include "range_element.h"
 #include "csiitem.h"
 #include "ranges.h"
@@ -33,6 +35,7 @@
 class Step;
 class QGraphicsView;
 class CsiAnnotation;
+class PliPart;
 
 class PlacementCsiPart : public Placement,
                          public QGraphicsRectItem
@@ -57,12 +60,17 @@ public:
   CsiAnnotationMeta caMeta;
   CsiPartMeta       csiPartMeta;
   Where             partLine,metaLine; // Part / Meta line in the model file
+  CsiAnnotationKind kind;   // Which ASSEM ANNOTATION sub-command created this annotation
+  bool              hidden; // Hidden flag of the active sub-command data
 
   CsiAnnotation(){}
   CsiAnnotation(
      const Where       &_here,
-     CsiAnnotationMeta &_caMeta);
+     const Where       &_partLine,
+     CsiAnnotationMeta &_caMeta,
+     CsiAnnotationKind  _kind = CsiAnnotationIcon);
   virtual ~CsiAnnotation(){}
+  const CsiAnnotationIconData &activeData();
   bool setPlacement();
   bool setCsiPartLoc(int csiSize[]);
   bool setAnnotationLoc(float iconOffset[]);
@@ -148,6 +156,58 @@ protected:
   Qt::Alignment	       alignment;
   bool isHovered;
   bool mouseIsDown;
+};
+
+/*
+ * Renders the ASSEM ANNOTATION ARROW sub-command: a straight black arrow whose
+ * tail is the annotation anchor and whose tip points at the annotated part
+ * (ray from the anchor to the part centre clipped at the part bounding box).
+ */
+class CsiAnnotationArrowItem : public QGraphicsPathItem, public Placement
+{
+public:
+  PlacementCsiPart *placementCsiPart;
+  Where             topOf,bottomOf;
+  Where             partLine, metaLine;
+  CsiAnnotationIconData icon;
+  int               stepNumber;
+
+  CsiAnnotationArrowItem(QGraphicsItem *_parent = nullptr);
+  void addGraphicsItems(
+     CsiAnnotation *_ca,
+     Step          *_step,
+     PliPart       *_part,
+     CsiItem       *_csiItem);
+  void setArrowPath();
+};
+
+/*
+ * Renders the ASSEM ANNOTATION STEP_BADGE sub-command: a circular step
+ * number badge centred on the annotated part's bounding-box centre. The
+ * badge is anchored purely by the part geometry (partOffset 0 0); no leader
+ * line is drawn.
+ */
+class CsiAnnotationBadgeItem : public QGraphicsTextItem, public Placement
+{
+public:
+  PlacementCsiPart *placementCsiPart;
+  Where             topOf,bottomOf;
+  Where             partLine, metaLine;
+  CsiAnnotationIconData icon;
+  int               stepNumber;
+  QRectF            badgeRect;
+
+  CsiAnnotationBadgeItem(QGraphicsItem *_parent = nullptr);
+  void addGraphicsItems(
+     CsiAnnotation *_ca,
+     Step          *_step,
+     PliPart       *_part,
+     CsiItem       *_csiItem);
+
+  QRectF boundingRect() const override;
+
+protected:
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *o, QWidget *w);
 };
 
 #endif // CSIANNOTATION_H

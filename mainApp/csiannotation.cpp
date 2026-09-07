@@ -27,6 +27,7 @@
 #include "metaitem.h"
 #include "color.h"
 #include "step.h"
+#include "calloutbackgrounditem.h"
 #include "lpub.h"
 
 PlacementCsiPart::PlacementCsiPart(
@@ -47,6 +48,55 @@ PlacementCsiPart::PlacementCsiPart(
   setData(ObjectId, AssemAnnotationPartObj);
   setZValue(ASSEMANNOTATIONPART_ZVALUE_DEFAULT);
   setParentItem(_parent);
+}
+
+
+// Compute the reference rectangle (page or callout) in CSI-local coordinates
+// for annotations placed relative to a frame other than the assembly.  The
+// page/callout rectangles live in scene coordinates; mapping them by the CSI's
+// scene position puts them into the CSI item's local space where every
+// annotation child lives.  When *direct is true the returned reference must be
+// used to place the annotation itself (PAGE/CALLOUT); otherwise the original
+// anchor chain (CSI -> anchor -> annotation) is kept (ASSEM).
+static Placement csiAnnotationReference(CsiItem      *csiItem,
+                                        Step         *step,
+                                        PlacementType relativeTo,
+                                        bool         *direct)
+{
+    Placement reference;
+    *direct = false;
+    if (relativeTo == PageType) {
+        int pageW = lpub->pageSize(lpub->page.meta.LPub.page, 0);
+        int pageH = lpub->pageSize(lpub->page.meta.LPub.page, 1);
+        // Default bleed margin: keep page-edge annotations fully visible inside
+        // the page instead of being clipped at the export boundary.  The badge
+        // is centred on the reference edge (its size is still 0 when placed),
+        // so the inset must be at least the badge radius.
+        int bleed = qRound(0.16f * lpub->page.meta.LPub.resolution.value());
+        QPointF csiScenePos = csiItem->scenePos();
+        reference.loc[XX]  = qRound(-csiScenePos.x()) + bleed;
+        reference.loc[YY]  = qRound(-csiScenePos.y()) + bleed;
+        reference.size[XX] = pageW - 2*bleed;
+        reference.size[YY] = pageH - 2*bleed;
+        *direct = true;
+    } else if (relativeTo == CalloutType && step) {
+        for (int i = 0; i < step->list.size(); ++i) {
+            Callout *callout = step->list.at(i);
+            QRectF cref;
+            if (callout->background)
+                cref = callout->background->sceneBoundingRect();
+            else
+                cref = QRectF(callout->loc[XX], callout->loc[YY],
+                              callout->size[XX], callout->size[YY]);
+            QPointF csiScenePos = csiItem->scenePos();
+            reference.loc[XX]  = qRound(cref.left() - csiScenePos.x());
+            reference.loc[YY]  = qRound(cref.top()  - csiScenePos.y());
+            reference.size[XX] = qRound(cref.width());
+            reference.size[YY] = qRound(cref.height());
+            *direct = true;
+        }
+    }
+    return reference;
 }
 
 bool PlacementCsiPart::hasOffset()
@@ -99,29 +149,33 @@ void PlacementCsiPart::setOutline(QPainter *painter)
 
 CsiAnnotation::CsiAnnotation(
     const Where       &_here,
-    CsiAnnotationMeta &_caMeta)
+    const Where       &_partLine,
+    CsiAnnotationMeta &_caMeta,
+    CsiAnnotationKind  _kind)
 {
     caMeta        = _caMeta;
     metaLine      = _here;
-    partLine      = _here -1;
+    partLine      = _partLine;
+    kind          = _kind;
+    hidden        = activeData().hidden;
 
-    if (caMeta.icon.value().hidden)
+    if (hidden)
         return;
 
     PlacementData pld;
 
     // set PlacementCsiPart placement
     pld             = csiPartMeta.placement.value();
-    pld.offsets[XX] = caMeta.icon.value().partOffset[XX];
-    pld.offsets[YY] = caMeta.icon.value().partOffset[YY];
+    pld.offsets[XX] = activeData().partOffset[XX];
+    pld.offsets[YY] = activeData().partOffset[YY];
     csiPartMeta.placement.setValue(pld);
-    csiPartMeta.size.setValuePixels(XX,caMeta.icon.value().partSize[XX]);
-    csiPartMeta.size.setValuePixels(YY,caMeta.icon.value().partSize[YY]);
+    csiPartMeta.size.setValuePixels(XX,activeData().partSize[XX]);
+    csiPartMeta.size.setValuePixels(YY,activeData().partSize[YY]);
 
-    // set CsiAnnotation Icon placement
+    // set CsiAnnotation placement
     pld             = caMeta.placement.value();
-    pld.offsets[XX] = caMeta.icon.value().iconOffset[XX];
-    pld.offsets[YY] = caMeta.icon.value().iconOffset[YY];
+    pld.offsets[XX] = activeData().iconOffset[XX];
+    pld.offsets[YY] = activeData().iconOffset[YY];
     caMeta.placement.setValue(pld);
     setPlacement();
 
@@ -130,28 +184,48 @@ CsiAnnotation::CsiAnnotation(
     relativeType    = CsiAnnotationType;
 }
 
+const CsiAnnotationIconData &CsiAnnotation::activeData()
+{
+    switch (kind) {
+      case CsiAnnotationArrow:
+        return caMeta.arrow.value();
+      case CsiAnnotationBadge:
+        return caMeta.stepBadge.value();
+      case CsiAnnotationIcon:
+      default:
+        return caMeta.icon.value();
+    }
+}
+
 bool CsiAnnotation::setPlacement()
 {
-    QString placement, justification, preposition;
-    if (caMeta.icon.value().placements.size() == 2) {
-        placement   = placementNames[PlacementEnc(caMeta.icon.value().placements.at(0).toInt())];
-        preposition = prepositionNames[PrepositionEnc(caMeta.icon.value().placements.at(1).toInt())];
+    // Raw placement tokens are stored as PlacementEnc/PrepositionEnc ints.
+    // Match them against placementDecode (meta.cpp) - the same canonical table
+    // PlacementMeta::parse uses - so every annotation keeps its own edge.
+    int placement, justification, preposition;
+    if (activeData().placements.size() == 2) {
+        // 2-token form "<PLACEMENT> <INSIDE|OUTSIDE>": no justification given,
+        // default to CENTER (placementDecode stores CENTER for all these entries,
+        // e.g. TopOutside = {Top, Center, Outside}).
+        placement     = activeData().placements.at(0).toInt();
+        justification = Center;
+        preposition   = activeData().placements.at(1).toInt();
     }
     else
-    if (caMeta.icon.value().placements.size() == 3) {
-        placement     = placementNames[PlacementEnc(caMeta.icon.value().placements.at(0).toInt())];
-        justification = placementNames[PlacementEnc(caMeta.icon.value().placements.at(1).toInt())];
-        preposition   = prepositionNames[PrepositionEnc(caMeta.icon.value().placements.at(2).toInt())];
+    if (activeData().placements.size() == 3) {
+        placement     = activeData().placements.at(0).toInt();
+        justification = activeData().placements.at(1).toInt();
+        preposition   = activeData().placements.at(2).toInt();
     }
-    if (preposition == "INSIDE" && justification == "CENTER") {
-        justification = "";
+    else {
+        return false;
     }
 
     int i;
     for (i = 0; i < NumSpots; i++) {
-        if (placementOptions[i][0] == placement &&
-            placementOptions[i][1] == justification &&
-            placementOptions[i][2] == preposition) {
+        if (placementDecode[i][0] == placement &&
+            placementDecode[i][1] == justification &&
+            placementDecode[i][2] == preposition) {
             break;
           }
     }
@@ -159,7 +233,9 @@ bool CsiAnnotation::setPlacement()
         return false;
     }
     RectPlacement  _placementR = RectPlacement(i);;
-    PlacementType  _relativeTo = caMeta.placement.value().relativeTo;
+    PlacementType  _relativeTo = (activeData().relativeTo >= 0)
+                               ? PlacementType(activeData().relativeTo)
+                               : caMeta.placement.value().relativeTo;
     caMeta.placement.setValue(_placementR,_relativeTo);
     return true;
 }
@@ -167,8 +243,8 @@ bool CsiAnnotation::setPlacement()
 bool CsiAnnotation::setCsiPartLoc(int csiSize[])
 {
     float partOffset[2] =
-    { caMeta.icon.value().partOffset[XX],
-      caMeta.icon.value().partOffset[YY]};
+    { activeData().partOffset[XX],
+      activeData().partOffset[YY]};
 
     if (partOffset[XX] != 0.0f || partOffset[YY] != 0.0f) {
         csiPartMeta.loc.setValuePixels(XX,int(csiSize[XX] * partOffset[XX]));
@@ -308,11 +384,17 @@ void CsiAnnotationItem::addGraphicsItems(
 
     _ca->setCsiPartLoc(_csiItem->size);
 
-    // place PlacementCsiPart relative to CSI
+    bool direct = false;
+    Placement reference = csiAnnotationReference(_csiItem, _step,
+                                                 placement.value().relativeTo,
+                                                 &direct);
+
+    // place PlacementCsiPart relative to CSI - the anchor stays at the part
+    // edge so ARROW/STEP_BADGE leader lines keep pointing at the part
 
     placementCsiPart = new PlacementCsiPart(_ca->csiPartMeta,_csiItem);
     placementCsiPart->top = topOf;
-    placementCsiPart->top = bottomOf;
+    placementCsiPart->bottom = bottomOf;
     placementCsiPart->stepNumber = stepNumber;
     if (! placementCsiPart->hasOffset())
         _csiItem->placeRelative(placementCsiPart);
@@ -320,12 +402,16 @@ void CsiAnnotationItem::addGraphicsItems(
     placementCsiPart->setPos(placementCsiPart->loc[XX],
                              placementCsiPart->loc[YY]);
 
-    // place CsiAnnotation Icon relative to PlacementCsiPart
+    // place CsiAnnotation Icon - PAGE/CALLOUT place the annotation directly
+    // against the reference frame; ASSEM keeps the anchor chain
 
     bool hasLoc = _ca->setAnnotationLoc(placement.value().offsets);
     if (hasLoc) {
         loc[XX] = _ca->loc[XX];
         loc[YY] = _ca->loc[YY];
+    } else if (direct) {
+        reference.placeRelative(this);
+        _ca->assign(this);
     } else {
         placementCsiPart->placeRelative(this);
         _ca->assign(this);
@@ -593,4 +679,314 @@ void CsiAnnotationItem::contextMenuEvent(
               icon.setValue(caid);
               updateCsiAnnotationIconMeta(metaLine, &icon);
    }
+}
+
+/*-------------------------------------------------------------------------*
+ * ASSEM ANNOTATION ARROW
+ *
+ * Renders a straight black arrow whose tail is the annotation anchor and
+ * whose tip points at the annotated part.  The tip is the intersection of
+ * the ray (anchor -> part centre) with the part bounding box, computed with
+ * the same rectLineIntersect geometry the callout pointers use.
+ *-------------------------------------------------------------------------*/
+
+CsiAnnotationArrowItem::CsiAnnotationArrowItem(QGraphicsItem *_parent)
+  : QGraphicsPathItem(_parent)
+{
+  relativeType     = CsiAnnotationType;
+  placementCsiPart = nullptr;
+
+  setData(ObjectId, AssemAnnotationObj);
+  setZValue(ASSEMANNOTATION_ZVALUE_DEFAULT);
+}
+
+void CsiAnnotationArrowItem::addGraphicsItems(
+   CsiAnnotation *_ca,
+   Step          *_step,
+   PliPart       *_part,
+   CsiItem       *_csiItem)
+{
+    Q_UNUSED(_part)
+
+    icon            = _ca->activeData();
+    partLine        = _ca->partLine;
+    metaLine        = _ca->metaLine;
+    placement       = _ca->placement;
+    stepNumber      = _step->stepNumber.number;
+    switch (_csiItem->parentRelativeType) {
+      case CalloutType:
+        topOf    = _step->topOfCallout();
+        bottomOf = _step->bottomOfCallout();
+        break;
+      default:
+        topOf    = _step->topOfStep();
+        bottomOf = _step->bottomOfStep();
+        break;
+    }
+
+    setParentItem(_csiItem);
+
+    bool direct = false;
+    Placement reference = csiAnnotationReference(_csiItem, _step,
+                                                 placement.value().relativeTo,
+                                                 &direct);
+
+    // place the anchor part rectangle exactly like the ICON annotation - the
+    // anchor stays at the part edge so the arrow tip keeps pointing at the part
+    _ca->setCsiPartLoc(_csiItem->size);
+
+    placementCsiPart = new PlacementCsiPart(_ca->csiPartMeta,_csiItem);
+    placementCsiPart->top = topOf;
+    placementCsiPart->bottom = bottomOf;
+    placementCsiPart->stepNumber = stepNumber;
+    if (! placementCsiPart->hasOffset())
+        _csiItem->placeRelative(placementCsiPart);
+
+    placementCsiPart->setPos(placementCsiPart->loc[XX],
+                             placementCsiPart->loc[YY]);
+
+    // place the arrow tail - PAGE/CALLOUT place the arrow directly against
+    // the reference frame; ASSEM keeps the anchor chain
+    bool hasLoc = _ca->setAnnotationLoc(placement.value().offsets);
+    if (hasLoc) {
+        loc[XX] = _ca->loc[XX];
+        loc[YY] = _ca->loc[YY];
+    } else if (direct) {
+        reference.placeRelative(this);
+        _ca->assign(this);
+    } else {
+        placementCsiPart->placeRelative(this);
+        _ca->assign(this);
+    }
+    setPos(loc[XX],loc[YY]);
+
+    setArrowPath();
+
+    QSizeF itemSize = boundingRect().size();
+    size[XX] = qRound(itemSize.width());
+    size[YY] = qRound(itemSize.height());
+}
+
+void CsiAnnotationArrowItem::setArrowPath()
+{
+    // part rectangle in our local coordinates
+    QPointF partPos = placementCsiPart->pos() - pos();
+    QRectF  partRect(partPos.x(), partPos.y(),
+                     placementCsiPart->size[XX], placementCsiPart->size[YY]);
+    QPointF anchor(0.0, 0.0);
+    QPointF partCentre = partRect.center();
+
+    // rectLineIntersect expects the rectangle in the (0,0,w,h) frame, so
+    // translate the part rect to the origin, then shift the intersection back.
+    QPointF partTopLeft = partRect.topLeft();
+    QRect   originRect(0, 0, qRound(partRect.width()), qRound(partRect.height()));
+    QPoint  tip(qRound(partCentre.x() - partTopLeft.x()),
+                qRound(partCentre.y() - partTopLeft.y()));
+    QPoint  loc(qRound(anchor.x() - partTopLeft.x()),
+                qRound(anchor.y() - partTopLeft.y()));
+    QPoint  intersect;
+    PlacementEnc enc;
+    bool hit = PointerItem::rectLineIntersect(tip, loc, originRect, 0, intersect, enc);
+    if (! hit)
+        intersect = tip;
+    intersect += QPoint(qRound(partTopLeft.x()), qRound(partTopLeft.y()));
+
+    QLineF shaft(anchor, QPointF(intersect));
+    qreal  shaftLen = shaft.length();
+    if (shaftLen < 1.0) {
+        setPath(QPainterPath());
+        return;
+    }
+
+    QPointF dir = QPointF(shaft.dx() / shaftLen, shaft.dy() / shaftLen);
+    QPointF perp(-dir.y(), dir.x());
+
+    // Minimum visible shaft length.  With OUTSIDE placement the anchor sits
+    // right at the part edge, so the anchor->part intersection is only a few
+    // pixels and no line is visible.  Pull the tail back along the reversed
+    // direction until the shaft is at least this long, keeping the tip at the
+    // part boundary so the arrow still points exactly at the part.
+    const qreal minShaft = 0.8 * lpub->page.meta.LPub.resolution.value();
+    QPointF tail = anchor;
+    if (shaftLen < minShaft)
+        tail = anchor - dir * (minShaft - shaftLen);
+
+    // arrow head geometry (filled triangle at the part boundary)
+    const qreal headLen      = 10.0;
+    const qreal headHalfWide = 6.0;
+    QPointF headBase = QPointF(intersect) - dir * headLen;
+
+    QPainterPath path;
+    path.moveTo(tail);                         // tail (pulled back if needed)
+    path.lineTo(headBase);                     // shaft
+    path.moveTo(QPointF(intersect));           // tip at the part boundary
+    path.lineTo(headBase + perp * headHalfWide);
+    path.lineTo(headBase - perp * headHalfWide);
+    path.closeSubpath();
+
+    // keep the tail anchored at the item origin (0,0) so the arrow tip and
+    // tail stay exactly on the anchor/part geometry; Qt handles negative
+    // bounding-rect coordinates natively.
+    setPath(path);
+
+    QPen pen(QColor(0x00,0x00,0x00));
+    pen.setWidthF(2.0);
+    pen.setCapStyle(Qt::SquareCap);
+    pen.setJoinStyle(Qt::MiterJoin);
+    setPen(pen);
+    setBrush(QColor(0x00,0x00,0x00));
+}
+
+/*-------------------------------------------------------------------------*
+ * ASSEM ANNOTATION STEP_BADGE
+ *
+ * Renders a circular step-number badge centred on the annotated part's
+ * bounding-box centre. Anchored purely by the part geometry (partOffset 0 0,
+ * neutral anchor); no leader line is drawn.
+ *-------------------------------------------------------------------------*/
+
+CsiAnnotationBadgeItem::CsiAnnotationBadgeItem(QGraphicsItem *_parent)
+  : QGraphicsTextItem(_parent)
+{
+  relativeType     = CsiAnnotationType;
+  placementCsiPart = nullptr;
+
+  setData(ObjectId, AssemAnnotationObj);
+  setZValue(ASSEMANNOTATION_ZVALUE_DEFAULT);
+}
+
+void CsiAnnotationBadgeItem::addGraphicsItems(
+   CsiAnnotation *_ca,
+   Step          *_step,
+   PliPart       *_part,
+   CsiItem       *_csiItem)
+{
+    icon            = _ca->activeData();
+    partLine        = _ca->partLine;
+    metaLine        = _ca->metaLine;
+    placement       = _ca->placement;
+    // Badge number = 1-based ordinal of this STEP_BADGE command within the
+    // page (user requirement: number by command count). Previously every
+    // badge on a page showed the same LPub step number (e.g. all badges on
+    // page 1 showed "1"); now the 1st badge shows 1, 2nd shows 2, ...
+    stepNumber      = 0;
+    for (int i = 0; i < _step->csiAnnotations.size(); ++i) {
+        CsiAnnotation *ann = _step->csiAnnotations.at(i);
+        if (ann->kind != CsiAnnotationBadge)
+            continue;
+        ++stepNumber;
+        if (ann == _ca)
+            break;
+    }
+    switch (_csiItem->parentRelativeType) {
+      case CalloutType:
+        topOf    = _step->topOfCallout();
+        bottomOf = _step->bottomOfCallout();
+        break;
+      default:
+        topOf    = _step->topOfStep();
+        bottomOf = _step->bottomOfStep();
+        break;
+    }
+
+    setParentItem(_csiItem);
+
+    // Badge anchor = the annotated part's bounding-box centre, computed
+    // purely from the part geometry (Ground Truth). partOffset 0 0 (neutral
+    // anchor): the badge is placed exactly on the part centre - no partOffset
+    // projection, no placement-chain offset. The badge therefore sits on the
+    // part itself and no leader line is drawn.
+    _ca->setCsiPartLoc(_csiItem->size);
+
+    placementCsiPart = new PlacementCsiPart(_ca->csiPartMeta,_csiItem);
+    placementCsiPart->top = topOf;
+    placementCsiPart->bottom = bottomOf;
+    placementCsiPart->stepNumber = stepNumber;
+    if (! placementCsiPart->hasOffset())
+        _csiItem->placeRelative(placementCsiPart);
+    placementCsiPart->setPos(placementCsiPart->loc[XX],
+                             placementCsiPart->loc[YY]);
+
+    // part bounding box in this item's frame (= the CSI item frame)
+    QPointF partPos = placementCsiPart->pos();
+    QRectF  partRect(partPos.x(), partPos.y(),
+                     placementCsiPart->size[XX], placementCsiPart->size[YY]);
+    QPointF partCentre = partRect.center();
+    loc[XX] = partCentre.x();
+    loc[YY] = partCentre.y();
+
+    // badge metrics: step number text padded to a rounded rectangle
+    QString text = QString::number(stepNumber);
+    QFont   font;
+    font.fromString(_part->styleMeta.font.valueFoo());
+    if (font.pointSizeF() < 20.0)
+        font.setPointSizeF(20.0);
+    font.setBold(true);
+    setFont(font);
+
+    QFontMetricsF fm(font);
+    QRectF textRect = fm.boundingRect(text);
+    const qreal padX = 8.0;
+    const qreal padY = 4.0;
+    qreal badgeD = qMax(textRect.width() + 2*padX, textRect.height() + 2*padY);
+    badgeRect = QRectF(0, 0, badgeD, badgeD);   // square -> circular badge
+    size[XX]  = qRound(badgeRect.width());
+    size[YY]  = qRound(badgeRect.height());
+
+    // centre the badge on the anchor
+    setPos(loc[XX] - badgeRect.width()/2.0,
+           loc[YY] - badgeRect.height()/2.0);
+
+    // Clamp the badge fully inside the page (with a bleed margin) so badges
+    // placed at a page edge are never clipped by the export boundary.  The
+    // badge rect is square, so only its width is needed.
+    {
+        int pageW = lpub->pageSize(lpub->page.meta.LPub.page, 0);
+        int pageH = lpub->pageSize(lpub->page.meta.LPub.page, 1);
+        int bleed = qRound(0.16f * lpub->page.meta.LPub.resolution.value());
+        QPointF csiScenePos = _csiItem->scenePos();
+        qreal pageL = -csiScenePos.x() + bleed;
+        qreal pageT = -csiScenePos.y() + bleed;
+        qreal pageR = pageL + pageW - 2*bleed - badgeRect.width();
+        qreal pageB = pageT + pageH - 2*bleed - badgeRect.height();
+        if (pageR < pageL) pageR = pageL;
+        if (pageB < pageT) pageB = pageT;
+        qreal bx = pos().x();
+        qreal by = pos().y();
+        bx = qMax(pageL, qMin(pageR, bx));
+        by = qMax(pageT, qMin(pageB, by));
+        setPos(bx, by);
+    }
+}
+
+QRectF CsiAnnotationBadgeItem::boundingRect() const
+{
+    return badgeRect.adjusted(-2, -2, 2, 2);
+}
+
+void CsiAnnotationBadgeItem::paint(
+   QPainter                        *painter,
+   const QStyleOptionGraphicsItem  *o,
+   QWidget                         *w)
+{
+    Q_UNUSED(o)
+    Q_UNUSED(w)
+
+    painter->setRenderHints(QPainter::TextAntialiasing | QPainter::Antialiasing);
+
+    // The badge item overrides paint() and draws the step number directly, so
+    // the item font must be applied to the painter explicitly here (setFont()
+    // alone would only affect the underlying QGraphicsTextItem document).
+    painter->setFont(font());
+
+    // badge background + border
+    QPen borderPen(QColor(0x00,0x00,0x00));
+    borderPen.setWidthF(1.5);
+    painter->setPen(borderPen);
+    painter->setBrush(QColor(0xFF,0xFF,0xFF));
+    painter->drawEllipse(badgeRect);
+
+    // step number text centred in the badge
+    painter->setPen(QColor(0x00,0x00,0x00));
+    painter->drawText(badgeRect, Qt::AlignCenter, QString::number(stepNumber));
 }

@@ -2138,35 +2138,12 @@ void PointerMeta::metaKeywords(QStringList &out, QString preamble)
 }
 
 //--------------
-Rc CsiAnnotationIconMeta::parse(QStringList &argv, int index,Where &here)
+// Shared parse for the ASSEM ANNOTATION sub-commands (ICON / ARROW / STEP_BADGE).
+// The grammar is identical for all three; only the returned Rc differs so the
+// traverse switch can hand the annotation kind to the CSI step annotation.
+static Rc parseCsiAnnotationData(QStringList &argv, int index, CsiAnnotationIconData &annotationData)
 {
-/* DEBUG - COMMENT TO ENABLE
-#ifdef QT_DEBUG_MODE
-  QStringList debugLine = QStringList() << "[LINE:";
-  for(int i=0;i<argv.size();i++) {
-      debugLine << argv[i];
-      int size = argv.size();
-      int incr = i;
-      int result = size - incr;
-      QString traceLine = QString("ARGV Pos:(%1), PosIndex:(%2) [%3 - %4 = %5], Value:(%6)")
-                                  .arg(i+1)
-                                  .arg(i)
-                                  .arg(size)
-                                  .arg(incr)
-                                  .arg(result)
-                                  .arg(argv[i]);
-      qDebug() << "\nCSI ANNOTATION ICON META PARSE" << traceLine;  // ARGS DETAIL
-  }
-  debugLine << QString("], Index (%1)[%2], Size (%3), Valid (%4), LineNum (%5), ModelName (%6)")
-                       .arg(index)
-                       .arg(argv[index])
-                       .arg(argv.size())
-                       .arg(argv.size() - index)
-                       .arg(here.modelName)
-                       .arg(here.lineNumber);
-#endif
-//*/
-  CsiAnnotationIconData annotationData;
+  QRegularExpression &rx = AbstractMeta::rx; // shared static, matches original CsiAnnotationIconMeta::parse
   Rc rc = FailureRc;
   if (argv.size() - index == 1) {
       rx.setPattern("^(HIDE|HIDDEN)$");
@@ -2177,53 +2154,101 @@ Rc CsiAnnotationIconMeta::parse(QStringList &argv, int index,Where &here)
   }
   else
   if (argv.size() - index >= 10) {
-    rx.setPattern("^(TOP_LEFT|TOP|TOP_RIGHT|LEFT|CENTER|RIGHT|BOTTOM_LEFT|BOTTOM|BOTTOM_RIGHT)$");
+    // Full placement grammar, identical to PlacementMeta::parse:
+    //   TOP|BOTTOM [LEFT|CENTER|RIGHT] [relativeTo] [INSIDE|OUTSIDE]
+    //   LEFT|RIGHT [TOP|CENTER|BOTTOM] [relativeTo] [INSIDE|OUTSIDE]
+    //   TOP_LEFT|TOP_RIGHT|BOTTOM_LEFT|BOTTOM_RIGHT|CENTER [relativeTo] [INSIDE|OUTSIDE]
+    const QString relativeTos = "^(PAGE|ASSEM|MULTI_STEP|STEP_NUMBER|PLI|CALLOUT|PAGE_NUMBER|"
+                                "DOCUMENT_TITLE|MODEL_ID|DOCUMENT_AUTHOR|PUBLISH_URL|MODEL_DESCRIPTION|"
+                                "PUBLISH_DESCRIPTION|PUBLISH_COPYRIGHT|PUBLISH_EMAIL|LEGO_DISCLAIMER|"
+                                "MODEL_PARTS|APP_PLUG|MODEL_CATEGORY|DOCUMENT_LOGO|DOCUMENT_COVER_IMAGE|"
+                                "APP_PLUG_IMAGE|PAGE_HEADER|PAGE_FOOTER|MODEL_CATEGORY|SUBMODEL_DISPLAY|"
+                                "ROTATE_ICON|ASSEM_PART|STEP|RANGE|TEXT|BOM|PAGE_POINTER|SINGLE_STEP|RESERVE|"
+                                "COVER_PAGE|ANNOTATION|DIVIDER_POINTER)$";
     QStringList entries;
+    QString placement, justification, preposition, relativeTo;
+    int argc = argv.size();
+
+    rx.setPattern("^(TOP|BOTTOM)$");
     if (argv[index].contains(rx)) {
-      entries << QString::number(PlacementEnc(tokenMap[argv[index]]));
+      placement = argv[index++];
+      if (index < argc) {
+        rx.setPattern("^(LEFT|CENTER|RIGHT)$");
+        if (argv[index].contains(rx))
+          justification = argv[index++];
+      }
       rc = OkRc;
-    }
-    if (argv.size() - index == 11) {
-      if (argv[++index].contains(rx)) {
-        entries << QString::number(PlacementEnc(tokenMap[argv[index]]));
+    } else {
+      rx.setPattern("^(LEFT|RIGHT)$");
+      if (argv[index].contains(rx)) {
+        placement = argv[index++];
+        if (index < argc) {
+          rx.setPattern("^(TOP|CENTER|BOTTOM)$");
+          if (argv[index].contains(rx))
+            justification = argv[index++];
+        }
         rc = OkRc;
+      } else {
+        rx.setPattern("^(TOP_LEFT|TOP_RIGHT|BOTTOM_LEFT|BOTTOM_RIGHT|CENTER)$");
+        if (argv[index].contains(rx)) {
+          placement = argv[index++];
+          rc = OkRc;
+        }
       }
     }
-    rx.setPattern("^(INSIDE|OUTSIDE)$");
-    if (argv[++index].contains(rx)) {
-      entries << QString::number(PrepositionEnc(tokenMap[argv[index]]));
-      rc = OkRc;
-    }
-    annotationData.placements = entries;
 
-    if (rc == OkRc) {
-      bool good = false, ok = false;
-      annotationData.iconOffset[0] = argv[++index].toInt(&good);
-      annotationData.iconOffset[1] = argv[++index].toInt(&ok);
-      good &= ok;
-      annotationData.partOffset[0] = argv[++index].toFloat(&ok);
-      good &= ok;
-      annotationData.partOffset[1] = argv[++index].toFloat(&ok);
-      good &= ok;
-      annotationData.partSize[0] = argv[++index].toInt(&ok);
-      good &= ok;
-      annotationData.partSize[1] = argv[++index].toInt(&ok);
-      good &= ok;
-      annotationData.typeColor = argv[++index].toInt(&ok);
-      good &= ok;
-      if (!good) {
-        rc = FailureRc;
+    if (rc == OkRc && index < argc) {
+      rx.setPattern(relativeTos);
+      if (argv[index].contains(rx))
+        relativeTo = argv[index++];
+    }
+
+    if (rc == OkRc && index < argc) {
+      rx.setPattern("^(INSIDE|OUTSIDE)$");
+      if (argv[index].contains(rx)) {
+        preposition = argv[index++];
+        entries << QString::number(PlacementEnc(tokenMap[placement]));
+        if (!justification.isEmpty())
+          entries << QString::number(PlacementEnc(tokenMap[justification]));
+        entries << QString::number(PrepositionEnc(tokenMap[preposition]));
+        annotationData.placements = entries;
+        if (!relativeTo.isEmpty())
+          annotationData.relativeTo = tokenMap[relativeTo];
+        if (argc - index >= 8) {
+          bool good = false, ok = false;
+          annotationData.iconOffset[0] = argv[index++].toInt(&good);
+          annotationData.iconOffset[1] = argv[index++].toInt(&ok);
+          good &= ok;
+          annotationData.partOffset[0] = argv[index++].toFloat(&ok);
+          good &= ok;
+          annotationData.partOffset[1] = argv[index++].toFloat(&ok);
+          good &= ok;
+          annotationData.partSize[0] = argv[index++].toInt(&ok);
+          good &= ok;
+          annotationData.partSize[1] = argv[index++].toInt(&ok);
+          good &= ok;
+          annotationData.typeColor = argv[index++].toInt(&ok);
+          good &= ok;
+          if (!good) {
+            rc = FailureRc;
+          } else {
+            annotationData.typeBaseName = argv[index++];
+          }
+        } else {
+          rc = FailureRc;
+        }
       } else {
-        annotationData.typeBaseName = argv[++index];
+        rc = FailureRc;
       }
     }
   }
-/* DEBUG - COMMENT TO ENABLE
-#ifdef QT_DEBUG_MODE
-  QString result = QString(", Result (%1)").arg(rc == 0 ? "OkRc" : "FailureRc");
-  qDebug() << "\nCSI ANNOTATION ICON META PARSE DEBUG" << debugLine.join(" ") << result;
-#endif
-//*/
+  return rc;
+}
+
+Rc CsiAnnotationIconMeta::parse(QStringList &argv, int index,Where &here)
+{
+  CsiAnnotationIconData annotationData;
+  Rc rc = parseCsiAnnotationData(argv, index, annotationData);
   if (rc == OkRc) {
     _value[pushed] = annotationData;
     _here[pushed]  = here;
@@ -2236,45 +2261,87 @@ Rc CsiAnnotationIconMeta::parse(QStringList &argv, int index,Where &here)
   return rc;
 }
 
+Rc CsiAnnotationArrowMeta::parse(QStringList &argv, int index,Where &here)
+{
+  CsiAnnotationIconData annotationData;
+  Rc rc = parseCsiAnnotationData(argv, index, annotationData);
+  if (rc == OkRc) {
+    _value[pushed] = annotationData;
+    _here[pushed]  = here;
+    return AssemAnnotationArrowRc;
+  }
+  if (reportErrors) {
+    QString const message = QMessageBox::tr("Malformed CSI Annotation metacommand \"%1\"\n").arg(argv.join(" "));
+    emit gui->parseErrorSig(message,here,Preferences::ParseErrors,false,false);
+  }
+  return rc;
+}
+
+Rc CsiAnnotationBadgeMeta::parse(QStringList &argv, int index,Where &here)
+{
+  CsiAnnotationIconData annotationData;
+  Rc rc = parseCsiAnnotationData(argv, index, annotationData);
+  if (rc == OkRc) {
+    _value[pushed] = annotationData;
+    _here[pushed]  = here;
+    return AssemAnnotationBadgeRc;
+  }
+  if (reportErrors) {
+    QString const message = QMessageBox::tr("Malformed CSI Annotation metacommand \"%1\"\n").arg(argv.join(" "));
+    emit gui->parseErrorSig(message,here,Preferences::ParseErrors,false,false);
+  }
+  return rc;
+}
+
+// Shared formatter for the CSI Annotation sub-command data.
+static QString formatCsiAnnotationData(const CsiAnnotationIconData &d)
+{
+  QString foo,bar;
+  if (d.hidden) {
+      foo = "HIDDEN";
+  } else {
+    if (d.placements.size() == 2) {
+      foo = placementNames[PlacementEnc(d.placements.at(0).toInt())] + QString(" ");
+      if (d.relativeTo >= 0)
+          foo += relativeNames[d.relativeTo] + QString(" ");
+      foo += prepositionNames[PrepositionEnc(d.placements.at(1).toInt())] + QString(" ");
+    }
+    else
+    if (d.placements.size() == 3) {
+      foo = placementNames[PlacementEnc(d.placements.at(0).toInt())] + QString(" ");
+      foo += placementNames[PlacementEnc(d.placements.at(1).toInt())] + QString(" ");
+      if (d.relativeTo >= 0)
+          foo += relativeNames[d.relativeTo] + QString(" ");
+      foo += prepositionNames[PrepositionEnc(d.placements.at(2).toInt())] + QString(" ");
+    }
+    bar = QString("%1 %2 %3 %4 %5 %6 %7 %8")
+                   .arg(double(d.iconOffset[0]),0,'f',0)
+                   .arg(double(d.iconOffset[1]),0,'f',0)
+                   .arg(double(d.partOffset[0]),0,'f',4)
+                   .arg(double(d.partOffset[1]),0,'f',4)
+                   .arg(d.partSize[0])
+                   .arg(d.partSize[1])
+                   .arg(d.typeColor)
+                   .arg(d.typeBaseName);
+    foo += bar;
+  }
+  return foo;
+}
+
 // format() should never be used as we manage CsiAnnotationIconData directly in pliPart
 QString CsiAnnotationIconMeta::format(bool local, bool global)
 {
+  return LeafMeta::format(local,global,formatCsiAnnotationData(_value[pushed]));
+}
 
-  QString foo,bar;
+QString CsiAnnotationArrowMeta::format(bool local, bool global)
+{
+  return LeafMeta::format(local,global,formatCsiAnnotationData(_value[pushed]));
+}
 
-  if (_value[pushed].hidden) {
-      foo = "HIDDEN";
-  } else {
-    if (_value[pushed].placements.size() == 2) {
-      foo = QString("%1 %2 ")
-              .arg(placementNames[PlacementEnc(_value[pushed].placements.at(0).toInt())],
-                   prepositionNames[PrepositionEnc(_value[pushed].placements.at(1).toInt())]);
-    }
-    else
-    if (_value[pushed].placements.size() == 3) {
-      foo = QString("%1 %2 %3 ")
-              .arg(placementNames[PlacementEnc(_value[pushed].placements.at(0).toInt())],
-                   placementNames[PlacementEnc(_value[pushed].placements.at(1).toInt())],
-                   prepositionNames[PrepositionEnc(_value[pushed].placements.at(2).toInt())]);
-    }
-    bar = QString("%1 %2 %3 %4 %5 %6 %7 %8")
-                   .arg(double(_value[pushed].iconOffset[0]),0,'f',0)
-                   .arg(double(_value[pushed].iconOffset[1]),0,'f',0)
-                   .arg(double(_value[pushed].partOffset[0]),0,'f',4)
-                   .arg(double(_value[pushed].partOffset[1]),0,'f',4)
-                   .arg(_value[pushed].partSize[0])
-                   .arg(_value[pushed].partSize[1])
-                   .arg(_value[pushed].typeColor)
-                   .arg(_value[pushed].typeBaseName);
-    foo += bar;
-  }
-/* DEBUG - COMMENT TO ENABLE
-#ifdef QT_DEBUG_MODE
-    qDebug() << "\nCSI ANNOTATION ICON META FORMAT" <<
-                "\nPreamble:" << preamble << "LINE DATA" << foo;
-#endif
-//*/
-  return LeafMeta::format(local,global,foo);
+QString CsiAnnotationBadgeMeta::format(bool local, bool global)
+{
+  return LeafMeta::format(local,global,formatCsiAnnotationData(_value[pushed]));
 }
 
 void CsiAnnotationIconMeta::doc(QStringList &out, QString preamble)
@@ -2288,6 +2355,31 @@ void CsiAnnotationIconMeta::metaKeywords(QStringList &out, QString preamble)
 {
   out << preamble + " TOP_LEFT TOP TOP_RIGHT LEFT CENTER RIGHT BOTTOM_LEFT BOTTOM BOTTOM_RIGHT";
 }
+
+void CsiAnnotationArrowMeta::doc(QStringList &out, QString preamble)
+{
+  out << preamble + " ( TOP_LEFT | TOP | TOP_RIGHT | LEFT | CENTER | RIGHT | BOTTOM_LEFT | BOTTOM | BOTTOM_RIGHT )"
+                    " <icon offset X px> <icon offset Y px> <part offset X px> <part offset Y px>"
+                    " <part size X px> <part size Y px> <LDraw color code for part> <LDraw part name without extension>";
+}
+
+void CsiAnnotationArrowMeta::metaKeywords(QStringList &out, QString preamble)
+{
+  out << preamble + " TOP_LEFT TOP TOP_RIGHT LEFT CENTER RIGHT BOTTOM_LEFT BOTTOM BOTTOM_RIGHT";
+}
+
+void CsiAnnotationBadgeMeta::doc(QStringList &out, QString preamble)
+{
+  out << preamble + " ( TOP_LEFT | TOP | TOP_RIGHT | LEFT | CENTER | RIGHT | BOTTOM_LEFT | BOTTOM | BOTTOM_RIGHT )"
+                    " <icon offset X px> <icon offset Y px> <part offset X px> <part offset Y px>"
+                    " <part size X px> <part size Y px> <LDraw color code for part> <LDraw part name without extension>";
+}
+
+void CsiAnnotationBadgeMeta::metaKeywords(QStringList &out, QString preamble)
+{
+  out << preamble + " TOP_LEFT TOP TOP_RIGHT LEFT CENTER RIGHT BOTTOM_LEFT BOTTOM BOTTOM_RIGHT";
+}
+
 /* ------------------ */
 
 PreferredRendererMeta::PreferredRendererMeta() : LeafMeta()
@@ -3661,8 +3753,8 @@ void ColorMeta::metaKeywords(QStringList &out, QString preamble)
 
 /*
  *  INSERT (
- *   PICTURE "name" (SCALE x)
- *   ARROW HDX HDY TLX TLY HD HFX HFY
+ *   PICTURE "name" (SCALE x) (PLACEMENT)
+ *   ARROW HDX HDY TLX TLY HD HFX HFY (PLACEMENT)
  *   TEXT "text" "font" color (PLACEMENT)
  *   RICH_TEXT | HTML_TEXT "text" (PLACEMENT)
  *   PAGE
@@ -3769,6 +3861,28 @@ Rc InsertMeta::parse(QStringList &argv, int index, Where &here)
         rc = FailureRc;
       }
     }
+
+    // PICTURE/ARROW support the same full PLACEMENT subcommand as TEXT/RICH_TEXT:
+    //   INSERT PICTURE "file" [SCALE x] PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET x y]
+    //   INSERT ARROW hdX hdY tlX tlY depth hfX hfY PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET x y]
+    if (rc == OkRc && index < argv.size() && argv[index] == "PLACEMENT") {
+      bool local = index + 1 < argv.size() && argv[index+1] == "LOCAL";
+      int  plmIndex = local ? index + 2 : index + 1;
+      PlacementMeta plm;
+      if (plm.parse(argv, plmIndex, here) != OkRc) {
+        rc = FailureRc;
+      } else {
+        insertData.placementCommand = true;
+        insertData.defaultPlacement  = false;
+        insertData.placement     = plm.value().placement;
+        insertData.justification = plm.value().justification;
+        insertData.relativeTo    = plm.value().relativeTo;
+        insertData.preposition   = plm.value().preposition;
+        insertData.rectPlacement = plm.value().rectPlacement;
+        insertData.offsets[0]    = plm.value().offsets[XX];
+        insertData.offsets[1]    = plm.value().offsets[YY];
+      }
+    }
   } else if (argv.size() - index > 3 && argv[index] == "TEXT") {
     insertData.type = InsertData::InsertText;
     insertData.placementCommand = argv[index+1] == "PLACEMENT";
@@ -3833,6 +3947,28 @@ Rc InsertMeta::parse(QStringList &argv, int index, Where &here)
         rc = FailureRc;
       }
     ++index;
+
+    // PICTURE/ARROW support the same full PLACEMENT subcommand as TEXT/RICH_TEXT:
+    //   INSERT PICTURE "file" [SCALE x] PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET x y]
+    //   INSERT ARROW hdX hdY tlX tlY depth hfX hfY PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET x y]
+    if (rc == OkRc && index < argv.size() && argv[index] == "PLACEMENT") {
+      bool local = index + 1 < argv.size() && argv[index+1] == "LOCAL";
+      int  plmIndex = local ? index + 2 : index + 1;
+      PlacementMeta plm;
+      if (plm.parse(argv, plmIndex, here) != OkRc) {
+        rc = FailureRc;
+      } else {
+        insertData.placementCommand = true;
+        insertData.defaultPlacement  = false;
+        insertData.placement     = plm.value().placement;
+        insertData.justification = plm.value().justification;
+        insertData.relativeTo    = plm.value().relativeTo;
+        insertData.preposition   = plm.value().preposition;
+        insertData.rectPlacement = plm.value().rectPlacement;
+        insertData.offsets[0]    = plm.value().offsets[XX];
+        insertData.offsets[1]    = plm.value().offsets[YY];
+      }
+    }
 
   } else if (argv[index] == "BOM") {
     if (argv.size() - index >= 2) {
@@ -3921,14 +4057,15 @@ QString InsertMeta::format(bool local, bool global)
 
 void InsertMeta::doc(QStringList &out, QString preamble)
 {
-  out << preamble + " ( PICTURE <\"file path\"> ) | ( TEXT <\"text\"> <\"#RRGGBB\"> ) | ( RICH_TEXT <\"text\"> ) | ( HTML_TEXT <\"text\"> ) | "
-                    "( TEXT PLACEMENT ( TOP | BOTTOM | LEFT | CENTER | RIGHT | TOP_LEFT | TOP_RIGHT | BOTTOM_LEFT | BOTTOM_RIGHT ) (PAGE | PAGE_HEADER | PAGE_FOOTER) ( INSIDE | OUTSIDE )) | "
+  out << preamble + " ( PICTURE <\"file path\"> [ SCALE <decimal> ] [ PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET <decimal X> <decimal Y>] ] ) | "
+                    "( TEXT <\"text\"> <\"#RRGGBB\"> | RICH_TEXT <\"text\"> | HTML_TEXT <\"text\"> ) [ PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET <decimal X> <decimal Y>] ] | "
+                    "( ARROW <headX> <headY> <tailX> <tailY> <depth> <tipX> <tipY> [ PLACEMENT <spot> [<relativeTo>] [INSIDE|OUTSIDE] [OFFSET <decimal X> <decimal Y>] ] ) | "
                     "( PAGE | BOM | MODEL | DISPLAY_MODEL | COVER_PAGE [ FRONT | BACK ] | ROTATE_ICON ) ( OFFSET <decimal X> <decimal Y> )";
 }
 
 void InsertMeta::metaKeywords(QStringList &out, QString preamble)
 {
-  out << preamble + " BEGIN BOM COVER_PAGE FRONT BACK DISPLAY_MODEL FOR_SUBMODEL HTML_TEXT LOCAL MODEL OFFSET PAGE PICTURE RICH_TEXT ROTATE_ICON SCALE SUB TEXT "
+  out << preamble + " BEGIN BOM ARROW COVER_PAGE FRONT BACK DISPLAY_MODEL FOR_SUBMODEL HTML_TEXT LOCAL MODEL OFFSET PAGE PICTURE RICH_TEXT ROTATE_ICON SCALE SUB TEXT "
                     "PLACEMENT TOP BOTTOM LEFT CENTER RIGHT TOP_LEFT TOP_RIGHT BOTTOM_LEFT BOTTOM_RIGHT PAGE PAGE_HEADER PAGE_FOOTER INSIDE OUTSIDE";
 }
 /* ------------------ */
@@ -5492,6 +5629,8 @@ void CsiAnnotationMeta::init(BranchMeta *parent, QString name)
   hoseDisplay.init(this, "HOSE");
   panelDisplay.init(this, "PANEL");
   icon.init(this, "ICON");
+  arrow.init(this, "ARROW");
+  stepBadge.init(this, "STEP_BADGE");
 }
 
 /* ------------------ */

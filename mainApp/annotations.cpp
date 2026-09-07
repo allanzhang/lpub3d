@@ -1929,6 +1929,8 @@ bool Annotations::loadUserElements(bool useLDrawKey) {
 
 const QString &Annotations::freeformAnnotation(QString part)
 {
+    if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+        fprintf(stderr, "FFLOOKUP part=%s loaded=%d\n", qPrintable(part.toLower()), (int)freeformAnnotations.size());
     if (freeformAnnotations.contains(part.toLower()))
         return freeformAnnotations[part.toLower()];
     return returnString;

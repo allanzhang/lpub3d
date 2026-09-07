@@ -378,6 +378,7 @@ class CsiAnnotationIconData
 {
 public:
   QStringList placements;     // My placement attributes
+  int         relativeTo;     // PlacementType; -1 = not specified (use meta default)
   float       iconOffset[2];  // My offset from the part;
   float       partOffset[2];  // My part offset from the csi
   int         partSize[2];    // How big is my part (in pixels)?
@@ -388,6 +389,7 @@ public:
   CsiAnnotationIconData()
   {
     placements    = QStringList() << QString::number(BottomLeft) << QString::number(Outside);
+    relativeTo    = -1;
     iconOffset[0] = 0.0f;
     iconOffset[1] = 0.0f;
     partOffset[0] = 0.0f;

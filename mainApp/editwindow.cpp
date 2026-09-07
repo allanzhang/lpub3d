@@ -2783,7 +2783,7 @@ void EditWindow::loadFinished()
             .arg(isIncludeFile ? "Include" : "Model")
             .arg(reloaded ? "Updated" : "Loaded")
             .arg(QFileInfo(fileName).fileName())
-            .arg(lineCount)
+            .arg(int(lineCount))
             .arg(LPub::elapsedTime(displayTimer.elapsed()));
 
     if (modelFileEdit()) {  // Detached Editor

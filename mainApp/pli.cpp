@@ -750,6 +750,11 @@ void Pli::getAnnotation(
   annotateStr.clear();
 
   bool enableAnnotations = pliMeta.annotation.display.value();
+  if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+    fprintf(stderr, "PLIGETA type=%s display=%d title=%d freeform=%d style=%d\n",
+            qPrintable(type), (int)enableAnnotations,
+            (int)pliMeta.annotation.titleAnnotation.value(),
+            (int)pliMeta.annotation.freeformAnnotation.value(), style);
   if (! enableAnnotations)
     return;
 
@@ -1160,6 +1165,7 @@ int Pli::createPartImage(
             viewerOptions->ZFar           = pliMeta.cameraZFar.value();
             viewerOptions->ZNear          = pliMeta.cameraZNear.value();
             viewerOptions->DDF            = meta->LPub.cameraDDF.value();
+            viewerOptions->LineWidth      = lcGetPreferences().mLineWidth;
             if (viewerOptsList.contains(keyPart1))
                 viewerOptsList.remove(keyPart1);
             viewerOptsList.insert(keyPart1,viewerOptions);
@@ -2695,6 +2701,7 @@ int Pli::partSizeLDViewSCall() {
                     viewerOptions->ZFar           = pliMeta.cameraZFar.value();
                     viewerOptions->ZNear          = pliMeta.cameraZNear.value();
                     viewerOptions->DDF            = meta->LPub.cameraDDF.value();
+                    viewerOptions->LineWidth      = lcGetPreferences().mLineWidth;
                     if (viewerOptsList.contains(keyPart1))
                         viewerOptsList.remove(keyPart1);
                     viewerOptsList.insert(keyPart1,viewerOptions);

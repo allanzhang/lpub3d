@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>LPub3D_debug</string>
+	<string>mylpub3d_debug</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -66,17 +66,17 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>LPub3D_debug</string>
+	<string>mylpub3d_debug</string>
 	<key>CFBundleGetInfoString</key>
-	<string>LPub3D_debug 1.0.0.257 https://trevorsandy.github.io/lpub3d</string>
+	<string>mylpub3d_debug 1.0.0.257 https://trevorsandy.github.io/lpub3d</string>
 	<key>CFBundleIconFile</key>
 	<string>lpub3d.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.trevorsandy.lpub3d_debug</string>
+	<string>com.doubleeagle.lpub3d_debug</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>LPub3D_debug</string>
+	<string>mylpub3d_debug</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -110,7 +110,7 @@
 			<key>UTTypeIconFile</key>
 			<string>ldraw_document.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.trevorsandy.lpub3d_debug</string>
+			<string>com.doubleeagle.lpub3d_debug</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -134,7 +134,7 @@
 			<key>UTTypeIconFile</key>
 			<string>ldraw_document.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.trevorsandy.lpub3d_debug</string>
+			<string>com.doubleeagle.lpub3d_debug</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -158,7 +158,7 @@
 			<key>UTTypeIconFile</key>
 			<string>ldraw_document.icns</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.trevorsandy.lpub3d_debug</string>
+			<string>com.doubleeagle.lpub3d_debug</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

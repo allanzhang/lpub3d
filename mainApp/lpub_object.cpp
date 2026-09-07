@@ -362,8 +362,6 @@ bool LPub::OpenProject(const NativeOptions* Options, int Type/*NATIVE_VIEW*/, bo
             if (HC.isValid())
                 Preferences.mHighlightNewPartsColor = LC_RGBA(HC.red(), HC.green(), HC.blue(), HC.alpha());
 
-            if (Preferences.mLineWidth != Preferences::highlightStepLineWidth)
-                Preferences.mLineWidth = Preferences::highlightStepLineWidth;
         }
     }
 
