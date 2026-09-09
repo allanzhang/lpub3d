@@ -79,6 +79,7 @@ win32 {
 } else:macx {
     CONFIG += sdk_no_version_check
     LIBS += -framework CoreFoundation -framework CoreServices
+    ICON = $$_PRO_FILE_PWD_/mylpub3d.icns
 }
 
 if (unix|msys):!macx: \

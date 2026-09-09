@@ -4,6 +4,10 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
+## v2.5.1 (2026-09-09)
+
+- **App icon**: new myLPub3D macOS application icon, shipped as a full 16–1024 px icon set.
+
 ## v2.5.0 (2026-09-07)
 
 - **Sharper renders**: crisp hard edges at any zoom — no line smoothing / export MSAA softening; borders follow the global line-width setting (`3`) for both step images (CSI) and part lists (PLI).
@@ -17,6 +21,8 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 ## Download
 
 - [myLPub3D-v2.5.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.5.0/myLPub3D-v2.5.0-macOS.zip) (macOS, Apple Silicon)
+
+> v2.5.1 is a local build and has not been published yet.
 
 ## Upstream
 
