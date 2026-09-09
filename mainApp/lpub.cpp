@@ -7275,6 +7275,8 @@ void Gui::createToolBars()
     if (!Preferences::modeGUI)
         return;
 
+    setIconSize(QSize(16, 16));
+
     QSettings Settings;
 
     QToolBar *fileToolBar = addToolBar(tr("File Toolbar"));
