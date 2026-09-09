@@ -636,6 +636,72 @@ void Application::setTheme(bool appStarted /*true*/)
   lcSetProfileInt(LC_PROFILE_COLOR_THEME, static_cast<int>(visualEditorColorTheme));
 }
 
+SplashScreen::SplashScreen(const QPixmap &pixmap)
+  : QSplashScreen(pixmap)
+{
+}
+
+void SplashScreen::showStatusMessage(const QString &message, const QColor &color)
+{
+  m_statusMessage = message;
+  m_statusColor = color;
+  repaint();
+}
+
+void SplashScreen::drawContents(QPainter *painter)
+{
+  QSplashScreen::drawContents(painter);
+
+  if (m_statusMessage.isEmpty())
+      return;
+
+  int percent = -1;
+  QString caption = m_statusMessage;
+  const int percentPos = caption.indexOf(QLatin1Char('%'));
+  if (percentPos > 0) {
+      bool ok = false;
+      percent = caption.left(percentPos).trimmed().toInt(&ok);
+      if (ok) {
+          const int separator = caption.indexOf(QLatin1Char('-'), percentPos);
+          caption = separator >= 0 ? caption.mid(separator + 1).trimmed() : caption;
+      } else {
+          percent = -1;
+      }
+  }
+
+  const QRect bounds = rect();
+  const int margin = qRound(bounds.width() * 0.06);
+  const QRect textRect(margin,
+                       qRound(bounds.height() * 0.799),
+                       bounds.width() - 2 * margin,
+                       qRound(bounds.height() * 0.050));
+
+  painter->setRenderHint(QPainter::Antialiasing, true);
+
+  if (percent >= 0) {
+      // Progress bar geometry aligned with the reference mockup:
+      // 37% width, ~0.625% height, vertical centre at 80.2%
+      const qreal barWidth = bounds.width() * 0.37;
+      const qreal barHeight = qMax(3.0, bounds.height() * 0.00625);
+      const QRectF barRect((bounds.width() - barWidth) / 2.0,
+                           bounds.height() * 0.802 - barHeight / 2.0,
+                           barWidth,
+                           barHeight);
+      QColor track(m_statusColor);
+      track.setAlpha(70);
+      painter->setPen(Qt::NoPen);
+      painter->setBrush(track);
+      painter->drawRoundedRect(barRect, barHeight / 2.0, barHeight / 2.0);
+      QRectF fillRect(barRect);
+      fillRect.setWidth(barWidth * qBound(0, percent, 100) / 100.0);
+      painter->setBrush(m_statusColor);
+      painter->drawRoundedRect(fillRect, barHeight / 2.0, barHeight / 2.0);
+  }
+
+  painter->setPen(m_statusColor);
+  painter->drawText(textRect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextWordWrap, caption);
+}
+
 void Application::splashMsg(const QString &message)
 {
   Preferences::setMessageLogging(DEFAULT_LOG_LEVEL);
@@ -643,7 +709,7 @@ void Application::splashMsg(const QString &message)
   Preferences::setMessageLogging();
   if (m_console_mode)
       return;
-  splash->showMessage(QSplashScreen::tr(message.toLatin1().constData()),Qt::AlignBottom | Qt::AlignLeft, QColor(QString(SPLASH_FONT_COLOUR)));
+  splash->showStatusMessage(message, QColor(QString(SPLASH_FONT_COLOUR)));
   m_application.processEvents();
 }
 
@@ -1130,19 +1196,20 @@ QString distribution = tr("Installed");
     {
         QPixmap pixmap(":/resources/LPub512Splash.png");
         pixmap.setDevicePixelRatio(2.0);
-        splash = new QSplashScreen(pixmap);
+        splash = new SplashScreen(pixmap);
 
         QFont splashFont;
 #ifdef Q_OS_LINUX
         splashFont.setFamily("Geneva");
-        splashFont.setPointSize(16);
+        splashFont.setPointSize(11);
 #elif defined(Q_OS_MACOS)
-        splashFont.setFamily("Menlo");
-        splashFont.setPointSize(14);
+        splashFont.setFamily("Helvetica Neue");
+        splashFont.setPointSize(10);
 #else
         splashFont.setFamily("Segoe UI");
-        splashFont.setPointSize(16);
+        splashFont.setPointSize(11);
 #endif
+        splashFont.setWeight(QFont::DemiBold);
         splashFont.setStretch(100);
 
         splash->setFont(splashFont);

@@ -42,6 +42,24 @@ public:
     ~InitException() throw() {}
 };
 
+/// Custom splash screen that draws the start-up status message centered in the
+/// lower part of the splash image (progress bar plus caption).
+class SplashScreen : public QSplashScreen
+{
+public:
+    explicit SplashScreen(const QPixmap &pixmap);
+
+    /// Set the status message (e.g. "40% - Visual Editor initialization...")
+    void showStatusMessage(const QString &message, const QColor &color);
+
+protected:
+    void drawContents(QPainter *painter) override;
+
+private:
+    QString m_statusMessage;
+    QColor  m_statusColor;
+};
+
 /// The Application class is responsible for further initialization of the app
 /// and provides acessors to the current instance and internal resources. It
 /// also take cares of shutdown cleanup. An Application class must be
@@ -101,7 +119,7 @@ public:
 #endif
 
     /// Initialize the splash screen
-    QSplashScreen *splash;
+    SplashScreen *splash;
 
 public slots:
     /// Splash message function to display message updates during startup
