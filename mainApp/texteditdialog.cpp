@@ -54,6 +54,8 @@ TextEditDialog::TextEditDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->mainToolBar->setIconSize(QSize(16, 16));
+
     setWindowTitle(tr("Edit Text"));
 
     setWhatsThis(lpubWT(WT_DIALOG_TEXT_EDIT, windowTitle()));

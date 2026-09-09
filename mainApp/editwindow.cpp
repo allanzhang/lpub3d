@@ -924,6 +924,8 @@ void EditWindow::clearEditorWindow()
 
 void EditWindow::createToolBars()
 {
+    setIconSize(QSize(16, 16));
+
     if (modelFileEdit()) {
         fileToolBar = addToolBar(tr("Editor File Toolbar"));
         fileToolBar->setObjectName("editorFileToolbar");

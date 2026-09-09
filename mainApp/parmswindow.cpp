@@ -291,6 +291,8 @@ void ParmsWindow::createActions()
 
 void ParmsWindow::createToolBars()
 {
+    setIconSize(QSize(16, 16));
+
     editToolBar = addToolBar(tr("Edit"));
     editToolBar->setObjectName("editToolbar");
     editToolBar->addAction(exitAct);

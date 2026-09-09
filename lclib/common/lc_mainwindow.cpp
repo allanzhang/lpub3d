@@ -694,6 +694,8 @@ void lcMainWindow::CreateMenus()
 
 void lcMainWindow::CreateToolBars()
 {
+	setIconSize(QSize(16, 16));
+
 	mSelectionModeMenu = new QMenu(tr("Selection Mode"), this);
 	for (int ModeIdx = LC_EDIT_SELECTION_MODE_FIRST; ModeIdx <= LC_EDIT_SELECTION_MODE_LAST; ModeIdx++)
 		mSelectionModeMenu->addAction(mActions[ModeIdx]);

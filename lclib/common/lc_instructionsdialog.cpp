@@ -531,6 +531,8 @@ lcInstructionsDialog::lcInstructionsDialog(QWidget* Parent, Project* Project)
 {
 	setWindowTitle(tr("Instructions"));
 
+	setIconSize(QSize(16, 16));
+
 	mInstructions = mProject->GetInstructions();
 
 	mPropertiesWidget = new lcInstructionsPropertiesWidget(this, mInstructions);

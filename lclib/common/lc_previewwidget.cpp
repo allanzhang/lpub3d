@@ -16,6 +16,8 @@ lcPreviewDockWidget::lcPreviewDockWidget(QMainWindow* Parent)
 	setCentralWidget(mViewWidget);
 	setMinimumSize(200, 200);
 
+	setIconSize(QSize(16, 16));
+
 	mLockAction = new QAction(QIcon(":/resources/action_preview_unlocked.png"),tr("Lock Preview"), this);
 	mLockAction->setCheckable(true);
 	mLockAction->setChecked(false);
