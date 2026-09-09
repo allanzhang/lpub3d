@@ -32,6 +32,7 @@
 #endif
 #include <QDebug>
 
+#include "lc_global.h"
 #include "texteditdialog.h"
 #include "ui_texteditdialog.h"
 #include "messageboxresizable.h"
@@ -55,6 +56,7 @@ TextEditDialog::TextEditDialog(QWidget *parent) :
     ui->setupUi(this);
 
     ui->mainToolBar->setIconSize(QSize(16, 16));
+    lcSetSimpleToolBarToolTips(ui->mainToolBar);
 
     setWindowTitle(tr("Edit Text"));
 

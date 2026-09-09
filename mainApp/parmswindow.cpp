@@ -318,6 +318,9 @@ void ParmsWindow::createToolBars()
     undoRedoToolBar->setObjectName("undoRedoToolbar");
     undoRedoToolBar->addAction(undoAct);
     undoRedoToolBar->addAction(redoAct);
+
+    lcSetSimpleToolBarToolTips(editToolBar);
+    lcSetSimpleToolBarToolTips(undoRedoToolBar);
 }
 
 void ParmsWindow::showContextMenu(const QPoint &pt)

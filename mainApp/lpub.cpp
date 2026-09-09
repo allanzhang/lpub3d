@@ -7535,6 +7535,9 @@ void Gui::createToolBars()
     zoomToolBar->addAction(gui->getAct("fullScreenViewAct.1"));
 
     gui->create3DToolBars();
+
+    for (QToolBar* toolBar : gui->toolbars)
+        lcSetSimpleToolBarToolTips(toolBar);
 }
 
 void Gui::createDockWindows()

@@ -973,6 +973,10 @@ void Gui::create3DToolBars()
     gMainWindow->GetVisualizationToolBar()->addAction(ResetViewerImageAct);
 
     gMainWindow->GetPartsToolBar()->setWindowTitle("Tools Toolbar");
+
+    lcSetSimpleToolBarToolTips(gMainWindow->GetStandardToolBar());
+    lcSetSimpleToolBarToolTips(gMainWindow->GetToolsToolBar());
+    lcSetSimpleToolBarToolTips(gMainWindow->GetVisualizationToolBar());
 }
 
 bool Gui::eventFilter(QObject *object, QEvent *event)

@@ -926,6 +926,8 @@ void EditWindow::createToolBars()
 {
     setIconSize(QSize(16, 16));
 
+    fileToolBar = nullptr;
+
     if (modelFileEdit()) {
         fileToolBar = addToolBar(tr("Editor File Toolbar"));
         fileToolBar->setObjectName("editorFileToolbar");
@@ -1028,6 +1030,11 @@ void EditWindow::createToolBars()
     toolsToolBar->addSeparator();
     toolsToolBar->addAction(previewCurrentModelAct);
 #endif
+
+    lcSetSimpleToolBarToolTips(fileToolBar);
+    lcSetSimpleToolBarToolTips(editToolBar);
+    lcSetSimpleToolBarToolTips(standardToolBar);
+    lcSetSimpleToolBarToolTips(toolsToolBar);
 
     disableActions();
 }

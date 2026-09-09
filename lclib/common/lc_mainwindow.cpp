@@ -962,6 +962,11 @@ void lcMainWindow::CreateToolBars()
 /*** LPub3D Mod - hide timeline toolbar on visual editor tab ***/
 	mTimeToolBar->setVisible(false);
 /*** LPub3D Mod end ***/
+
+	lcSetSimpleToolBarToolTips(mStandardToolBar);
+	lcSetSimpleToolBarToolTips(mTimeToolBar);
+	lcSetSimpleToolBarToolTips(mToolsToolBar);
+	lcSetSimpleToolBarToolTips(mVisualizationToolBar);
 }
 
 lcView* lcMainWindow::CreateView(lcModel* Model)
