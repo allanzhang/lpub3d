@@ -734,7 +734,7 @@ enum ThemeColorType {
 
 #define LPUB3D_DISABLED_TEXT_COLOUR            "#808080" // 128, 128, 128, 255
 
-#define SPLASH_FONT_COLOUR                      LPUB3D_DEFAULT_COLOUR
+#define SPLASH_FONT_COLOUR                      "#ffffff"
 
 #define THEME_DEFAULT                          "Default" // Default Theme
 

@@ -1129,6 +1129,7 @@ QString distribution = tr("Installed");
     if (modeGUI())
     {
         QPixmap pixmap(":/resources/LPub512Splash.png");
+        pixmap.setDevicePixelRatio(2.0);
         splash = new QSplashScreen(pixmap);
 
         QFont splashFont;
