@@ -184,3 +184,6 @@ patches/*
 
 # Logs
 *.log
+
+# Agent local state (memory, session cache) - not part of the project
+.workbuddy/

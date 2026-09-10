@@ -28,7 +28,7 @@
 #define VER_PRODUCTNAME_STR                 "myLPub3D"
 #define VER_COMPANYDOMAIN_STR               "doubleeagle.com"
 #define VER_COMPANYNAME_BLD_STR             "DoubleEagle"
-#define VER_FILEDESCRIPTION_STR             "LPub3D - An LDraw Building Instruction Editor"
+#define VER_FILEDESCRIPTION_STR             "myLPub3D - An LDraw Building Instruction Editor"
 #define VER_LEGALCOPYRIGHT_STR              "Copyright &copy; 2015 - 2025 by Trevor SANDY"
 #define VER_LEGALTRADEMARKS1_STR            "All Rights Reserved"
 #define VER_LEGALTRADEMARKS2_STR            VER_LEGALTRADEMARKS1_STR

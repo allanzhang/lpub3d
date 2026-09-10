@@ -38,7 +38,7 @@ LDrawColorDialog::LDrawColorDialog(
 {
      ui->setupUi(this);
 
-     setWindowTitle("LDraw Color Selector");
+     setWindowTitle(tr("LDraw Color Selector"));
 
      setWhatsThis(lpubWT(WT_DIALOG_LDRAW_COLOR,windowTitle()));
 

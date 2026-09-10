@@ -1578,7 +1578,7 @@ bool EditWindow::substitutePLIPart(QString &replaceText, const int action, const
     box.setWindowFlags (Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
     box.setStandardButtons (QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     box.setDefaultButton   (QMessageBox::Save);
-    box.setWindowTitle("Substitute PLI Part");
+    box.setWindowTitle(tr("Substitute PLI Part"));
     Step *currentStep = lpub->currentStep;
     if (currentStep) {
         const QString key = QString("%1_%2").arg(elements.at(sType), elements.at(sColorCode));
@@ -3038,7 +3038,7 @@ void EditWindow::preferences()
         box.setWindowTitle(windowTitle);
         box.setWindowFlags (Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
         QString title = "<b>" + change + "</b>";
-        QString text  = QString("%1 will take effect the next time LPub3D is started.").arg(change);
+        QString text  = QString("%1 will take effect the next time myLPub3D is started.").arg(change);
         box.setText (title);
         box.setInformativeText (text);
         box.setStandardButtons (QMessageBox::Ok);

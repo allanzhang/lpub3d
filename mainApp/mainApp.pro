@@ -713,4 +713,16 @@ RESOURCES += \
     resources/lsynth/lsynth.qrc \
     lpub3d.qrc
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Translations
+#   The compiled .qm is embedded through lpub3d.qrc and loaded by
+#   Application::initialize() from :/resources - see mainApp/application.cpp.
+#   Regenerate with:
+#     lupdate mainApp/translations/translations.pro -ts mainApp/translations/lpub3d_zh_CN.ts
+#     lrelease mainApp/translations/lpub3d_zh_CN.ts
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TRANSLATIONS += \
+    translations/lpub3d_zh_CN.ts
+
 #message($$CONFIG)

@@ -351,5 +351,8 @@
         <file alias="viewzoomextents16.png">resources/viewzoomextents16.png</file>
         <file alias="zoomin.png">resources/zoomin.png</file>
         <file alias="zoomout.png">resources/zoomout.png</file>
+        <!-- Translations: embedded so the compiled .qm can never go missing from a deployment.
+             Loaded by Application::initialize() from :/resources - see mainApp/application.cpp -->
+        <file alias="lpub3d_zh_CN.qm">translations/lpub3d_zh_CN.qm</file>
     </qresource>
 </RCC>

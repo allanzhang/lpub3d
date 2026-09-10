@@ -382,32 +382,43 @@ contains(LOAD_LDV_LIBS,True) {
 #~~ Merge ldv messages ini files and move to extras dir ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     LDV_EXTRAS_DIR      = $${OUT_PWD}/$${DESTDIR}/extras
+    # LPub3D Mod - quote every path interpolated into the shell commands below.
+    # $$shell_path() escapes for the shell but does NOT quote, so a checkout that
+    # lives under a path containing a space (e.g. '.../IO Enhancement/...')
+    # truncates the command at the first space and fails the build with
+    #   cat: Enhancement/myLPub3D/.../LDViewMessages.ini: No such file or directory
+    LDV_EXTRAS_DIR_Q    = \"$${LDV_EXTRAS_DIR}\"
     if (mingw:ide_qtcreator)|win32-arm64-msvc|win32-msvc* {
         LDV_COPY_CMD    = COPY /V /Y
         LDV_CONCAT_CMD  = TYPE
-        LDV_EXTRAS_DIR_CMD = IF NOT EXIST $${LDV_EXTRAS_DIR} MD $${LDV_EXTRAS_DIR}
+        LDV_EXTRAS_DIR_CMD = IF NOT EXIST $${LDV_EXTRAS_DIR_Q} MD $${LDV_EXTRAS_DIR_Q}
     } else {
         LDV_COPY_CMD    = cp -f
         LDV_CONCAT_CMD  = cat
-        LDV_EXTRAS_DIR_CMD = if ! test -d $${LDV_EXTRAS_DIR}; then mkdir -p $${LDV_EXTRAS_DIR}; fi
+        LDV_EXTRAS_DIR_CMD = if ! test -d $${LDV_EXTRAS_DIR_Q}; then mkdir -p $${LDV_EXTRAS_DIR_Q}; fi
     }
     # LDV_LDVIEW_RESOURCE_DIR, LDV_EXPORT_RESOURCE_DIR, LDV_LDVQT_DIR and LDV_MESSAGES_INI defined in mainApp.pro
     LDV_LDVIEW_MESSAGES = $$shell_path( $$absolute_path( $${LDV_LDVIEW_RESOURCE_DIR}/LDViewMessages.ini ) )
     LDV_EXPORT_MESSAGES = $$shell_path( $$absolute_path( $${LDV_EXPORT_RESOURCE_DIR}/LDExportMessages.ini ) )
     LDV_WIDGET_MESSAGES = $$shell_path( $$absolute_path( $${LDV_LDVQT_DIR}/LDVWidgetMessages.ini ) )
     LDV_CONCAT_MESSAGES = $$shell_path( $$absolute_path( $$_PRO_FILE_PWD_/extras/$$LDV_MESSAGES_INI ) )
+    LDV_LDVIEW_MESSAGES_Q = \"$${LDV_LDVIEW_MESSAGES}\"
+    LDV_EXPORT_MESSAGES_Q = \"$${LDV_EXPORT_MESSAGES}\"
+    LDV_WIDGET_MESSAGES_Q = \"$${LDV_WIDGET_MESSAGES}\"
+    LDV_CONCAT_MESSAGES_Q = \"$${LDV_CONCAT_MESSAGES}\"
     LDV_CONCAT_MESSAGES_CMD = \
-    $$LDV_CONCAT_CMD $$LDV_LDVIEW_MESSAGES $$LDV_EXPORT_MESSAGES $$LDV_WIDGET_MESSAGES > $$LDV_CONCAT_MESSAGES
+    $$LDV_CONCAT_CMD $$LDV_LDVIEW_MESSAGES_Q $$LDV_EXPORT_MESSAGES_Q $$LDV_WIDGET_MESSAGES_Q > $$LDV_CONCAT_MESSAGES_Q
     # When compiling from QtCreator, add ldvMessages.ini to destination directory extras folder - except for macOS
     contains(DEVL_LDV_MESSAGES_INI,True) {
         LDV_MESSAGES_DEVL = $$shell_path( $${LDV_EXTRAS_DIR}/$$LDV_MESSAGES_INI )
+        LDV_MESSAGES_DEVL_Q = \"$${LDV_MESSAGES_DEVL}\"
         message("~~~ $${LPUB3D} COPY LDV_MESSAGES_INI TO: ./$${DESTDIR}/extras/$$LDV_MESSAGES_INI ~~~")
         LDV_CONCAT_MESSAGES_CMD += \
         $$escape_expand(\n\t) \
         $$LDV_EXTRAS_DIR_CMD \
         $$escape_expand(\n\t) \
         $$LDV_COPY_CMD \
-        $$LDV_CONCAT_MESSAGES $$LDV_MESSAGES_DEVL
+        $$LDV_CONCAT_MESSAGES_Q $$LDV_MESSAGES_DEVL_Q
     }
     #message("~~~ DEBUG_$$upper($${TARGET}) LDV_CONCAT_MESSAGES_CMD: $$LDV_CONCAT_MESSAGES_CMD ~~~ ")
     ldvmsg_concat_msg.target   = ConcatProjectMessage

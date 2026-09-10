@@ -378,7 +378,7 @@ bool lcLoadColorFile(lcFile& File, lcStudStyle StudStyle, bool Update, bool LPub
 		gColorGroups[0].Name = QApplication::tr("Solid", "Colors");
 		gColorGroups[1].Name = QApplication::tr("Translucent", "Colors");
 		gColorGroups[2].Name = QApplication::tr("Special", "Colors");
-		gColorGroups[3].Name = QApplication::tr("LPub3D", "Colors");
+		gColorGroups[3].Name = QApplication::tr("myLPub3D", "Colors");
 	}
 /*** LPub3D Mod end ***/
 

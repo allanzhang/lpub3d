@@ -41,7 +41,7 @@ LDrawPartDialog::LDrawPartDialog(
 {
      ui->setupUi(this);
 
-     setWindowTitle("LDraw Part Selector");
+     setWindowTitle(tr("LDraw Part Selector"));
 
      int color = partKey.split(";").last().toInt();
      QString partType = partKey.split(";").first();

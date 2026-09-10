@@ -445,7 +445,7 @@
            <string>Make faded parts translucent but do not draw back faces or highlight part edges</string>
           </property>
           <property name="text">
-           <string>LPub3D Fade and Highlight Parts</string>
+           <string>myLPub3D Fade and Highlight Parts</string>
           </property>
          </widget>
         </item>

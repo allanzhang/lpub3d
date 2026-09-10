@@ -16,6 +16,8 @@
 #include <iostream>
 #include <QMessageBox>
 #include <QSslSocket>
+#include <QLocale>
+#include <QTranslator>
 
 #include <locale.h>
 #include "application.h"
@@ -930,7 +932,7 @@ int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
                 fprintf(stdout, "%s", qUtf8Printable(tr("  -rs, --reset-search-dirs: Reset the LDraw parts directories to those searched by\n         default. Default is off.\n")));
                 fprintf(stdout, "%s", qUtf8Printable(tr("  -scc, --stud-cylinder-color <#AARRGGBB>: High contrast stud cylinder color.\n")));
                 fprintf(stdout, "%s", qUtf8Printable(tr("  -ss, --stud-style <id>: Set the stud style 0=Plain, 1=Thin Lines Logo, 2=Outline Logo,\n         3=Sharp Top Logo, 4=Rounded Top Logo, 5=Flattened Logo, 6=High Contrast,\n         7=High Contrast with Logo.\n")));
-                fprintf(stdout, "%s", qUtf8Printable(tr("  -v, --version: Output LPub3D version information and exit.\n")));
+                fprintf(stdout, "%s", qUtf8Printable(tr("  -v, --version: Output myLPub3D version information and exit.\n")));
                 fprintf(stdout, "%s", qUtf8Printable(tr("  -x, --clear-cache: Reset the LDraw file and image caches. Used with export-option\n        change. Default is off.\n")));
                 fprintf(stdout, "\n");
                 fprintf(stdout, "%s", qUtf8Printable(tr("[Visual Editor Options]\n")));
@@ -1088,7 +1090,7 @@ int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
 #ifdef Q_OS_WIN
     Preferences::printInfo(tr("%1 Parameters Location...(%2)").arg(VER_PRODUCTNAME_STR, QDir::toNativeSeparators(Preferences::dataLocation)));
 #else // Q_OS_LINUX and Q_OS_MACOS
-    Preferences::printInfo(tr("LPub3D Extras Resource Path..(%1)").arg(QDir::toNativeSeparators(Preferences::lpub3dExtrasResourcePath)));
+    Preferences::printInfo(tr("myLPub3D Extras Resource Path..(%1)").arg(QDir::toNativeSeparators(Preferences::lpub3dExtrasResourcePath)));
 #if defined Q_OS_LINUX
 #ifdef DEBUG_MODE_USE_BUILD_FOLDERS
     Preferences::printInfo(tr("%1 Renderers Exe Path....(%2)").arg(VER_PRODUCTNAME_STR, QDir::toNativeSeparators(Preferences::lpub3d3rdPartyAppExeDir)));
@@ -1239,40 +1241,58 @@ QString distribution = tr("Installed");
     // Resolution
     defaultResolutionType(Preferences::preferCentimeters);
 
-    // Translator - not implemented
-    QString Language = lcGetProfileString(LC_PROFILE_LANGUAGE);
-    QLocale Locale;
+    // Translator - application and Qt framework localisation
+    // -----------------------------------------------------------------------
+    // Language resolution order:
+    //   1. LPUB3D_LANGUAGE environment variable - forced override, also used to
+    //      pin a language on a host whose system locale would select another one.
+    //   2. LeoCAD profile LC_PROFILE_LANGUAGE  - user preference.
+    //   3. QLocale::system()                   - follow the operating system.
+    // -----------------------------------------------------------------------
+    QString Language = qEnvironmentVariable("LPUB3D_LANGUAGE");
+    if (Language.isEmpty())
+        Language = lcGetProfileString(LC_PROFILE_LANGUAGE);
 
-    if (!Language.isEmpty())
-        Locale = QLocale(Language);
+    const QLocale Locale = Language.isEmpty() ? QLocale::system() : QLocale(Language);
 
-    QTranslator QtTranslator;
+    // These translators must outlive this function. QApplication stores only the
+    // pointer, so stack-allocated instances are destroyed when initialize()
+    // returns and the installed translation is lost immediately. They are
+    // therefore heap-allocated and parented to the application object.
+    QTranslator *QtTranslator     = new QTranslator(&m_application);
+    QTranslator *QtBaseTranslator = new QTranslator(&m_application);
+    QTranslator *AppTranslator    = new QTranslator(&m_application);
+
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-    if (QtTranslator.load(Locale, "qt", "_", QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+    const QString QtTranslationsPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
 #else
-    if (QtTranslator.load(Locale, "qt", "_", QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-#endif
-        m_application.installTranslator(&QtTranslator);
-#ifdef Q_OS_WIN
-    else if (QtTranslator.load(Locale, "qt", "_", qApp->applicationDirPath() + "/translations"))
-        m_application.installTranslator(&QtTranslator);
+    const QString QtTranslationsPath = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
 #endif
 
-    QTranslator QtBaseTranslator;
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-    if (QtBaseTranslator.load("qtbase_" + Locale.name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
-#else
-    if (QtBaseTranslator.load("qtbase_" + Locale.name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-#endif
-        m_application.installTranslator(&QtBaseTranslator);
+    // Framework translation search path - first hit wins.
+    QStringList TranslatorPaths;
+    TranslatorPaths << QtTranslationsPath;                                        // SDK / Homebrew
 #ifdef Q_OS_WIN
-    else if (QtBaseTranslator.load("qtbase_" + Locale.name(), qApp->applicationDirPath() + "/translations"))
-        m_application.installTranslator(&QtBaseTranslator);
+    TranslatorPaths << qApp->applicationDirPath() + "/translations";              // portable install
+#endif
+#ifdef Q_OS_MACOS
+    TranslatorPaths << qApp->applicationDirPath() + "/../Resources/translations"; // deployed bundle
+    TranslatorPaths << qApp->applicationDirPath() + "/../Translations";           // macdeployqt default
 #endif
 
-    QTranslator Translator;
-    if (Translator.load("lpub_" + Locale.name(), ":../lclib/resources"))
-        m_application.installTranslator(&Translator);
+    for (const QString &TranslatorPath : TranslatorPaths)
+    {
+        if (QtTranslator->isEmpty() && QtTranslator->load(Locale, "qt", "_", TranslatorPath))
+            m_application.installTranslator(QtTranslator);
+
+        if (QtBaseTranslator->isEmpty() && QtBaseTranslator->load("qtbase_" + Locale.name(), TranslatorPath))
+            m_application.installTranslator(QtBaseTranslator);
+    }
+
+    // Application translation is embedded in the resource system so it cannot go
+    // missing from a deployment.
+    if (AppTranslator->load("lpub3d_" + Locale.name(), ":/resources"))
+        m_application.installTranslator(AppTranslator);
 
     qRegisterMetaType<PieceInfo*>("PieceInfo*");
     qRegisterMetaType<QList<int> >("QList<int>");

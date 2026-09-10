@@ -128,11 +128,11 @@ bool PliSubstituteParts::exportSubstitutePartsHeader() {
         outstream << "#" << lpub_endl;
         outstream << "# The file path must be quoted even if there are no spaces in the path" << lpub_endl;
         outstream << "#" << lpub_endl;
-        outstream << "# This file can be edited from LPub3D from:" << lpub_endl;
+        outstream << "# This file can be edited from myLPub3D from:" << lpub_endl;
         outstream << "#    Configuration=>Edit Parameter Files=>Edit PLI/BOM Substitue Parts List" << lpub_endl;
         outstream << "#" << lpub_endl;
-        outstream << "# LPub3D will attempt to load the regular expression below first, if the" << lpub_endl;
-        outstream << "# load fails, LPub3D will load the hard-coded (default) regular expression." << lpub_endl;
+        outstream << "# myLPub3D will attempt to load the regular expression below first, if the" << lpub_endl;
+        outstream << "# load fails, myLPub3D will load the hard-coded (default) regular expression." << lpub_endl;
         outstream << "# If you wish to modify the file import, you can edit this regular expression." << lpub_endl;
         outstream << "# It would be wise to backup the default entry before performing and update - copy" << lpub_endl;
         outstream << "# and paste to a new line with starting phrase other than 'The Regular Expression...'" << lpub_endl;

@@ -1462,7 +1462,7 @@ bool LDSnapshotTaker::writeImage(
 #else
 		const char LDViewVersion[] = "-";
 #endif
-		printf("\nLDView %s LPub3D Edition Image Output\n", LDViewVersion);
+		printf("\nLDView %s myLPub3D Edition Image Output\n", LDViewVersion);
 		printf("=========================================\n");
 		printf("Write %s image %s\n\n", formatName, filename);
 	}

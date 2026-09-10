@@ -945,7 +945,7 @@ void Gui::exportAsPdf()
 
   // initialize progress bar dialog
   if (Preferences::modeGUI) {
-      gui->m_progressDialog->setWindowTitle("Export pdf");
+      gui->m_progressDialog->setWindowTitle(tr("Export pdf"));
       gui->m_progressDialog->setLabelText(tr("Exporting %1").arg(message));
       gui->m_progressDialog->setBtnToCancel();
       gui->m_progressDialog->show();

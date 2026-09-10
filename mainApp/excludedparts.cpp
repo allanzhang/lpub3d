@@ -306,11 +306,11 @@ bool ExcludedParts::exportExcludedParts() {
         outstream << QMessageBox::tr("# Excluded parts must be defined using the file name.") << lpub_endl;
         outstream << QMessageBox::tr("# Parts on this list are excluded from the part count and PLI.") << lpub_endl;
         outstream << "#" << lpub_endl;
-        outstream << QMessageBox::tr("# This file can be edited from LPub3D from:") << lpub_endl;
+        outstream << QMessageBox::tr("# This file can be edited from myLPub3D from:") << lpub_endl;
         outstream << QMessageBox::tr("#    Configuration=>Edit Parameter Files=>Edit Part Count Excluded Parts List") << lpub_endl;
         outstream << "#" << lpub_endl;
-        outstream << QMessageBox::tr("# LPub3D will attempt to load the regular expression below first, if the") << lpub_endl;
-        outstream << QMessageBox::tr("# load fails, LPub3D will load the hard-coded (default) regular expression.") << lpub_endl;
+        outstream << QMessageBox::tr("# myLPub3D will attempt to load the regular expression below first, if the") << lpub_endl;
+        outstream << QMessageBox::tr("# load fails, myLPub3D will load the hard-coded (default) regular expression.") << lpub_endl;
         outstream << QMessageBox::tr("# If you wish to modify the file import, you can edit this regular expression.") << lpub_endl;
         outstream << QMessageBox::tr("# It would be wise to backup the default entry before performing and update - copy") << lpub_endl;
         outstream << QMessageBox::tr("# and paste to a new line with starting phrase other than 'The Regular Expression...'") << lpub_endl;

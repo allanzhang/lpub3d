@@ -12,7 +12,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LPub3D HTML Part List Export</string>
+   <string>myLPub3D HTML Part List Export</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../mainApp/lpub3d.qrc">
@@ -339,7 +339,7 @@
           <item>
            <widget class="QLineEdit" name="rebrickableKeyEdit">
             <property name="toolTip">
-             <string>Enter your Rebrickable API Key or leave blank to use the LPub3D default API key</string>
+             <string>Enter your Rebrickable API Key or leave blank to use the myLPub3D default API key</string>
             </property>
            </widget>
           </item>

@@ -1180,7 +1180,7 @@ bool PartWorker::createCustomPartFiles(const PartType partType, bool  overwriteC
             // insert color entries after header
             if (!customPartColourList.isEmpty()) {
                 customPartColourList.removeDuplicates();  // remove dupes
-                customPartContent.insert(insertionPoint,"0 // LPub3D part custom colours");
+                customPartContent.insert(insertionPoint,"0 // myLPub3D part custom colours");
                 for (int i = 0; i < customPartColourList.size(); i++) {
                     insertionPoint++;
                     customPartContent.insert(insertionPoint,customPartColourList.at(i));
@@ -1944,8 +1944,8 @@ void ColourPartListWorker::fileSectionHeader(const int &option, const QString &h
         _ldrawStaticColourParts  << tr("# However, it can also be edited manually from:");
         _ldrawStaticColourParts  << tr("#    Configuration=>Edit Parameter Files=>Edit LDraw Static Color Parts List");
         _ldrawStaticColourParts  << QString();
-        _ldrawStaticColourParts  << tr("# LPub3D will attempt to load the regular expression below first, if the");
-        _ldrawStaticColourParts  << tr("# load fails, LPub3D will load the hard-coded (default) regular expression.");
+        _ldrawStaticColourParts  << tr("# myLPub3D will attempt to load the regular expression below first, if the");
+        _ldrawStaticColourParts  << tr("# load fails, myLPub3D will load the hard-coded (default) regular expression.");
         _ldrawStaticColourParts  << tr("# If you wish to modify the file import, you can edit this regular expression.");
         _ldrawStaticColourParts  << tr("# It would be wise to backup the default entry before performing an update - copy");
         _ldrawStaticColourParts  << tr("# and paste to a new line with starting phrase other than 'The Regular Expression...'");

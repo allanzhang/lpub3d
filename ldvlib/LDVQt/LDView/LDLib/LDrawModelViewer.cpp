@@ -5254,7 +5254,7 @@ int LDrawModelViewer::exportCurModel(
 				exporter->setYPan(yPan);
 				// LPub3D Mod - export settings
 				exporter->setAppUrl("https://trevorsandy.github.io/lpub3d/");
-				exporter->setAppName("LDView - LPub3D Edition");
+				exporter->setAppName("LDView - myLPub3D Edition");
 				// LPub3D Mod End
 				if (version != NULL)
 				{

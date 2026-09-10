@@ -972,7 +972,7 @@ void Gui::create3DToolBars()
     gMainWindow->GetVisualizationToolBar()->addAction(ViewpointGroupAct);
     gMainWindow->GetVisualizationToolBar()->addAction(ResetViewerImageAct);
 
-    gMainWindow->GetPartsToolBar()->setWindowTitle("Tools Toolbar");
+    gMainWindow->GetPartsToolBar()->setWindowTitle(tr("Tools Toolbar"));
 
     lcSetSimpleToolBarToolTips(gMainWindow->GetStandardToolBar());
     lcSetSimpleToolBarToolTips(gMainWindow->GetToolsToolBar());

@@ -765,7 +765,7 @@ const lcCommand gCommands[] =
 	{
 		QT_TRANSLATE_NOOP("Action","Edit.Tool.RotateStep"),
 		QT_TRANSLATE_NOOP("Menu", "Apply ROTSTEP"),
-		QT_TRANSLATE_NOOP("Status", "Apply LPub3D ROTSTEP command to this STEP"),
+		QT_TRANSLATE_NOOP("Status", "Apply myLPub3D ROTSTEP command to this STEP"),
 		"Shift+R"
 	},
 	// LC_EDIT_ACTION_RESET_TRANSFORM
