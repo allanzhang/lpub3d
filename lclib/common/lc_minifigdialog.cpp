@@ -397,7 +397,7 @@ void lcMinifigDialog::PieceButtonClicked()
 	}
 	else
 	{
-		PieceButton->setText("None");
+		PieceButton->setText(tr("None"));
 	}
 }
 

@@ -241,7 +241,7 @@ PlacementDialog::PlacementDialog(
   insideFrame    = new QFrame;
   horizontalLine = new QFrame;
 
-  lblRelativeTo = new QLabel("Relative To",parent);
+  lblRelativeTo = new QLabel(tr("Relative To"),parent);
   lblRelativeTo->setToolTip(tr("Select item that %1 will be moved relative to.").arg(title));
   outsideGrid->addWidget(lblRelativeTo,0,0);
 

@@ -90,16 +90,16 @@ void Gui::configureMpdCombo()
 
     comboFilterMenu->addSeparator();
     gui->mComboPatternGroup->setExclusive(true);
-    QAction *patternAction = comboFilterMenu->addAction("Fixed String");
+    QAction *patternAction = comboFilterMenu->addAction(tr("Fixed String"));
     patternAction->setData(QVariant(int(RegExp::FixedString)));
     patternAction->setCheckable(true);
     patternAction->setChecked(true);
     gui->mComboPatternGroup->addAction(patternAction);
-    patternAction = comboFilterMenu->addAction("Regular Expression");
+    patternAction = comboFilterMenu->addAction(tr("Regular Expression"));
     patternAction->setCheckable(true);
     patternAction->setData(QVariant(int(RegExp::RegularExpression)));
     gui->mComboPatternGroup->addAction(patternAction);
-    patternAction = comboFilterMenu->addAction("Wildcard");
+    patternAction = comboFilterMenu->addAction(tr("Wildcard"));
     patternAction->setCheckable(true);
     patternAction->setData(QVariant(int(RegExp::Wildcard)));
     gui->mComboPatternGroup->addAction(patternAction);

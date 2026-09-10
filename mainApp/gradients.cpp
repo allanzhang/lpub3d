@@ -61,7 +61,7 @@ GradientDialog::GradientDialog(QSize bgSize,QGradient *bgGradient, QDialog *pare
     setWhatsThis(lpubWT(WT_DIALOG_GRADIENT,windowTitle()));
 
     QGroupBox *displayGroup = new QGroupBox(this);
-    displayGroup->setTitle("Display");
+    displayGroup->setTitle(tr("Display"));
     m_renderer = new GradientRenderer(bgSize,displayGroup);
     displayGroup->setMinimumWidth(100);
 

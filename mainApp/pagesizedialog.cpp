@@ -45,7 +45,7 @@ PageSizeDialog::PageSizeDialog(
   QVBoxLayout *layout = new QVBoxLayout(this);
   setLayout(layout);
 
-  QGroupBox *box = new QGroupBox("Page Size",this);
+  QGroupBox *box = new QGroupBox(tr("Page Size"),this);
   layout->addWidget(box);
 
   pageSize = new PageSizeGui("",&meta,box);

@@ -976,7 +976,7 @@ void EditWindow::createToolBars()
         mpdCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 #endif
         mpdCombo->setToolTip(tr("Go to submodel"));
-        mpdCombo->setStatusTip("Use dropdown to go to submodel");
+        mpdCombo->setStatusTip(tr("Use dropdown to go to submodel"));
         connect(mpdCombo,SIGNAL(activated(int)),
                 this,    SLOT(mpdComboChanged(int)));
         mpdComboSeparatorAct = editToolBar->addSeparator();
@@ -2497,16 +2497,16 @@ void EditWindow::configureMpdCombo()
 
     comboFilterMenu->addSeparator();
     mComboPatternGroup->setExclusive(true);
-    QAction *patternAction = comboFilterMenu->addAction("Fixed String");
+    QAction *patternAction = comboFilterMenu->addAction(tr("Fixed String"));
     patternAction->setData(QVariant(int(RegExp::FixedString)));
     patternAction->setCheckable(true);
     patternAction->setChecked(true);
     mComboPatternGroup->addAction(patternAction);
-    patternAction = comboFilterMenu->addAction("Regular Expression");
+    patternAction = comboFilterMenu->addAction(tr("Regular Expression"));
     patternAction->setCheckable(true);
     patternAction->setData(QVariant(int(RegExp::RegularExpression)));
     mComboPatternGroup->addAction(patternAction);
-    patternAction = comboFilterMenu->addAction("Wildcard");
+    patternAction = comboFilterMenu->addAction(tr("Wildcard"));
     patternAction->setCheckable(true);
     patternAction->setData(QVariant(int(RegExp::Wildcard)));
     mComboPatternGroup->addAction(patternAction);

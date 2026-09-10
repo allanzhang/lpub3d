@@ -32,6 +32,7 @@
 #include "pagepointerbackgrounditem.h"
 #include "step.h"
 #include "range.h"
+#include <QCoreApplication>
 
 //---------------------------------------------------------------------------
 
@@ -182,7 +183,7 @@ PagePointerItem::PagePointerItem(
   head->setPen(tipPen);
   head->setBrush(brushColor);
   head->setFlag(QGraphicsItem::ItemIsSelectable,false);
-  head->setToolTip("Pointer head - drag to move");
+  head->setToolTip(QCoreApplication::translate("PagePointerItem", "Pointer head - drag to move"));
   addToGroup(head);
 
   for (int i = 0; i < NumPointerGrabbers; i++) {

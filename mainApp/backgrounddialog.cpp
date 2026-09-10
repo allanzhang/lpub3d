@@ -48,7 +48,7 @@ BackgroundDialog::BackgroundDialog(
   QVBoxLayout *layout = new QVBoxLayout(this);
   setLayout(layout);
 
-  QGroupBox *box = new QGroupBox("Background",this);
+  QGroupBox *box = new QGroupBox(tr("Background"),this);
   layout->addWidget(box);
   background = new BackgroundGui(&meta,box,picSettings);
 

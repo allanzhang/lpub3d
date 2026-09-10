@@ -86,7 +86,7 @@ GlobalFadeStepDialog::GlobalFadeStepDialog(
   fadeStepsChild = new FadeStepsGui(fadeStepsMeta,box);
   data->children.append(fadeStepsChild);
 
-  box = new QGroupBox("Final Model Step");
+  box = new QGroupBox(tr("Final Model Step"));
   box->setToolTip(tr("Automatically, append an un-faded final step to the top level model file."));
   layout->addWidget(box);
   finalModelEnabledChild = new FinalModelEnabledGui(tr("Enable Final Model Step"),&lpubMeta->finalModelEnabled,box);

@@ -32,6 +32,8 @@
 #include "calloutbackgrounditem.h"
 #include "step.h"
 #include "range.h"
+#include <QCoreApplication>
+#include <QCoreApplication>
 
 //---------------------------------------------------------------------------
 
@@ -189,7 +191,7 @@ CalloutPointerItem::CalloutPointerItem(
   head->setPen(tipPen);
   head->setBrush(brushColor);
   head->setFlag(QGraphicsItem::ItemIsSelectable,false);
-  head->setToolTip("Pointer head - drag to move");
+  head->setToolTip(QCoreApplication::translate("CalloutPointerItem", "Pointer head - drag to move"));
   addToGroup(head);  
   
   for (int i = 0; i < NumPointerGrabbers; i++) {

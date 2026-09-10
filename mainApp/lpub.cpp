@@ -3451,7 +3451,7 @@ Gui::Gui()
         mpdCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 #endif
         mpdCombo->setToolTip(tr("Current Submodel"));
-        mpdCombo->setStatusTip("Use dropdown to select submodel");
+        mpdCombo->setStatusTip(tr("Use dropdown to select submodel"));
         mpdCombo->setEnabled(false);
 
         setGoToPageCombo = new QComboBox(this);
@@ -3463,7 +3463,7 @@ Gui::Gui()
         setGoToPageCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
 #endif
         setGoToPageCombo->setToolTip(tr("Current Page"));
-        setGoToPageCombo->setStatusTip("Use dropdown to select page");
+        setGoToPageCombo->setStatusTip(tr("Use dropdown to select page"));
         setGoToPageCombo->setEnabled(false);
 
         m_progressDialog = new ProgressDialog();
@@ -5749,8 +5749,8 @@ void Gui::createActions()
     QSize size = setPageLineEdit->sizeHint();
     size.setWidth(size.width()/3);
     setPageLineEdit->setMinimumSize(size);
-    setPageLineEdit->setToolTip("Current Page");
-    setPageLineEdit->setStatusTip("Enter desired page(s) in the format 'page', 'page of pages', or 'page to pages'.");
+    setPageLineEdit->setToolTip(tr("Current Page"));
+    setPageLineEdit->setStatusTip(tr("Enter desired page(s) in the format 'page', 'page of pages', or 'page to pages'."));
     setPageLineEdit->setEnabled(false);
     QAction *setPageLineEditResetAct = setPageLineEdit->addAction(QIcon(":/resources/resetaction.png"), QLineEdit::TrailingPosition);
     setPageLineEditResetAct->setText(tr("Current Page Edit Reset"));
@@ -6947,7 +6947,7 @@ void Gui::createMenus()
     fileMenu->addAction(gui->getAct("saveCopyAct.1"));
     fileMenu->addAction(gui->getAct("closeFileAct.1"));
 
-    QMenu *importMenu = fileMenu->addMenu("Import...");
+    QMenu *importMenu = fileMenu->addMenu(tr("Import..."));
     importMenu->setObjectName("importMenu");
     gui->menus.insert(importMenu->objectName(), importMenu);
     importMenu->setIcon(QIcon(":/resources/import.png"));
@@ -6956,7 +6956,7 @@ void Gui::createMenus()
     importMenu->addAction(gui->getAct("importSetInventoryAct.1"));
     importMenu->addSeparator();
 
-    QMenu *exportMenu = fileMenu->addMenu("Export As...");
+    QMenu *exportMenu = fileMenu->addMenu(tr("Export As..."));
     exportMenu->setObjectName("exportMenu");
     gui->menus.insert(exportMenu->objectName(), exportMenu);
     exportMenu->setIcon(QIcon(":/resources/exportas.png"));
@@ -7094,7 +7094,7 @@ void Gui::createMenus()
     configMenu->addAction(gui->getAct("preferencesAct.1"));
     configMenu->addSeparator();
 
-    QMenu *setupMenu = configMenu->addMenu("Build &Instructions Setup...");
+    QMenu *setupMenu = configMenu->addMenu(tr("Build &Instructions Setup..."));
     setupMenu->setObjectName("setupMenu");
     gui->menus.insert(setupMenu->objectName(), setupMenu);
     setupMenu->setIcon(QIcon(":/resources/instructionsetup.png"));
@@ -7112,7 +7112,7 @@ void Gui::createMenus()
     setupMenu->addSeparator();
     setupMenu->setDisabled(true);
 
-    QMenu *editorMenu = configMenu->addMenu("Edit Parameter Files...");
+    QMenu *editorMenu = configMenu->addMenu(tr("Edit Parameter Files..."));
     editorMenu->setObjectName("editorMenu");
     gui->menus.insert(editorMenu->objectName(), editorMenu);
     editorMenu->setIcon(QIcon(":/resources/editparameterfiles.png"));
@@ -7165,7 +7165,7 @@ void Gui::createMenus()
 
     configMenu->addSeparator();
 
-    QMenu *cacheMenu = configMenu->addMenu("Reset Cache...");
+    QMenu *cacheMenu = configMenu->addMenu(tr("Reset Cache..."));
     cacheMenu->setObjectName("cacheMenu");
     gui->menus.insert(cacheMenu->objectName(), cacheMenu);
     cacheMenu->setIcon(QIcon(":/resources/resetcache.png"));
@@ -8127,9 +8127,9 @@ void LDrawSearchDirDialog::getLDrawSearchDirDialog()
       textEditSearchDirs->setReadOnly(true);
       textEditSearchDirs->setPalette(readOnlyPalette);
       textEditSearchDirs->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
-      textEditSearchDirs->setToolTip("Read only list of LDraw.ini search directories.");
+      textEditSearchDirs->setToolTip(tr("Read only list of LDraw.ini search directories."));
   } else {
-      textEditSearchDirs->setToolTip("Editable list of search directories - add or edit search paths. Use a new line for each entry.");
+      textEditSearchDirs->setToolTip(tr("Editable list of search directories - add or edit search paths. Use a new line for each entry."));
       lineEditIniFile->setText(tr("%1").arg(Preferences::ldSearchDirs.size() ?
                                             tr("Using default %1 search.").arg(VER_PRODUCTNAME_STR) :
                                             tr("Using default search. No search directories detected.")));

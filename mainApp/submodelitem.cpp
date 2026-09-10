@@ -45,6 +45,7 @@
 
 #include "lc_viewwidget.h"
 #include "lc_previewwidget.h"
+#include <QCoreApplication>
 
 const Where &SubModel::topOfStep()
 {
@@ -1703,7 +1704,7 @@ void SubModelBackgroundItem::contextMenuEvent(
     const QString name = QObject::tr("Submodel");
 
     QAction *constrainAction         = lpub->getAct("constrainAction.1");
-    constrainAction->setWhatsThis("Change Shape:\n"
+    constrainAction->setWhatsThis(QCoreApplication::translate("SubModelBackgroundItem", "Change Shape:\n"
       "  You can change the shape of this Submodel.  One way, is\n"
       "  is to ask the computer to make the Submodel as small as\n"
       "  possible (area). Another way is to ask the computer to\n"
@@ -1713,7 +1714,7 @@ void SubModelBackgroundItem::contextMenuEvent(
       "  and it, and the computer will make it as wide as it needs.\n"
       "  The last way is to tell the computer how many columns it\n"
       "  can have, and then it will try to make all the columns the\n"
-                                               "  same height\n");
+                                               "  same height\n"));
     commonMenus.addAction(constrainAction,menu,name);
 
     QAction *placementAction         = lpub->getAct("placementAction.1");

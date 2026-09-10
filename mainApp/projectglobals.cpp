@@ -164,7 +164,7 @@ GlobalProjectDialog::GlobalProjectDialog(
   data->children.append(childBuildModEnabled);
   connect (childBuildModEnabled->getCheckBox(), SIGNAL(clicked(bool)), this, SLOT(clearCache(bool)));
 
-  box = new QGroupBox("Buffer Exchange");
+  box = new QGroupBox(tr("Buffer Exchange"));
   box->setWhatsThis(lpubWT(WT_SETUP_PROJECT_PARSE_BUFFER_EXCHANGE,box->title()));
   vlayout->addWidget(box);
   CheckBoxGui *childParseNoStep = new CheckBoxGui(tr("Parse Single Step With NOSTEP Or BUFEXCHG Commands"),&lpubMeta->parseNoStep,box);
@@ -181,7 +181,7 @@ GlobalProjectDialog::GlobalProjectDialog(
   connect (childCountInstance, SIGNAL(settingsChanged(bool)), this, SLOT(clearCache(bool)));
   connect (childCountInstance->getCheckBox(), SIGNAL(clicked(bool)), this, SLOT(enableCountInstanceByColour(bool)));
 
-  countInstanceByColourCheck = new QCheckBox("Count By Colour Code", nullptr);
+  countInstanceByColourCheck = new QCheckBox(tr("Count By Colour Code"), nullptr);
   countInstanceByColourCheck->setChecked(lpubMeta->countInstanceByColour.value());
   countInstanceByColourCheck->setToolTip(tr("Count unique instances for submodels that have the same name but unique colour code."));
   qobject_cast<QGridLayout*>(box->layout())->addWidget(countInstanceByColourCheck,2,0,1,3);
@@ -242,13 +242,13 @@ GlobalProjectDialog::GlobalProjectDialog(
   connect (childCountInstance, SIGNAL(settingsChanged(bool)), this, SLOT(clearCache(bool)));
   connect (childCountInstance->getCheckBox(), SIGNAL(clicked(bool)), this, SLOT(enableCountInstanceByColour(bool)));
 
-  countInstanceByColourCheck = new QCheckBox("Count By Colour Code", nullptr);
+  countInstanceByColourCheck = new QCheckBox(tr("Count By Colour Code"), nullptr);
   countInstanceByColourCheck->setChecked(lpubMeta->countInstanceByColour.value());
   countInstanceByColourCheck->setToolTip(tr("Count unique instances for submodels that have the same name but unique colour code."));
   qobject_cast<QGridLayout*>(box->layout())->addWidget(countInstanceByColourCheck,2,0,1,3);
   connect (countInstanceByColourCheck, SIGNAL(clicked(bool)), this, SLOT(countInstanceByColour(bool)));
 
-  box = new QGroupBox("Submodel Substitute Parts");
+  box = new QGroupBox(tr("Submodel Substitute Parts"));
   box->setWhatsThis(lpubWT(WT_SETUP_PROJECT_SUBMODEL_SUBSTITUTE_PART,box->title()));
   vlayout->addWidget(box);
   CheckBoxGui *childSubstitutePart = new CheckBoxGui(tr("Set As Unofficial Part"),&lpubMeta->setSubstituteAsUnofficialPart,box);

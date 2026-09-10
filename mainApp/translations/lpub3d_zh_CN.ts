@@ -2625,6 +2625,14 @@
     </message>
 </context>
 <context>
+    <name>BackgroundDialog</name>
+    <message>
+        <location filename="../backgrounddialog.cpp" line="51" />
+        <source>Background</source>
+        <translation>背景</translation>
+    </message>
+</context>
+<context>
     <name>BackgroundGui</name>
     <message>
         <location filename="../metagui.cpp" line="3478" />
@@ -2632,9 +2640,19 @@
         <translation>背景</translation>
     </message>
     <message>
+        <location filename="../metagui.cpp" line="3521" />
+        <source>Change Color...</source>
+        <translation>更改颜色...</translation>
+    </message>
+    <message>
         <location filename="../metagui.cpp" line="3522" />
         <source>Change color using color picker</source>
         <translation>使用取色器更改颜色</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3527" />
+        <source>Change Gradient...</source>
+        <translation>更改渐变...</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="3528" />
@@ -2646,6 +2664,31 @@
         <location filename="../metagui.cpp" line="3825" />
         <source>Hex RGB %1</source>
         <translation>十六进制 RGB %1</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3554" />
+        <source>Enter image path</source>
+        <translation>输入图像路径</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3559" />
+        <source>Browse</source>
+        <translation>浏览</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3566" />
+        <source>Image Fill</source>
+        <translation>图像填充</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3572" />
+        <source>Stretch Image</source>
+        <translation>拉伸图像</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3576" />
+        <source>Tile Image</source>
+        <translation>平铺图像</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="3797" />
@@ -3520,6 +3563,16 @@
         <source>Margins</source>
         <translation>边距</translation>
     </message>
+    <message>
+        <location filename="../metagui.cpp" line="4205" />
+        <source>Rotate Icon Arrows Hidden</source>
+        <translation>旋转图标箭头已隐藏</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4207" />
+        <source>Hide Rotate Icon Arrows</source>
+        <translation>隐藏旋转图标箭头</translation>
+    </message>
 </context>
 <context>
     <name>BuildModDialogGui</name>
@@ -3598,6 +3651,14 @@
         <location filename="../callout.cpp" line="717" />
         <source>Times Used Margin</source>
         <translation>使用次数边距</translation>
+    </message>
+</context>
+<context>
+    <name>CalloutPointerItem</name>
+    <message>
+        <location filename="../calloutpointeritem.cpp" line="194" />
+        <source>Pointer head - drag to move</source>
+        <translation>指针头部 - 拖动以移动</translation>
     </message>
 </context>
 <context>
@@ -5577,6 +5638,19 @@ of the callout, clicking the menu button, and using that
         <source>Edit %1</source>
         <translation>编辑 %1</translation>
     </message>
+    <message>
+        <location filename="../dividerdialog.cpp" line="50" />
+        <source>Divider</source>
+        <translation>分隔</translation>
+    </message>
+</context>
+<context>
+    <name>DividerPointerItem</name>
+    <message>
+        <location filename="../dividerpointeritem.cpp" line="176" />
+        <source>Pointer head - drag to move</source>
+        <translation>指针头部 - 拖动以移动</translation>
+    </message>
 </context>
 <context>
     <name>DoubleSpinGui</name>
@@ -6299,6 +6373,11 @@ of the callout, clicking the menu button, and using that
         <translation>转到 Sub-model</translation>
     </message>
     <message>
+        <location filename="../editwindow.cpp" line="979" />
+        <source>Use dropdown to go to submodel</source>
+        <translation>使用下拉列表跳转到 Sub-model</translation>
+    </message>
+    <message>
         <location filename="../editwindow.cpp" line="1006" />
         <source>Editor Standard Toolbar</source>
         <translation>编辑器标准工具栏</translation>
@@ -6489,6 +6568,21 @@ of the callout, clicking the menu button, and using that
         <location filename="../editwindow.cpp" line="2494" />
         <source>Match Case</source>
         <translation>区分大小写</translation>
+    </message>
+    <message>
+        <location filename="../editwindow.cpp" line="2500" />
+        <source>Fixed String</source>
+        <translation>固定字符串</translation>
+    </message>
+    <message>
+        <location filename="../editwindow.cpp" line="2505" />
+        <source>Regular Expression</source>
+        <translation>正则表达式</translation>
+    </message>
+    <message>
+        <location filename="../editwindow.cpp" line="2509" />
+        <source>Wildcard</source>
+        <translation>通配符</translation>
     </message>
     <message>
         <location filename="../editwindow.cpp" line="2522" />
@@ -6855,6 +6949,21 @@ of the callout, clicking the menu button, and using that
         <translation>区分大小写</translation>
     </message>
     <message>
+        <location filename="../commands/filterlineedit.cpp" line="109" />
+        <source>Fixed String</source>
+        <translation>固定字符串</translation>
+    </message>
+    <message>
+        <location filename="../commands/filterlineedit.cpp" line="114" />
+        <source>Regular Expression</source>
+        <translation>正则表达式</translation>
+    </message>
+    <message>
+        <location filename="../commands/filterlineedit.cpp" line="118" />
+        <source>Wildcard</source>
+        <translation>通配符</translation>
+    </message>
+    <message>
         <location filename="../commands/filterlineedit.cpp" line="131" />
         <source>Filter Options...</source>
         <translation>筛选选项...</translation>
@@ -6890,9 +6999,90 @@ of the callout, clicking the menu button, and using that
         <source>Command Editor Find</source>
         <translation>命令编辑器查找</translation>
     </message>
+    <message>
+        <location filename="../findreplace.cpp" line="86" />
+        <source>String to find</source>
+        <translation>要查找的字符串</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="114" />
+        <source>String to find and replace</source>
+        <translation>要查找并替换的字符串</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="119" />
+        <source>Find: </source>
+        <translation>查找: </translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="123" />
+        <source>Replace: </source>
+        <translation>替换: </translation>
+    </message>
 </context>
 <context>
     <name>FindReplaceCtrls</name>
+    <message>
+        <location filename="../findreplace.cpp" line="219" />
+        <source>Find</source>
+        <translation>查找</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="220" />
+        <source>Find Next</source>
+        <translation>查找下一个</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="221" />
+        <source>Find Previous</source>
+        <translation>查找上一个</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="222" />
+        <source>Find All</source>
+        <translation>查找全部</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="223" />
+        <location filename="../findreplace.cpp" line="236" />
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="226" />
+        <source>Case Senstive</source>
+        <translation>区分大小写</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="227" />
+        <source>Whole Words</source>
+        <translation>全字匹配</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="228" />
+        <source>Regular Expression</source>
+        <translation>正则表达式</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="233" />
+        <source>Replace</source>
+        <translation>替换</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="234" />
+        <source>Replace &amp;&amp; Find</source>
+        <translation>替换 &amp;&amp; 查找</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="235" />
+        <source>Replace All</source>
+        <translation>全部替换</translation>
+    </message>
+    <message>
+        <location filename="../findreplace.cpp" line="242" />
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
     <message>
         <location filename="../findreplace.cpp" line="283" />
         <location filename="../findreplace.cpp" line="362" />
@@ -7080,6 +7270,11 @@ of the callout, clicking the menu button, and using that
         <location filename="../assemglobals.cpp" line="270" />
         <source>'Display Part List (PLI) Annotations' must be enabled to set Assembly (CSI) Part annotation.</source>
         <translation>必须启用 'Display Part List (PLI) Annotations' 才能设置装配（CSI）零件标注。</translation>
+    </message>
+    <message>
+        <location filename="../assemglobals.cpp" line="272" />
+        <source>Stud Style And Automate Edge Color</source>
+        <translation>凸点样式与自动边线颜色</translation>
     </message>
     <message>
         <location filename="../assemglobals.cpp" line="275" />
@@ -7314,6 +7509,11 @@ of the callout, clicking the menu button, and using that
         <translation>启用淡出之前的步骤</translation>
     </message>
     <message>
+        <location filename="../fadestepglobals.cpp" line="89" />
+        <source>Final Model Step</source>
+        <translation>最终模型 Step</translation>
+    </message>
+    <message>
         <location filename="../fadestepglobals.cpp" line="90" />
         <source>Automatically, append an un-faded final step to the top level model file.</source>
         <translation>自动向顶层模型文件追加一个未淡出的最终步骤。</translation>
@@ -7470,6 +7670,11 @@ of the callout, clicking the menu button, and using that
         <location filename="../multistepglobals.cpp" line="186" />
         <source>Scale</source>
         <translation>缩放</translation>
+    </message>
+    <message>
+        <location filename="../multistepglobals.cpp" line="197" />
+        <source>Default Assembly Orientation</source>
+        <translation>默认装配方向</translation>
     </message>
     <message>
         <location filename="../multistepglobals.cpp" line="204" />
@@ -8473,6 +8678,11 @@ of the callout, clicking the menu button, and using that
         <translation>启用构建修改元命令。此功能用于替代 MLCad 的 BUFEXCHG 框架。</translation>
     </message>
     <message>
+        <location filename="../projectglobals.cpp" line="167" />
+        <source>Buffer Exchange</source>
+        <translation>缓冲区交换</translation>
+    </message>
+    <message>
         <location filename="../projectglobals.cpp" line="170" />
         <source>Parse Single Step With NOSTEP Or BUFEXCHG Commands</source>
         <translation>使用 NOSTEP 或 BUFEXCHG 命令解析单一步骤</translation>
@@ -8544,9 +8754,19 @@ of the callout, clicking the menu button, and using that
         <translation>合并 Sub-model 实例计数。</translation>
     </message>
     <message>
+        <location filename="../projectglobals.cpp" line="245" />
+        <source>Count By Colour Code</source>
+        <translation>按颜色代码计数</translation>
+    </message>
+    <message>
         <location filename="../projectglobals.cpp" line="247" />
         <source>Count unique instances for submodels that have the same name but unique colour code.</source>
         <translation>统计名称相同但颜色代码不同的 Sub-model 的唯一实例数。</translation>
+    </message>
+    <message>
+        <location filename="../projectglobals.cpp" line="251" />
+        <source>Submodel Substitute Parts</source>
+        <translation>Sub-model 替换零件</translation>
     </message>
     <message>
         <location filename="../projectglobals.cpp" line="254" />
@@ -8620,6 +8840,11 @@ of the callout, clicking the menu button, and using that
         <location filename="../submodelglobals.cpp" line="174" />
         <source>Image</source>
         <translation>图像</translation>
+    </message>
+    <message>
+        <location filename="../submodelglobals.cpp" line="179" />
+        <source>Submodel Image</source>
+        <translation>Sub-model 图像</translation>
     </message>
     <message>
         <location filename="../submodelglobals.cpp" line="184" />
@@ -8745,6 +8970,11 @@ of the callout, clicking the menu button, and using that
         <location filename="../gradients.cpp" line="69" />
         <source>Gradients</source>
         <translation>渐变</translation>
+    </message>
+    <message>
+        <location filename="../gradients.cpp" line="64" />
+        <source>Display</source>
+        <translation>显示</translation>
     </message>
     <message>
         <location filename="../gradients.cpp" line="72" />
@@ -9552,9 +9782,20 @@ Restart continuous processing ?</source>
         <translation>当前 Sub-model</translation>
     </message>
     <message>
+        <location filename="../lpub.cpp" line="3454" />
+        <source>Use dropdown to select submodel</source>
+        <translation>使用下拉列表选择 Sub-model</translation>
+    </message>
+    <message>
         <location filename="../lpub.cpp" line="3465" />
+        <location filename="../lpub.cpp" line="5752" />
         <source>Current Page</source>
         <translation>当前页面</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="3466" />
+        <source>Use dropdown to select page</source>
+        <translation>使用下拉列表选择页面</translation>
     </message>
     <message>
         <location filename="../lpub.cpp" line="3720" />
@@ -10652,6 +10893,11 @@ Restart continuous processing ?</source>
         <location filename="../lpub.cpp" line="5742" />
         <source>Continuously process previous page to start of document</source>
         <translation>连续处理上一页直至文档开头</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="5753" />
+        <source>Enter desired page(s) in the format 'page', 'page of pages', or 'page to pages'.</source>
+        <translation>按 'page'、'page of pages' 或 'page to pages' 的格式输入所需页面。</translation>
     </message>
     <message>
         <location filename="../lpub.cpp" line="5756" />
@@ -12021,9 +12267,19 @@ Restart continuous processing ?</source>
         <translation>用选定的应用程序打开模型文件</translation>
     </message>
     <message>
+        <location filename="../lpub.cpp" line="6950" />
+        <source>Import...</source>
+        <translation>导入...</translation>
+    </message>
+    <message>
         <location filename="../lpub.cpp" line="6954" />
         <source>Import LEGO Digital Designer files and set inventory lists</source>
         <translation>导入 LEGO Digital Designer 文件与套装清单</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="6959" />
+        <source>Export As...</source>
+        <translation>导出为...</translation>
     </message>
     <message>
         <location filename="../lpub.cpp" line="6963" />
@@ -12081,14 +12337,29 @@ Restart continuous processing ?</source>
         <translation>配置(&amp;C)</translation>
     </message>
     <message>
+        <location filename="../lpub.cpp" line="7097" />
+        <source>Build &amp;Instructions Setup...</source>
+        <translation>构建说明设置(&amp;I)...</translation>
+    </message>
+    <message>
         <location filename="../lpub.cpp" line="7101" />
         <source>Instruction document global settings</source>
         <translation>说明书文档全局设置</translation>
     </message>
     <message>
+        <location filename="../lpub.cpp" line="7115" />
+        <source>Edit Parameter Files...</source>
+        <translation>编辑参数文件...</translation>
+    </message>
+    <message>
         <location filename="../lpub.cpp" line="7119" />
         <source>Edit %1 parameter files</source>
         <translation>编辑 %1 参数文件</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="7168" />
+        <source>Reset Cache...</source>
+        <translation>重置缓存...</translation>
     </message>
     <message>
         <location filename="../lpub.cpp" line="7172" />
@@ -12304,6 +12575,21 @@ Restart continuous processing ?</source>
         <location filename="../openclose.cpp" line="87" />
         <source>Match Case</source>
         <translation>区分大小写</translation>
+    </message>
+    <message>
+        <location filename="../openclose.cpp" line="93" />
+        <source>Fixed String</source>
+        <translation>固定字符串</translation>
+    </message>
+    <message>
+        <location filename="../openclose.cpp" line="98" />
+        <source>Regular Expression</source>
+        <translation>正则表达式</translation>
+    </message>
+    <message>
+        <location filename="../openclose.cpp" line="102" />
+        <source>Wildcard</source>
+        <translation>通配符</translation>
     </message>
     <message>
         <location filename="../openclose.cpp" line="115" />
@@ -16002,6 +16288,16 @@ into effect until the next time a model is loaded.</source>
         <translation>LDraw.ini 文件</translation>
     </message>
     <message>
+        <location filename="../lpub.cpp" line="8130" />
+        <source>Read only list of LDraw.ini search directories.</source>
+        <translation>LDraw.ini 搜索目录的只读列表。</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="8132" />
+        <source>Editable list of search directories - add or edit search paths. Use a new line for each entry.</source>
+        <translation>可编辑的搜索目录列表 - 添加或编辑搜索路径。每项占一行。</translation>
+    </message>
+    <message>
         <location filename="../lpub.cpp" line="8133" />
         <source>%1</source>
         <translation type="unfinished" />
@@ -19027,6 +19323,29 @@ Are you sure you want to continue ? </source>
     </message>
 </context>
 <context>
+    <name>MetaItem</name>
+    <message>
+        <location filename="../metaitem.cpp" line="2653" />
+        <source>Divider Allocation</source>
+        <translation>分隔线分配</translation>
+    </message>
+    <message>
+        <location filename="../metaitem.cpp" line="2655" />
+        <source>Select Allocation</source>
+        <translation>选择分配方式</translation>
+    </message>
+    <message>
+        <location filename="../metaitem.cpp" line="2670" />
+        <source>This option places the traditional divider that bisects the current range.</source>
+        <translation>此选项放置平分当前范围的传统分隔线。</translation>
+    </message>
+    <message>
+        <location filename="../metaitem.cpp" line="2672" />
+        <source>This option places a divider perpendicular to the previous range divider.</source>
+        <translation>此选项放置与上一个范围分隔线垂直的分隔线。</translation>
+    </message>
+</context>
+<context>
     <name>MinifigWizard</name>
     <message>
         <location filename="../../lclib/common/minifig.cpp" line="65" />
@@ -19179,6 +19498,16 @@ Are you sure you want to continue ? </source>
 <context>
     <name>OpenWithProgramDialogGui</name>
     <message>
+        <location filename="../metagui.cpp" line="8537" />
+        <source>Edit program name</source>
+        <translation>编辑程序名称</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8548" />
+        <source>Edit program path - program arguments are supported, use quotes with spaced names</source>
+        <translation>编辑程序路径 - 支持程序参数，名称含空格时请使用引号</translation>
+    </message>
+    <message>
         <location filename="../metagui.cpp" line="8573" />
         <source>Open With Programs Setup</source>
         <translation>打开方式程序设置</translation>
@@ -19187,6 +19516,31 @@ Are you sure you want to continue ? </source>
         <location filename="../metagui.cpp" line="8583" />
         <source>Program Slots:</source>
         <translation>程序槽位：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8586" />
+        <source>Adjust the number of program slots availabe in the dialogue</source>
+        <translation>调整对话框中可用的程序槽位数量</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8616" />
+        <source>Open With Programs</source>
+        <translation>打开方式程序</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8624" />
+        <source>System Editor</source>
+        <translation>系统编辑器</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8644" />
+        <source>Select text editor and arguments or leave blank to use 'open -e' - TextEdit</source>
+        <translation>选择文本编辑器及其参数，留空则使用 'open -e' - TextEdit</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8646" />
+        <source>Select text editor and arguments or leave blank to use the operating system designated editor</source>
+        <translation>选择文本编辑器及其参数，留空则使用操作系统指定的编辑器</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="8686" />
@@ -19549,6 +19903,14 @@ Are you sure you want to continue ? </source>
     </message>
 </context>
 <context>
+    <name>PageOrientationDialog</name>
+    <message>
+        <location filename="../pageorientationdialog.cpp" line="48" />
+        <source>PageOrientation</source>
+        <translation>页面方向</translation>
+    </message>
+</context>
+<context>
     <name>PageOrientationGui</name>
     <message>
         <location filename="../metagui.cpp" line="7323" />
@@ -19564,6 +19926,22 @@ Are you sure you want to continue ? </source>
         <location filename="../metagui.cpp" line="7343" />
         <source>Landscape</source>
         <translation>横向</translation>
+    </message>
+</context>
+<context>
+    <name>PagePointerItem</name>
+    <message>
+        <location filename="../pagepointeritem.cpp" line="186" />
+        <source>Pointer head - drag to move</source>
+        <translation>指针头部 - 拖动以移动</translation>
+    </message>
+</context>
+<context>
+    <name>PageSizeDialog</name>
+    <message>
+        <location filename="../pagesizedialog.cpp" line="48" />
+        <source>Page Size</source>
+        <translation>页面尺寸</translation>
     </message>
 </context>
 <context>
@@ -20248,6 +20626,11 @@ Archived %3 %4</source>
         <translation>%1 %2 对话框</translation>
     </message>
     <message>
+        <location filename="../placementdialog.cpp" line="244" />
+        <source>Relative To</source>
+        <translation>相对于</translation>
+    </message>
+    <message>
         <location filename="../placementdialog.cpp" line="245" />
         <source>Select item that %1 will be moved relative to.</source>
         <translation>选择 %1 相对于其移动的项。</translation>
@@ -20473,6 +20856,11 @@ Archived %3 %4</source>
         <source>Pli Sort</source>
         <translation>PLI 排序</translation>
     </message>
+    <message>
+        <location filename="../metagui.cpp" line="6141" />
+        <source>Sort By</source>
+        <translation>排序依据</translation>
+    </message>
 </context>
 <context>
     <name>PliSortOrderGui</name>
@@ -20480,6 +20868,49 @@ Archived %3 %4</source>
         <location filename="../metagui.cpp" line="6205" />
         <source>Sort Order and Direction</source>
         <translation>排序方式与方向</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6220" />
+        <source>Primary</source>
+        <translation>主要</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6226" />
+        <location filename="../metagui.cpp" line="6246" />
+        <location filename="../metagui.cpp" line="6266" />
+        <source>Asc</source>
+        <translation>升序</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6227" />
+        <location filename="../metagui.cpp" line="6247" />
+        <location filename="../metagui.cpp" line="6267" />
+        <source>Sort Ascending</source>
+        <translation>升序排序</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6233" />
+        <location filename="../metagui.cpp" line="6253" />
+        <location filename="../metagui.cpp" line="6273" />
+        <source>Des</source>
+        <translation>降序</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6234" />
+        <location filename="../metagui.cpp" line="6254" />
+        <location filename="../metagui.cpp" line="6274" />
+        <source>Sort Descending</source>
+        <translation>降序排序</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6240" />
+        <source>Secondary</source>
+        <translation>次要</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="6260" />
+        <source>Tertiary</source>
+        <translation>第三</translation>
     </message>
 </context>
 <context>
@@ -20588,6 +21019,11 @@ Archived %3 %4</source>
         <location filename="../pointerplacementdialog.cpp" line="98" />
         <source>%1 %2 Dialog</source>
         <translation>%1 %2 对话框</translation>
+    </message>
+    <message>
+        <location filename="../pointerplacementdialog.cpp" line="108" />
+        <source>Relative To</source>
+        <translation>相对于</translation>
     </message>
     <message>
         <location filename="../pointerplacementdialog.cpp" line="109" />
@@ -23083,11 +23519,54 @@ Are you sure you want to continue? </source>
     </message>
 </context>
 <context>
+    <name>PreferredRendererDialog</name>
+    <message>
+        <location filename="../preferredrendererdialog.cpp" line="50" />
+        <source>Renderer</source>
+        <translation>渲染器</translation>
+    </message>
+</context>
+<context>
     <name>PreferredRendererGui</name>
     <message>
         <location filename="../metagui.cpp" line="5109" />
         <source>Preferred Renderer</source>
         <translation>首选渲染器</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5129" />
+        <source>Use LDView Single Call</source>
+        <translation>使用 LDView 单次调用</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5130" />
+        <source>Process a page's part or assembly images in a single renderer call</source>
+        <translation>在单次渲染器调用中处理某页的零件或装配图像</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5139" />
+        <source>Use LDView Snapshot List</source>
+        <translation>使用 LDView 快照列表</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5140" />
+        <source>Capture Single Call ldraw image-generation files in a single list file</source>
+        <translation>将单次调用生成的 LDraw 图像文件捕获到单个列表文件</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5149" />
+        <source>POV File Generation Renderer</source>
+        <translation>POV 文件生成渲染器</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5155" />
+        <source>Native</source>
+        <translation>Native</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5163" />
+        <source>LDView</source>
+        <translation>LDView</translation>
     </message>
 </context>
 <context>
@@ -23402,13 +23881,13 @@ File format is not recognized.</source>
         <translation>选择 LDraw LDConfig 文件</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="2586" />
-        <location filename="../metaitem.cpp" line="3129" />
+        <location filename="../metaitem.cpp" line="2587" />
+        <location filename="../metaitem.cpp" line="3130" />
         <source>Image Files (*.png *.jpg *.jpeg *.bmp)</source>
         <translation>图像文件 (*.png *.jpg *.jpeg *.bmp)</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3127" />
+        <location filename="../metaitem.cpp" line="3128" />
         <source>Select Image</source>
         <translation>选择图像</translation>
     </message>
@@ -24598,102 +25077,102 @@ does not exist.
 %3</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3162" />
+        <location filename="../metaitem.cpp" line="3163" />
         <source>Edit Rich Text</source>
         <translation>编辑富文本</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3162" />
+        <location filename="../metaitem.cpp" line="3163" />
         <source>Edit Plain Text</source>
         <translation>编辑纯文本</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3188" />
+        <location filename="../metaitem.cpp" line="3189" />
         <source>Placement</source>
         <translation>放置</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3213" />
+        <location filename="../metaitem.cpp" line="3214" />
         <source>Steps</source>
         <translation>步骤</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3213" />
+        <location filename="../metaitem.cpp" line="3214" />
         <source>Which Step</source>
         <translation>选择步骤</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3236" />
+        <location filename="../metaitem.cpp" line="3237" />
         <source>Text Placement Select</source>
         <translation>选择文本放置</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3242" />
+        <location filename="../metaitem.cpp" line="3243" />
         <source>Placement selection was cancelled or not valid.&lt;br&gt;</source>
         <translation>放置选择已取消或无效。&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3244" />
+        <location filename="../metaitem.cpp" line="3245" />
         <source>Specified step number %1 is not valid. Bottom of multi steps will be used.&lt;br&gt;</source>
         <translation>指定的步骤编号 %1 无效。将使用多步骤的终点。&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3246" />
+        <location filename="../metaitem.cpp" line="3247" />
         <source>Step number %1 was not found. Bottom of multi steps will be used.</source>
         <translation>未找到步骤编号 %1。将使用多步骤的终点。</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3247" />
+        <location filename="../metaitem.cpp" line="3248" />
         <source>Woulld you like to cancel the %1 text action ?</source>
         <translation>是否取消 %1 文本操作？</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3332" />
+        <location filename="../metaitem.cpp" line="3333" />
         <source>Plain Text</source>
         <translation>纯文本</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3332" />
+        <location filename="../metaitem.cpp" line="3333" />
         <source>Rich Text</source>
         <translation>富文本</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3336" />
+        <location filename="../metaitem.cpp" line="3337" />
         <source>Add Text</source>
         <translation>添加文本</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3337" />
+        <location filename="../metaitem.cpp" line="3338" />
         <source>Text Format:</source>
         <translation>文本格式：</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3348" />
+        <location filename="../metaitem.cpp" line="3349" />
         <source>Text Format Select</source>
         <translation>选择文本格式</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3352" />
+        <location filename="../metaitem.cpp" line="3353" />
         <source>Text format selection was cancelled or not valid.</source>
         <translation>文本格式选择已取消或无效。</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3353" />
+        <location filename="../metaitem.cpp" line="3354" />
         <source>Woulld you like to cancel the add text action ?</source>
         <translation>是否取消添加文本操作？</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3554" />
+        <location filename="../metaitem.cpp" line="3555" />
         <source>Final model inserted at lines %1 to %2</source>
         <translation>最终模型已插入到第 %1 至 %2 行</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="4421" />
+        <location filename="../metaitem.cpp" line="4422" />
         <source>Multiple Copies</source>
         <translation>多份副本</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="4422" />
+        <location filename="../metaitem.cpp" line="4423" />
         <source>There are multiple copies, do you want them as one callout?</source>
         <translation>存在多份副本，是否将它们合并为一个 Callout？</translation>
     </message>
@@ -26326,8 +26805,8 @@ does not exist.
         <location filename="../pli.cpp" line="3618" />
         <location filename="../ranges_item.cpp" line="194" />
         <location filename="../rotateiconitem.cpp" line="533" />
-        <location filename="../submodelitem.cpp" line="1812" />
-        <location filename="../submodelitem.cpp" line="1819" />
+        <location filename="../submodelitem.cpp" line="1813" />
+        <location filename="../submodelitem.cpp" line="1820" />
         <source>%1 Placement</source>
         <translation>%1 放置</translation>
     </message>
@@ -26342,7 +26821,7 @@ does not exist.
         <location filename="../pli.cpp" line="3635" />
         <location filename="../pli.cpp" line="3844" />
         <location filename="../rotateiconitem.cpp" line="538" />
-        <location filename="../submodelitem.cpp" line="1835" />
+        <location filename="../submodelitem.cpp" line="1836" />
         <source>%1 Background</source>
         <translation>%1 背景</translation>
     </message>
@@ -26352,7 +26831,7 @@ does not exist.
         <location filename="../pli.cpp" line="3645" />
         <location filename="../pli.cpp" line="3851" />
         <location filename="../rotateiconitem.cpp" line="549" />
-        <location filename="../submodelitem.cpp" line="1840" />
+        <location filename="../submodelitem.cpp" line="1841" />
         <source>%1 Border</source>
         <translation>%1 边框</translation>
     </message>
@@ -26364,9 +26843,9 @@ does not exist.
         <location filename="../pli.cpp" line="4121" />
         <location filename="../ranges_item.cpp" line="204" />
         <location filename="../rotateiconitem.cpp" line="554" />
-        <location filename="../submodelitem.cpp" line="1331" />
-        <location filename="../submodelitem.cpp" line="1478" />
-        <location filename="../submodelitem.cpp" line="1830" />
+        <location filename="../submodelitem.cpp" line="1332" />
+        <location filename="../submodelitem.cpp" line="1479" />
+        <location filename="../submodelitem.cpp" line="1831" />
         <source>%1 Margins</source>
         <translation>%1 边距</translation>
     </message>
@@ -27155,7 +27634,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="1233" />
         <location filename="../pli.cpp" line="3687" />
-        <location filename="../submodelitem.cpp" line="1880" />
+        <location filename="../submodelitem.cpp" line="1881" />
         <source>Add %1 Arguments</source>
         <translation>添加 %1 参数</translation>
     </message>
@@ -30941,82 +31420,82 @@ You can edit the library path in the Preferences dialogue.
         <translation>指定 LDView LDraw 偏好</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3085" />
+        <location filename="../metaitem.cpp" line="3086" />
         <source>Inserting a display model to a cover page is not allowed.</source>
         <translation>不允许向封面页插入显示模型。</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3091" />
+        <location filename="../metaitem.cpp" line="3092" />
         <source>Inserting a display model to a multi-step page is not allowed.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3096" />
+        <location filename="../metaitem.cpp" line="3097" />
         <source>Inserting a display model to a called out page is not allowed.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3388" />
+        <location filename="../metaitem.cpp" line="3389" />
         <source>Adding a bill of materials to a cover page is not allowed.</source>
         <translation>不允许向封面页添加物料清单。</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3417" />
+        <location filename="../metaitem.cpp" line="3418" />
         <source>Final model check starting at line: %1...</source>
         <translation>最终模型检查从第 %1 行开始...</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3434" />
+        <location filename="../metaitem.cpp" line="3435" />
         <source>Final model detected at line: %1</source>
         <translation>在第 %1 行检测到最终模型</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3437" />
+        <location filename="../metaitem.cpp" line="3438" />
         <source>Display model detected at line: %1</source>
         <translation>在第 %1 行检测到显示模型</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3440" />
+        <location filename="../metaitem.cpp" line="3441" />
         <source>Cover page detected at line: %1</source>
         <translation>在第 %1 行检测到封面页</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3443" />
+        <location filename="../metaitem.cpp" line="3444" />
         <source>Inserted page detected at line: %1</source>
         <translation>在第 %1 行检测到插入页面</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3447" />
+        <location filename="../metaitem.cpp" line="3448" />
         <source>Bill of materials detected at line: %1</source>
         <translation>在第 %1 行检测到物料清单</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3495" />
+        <location filename="../metaitem.cpp" line="3496" />
         <source>0 // These lines are not saved and should not be modified, but they can be replaced.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3496" />
+        <location filename="../metaitem.cpp" line="3497" />
         <source>0 // Remove comment lines and replace MODEL with DISPLAY_MODEL to override this behaviour.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3539" />
+        <location filename="../metaitem.cpp" line="3540" />
         <source>Inserting fade/highlight final model step at line %1...</source>
         <translation>正在第 %1 行插入淡出/高亮最终模型步骤...</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3567" />
+        <location filename="../metaitem.cpp" line="3568" />
         <source>Removing fade/highlight final model step at line %1...</source>
         <translation>正在第 %1 行移除淡出/高亮最终模型步骤...</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3575" />
+        <location filename="../metaitem.cpp" line="3576" />
         <source>Final model meta commands detected at lines %1 to %2</source>
         <translation>在第 %1 至 %2 行检测到最终模型元命令</translation>
     </message>
     <message>
-        <location filename="../metaitem.cpp" line="3602" />
+        <location filename="../metaitem.cpp" line="3603" />
         <source>Deleting inserted final model line %1 in '%2' [%3]</source>
         <translation>正在删除 '%2' [%3] 中插入的最终模型行 %1</translation>
     </message>
@@ -31254,15 +31733,15 @@ You can edit the library path in the Preferences dialogue.
     </message>
     <message>
         <location filename="../pli.cpp" line="2641" />
-        <location filename="../submodelitem.cpp" line="522" />
-        <location filename="../submodelitem.cpp" line="542" />
+        <location filename="../submodelitem.cpp" line="523" />
+        <location filename="../submodelitem.cpp" line="543" />
         <source>step group</source>
         <translation>Step 组</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="2641" />
-        <location filename="../submodelitem.cpp" line="522" />
-        <location filename="../submodelitem.cpp" line="542" />
+        <location filename="../submodelitem.cpp" line="523" />
+        <location filename="../submodelitem.cpp" line="543" />
         <source>single step</source>
         <translation>单一步骤</translation>
     </message>
@@ -31360,50 +31839,50 @@ You can edit the library path in the Preferences dialogue.
     </message>
     <message>
         <location filename="../pli.cpp" line="3576" />
-        <location filename="../submodelitem.cpp" line="1785" />
+        <location filename="../submodelitem.cpp" line="1786" />
         <source>%1 Constraint</source>
         <translation>%1 约束</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3640" />
-        <location filename="../submodelitem.cpp" line="1845" />
+        <location filename="../submodelitem.cpp" line="1846" />
         <source>%1 Background Color</source>
         <translation>%1 背景颜色</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3650" />
-        <location filename="../submodelitem.cpp" line="1850" />
+        <location filename="../submodelitem.cpp" line="1851" />
         <source>%1 Scale</source>
         <translation>%1 缩放</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3651" />
-        <location filename="../submodelitem.cpp" line="1851" />
+        <location filename="../submodelitem.cpp" line="1852" />
         <source>Model Size</source>
         <translation>模型尺寸</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3658" />
-        <location filename="../submodelitem.cpp" line="1863" />
+        <location filename="../submodelitem.cpp" line="1864" />
         <source>%1 Field Of View</source>
         <translation>%1 视场角</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3659" />
-        <location filename="../submodelitem.cpp" line="1864" />
+        <location filename="../submodelitem.cpp" line="1865" />
         <source>FOV</source>
         <translation>视场角</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3666" />
-        <location filename="../submodelitem.cpp" line="1871" />
+        <location filename="../submodelitem.cpp" line="1872" />
         <source>%1 Camera Angles</source>
         <translation>%1 相机角度</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="3672" />
         <location filename="../pli.cpp" line="3677" />
-        <location filename="../submodelitem.cpp" line="1825" />
+        <location filename="../submodelitem.cpp" line="1826" />
         <source>%1 Preferred Renderer</source>
         <translation>%1 首选渲染器</translation>
     </message>
@@ -31414,7 +31893,7 @@ You can edit the library path in the Preferences dialogue.
     </message>
     <message>
         <location filename="../pli.cpp" line="3689" />
-        <location filename="../submodelitem.cpp" line="1882" />
+        <location filename="../submodelitem.cpp" line="1883" />
         <source>%1 Renderer</source>
         <translation>%1 渲染器</translation>
     </message>
@@ -32193,82 +32672,82 @@ You can edit the library path in the Preferences dialogue.
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="213" />
-        <location filename="../submodelitem.cpp" line="452" />
+        <location filename="../submodelitem.cpp" line="214" />
+        <location filename="../submodelitem.cpp" line="453" />
         <source>Failed to create and rotate Submodel ldr file: %1.</source>
         <translation>无法创建并旋转 Sub-model ldr 文件：%1。</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="297" />
-        <location filename="../submodelitem.cpp" line="305" />
+        <location filename="../submodelitem.cpp" line="298" />
+        <location filename="../submodelitem.cpp" line="306" />
         <source>SubModel Preview image out of date %1.</source>
         <translation>Sub-model 预览图像已过期 %1。</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="299" />
-        <location filename="../submodelitem.cpp" line="307" />
+        <location filename="../submodelitem.cpp" line="300" />
+        <location filename="../submodelitem.cpp" line="308" />
         <source>Failed to remove out of date SubModel Preview PNG file.</source>
         <translation>无法移除过期的 Sub-model 预览 PNG 文件。</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="386" />
+        <location filename="../submodelitem.cpp" line="387" />
         <source>Failed to rotate viewer Submodel</source>
         <translation>无法旋转查看器 Sub-model</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="422" />
+        <location filename="../submodelitem.cpp" line="423" />
         <source>Failed to create merged Submodel Preview (SMI) file</source>
         <translation>无法创建合并的 Sub-model 预览 (SMI) 文件</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="505" />
+        <location filename="../submodelitem.cpp" line="506" />
         <source>Generate Visual Editor submodel options entry: %1</source>
         <translation>生成视觉编辑器 Sub-model 选项条目：%1</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="518" />
+        <location filename="../submodelitem.cpp" line="519" />
         <source>%1 Submodel render failed for [%2] %3 %4 %5 on page %6</source>
         <translation>%1 Sub-model 渲染失败，对象 [%2] %3 %4 %5，页面 %6</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="521" />
-        <location filename="../submodelitem.cpp" line="541" />
+        <location filename="../submodelitem.cpp" line="522" />
+        <location filename="../submodelitem.cpp" line="542" />
         <source>called out,</source>
         <translation>Callout，</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="521" />
-        <location filename="../submodelitem.cpp" line="541" />
+        <location filename="../submodelitem.cpp" line="522" />
+        <location filename="../submodelitem.cpp" line="542" />
         <source>simple,</source>
         <translation>简单，</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="536" />
+        <location filename="../submodelitem.cpp" line="537" />
         <source>%1 Submodel render call took %2 to render %3 for %4 %5 %6 on page %7.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="585" />
+        <location filename="../submodelitem.cpp" line="586" />
         <source>Failed to create submodel image %1</source>
         <translation>无法创建 Sub-model 图像 %1</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="1264" />
+        <location filename="../submodelitem.cpp" line="1265" />
         <source>Could not load Visual Editor with Submodel key: %1</source>
         <translation>无法用 Sub-model 键 %1 加载视觉编辑器</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="1485" />
+        <location filename="../submodelitem.cpp" line="1486" />
         <source>Scale</source>
         <translation>缩放</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="1703" />
+        <location filename="../submodelitem.cpp" line="1704" />
         <source>Submodel</source>
         <translation>Sub-model</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="1858" />
+        <location filename="../submodelitem.cpp" line="1859" />
         <source>%1 Rotate</source>
         <translation>%1 旋转</translation>
     </message>
@@ -32926,9 +33405,22 @@ You can edit the library path in the Preferences dialogue.
         <translation>点分辨率</translation>
     </message>
     <message>
+        <location filename="../metagui.cpp" line="4985" />
+        <source>Units</source>
+        <translation>单位</translation>
+    </message>
+    <message>
         <location filename="../metagui.cpp" line="5013" />
         <source>Reset</source>
         <translation>重置</translation>
+    </message>
+</context>
+<context>
+    <name>RotStepDialog</name>
+    <message>
+        <location filename="../rotstepdialog.cpp" line="49" />
+        <source>Rotate Submodel</source>
+        <translation>旋转 Sub-model</translation>
     </message>
 </context>
 <context>
@@ -32949,6 +33441,11 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../metagui.cpp" line="3007" />
         <source>Reset</source>
         <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3016" />
+        <source>Transform</source>
+        <translation>变换</translation>
     </message>
 </context>
 <context>
@@ -32990,12 +33487,12 @@ You can edit the library path in the Preferences dialogue.
 <context>
     <name>SMInstanceTextItem</name>
     <message>
-        <location filename="../submodelitem.cpp" line="1289" />
+        <location filename="../submodelitem.cpp" line="1290" />
         <source>%1 times used - right-click to modify</source>
         <translation>%1 次使用 - 右键修改</translation>
     </message>
     <message>
-        <location filename="../submodelitem.cpp" line="1306" />
+        <location filename="../submodelitem.cpp" line="1307" />
         <source>Parts Count</source>
         <translation>零件数量</translation>
     </message>
@@ -33022,6 +33519,11 @@ You can edit the library path in the Preferences dialogue.
         <translation>分隔</translation>
     </message>
     <message>
+        <location filename="../metagui.cpp" line="4727" />
+        <source>Width</source>
+        <translation>宽度</translation>
+    </message>
+    <message>
         <location filename="../metagui.cpp" line="4738" />
         <location filename="../metagui.cpp" line="4769" />
         <location filename="../metagui.cpp" line="4809" />
@@ -33030,10 +33532,30 @@ You can edit the library path in the Preferences dialogue.
         <translation>重置</translation>
     </message>
     <message>
+        <location filename="../metagui.cpp" line="4748" />
+        <source>Length</source>
+        <translation>长度</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4779" />
+        <source>Color</source>
+        <translation>颜色</translation>
+    </message>
+    <message>
         <location filename="../metagui.cpp" line="4790" />
         <location filename="../metagui.cpp" line="4926" />
         <source>Hex RGB %1</source>
         <translation>十六进制 RGB %1</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4793" />
+        <source>Change</source>
+        <translation>更改</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4798" />
+        <source>Margins</source>
+        <translation>边距</translation>
     </message>
 </context>
 <context>
@@ -33042,6 +33564,102 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../metagui.cpp" line="5841" />
         <source>Preview Display</source>
         <translation>预览显示</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5844" />
+        <source>Show submodel at first step</source>
+        <translation>在第一步显示 Sub-model</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5845" />
+        <source>Show Submodel image on first step page</source>
+        <translation>在第一步页面显示 Sub-model 图像</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5853" />
+        <location filename="../metagui.cpp" line="5875" />
+        <location filename="../metagui.cpp" line="5897" />
+        <location filename="../metagui.cpp" line="5921" />
+        <source>Set In Preferences</source>
+        <translation>在偏好设置中设置</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5854" />
+        <source>Save show submodel to application settings.</source>
+        <translation>将“显示 Sub-model”保存到应用程序设置。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5858" />
+        <location filename="../metagui.cpp" line="5880" />
+        <location filename="../metagui.cpp" line="5902" />
+        <location filename="../metagui.cpp" line="5926" />
+        <source>Add LPub Meta Command</source>
+        <translation>添加 LPub 元命令</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5859" />
+        <source>Add show submodel as a global meta command to the LDraw file.</source>
+        <translation>将“显示 Sub-model”作为全局元命令添加到 LDraw 文件。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5867" />
+        <source>Show main model at first step</source>
+        <translation>在第一步显示主模型</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5868" />
+        <source>Show main model image on first step page</source>
+        <translation>在第一步页面显示主模型图像</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5876" />
+        <source>Save show top model to application settings.</source>
+        <translation>将“显示顶部模型”保存到应用程序设置。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5881" />
+        <source>Add show top model  as a global meta command to the LDraw file.</source>
+        <translation>将“显示顶部模型”作为全局元命令添加到 LDraw 文件。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5889" />
+        <source>Show submodel in callout</source>
+        <translation>在 Callout 中显示 Sub-model</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5890" />
+        <source>Show Submodel image in callout</source>
+        <translation>在 Callout 中显示 Sub-model 图像</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5898" />
+        <source>Save show submodel in callout to application settings.</source>
+        <translation>将“在 Callout 中显示 Sub-model”保存到应用程序设置。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5903" />
+        <source>Add show submodel in callout as a global meta command to the LDraw file.</source>
+        <translation>将“在 Callout 中显示 Sub-model”作为全局元命令添加到 LDraw 文件。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5911" />
+        <source>Show submodel instance count</source>
+        <translation>显示 Sub-model 实例数</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5912" />
+        <source>Show Submodel instance count</source>
+        <translation>显示 Sub-model 实例数</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5922" />
+        <source>Save show submodel instance count to application settings.</source>
+        <translation>将“显示 Sub-model 实例数”保存到应用程序设置。</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5927" />
+        <source>Add show submodel instance count as a global meta command to the LDraw file.</source>
+        <translation>将“显示 Sub-model 实例数”作为全局元命令添加到 LDraw 文件。</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="5936" />
@@ -34322,11 +34940,76 @@ You can edit the library path in the Preferences dialogue.
     </message>
 </context>
 <context>
+    <name>SubModelBackgroundItem</name>
+    <message>
+        <location filename="../submodelitem.cpp" line="1707" />
+        <source>Change Shape:
+  You can change the shape of this Submodel.  One way, is
+  is to ask the computer to make the Submodel as small as
+  possible (area). Another way is to ask the computer to
+  make it as close to square as possible.  You can also pick
+  how wide you want it, and the computer will make it as
+  tall as is needed.  Another way is to pick how tall you
+  and it, and the computer will make it as wide as it needs.
+  The last way is to tell the computer how many columns it
+  can have, and then it will try to make all the columns the
+  same height
+</source>
+        <translation>更改形状：
+  你可以更改此 Sub-model 的形状。一种方式是
+  让计算机把 Sub-model 做得尽可能小（面积）。
+  另一种方式是让它尽可能接近正方形。
+  你还可以指定宽度，计算机会按需要
+  自动确定高度。另一种方式是指定高度，
+  计算机会按需要自动确定宽度。
+  最后一种方式是告诉计算机它可以有多少列，
+  然后它会尽量让所有列保持
+  相同高度
+</translation>
+    </message>
+</context>
+<context>
+    <name>SubModelColorDialog</name>
+    <message>
+        <location filename="../submodelcolordialog.cpp" line="50" />
+        <source>Submodel Level Colors</source>
+        <translation>Sub-model 层级颜色</translation>
+    </message>
+</context>
+<context>
     <name>SubModelColorGui</name>
     <message>
         <location filename="../metagui.cpp" line="8094" />
         <source>Submodel Level Colors</source>
         <translation>Sub-model 层级颜色</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8098" />
+        <source>Level One</source>
+        <translation>第一层</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8110" />
+        <location filename="../metagui.cpp" line="8129" />
+        <location filename="../metagui.cpp" line="8148" />
+        <location filename="../metagui.cpp" line="8167" />
+        <source>Change</source>
+        <translation>更改</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8117" />
+        <source>Level Two</source>
+        <translation>第二层</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8136" />
+        <source>Level Three</source>
+        <translation>第三层</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8155" />
+        <source>Level Four</source>
+        <translation>第四层</translation>
     </message>
 </context>
 <context>
@@ -34464,6 +35147,7 @@ You can edit the library path in the Preferences dialogue.
     </message>
     <message>
         <location filename="../substitutepartdialog.cpp" line="79" />
+        <location filename="../substitutepartdialog.cpp" line="391" />
         <source>More...</source>
         <translation>更多...</translation>
     </message>
@@ -34471,6 +35155,11 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../substitutepartdialog.cpp" line="151" />
         <source>Reset</source>
         <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../substitutepartdialog.cpp" line="386" />
+        <source>Less...</source>
+        <translation>更少...</translation>
     </message>
 </context>
 <context>
@@ -34495,6 +35184,11 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../metagui.cpp" line="8344" />
         <source>Reset</source>
         <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8301" />
+        <source>Step Rotation</source>
+        <translation>Step 旋转</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="8302" />
@@ -37123,6 +37817,7 @@ BlendFuncSeparate：%4
     <message>
         <location filename="../../lclib/common/lc_minifigdialog.cpp" line="217" />
         <location filename="../../lclib/common/lc_minifigdialog.cpp" line="369" />
+        <location filename="../../lclib/common/lc_minifigdialog.cpp" line="400" />
         <source>None</source>
         <translation>无</translation>
     </message>

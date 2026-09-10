@@ -45,7 +45,7 @@ PageOrientationDialog::PageOrientationDialog(
   QVBoxLayout *layout = new QVBoxLayout(this);
   setLayout(layout);
 
-  QGroupBox *box = new QGroupBox("PageOrientation",this);
+  QGroupBox *box = new QGroupBox(tr("PageOrientation"),this);
   layout->addWidget(box);
 
   pageOrientation = new PageOrientationGui("",&meta,box);

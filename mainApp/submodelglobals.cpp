@@ -176,7 +176,7 @@ GlobalSubModelDialog::GlobalSubModelDialog(
   vlayout = new QVBoxLayout(nullptr);
   widget->setLayout(vlayout);
 
-  box = new QGroupBox("Submodel Image");
+  box = new QGroupBox(tr("Submodel Image"));
   box->setWhatsThis(lpubWT(WT_SETUP_SHARED_IMAGE_SIZING,box->title()));
   vlayout->addWidget(box);
   box->setLayout(childlayout);

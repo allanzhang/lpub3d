@@ -106,16 +106,16 @@ void FilterLineEdit::initialize()
 
     menu->addSeparator();
     m_patternGroup->setExclusive(true);
-    QAction *patternAction = menu->addAction("Fixed String");
+    QAction *patternAction = menu->addAction(tr("Fixed String"));
     patternAction->setData(QVariant(int(RegExp::FixedString)));
     patternAction->setCheckable(true);
     patternAction->setChecked(true);
     m_patternGroup->addAction(patternAction);
-    patternAction = menu->addAction("Regular Expression");
+    patternAction = menu->addAction(tr("Regular Expression"));
     patternAction->setCheckable(true);
     patternAction->setData(QVariant(int(RegExp::RegularExpression)));
     m_patternGroup->addAction(patternAction);
-    patternAction = menu->addAction("Wildcard");
+    patternAction = menu->addAction(tr("Wildcard"));
     patternAction->setCheckable(true);
     patternAction->setData(QVariant(int(RegExp::Wildcard)));
     m_patternGroup->addAction(patternAction);

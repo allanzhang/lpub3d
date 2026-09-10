@@ -3013,7 +3013,7 @@ RotStepGui::RotStepGui(
   grid->addWidget(button2,0,6);
 
   QLabel    *typeLabel;
-  typeLabel = new QLabel("Transform", parent);
+  typeLabel = new QLabel(tr("Transform"), parent);
   grid->addWidget(typeLabel,1,0);
 
   typeCombo = new QComboBox(parent);
@@ -3518,13 +3518,13 @@ BackgroundGui::BackgroundGui(
 
   /* Color and Gradient button */
 
-  colorButton = new QPushButton("Change Color...",parent);
+  colorButton = new QPushButton(tr("Change Color..."),parent);
   colorButton->setToolTip(tr("Change color using color picker"));
   connect(colorButton,SIGNAL(    clicked(bool)),
           this,         SLOT(browseColor(bool)));
   grid->addWidget(colorButton,0,1);
 
-  gradientButton = new QPushButton("Change Gradient...",parent);
+  gradientButton = new QPushButton(tr("Change Gradient..."),parent);
   gradientButton->setToolTip(tr("Change gradient using gradient dialog"));
   connect(gradientButton,SIGNAL(    clicked(bool)),
           this,            SLOT(setGradient(bool)));
@@ -3551,29 +3551,29 @@ BackgroundGui::BackgroundGui(
 
   pictureEdit = new QLineEdit(picture,parent);
   pictureEdit->setClearButtonEnabled(true);
-  pictureEdit->setToolTip("Enter image path");
+  pictureEdit->setToolTip(tr("Enter image path"));
   connect(pictureEdit,SIGNAL( textEdited(const QString&)),
           this,         SLOT(imageChange(const QString&)));
   grid->addWidget(pictureEdit,1,0,1,2);
 
-  pictureButton = new QPushButton("Browse",parent);
+  pictureButton = new QPushButton(tr("Browse"),parent);
   connect(pictureButton,SIGNAL(    clicked(bool)),
           this,           SLOT(browseImage(bool)));
   grid->addWidget(pictureButton,1,2);
 
   /* Image Fill */
 
-  fill = new QGroupBox("Image Fill",parent);
+  fill = new QGroupBox(tr("Image Fill"),parent);
 
   layout = new QHBoxLayout();
   fill->setLayout(layout);
   grid->addWidget(fill,2,0,1,3);
 
-  stretchRadio = new QRadioButton("Stretch Image",fill);
+  stretchRadio = new QRadioButton(tr("Stretch Image"),fill);
   connect(stretchRadio,SIGNAL(clicked(bool)),
           this,          SLOT(stretch(bool)));
   layout->addWidget(stretchRadio);
-  tileRadio    = new QRadioButton("Tile Image",fill);
+  tileRadio    = new QRadioButton(tr("Tile Image"),fill);
   connect(tileRadio,SIGNAL(clicked(bool)),
           this,       SLOT(   tile(bool)));
   layout->addWidget(tileRadio);
@@ -4202,9 +4202,9 @@ void BorderGui::checkChange(int value)
 
   _border.hideTip = hideArrowsChk->isChecked();
   if (hideArrowsChk->isChecked())
-    hideArrowsChk->setText("Rotate Icon Arrows Hidden");
+    hideArrowsChk->setText(tr("Rotate Icon Arrows Hidden"));
   else
-    hideArrowsChk->setText("Hide Rotate Icon Arrows");
+    hideArrowsChk->setText(tr("Hide Rotate Icon Arrows"));
 
   meta->setValue(_border);
   enable(true); // Is Rotate Icon
@@ -4724,7 +4724,7 @@ SepGui::SepGui(
   QPushButton *button;
   QComboBox   *typeCombo;
 
-  QLabel *label = new QLabel("Width",parent);
+  QLabel *label = new QLabel(tr("Width"),parent);
   grid->addWidget(label,0,0);
 
   thicknessEdit = new QLineEdit(parent);
@@ -4745,7 +4745,7 @@ SepGui::SepGui(
           this,                   SLOT(thicknessChange(const QString&)));
   grid->addWidget(thicknessEdit,0,1);
 
-  label = new QLabel("Length",parent);
+  label = new QLabel(tr("Length"),parent);
   grid->addWidget(label,1,0);
 
   typeCombo = new QComboBox(parent);
@@ -4776,7 +4776,7 @@ SepGui::SepGui(
           this,                SLOT(lengthChange(const QString&)));
   grid->addWidget(lengthEdit,1,2);
 
-  label = new QLabel("Color",parent);
+  label = new QLabel(tr("Color"),parent);
   grid->addWidget(label,2,0);
 
   colorExample = new QLabel(parent);
@@ -4790,12 +4790,12 @@ SepGui::SepGui(
   colorExample->setToolTip(tr("Hex RGB %1").arg(c.name(QColor::HexRgb).toUpper()));
   grid->addWidget(colorExample,2,1);
 
-  button = new QPushButton("Change",parent);
+  button = new QPushButton(tr("Change"),parent);
   connect(button,SIGNAL(clicked(bool)),
           this,  SLOT(  browseColor(bool)));
   grid->addWidget(button,2,2);
 
-  label = new QLabel("Margins",parent);
+  label = new QLabel(tr("Margins"),parent);
   grid->addWidget(label,3,0);
 
   marginXEdit = new QLineEdit(parent);
@@ -4982,7 +4982,7 @@ ResolutionGui::ResolutionGui(
 
   QLabel    *label;
 
-  label = new QLabel("Units",parent);
+  label = new QLabel(tr("Units"),parent);
   grid->addWidget(label,0,0);
 
   dataT = _meta->type();
@@ -5126,8 +5126,8 @@ PreferredRendererGui::PreferredRendererGui(
 
   grid->addWidget(combo,0,0,2,1);
 
-  ldvSingleCallBox = new QCheckBox("Use LDView Single Call",parent);
-  ldvSingleCallBox->setToolTip("Process a page's part or assembly images in a single renderer call");
+  ldvSingleCallBox = new QCheckBox(tr("Use LDView Single Call"),parent);
+  ldvSingleCallBox->setToolTip(tr("Process a page's part or assembly images in a single renderer call"));
   ldvSingleCallBox->setChecked(meta->value().useLDVSingleCall);
   ldvSingleCallBox->setEnabled(meta->value().renderer == RENDERER_LDVIEW);
 
@@ -5136,8 +5136,8 @@ PreferredRendererGui::PreferredRendererGui(
 
   grid->addWidget(ldvSingleCallBox,0,1);
 
-  ldvSnapshotListBox = new QCheckBox("Use LDView Snapshot List",parent);
-  ldvSnapshotListBox->setToolTip("Capture Single Call ldraw image-generation files in a single list file");
+  ldvSnapshotListBox = new QCheckBox(tr("Use LDView Snapshot List"),parent);
+  ldvSnapshotListBox->setToolTip(tr("Capture Single Call ldraw image-generation files in a single list file"));
   ldvSnapshotListBox->setChecked(meta->value().useLDVSnapShotList);
   ldvSnapshotListBox->setEnabled(meta->value().renderer == RENDERER_LDVIEW && meta->value().useLDVSingleCall);
 
@@ -5146,13 +5146,13 @@ PreferredRendererGui::PreferredRendererGui(
 
   grid->addWidget(ldvSnapshotListBox,1,1);
 
-  povFileGeneratorGrpBox = new QGroupBox("POV File Generation Renderer",parent);
+  povFileGeneratorGrpBox = new QGroupBox(tr("POV File Generation Renderer"),parent);
   povFileGeneratorGrpBox->setEnabled(meta->value().renderer == RENDERER_POVRAY);
   povFileGeneratorGrpBox->setLayout(hLayout);
 
   grid->addWidget(povFileGeneratorGrpBox,2,0,1,2);
 
-  nativeButton = new QRadioButton("Native",povFileGeneratorGrpBox);
+  nativeButton = new QRadioButton(tr("Native"),povFileGeneratorGrpBox);
   nativeButton->setChecked(meta->value().useNativeGenerator);
 
   connect(nativeButton,SIGNAL(clicked(bool)),
@@ -5160,7 +5160,7 @@ PreferredRendererGui::PreferredRendererGui(
 
   hLayout->addWidget(nativeButton);
 
-  ldvButton = new QRadioButton("LDView",povFileGeneratorGrpBox);
+  ldvButton = new QRadioButton(tr("LDView"),povFileGeneratorGrpBox);
   ldvButton->setChecked(!meta->value().useNativeGenerator);
 
   connect(ldvButton,SIGNAL(clicked(bool)),
@@ -5841,8 +5841,8 @@ ShowSubModelGui::ShowSubModelGui(
         setWhatsThis(lpubWT(WT_GUI_SUBMODEL_PREVIEW_DISPLAY, tr("Preview Display")));
     }
 
-    showSubmodelsBox = new QCheckBox("Show submodel at first step",parent);
-    showSubmodelsBox->setToolTip("Show Submodel image on first step page");
+    showSubmodelsBox = new QCheckBox(tr("Show submodel at first step"),parent);
+    showSubmodelsBox->setToolTip(tr("Show Submodel image on first step page"));
     showSubmodelsBox->setChecked(meta->show.value());
     connect(showSubmodelsBox,SIGNAL(clicked(bool)),
             this,            SLOT(showSubmodelsChange(bool)));
@@ -5850,13 +5850,13 @@ ShowSubModelGui::ShowSubModelGui(
 
     QSettings Settings;
     showSubmodelsDefaultSettings = Settings.contains(QString("%1/%2").arg(SETTINGS,"ShowSubmodels"));
-    showSubmodelsDefaultBox = new QCheckBox("Set In Preferences",parent);
-    showSubmodelsDefaultBox->setToolTip("Save show submodel to application settings.");
+    showSubmodelsDefaultBox = new QCheckBox(tr("Set In Preferences"),parent);
+    showSubmodelsDefaultBox->setToolTip(tr("Save show submodel to application settings."));
     showSubmodelsDefaultBox->setChecked(showSubmodelsDefaultSettings);
     grid->addWidget(showSubmodelsDefaultBox,1,0);
 
-    showSubmodelsMetaBox = new QCheckBox("Add LPub Meta Command",parent);
-    showSubmodelsMetaBox->setToolTip("Add show submodel as a global meta command to the LDraw file.");
+    showSubmodelsMetaBox = new QCheckBox(tr("Add LPub Meta Command"),parent);
+    showSubmodelsMetaBox->setToolTip(tr("Add show submodel as a global meta command to the LDraw file."));
     showSubmodelsMetaBox->setChecked(!showSubmodelsDefaultSettings);
     grid->addWidget(showSubmodelsMetaBox,1,1);
 
@@ -5864,21 +5864,21 @@ ShowSubModelGui::ShowSubModelGui(
     line->setFrameShape(QFrame::HLine);
     grid->addWidget(line,2,0,1,2);
 
-    showTopModelBox = new QCheckBox("Show main model at first step",parent);
-    showTopModelBox->setToolTip("Show main model image on first step page");
+    showTopModelBox = new QCheckBox(tr("Show main model at first step"),parent);
+    showTopModelBox->setToolTip(tr("Show main model image on first step page"));
     showTopModelBox->setChecked(meta->showTopModel.value());
     connect(showTopModelBox,SIGNAL(clicked(bool)),
             this,           SLOT(showTopModelChange(bool)));
     grid->addWidget(showTopModelBox,3,0,1,2);
 
     showTopModelDefaultSettings = Settings.contains(QString("%1/%2").arg(SETTINGS,"ShowTopModel"));
-    showTopModelDefaultBox = new QCheckBox("Set In Preferences",parent);
-    showTopModelDefaultBox->setToolTip("Save show top model to application settings.");
+    showTopModelDefaultBox = new QCheckBox(tr("Set In Preferences"),parent);
+    showTopModelDefaultBox->setToolTip(tr("Save show top model to application settings."));
     showTopModelDefaultBox->setChecked(showTopModelDefaultSettings);
     grid->addWidget(showTopModelDefaultBox,4,0);
 
-    showTopModelMetaBox = new QCheckBox("Add LPub Meta Command",parent);
-    showTopModelMetaBox->setToolTip("Add show top model  as a global meta command to the LDraw file.");
+    showTopModelMetaBox = new QCheckBox(tr("Add LPub Meta Command"),parent);
+    showTopModelMetaBox->setToolTip(tr("Add show top model  as a global meta command to the LDraw file."));
     showTopModelMetaBox->setChecked(!showTopModelDefaultSettings);
     grid->addWidget(showTopModelMetaBox,4,1);
 
@@ -5886,21 +5886,21 @@ ShowSubModelGui::ShowSubModelGui(
     line->setFrameShape(QFrame::HLine);
     grid->addWidget(line,5,0,1,2);
 
-    showSubmodelInCalloutBox = new QCheckBox("Show submodel in callout",parent);
-    showSubmodelInCalloutBox->setToolTip("Show Submodel image in callout");
+    showSubmodelInCalloutBox = new QCheckBox(tr("Show submodel in callout"),parent);
+    showSubmodelInCalloutBox->setToolTip(tr("Show Submodel image in callout"));
     showSubmodelInCalloutBox->setChecked(meta->showSubmodelInCallout.value());
     connect(showSubmodelInCalloutBox,SIGNAL(clicked(bool)),
             this,            SLOT(showSubmodelInCalloutChange(bool)));
     grid->addWidget(showSubmodelInCalloutBox,6,0,1,2);
 
     showSubmodelInCalloutDefaultSettings = Settings.contains(QString("%1/%2").arg(SETTINGS,"ShowSubmodelInCallout"));
-    showSubmodelInCalloutDefaultBox = new QCheckBox("Set In Preferences",parent);
-    showSubmodelInCalloutDefaultBox->setToolTip("Save show submodel in callout to application settings.");
+    showSubmodelInCalloutDefaultBox = new QCheckBox(tr("Set In Preferences"),parent);
+    showSubmodelInCalloutDefaultBox->setToolTip(tr("Save show submodel in callout to application settings."));
     showSubmodelInCalloutDefaultBox->setChecked(showSubmodelInCalloutDefaultSettings);
     grid->addWidget(showSubmodelInCalloutDefaultBox,7,0);
 
-    showSubmodelInCalloutMetaBox = new QCheckBox("Add LPub Meta Command",parent);
-    showSubmodelInCalloutMetaBox->setToolTip("Add show submodel in callout as a global meta command to the LDraw file.");
+    showSubmodelInCalloutMetaBox = new QCheckBox(tr("Add LPub Meta Command"),parent);
+    showSubmodelInCalloutMetaBox->setToolTip(tr("Add show submodel in callout as a global meta command to the LDraw file."));
     showSubmodelInCalloutMetaBox->setChecked(!showSubmodelInCalloutDefaultSettings);
     grid->addWidget(showSubmodelInCalloutMetaBox,7,1);
 
@@ -5908,8 +5908,8 @@ ShowSubModelGui::ShowSubModelGui(
     line->setFrameShape(QFrame::HLine);
     grid->addWidget(line,8,0,1,2);
 
-    showInstanceCountBox = new QCheckBox("Show submodel instance count",parent);
-    showInstanceCountBox->setToolTip("Show Submodel instance count");
+    showInstanceCountBox = new QCheckBox(tr("Show submodel instance count"),parent);
+    showInstanceCountBox->setToolTip(tr("Show Submodel instance count"));
     showInstanceCountBox->setChecked(meta->showInstanceCount.value());
     connect(showInstanceCountBox,SIGNAL(clicked(bool)),
             this,                SLOT(showInstanceCountChange(bool)));
@@ -5918,13 +5918,13 @@ ShowSubModelGui::ShowSubModelGui(
     grid->addWidget(showInstanceCountBox,9,0,1,2);
 
     showInstanceCountDefaultSettings = Settings.contains(QString("%1/%2").arg(SETTINGS,"ShowInstanceCount"));
-    showInstanceCountDefaultBox = new QCheckBox("Set In Preferences",parent);
-    showInstanceCountDefaultBox->setToolTip("Save show submodel instance count to application settings.");
+    showInstanceCountDefaultBox = new QCheckBox(tr("Set In Preferences"),parent);
+    showInstanceCountDefaultBox->setToolTip(tr("Save show submodel instance count to application settings."));
     showInstanceCountDefaultBox->setChecked(showInstanceCountDefaultSettings);
     grid->addWidget(showInstanceCountDefaultBox,10,0);
 
-    showInstanceCountMetaBox = new QCheckBox("Add LPub Meta Command",parent);
-    showInstanceCountMetaBox->setToolTip("Add show submodel instance count as a global meta command to the LDraw file.");
+    showInstanceCountMetaBox = new QCheckBox(tr("Add LPub Meta Command"),parent);
+    showInstanceCountMetaBox->setToolTip(tr("Add show submodel instance count as a global meta command to the LDraw file."));
     showInstanceCountMetaBox->setChecked(!showInstanceCountDefaultSettings);
     grid->addWidget(showInstanceCountMetaBox,10,1);
 
@@ -6138,7 +6138,7 @@ PliSortGui::PliSortGui(
   }
 
   QLabel      *label;
-  label = new QLabel("Sort By",parent);
+  label = new QLabel(tr("Sort By"),parent);
   grid->addWidget(label,0,0);
 
   int currentIndex;
@@ -6217,61 +6217,61 @@ PliSortOrderGui::PliSortOrderGui(
   int triSort = tokenMap[meta->tertiary.value()];
 
   // Direction Groups
-  gbPrimary = new QGroupBox("Primary",parent);
+  gbPrimary = new QGroupBox(tr("Primary"),parent);
   gbPrimary->setEnabled(priSort != NoSort);
   hLayout = new QHBoxLayout();
   gbPrimary->setLayout(hLayout);
   grid->addWidget(gbPrimary,0,0);
 
-  primaryAscendingRadio = new QRadioButton("Asc",gbPrimary);
-  primaryAscendingRadio->setToolTip("Sort Ascending");
+  primaryAscendingRadio = new QRadioButton(tr("Asc"),gbPrimary);
+  primaryAscendingRadio->setToolTip(tr("Sort Ascending"));
   primaryAscendingRadio->setChecked(tokenMap[meta->primaryDirection.value()] == SortAscending);
   hLayout->addWidget(primaryAscendingRadio);
   connect(primaryAscendingRadio,SIGNAL(clicked(bool)),
           this,                 SLOT(  directionChange(bool)));
 
-  primaryDescendingRadio = new QRadioButton("Des",gbPrimary);
-  primaryDescendingRadio->setToolTip("Sort Descending");
+  primaryDescendingRadio = new QRadioButton(tr("Des"),gbPrimary);
+  primaryDescendingRadio->setToolTip(tr("Sort Descending"));
   primaryDescendingRadio->setChecked(tokenMap[meta->primaryDirection.value()] == SortDescending);
   hLayout->addWidget(primaryDescendingRadio);
   connect(primaryDescendingRadio,SIGNAL(clicked(bool)),
           this,                  SLOT(  directionChange(bool)));
 
-  gbSecondary = new QGroupBox("Secondary",parent);
+  gbSecondary = new QGroupBox(tr("Secondary"),parent);
   gbSecondary->setEnabled(secSort != NoSort);
   hLayout = new QHBoxLayout();
   gbSecondary->setLayout(hLayout);
   grid->addWidget(gbSecondary,0,1);
 
-  secondaryAscendingRadio = new QRadioButton("Asc",gbSecondary);
-  secondaryAscendingRadio->setToolTip("Sort Ascending");
+  secondaryAscendingRadio = new QRadioButton(tr("Asc"),gbSecondary);
+  secondaryAscendingRadio->setToolTip(tr("Sort Ascending"));
   secondaryAscendingRadio->setChecked(tokenMap[meta->secondaryDirection.value()] == SortAscending);
   hLayout->addWidget(secondaryAscendingRadio);
   connect(secondaryAscendingRadio,SIGNAL(clicked(bool)),
           this,                   SLOT(  directionChange(bool)));
 
-  secondaryDescendingRadio = new QRadioButton("Des",gbSecondary);
-  secondaryDescendingRadio->setToolTip("Sort Descending");
+  secondaryDescendingRadio = new QRadioButton(tr("Des"),gbSecondary);
+  secondaryDescendingRadio->setToolTip(tr("Sort Descending"));
   secondaryDescendingRadio->setChecked(tokenMap[meta->secondaryDirection.value()] == SortDescending);
   hLayout->addWidget(secondaryDescendingRadio);
   connect(secondaryDescendingRadio,SIGNAL(clicked(bool)),
           this,                    SLOT(  directionChange(bool)));
 
-  gbTertiary = new QGroupBox("Tertiary",parent);
+  gbTertiary = new QGroupBox(tr("Tertiary"),parent);
   gbTertiary->setEnabled(triSort != NoSort);
   hLayout = new QHBoxLayout();
   gbTertiary->setLayout(hLayout);
   grid->addWidget(gbTertiary,0,2);
 
-  tertiaryAscendingRadio = new QRadioButton("Asc",gbTertiary);
-  tertiaryAscendingRadio->setToolTip("Sort Ascending");
+  tertiaryAscendingRadio = new QRadioButton(tr("Asc"),gbTertiary);
+  tertiaryAscendingRadio->setToolTip(tr("Sort Ascending"));
   tertiaryAscendingRadio->setChecked(tokenMap[meta->tertiaryDirection.value()] == SortAscending);
   hLayout->addWidget(tertiaryAscendingRadio);
   connect(tertiaryAscendingRadio,SIGNAL(clicked(bool)),
           this,                  SLOT(  directionChange(bool)));
 
-  tertiaryDescendingRadio = new QRadioButton("Des",gbTertiary);
-  tertiaryDescendingRadio->setToolTip("Sort Descending");
+  tertiaryDescendingRadio = new QRadioButton(tr("Des"),gbTertiary);
+  tertiaryDescendingRadio->setToolTip(tr("Sort Descending"));
   tertiaryDescendingRadio->setChecked(tokenMap[meta->tertiaryDirection.value()] == SortDescending);
   hLayout->addWidget(tertiaryDescendingRadio);
   connect(tertiaryDescendingRadio,SIGNAL(clicked(bool)),
@@ -8095,7 +8095,7 @@ SubModelColorGui::SubModelColorGui(
   }
 
   // 01
-  subModelColor0Label = new QLabel("Level One",parent);
+  subModelColor0Label = new QLabel(tr("Level One"),parent);
   grid->addWidget(subModelColor0Label,0,0);
 
   subModelColor0Example = new QLabel(parent);
@@ -8107,14 +8107,14 @@ SubModelColorGui::SubModelColorGui(
   subModelColor0Example->setStyleSheet(styleSheet);
   grid->addWidget(subModelColor0Example,0,1);
 
-  subModelColor0Button = new QPushButton("Change");
+  subModelColor0Button = new QPushButton(tr("Change"));
   connect(subModelColor0Button,SIGNAL(             clicked(bool)),
           this,                  SLOT(browseSubModelColor0(bool)));
 
   grid->addWidget(subModelColor0Button,0,2);
 
   // 02
-  subModelColor1Label = new QLabel("Level Two",parent);
+  subModelColor1Label = new QLabel(tr("Level Two"),parent);
   grid->addWidget(subModelColor1Label,1,0);
 
   subModelColor1Example = new QLabel(parent);
@@ -8126,14 +8126,14 @@ SubModelColorGui::SubModelColorGui(
   subModelColor1Example->setStyleSheet(styleSheet);
   grid->addWidget(subModelColor1Example,1,1);
 
-  subModelColor1Button = new QPushButton("Change");
+  subModelColor1Button = new QPushButton(tr("Change"));
   connect(subModelColor1Button,SIGNAL(             clicked(bool)),
           this,                  SLOT(browseSubModelColor1(bool)));
 
   grid->addWidget(subModelColor1Button,1,2);
 
   // 03
-  subModelColor2Label = new QLabel("Level Three",parent);
+  subModelColor2Label = new QLabel(tr("Level Three"),parent);
   grid->addWidget(subModelColor2Label,2,0);
 
   subModelColor2Example = new QLabel(parent);
@@ -8145,14 +8145,14 @@ SubModelColorGui::SubModelColorGui(
   subModelColor2Example->setStyleSheet(styleSheet);
   grid->addWidget(subModelColor2Example,2,1);
 
-  subModelColor2Button = new QPushButton("Change");
+  subModelColor2Button = new QPushButton(tr("Change"));
   connect(subModelColor2Button,SIGNAL(             clicked(bool)),
           this,                  SLOT(browseSubModelColor2(bool)));
 
   grid->addWidget(subModelColor2Button,2,2);
 
   // 04
-  subModelColor3Label = new QLabel("Level Four",parent);
+  subModelColor3Label = new QLabel(tr("Level Four"),parent);
   grid->addWidget(subModelColor3Label,3,0);
 
   subModelColor3Example = new QLabel(parent);
@@ -8164,7 +8164,7 @@ SubModelColorGui::SubModelColorGui(
   subModelColor3Example->setStyleSheet(styleSheet);
   grid->addWidget(subModelColor3Example,3,1);
 
-  subModelColor3Button = new QPushButton("Change");
+  subModelColor3Button = new QPushButton(tr("Change"));
   connect(subModelColor3Button,SIGNAL(             clicked(bool)),
           this,                  SLOT(browseSubModelColor3(bool)));
 
@@ -8298,7 +8298,7 @@ void TargetRotateDialogGui::getTargetAndRotateValues(QStringList &keyList) {
         subGridLayout->addWidget(button,i,2);
     }
 
-    form->addRow(new QLabel("Step Rotation"));
+    form->addRow(new QLabel(tr("Step Rotation")));
     QGroupBox *rotateBox = new QGroupBox(tr("Rotation"));
     rotateBox->setWhatsThis(lpubWT(WT_GUI_STEP_ROTATION,rotateBox->title()));
     form->addWidget(rotateBox);
@@ -8534,7 +8534,7 @@ void OpenWithProgramDialogGui::setProgramEntry(int i) {
 
     QLineEdit *programNameEdit = new QLineEdit(programName, dialog);
     programNameEdit->setClearButtonEnabled(true);
-    programNameEdit->setToolTip("Edit program name");
+    programNameEdit->setToolTip(tr("Edit program name"));
     if (i < programNameEditList.size()) {
         programsLayout->removeWidget(programNameEditList.at(i));
         programNameEditList.replace(i,programNameEdit);
@@ -8545,7 +8545,7 @@ void OpenWithProgramDialogGui::setProgramEntry(int i) {
 
     QLineEdit *programPathEdit = new QLineEdit(programPath, dialog);
     programPathEdit->setClearButtonEnabled(true);
-    programPathEdit->setToolTip("Edit program path - program arguments are supported, use quotes with spaced names");
+    programPathEdit->setToolTip(tr("Edit program path - program arguments are supported, use quotes with spaced names"));
     if (i < programPathEditList.size()) {
         programsLayout->removeWidget(programPathEditList.at(i));
         programPathEditList.replace(i,programPathEdit);
@@ -8583,7 +8583,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     QLabel *maxProgramsLabel = new QLabel(tr("Program Slots:"), dialog);
 
     QSpinBox * maxProgramsSpinBox = new QSpinBox(dialog);
-    maxProgramsSpinBox->setToolTip("Adjust the number of program slots availabe in the dialogue");
+    maxProgramsSpinBox->setToolTip(tr("Adjust the number of program slots availabe in the dialogue"));
     maxProgramsSpinBox->setRange(1,100);
     maxProgramsSpinBox->setSingleStep(1);
     maxProgramsSpinBox->setValue(maxPrograms);
@@ -8613,7 +8613,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     connect(maxProgramsSpinBox,SIGNAL(valueChanged(int)), this,SLOT (maxProgramsValueChanged(int)));
 
     // program box
-    QGroupBox *programBox = new QGroupBox("Open With Programs",dialog);
+    QGroupBox *programBox = new QGroupBox(tr("Open With Programs"),dialog);
     mainLayout->addWidget(programBox);
     programsLayout = new QGridLayout(programBox);
     programsLayout->setColumnStretch(1,10);
@@ -8621,7 +8621,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     programBox->setLayout(programsLayout);
 
     // system editor box
-    QGroupBox *systemEditorBox = new QGroupBox("System Editor", dialog);
+    QGroupBox *systemEditorBox = new QGroupBox(tr("System Editor"), dialog);
     mainLayout->addWidget(systemEditorBox);
     systemEditorLayout = new QGridLayout(systemEditorBox);
     systemEditorBox->setLayout(systemEditorLayout);
@@ -8641,9 +8641,9 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     systemEditorEdit = new QLineEdit(programPath, dialog);
     systemEditorEdit->setClearButtonEnabled(true);
 #ifdef Q_OS_MACOS
-    systemEditorEdit->setToolTip("Select text editor and arguments or leave blank to use 'open -e' - TextEdit");
+    systemEditorEdit->setToolTip(tr("Select text editor and arguments or leave blank to use 'open -e' - TextEdit"));
 #else
-    systemEditorEdit->setToolTip("Select text editor and arguments or leave blank to use the operating system designated editor");
+    systemEditorEdit->setToolTip(tr("Select text editor and arguments or leave blank to use the operating system designated editor"));
 #endif
     systemEditorLayout->addWidget(systemEditorEdit,0,1);
     systemEditorButton = new QPushButton(QString("Browse..."), dialog);

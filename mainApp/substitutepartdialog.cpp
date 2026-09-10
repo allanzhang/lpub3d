@@ -383,12 +383,12 @@ void SubstitutePartDialog::showExtendedAttributes(bool clicked) {
 
     if (ui->extendedSettingsBox->isHidden()) {
         ui->extendedSettingsBox->show();
-        mShowExtAttrsBtn->setText("Less...");
+        mShowExtAttrsBtn->setText(tr("Less..."));
         this->adjustSize();
     }
     else{
         ui->extendedSettingsBox->hide();
-        mShowExtAttrsBtn->setText("More...");
+        mShowExtAttrsBtn->setText(tr("More..."));
         this->adjustSize();
     }
 }

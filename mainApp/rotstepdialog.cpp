@@ -46,7 +46,7 @@ RotStepDialog::RotStepDialog(
   QVBoxLayout *layout = new QVBoxLayout(this);
   setLayout(layout);
 
-  QGroupBox *box = new QGroupBox("Rotate Submodel",this);
+  QGroupBox *box = new QGroupBox(tr("Rotate Submodel"),this);
   layout->addWidget(box);
   rotStep = new RotStepGui(&meta,box);
 

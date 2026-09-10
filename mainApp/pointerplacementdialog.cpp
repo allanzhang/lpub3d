@@ -105,7 +105,7 @@ PointerPlacementDialog::PointerPlacementDialog(
   outsideGrid    = new QGridLayout;
   horizontalLine = new QFrame;
 
-  lblRelativeTo = new QLabel("Relative To",parent);
+  lblRelativeTo = new QLabel(tr("Relative To"),parent);
   lblRelativeTo->setToolTip(tr("Select the item that %1 will be moved relative to.").arg(title));
   outsideGrid->addWidget(lblRelativeTo,0,0);
 

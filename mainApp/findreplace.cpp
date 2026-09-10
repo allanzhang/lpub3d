@@ -83,7 +83,7 @@
     grid = new QGridLayout;
     widget->setLayout(grid);
 
-    box = new QGroupBox("String to find");
+    box = new QGroupBox(tr("String to find"));
     grid->addWidget(box);
     gropuLayout = new QGridLayout;
     box->setLayout(gropuLayout);
@@ -111,16 +111,16 @@
     grid = new QGridLayout;
     widget->setLayout(grid);
 
-    box = new QGroupBox("String to find and replace");
+    box = new QGroupBox(tr("String to find and replace"));
     grid->addWidget(box);
     gropuLayout = new QGridLayout;
     box->setLayout(gropuLayout);
 
-    findReplace->label = new QLabel("Find: ");
+    findReplace->label = new QLabel(tr("Find: "));
     gropuLayout->addWidget(findReplace->label,0,0,1,1);
     gropuLayout->addWidget(findReplace->textFind,0,1,1,4);
 
-    findReplace->label = new QLabel("Replace: ");
+    findReplace->label = new QLabel(tr("Replace: "));
     gropuLayout->addWidget(findReplace->label,1,0,1,1);
     gropuLayout->addWidget(findReplace->textReplace,1,1,1,4);
 
@@ -216,30 +216,30 @@ FindReplaceCtrls::FindReplaceCtrls(QPlainTextEdit *textEdit, QWidget *parent)
     // find items
     textFind    = new HistoryLineEdit/*QLineEdit*/;
 
-    buttonFind  = new QPushButton("Find");
-    buttonFindNext = new QPushButton("Find Next");
-    buttonFindPrevious = new QPushButton("Find Previous");
-    buttonFindAll = new QPushButton("Find All");
-    buttonFindClear = new QPushButton("Clear");
+    buttonFind  = new QPushButton(tr("Find"));
+    buttonFindNext = new QPushButton(tr("Find Next"));
+    buttonFindPrevious = new QPushButton(tr("Find Previous"));
+    buttonFindAll = new QPushButton(tr("Find All"));
+    buttonFindClear = new QPushButton(tr("Clear"));
 
     // options
-    checkboxCase = new QCheckBox("Case Senstive");
-    checkboxWord = new QCheckBox("Whole Words");
-    checkboxRegExp = new QCheckBox("Regular Expression");
+    checkboxCase = new QCheckBox(tr("Case Senstive"));
+    checkboxWord = new QCheckBox(tr("Whole Words"));
+    checkboxRegExp = new QCheckBox(tr("Regular Expression"));
 
     // replace items
     textReplace = new HistoryLineEdit/*QLineEdit*/;
 
-    buttonReplace = new QPushButton("Replace");
-    buttonReplaceAndFind = new QPushButton("Replace && Find");
-    buttonReplaceAll = new QPushButton("Replace All");
-    buttonReplaceClear = new QPushButton("Clear");
+    buttonReplace = new QPushButton(tr("Replace"));
+    buttonReplaceAndFind = new QPushButton(tr("Replace && Find"));
+    buttonReplaceAll = new QPushButton(tr("Replace All"));
+    buttonReplaceClear = new QPushButton(tr("Clear"));
 
     // message
     labelMessage = new QLabel;
 
     // cancel button
-    buttonCancel = new QPushButton("Cancel");
+    buttonCancel = new QPushButton(tr("Cancel"));
 
     // events
     connect(textFind, SIGNAL(textChanged(QString)), this, SLOT(textFindChanged()));

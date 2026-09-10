@@ -73,6 +73,7 @@
 #include "submodelcolordialog.h"
 #include "substitutepartdialog.h"
 #include "texteditdialog.h"
+#include <QCoreApplication>
 
 enum AppendType { AppendNoOption, AppendAtModel, AppendAtPage, AppendAtSubmodel };
 enum MonoColors { Blue, TransWhite, NumColors };
@@ -2649,9 +2650,9 @@ void MetaItem::addDivider(
     QDialog *dialog = new QDialog();
 
     QFormLayout *form = new QFormLayout(dialog);
-    form->addRow(new QLabel("Divider Allocation"));
+    form->addRow(new QLabel(QCoreApplication::translate("MetaItem", "Divider Allocation")));
 
-    QGroupBox *box = new QGroupBox("Select Allocation");
+    QGroupBox *box = new QGroupBox(QCoreApplication::translate("MetaItem", "Select Allocation"));
     form->addWidget(box);
 
     QList<QRadioButton *> options;
@@ -2666,9 +2667,9 @@ void MetaItem::addDivider(
         if (allocLabels[i] == "Horizontal")
             option->setChecked(defAlloc == Horizontal);
         if (option->isChecked())
-            option->setToolTip("This option places the traditional divider that bisects the current range.");
+            option->setToolTip(QCoreApplication::translate("MetaItem", "This option places the traditional divider that bisects the current range."));
         else
-            option->setToolTip("This option places a divider perpendicular to the previous range divider.");
+            option->setToolTip(QCoreApplication::translate("MetaItem", "This option places a divider perpendicular to the previous range divider."));
         options << option;
     }
 

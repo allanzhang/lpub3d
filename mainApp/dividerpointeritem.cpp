@@ -26,6 +26,8 @@
 #include "dividerpointeritem.h"
 #include "ranges_item.h"
 #include "step.h"
+#include <QCoreApplication>
+#include <QCoreApplication>
 
 /*
  * This is the constructor of a graphical pointer
@@ -171,7 +173,7 @@ DividerPointerItem::DividerPointerItem(
   head->setPen(tipPen);
   head->setBrush(brushColor);
   head->setFlag(QGraphicsItem::ItemIsSelectable,false);
-  head->setToolTip("Pointer head - drag to move");
+  head->setToolTip(QCoreApplication::translate("DividerPointerItem", "Pointer head - drag to move"));
   addToGroup(head);
 
   for (int i = 0; i < NumPointerGrabbers; i++) {

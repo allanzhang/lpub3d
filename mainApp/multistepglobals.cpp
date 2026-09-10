@@ -194,7 +194,7 @@ GlobalMultiStepDialog::GlobalMultiStepDialog(
 
   /* Assembly camera settings */
 
-  box = new QGroupBox("Default Assembly Orientation");
+  box = new QGroupBox(tr("Default Assembly Orientation"));
   box->setWhatsThis(lpubWT(WT_SETUP_SHARED_MODEL_ORIENTATION,box->title()));
   vlayout->addWidget(box);
   boxGrid = new QGridLayout();

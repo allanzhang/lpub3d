@@ -47,7 +47,7 @@ PreferredRendererDialog::PreferredRendererDialog(
   QVBoxLayout *layout = new QVBoxLayout(this);
   setLayout(layout);
 
-  QGroupBox *box = new QGroupBox("Renderer",this);
+  QGroupBox *box = new QGroupBox(tr("Renderer"),this);
   layout->addWidget(box);
   preferredRenderer = new PreferredRendererGui(&meta,box);
 

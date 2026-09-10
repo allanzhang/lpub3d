@@ -47,7 +47,7 @@ DividerDialog::DividerDialog(
   QVBoxLayout *layout = new QVBoxLayout(this);
   setLayout(layout);
 
-  QGroupBox *box = new QGroupBox("Divider",this);
+  QGroupBox *box = new QGroupBox(tr("Divider"),this);
   layout->addWidget(box);
   seperator = new SepGui(&meta,box);
 
