@@ -3575,6 +3575,44 @@
     </message>
 </context>
 <context>
+    <name>BuildMetadata</name>
+    <message>
+        <location filename="../declarations.h" line="40" />
+        <source>An LDraw Building Instruction Editor</source>
+        <translation>LDraw 拼搭说明书编辑器</translation>
+    </message>
+    <message>
+        <location filename="../declarations.h" line="49" />
+        <source>Dev-debug</source>
+        <translation>开发调试版</translation>
+    </message>
+    <message>
+        <location filename="../declarations.h" line="50" />
+        <source>Dev-release</source>
+        <translation>开发发布版</translation>
+    </message>
+    <message>
+        <location filename="../declarations.h" line="51" />
+        <source>Next-debug</source>
+        <translation>预览调试版</translation>
+    </message>
+    <message>
+        <location filename="../declarations.h" line="52" />
+        <source>Next-release</source>
+        <translation>预览发布版</translation>
+    </message>
+    <message>
+        <location filename="../declarations.h" line="53" />
+        <source>Release</source>
+        <translation>正式版</translation>
+    </message>
+    <message>
+        <location filename="../declarations.h" line="54" />
+        <source>Version</source>
+        <translation>版本</translation>
+    </message>
+</context>
+<context>
     <name>BuildModDialogGui</name>
     <message>
         <location filename="../metagui.cpp" line="8788" />

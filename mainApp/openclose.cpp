@@ -999,12 +999,12 @@ void Gui::closeModelFile()
     QString const topModel = lpub->ldrawFile.topLevelFile();
     if (!topModel.isEmpty())
         emit lpub->messageSig(LOG_INFO, tr("Model unloaded. File closed - %1.").arg(topModel));
-    QString windowTitle = QString::fromLatin1(VER_FILEDESCRIPTION_STR);
+    QString windowTitle = fileDescriptionDisplayString();
     int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
     QString versionInfo;
 #if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
     versionInfo = QString("%1 v%2%3 (%4)")
-                          .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), QString::fromLatin1(VER_BUILD_TYPE_STR));
+                          .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), buildTypeDisplayString());
 #else
 
     versionInfo = QString("%1 v%2%3")
@@ -1231,7 +1231,7 @@ void Gui::setCurrentFile(const QString &fileName)
   Gui::curFile = fileName;
   QString windowTitle;
   if (fileName.size() == 0) {
-    windowTitle = QString::fromLatin1(VER_FILEDESCRIPTION_STR);
+    windowTitle = fileDescriptionDisplayString();
   } else {
     QFileInfo fileInfo(fileName);
     windowTitle = fileInfo.fileName();
@@ -1241,7 +1241,7 @@ void Gui::setCurrentFile(const QString &fileName)
   int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
 #if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
   versionInfo = QString("%1 v%2%3 (%4)")
-                        .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), QString::fromLatin1(VER_BUILD_TYPE_STR));
+                        .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), buildTypeDisplayString());
 #else
   versionInfo = QString("%1 v%2%3")
                         .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString());

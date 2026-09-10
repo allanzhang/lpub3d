@@ -638,7 +638,7 @@ void PreferencesDialog::setPreferences()
 
   QString versionInfo;
 #if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
-  versionInfo = tr("Change Log for Version %1%2 (%3)").arg(version, revision, QString::fromLatin1(VER_BUILD_TYPE_STR));
+  versionInfo = tr("Change Log for Version %1%2 (%3)").arg(version, revision, buildTypeDisplayString());
 #else
   versionInfo = tr("Change Log for Version %1%2").arg(version, revision);
 #endif

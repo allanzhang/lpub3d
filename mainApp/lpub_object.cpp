@@ -1456,7 +1456,7 @@ bool LPub::exportMetaCommands(const QString &fileName, QString &result, bool pla
         doc.prepend(tr("  Last Update.: %1").arg(VER_COMPILE_DATE_STR));
         doc.prepend(tr("  Version.....: %1.%2").arg(VER_PRODUCTVERSION_STR, VER_COMMIT_STR));
         doc.prepend(tr("  Author......: %1").arg(VER_PUBLISHER_STR));
-        doc.prepend(tr("  Name........: %1, LPUB Meta Commands").arg(VER_FILEDESCRIPTION_STR));
+        doc.prepend(tr("  Name........: %1, LPUB Meta Commands").arg(fileDescriptionDisplayString()));
         doc.prepend(QString());
         doc.prepend(generated);
 
@@ -1540,7 +1540,7 @@ bool LPub::exportMetaCommands(const QString &fileName, QString &result, bool pla
         doc.prepend(tr("  Last Update.: %1<br>").arg(VER_COMPILE_DATE_STR));
         doc.prepend(tr("  Version.....: %1.%2<br>").arg(VER_PRODUCTVERSION_STR, VER_COMMIT_STR));
         doc.prepend(tr("  Author......: %1<br>").arg(VER_PUBLISHER_STR));
-        doc.prepend(tr("  Name........: %1, LPUB Meta Commands<br>").arg(VER_FILEDESCRIPTION_STR));
+        doc.prepend(tr("  Name........: %1, LPUB Meta Commands<br>").arg(fileDescriptionDisplayString()));
         doc.prepend("<p>");
         doc.prepend("</div>");
         doc.prepend("<p>---------------------------------------------------------------------------------</p>");

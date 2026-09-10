@@ -749,7 +749,7 @@ int Application::initialize(lcCommandLineOptions &Options)
 int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
 #if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
     hdr = QString("%1 v%2%3 (%4) for %5")
-                 .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), QString::fromLatin1(VER_BUILD_TYPE_STR), QString::fromLatin1(VER_COMPILED_FOR));
+                 .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), buildTypeDisplayString(), QString::fromLatin1(VER_COMPILED_FOR));
 #else
 
     hdr = QString("%1 v%2%3 for %4")
@@ -845,7 +845,7 @@ int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
                 m_console_mode = true;
                 m_print_output = true;
                 int rev = QString::fromLatin1(VER_REVISION_STR).toInt();
-                fprintf(stdout, "%s", qUtf8Printable(tr("\n%1, %2 %3%4, Commit %5, SHA %6\n").arg(VER_PRODUCTNAME_STR, VER_BUILD_TYPE_STR, VER_PRODUCTVERSION_STR, rev ? tr(", Revision %1").arg(VER_REVISION_STR) : "", VER_COMMIT_STR, VER_GIT_SHA_STR)));
+                fprintf(stdout, "%s", qUtf8Printable(tr("\n%1, %2 %3%4, Commit %5, SHA %6\n").arg(VER_PRODUCTNAME_STR, buildTypeDisplayString(), VER_PRODUCTVERSION_STR, rev ? tr(", Revision %1").arg(VER_REVISION_STR) : "", VER_COMMIT_STR, VER_GIT_SHA_STR)));
                 fprintf(stdout, "%s", qUtf8Printable(tr("Compiled with Qt %1 on %2, running with Qt %3\n").arg(QT_VERSION_STR, __DATE__, qVersion())));
                 fflush(stdout);
                 if (ArgIdx == NumArgsIdx) {

@@ -20,6 +20,44 @@
 #define NAME_H
 
 #include "QString"
+#include <QCoreApplication>
+#include "version.h"
+
+// ~~~~~ Translatable build metadata ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+//
+// VER_FILEDESCRIPTION_STR and VER_BUILD_TYPE_STR (version.h) are compile-time
+// macros, so lupdate cannot see through them and their text stays English no
+// matter how complete the .ts is. Both are rebuilt here from translatable
+// parts: the macro values are spelled out as literals for extraction and
+// matched at runtime. Keep the literals in sync with version.h.
+
+// The file description, as used for the window title:
+// "<product name> - <description>".
+inline QString fileDescriptionDisplayString()
+{
+  return QString::fromLatin1(VER_PRODUCTNAME_STR)
+         + QStringLiteral(" - ")
+         + QCoreApplication::translate("BuildMetadata",
+                                       "An LDraw Building Instruction Editor");
+}
+
+// The build type - which value is compiled in depends on the build
+// configuration selected in version.h.
+inline QString buildTypeDisplayString()
+{
+  static const char *const values[] = {
+    QT_TRANSLATE_NOOP("BuildMetadata", "Dev-debug"),
+    QT_TRANSLATE_NOOP("BuildMetadata", "Dev-release"),
+    QT_TRANSLATE_NOOP("BuildMetadata", "Next-debug"),
+    QT_TRANSLATE_NOOP("BuildMetadata", "Next-release"),
+    QT_TRANSLATE_NOOP("BuildMetadata", "Release"),
+    QT_TRANSLATE_NOOP("BuildMetadata", "Version"),
+  };
+  for (const char *value : values)
+    if (qstrcmp(VER_BUILD_TYPE_STR, value) == 0)
+      return QCoreApplication::translate("BuildMetadata", value);
+  return QString::fromLatin1(VER_BUILD_TYPE_STR);
+}
 
 #define LPUB3D_OPACITY_TO_ALPHA(o,a)(((o * a) + (100 - 1)) / 100)
 
