@@ -59,7 +59,6 @@
 #include "dividerpointeritem.h"
 #include "calloutpointeritem.h"
 #include "pagepointeritem.h"
-#include "waitingspinnerwidget.h"
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 #include <QtConcurrent>
 #include <QCoreApplication>
@@ -1203,11 +1202,6 @@ int Gui::addGraphicsPageItems(
     }
 
     //page->relativeType = SingleStepType;
-
-    if (Preferences::modeGUI) {
-        if (gui->waitingSpinner->isSpinning())
-            gui->waitingSpinner->stop();
-    }
 
     gui->statusBarMsg("");
 

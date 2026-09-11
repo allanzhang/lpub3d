@@ -56,7 +56,6 @@ class SnippetCompleter;
 
 class TextEditor;
 class LDrawFile;
-class WaitingSpinnerWidget;
 class LoadModelWorker;
 
 class SnippetCollection;
@@ -127,7 +126,6 @@ signals:
     void editModelFileSig();
     void SelectedPartLinesSig(const QVector<TypeLine>&, PartSource = EDITOR_LINE);
     void setStepForLineSig();
-    void waitingSpinnerStopSig();
     void triggerUndoSig();
     void triggerRedoSig();
 
@@ -191,8 +189,6 @@ private slots:
 #ifndef QT_NO_CLIPBOARD
     void updateClipboard();
 #endif
-    void waitingSpinnerStart();
-    void waitingSpinnerStop();
     void contentLoaded();
     void loadFinished();
 
@@ -239,7 +235,6 @@ protected:
 
     void closeEvent(QCloseEvent*_event) override;
 
-    WaitingSpinnerWidget *_waitingSpinner;
     TextEditor        *_textEdit;
     LoadModelWorker   *loadModelWorker;
     Highlighter       *highlighter;

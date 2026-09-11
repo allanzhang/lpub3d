@@ -32,7 +32,6 @@
 #include "metagui.h"
 #include "lc_profile.h"
 #include "lc_previewwidget.h"
-#include "waitingspinnerwidget.h"
 
 
 enum FileOpts {
@@ -1027,10 +1026,7 @@ void Gui::closeModelFile()
 
 bool Gui::openFile(const QString &fileName)
 {
-  if (gui->maybeSave() && gui->saveBuildModification()) {
-    if (Preferences::modeGUI)
-      gui->waitingSpinner->start();
-  } else {
+  if (!(gui->maybeSave() && gui->saveBuildModification())) {
     return false;
   }
 
@@ -1061,9 +1057,6 @@ bool Gui::openFile(const QString &fileName)
                               tr("Load LDraw file '%1' aborted.").arg(fileInfo.absoluteFilePath()) :
                               tr("Load LDraw file '%1' failed.").arg(fileInfo.absoluteFilePath()));
     gui->closeModelFile();
-    if (Preferences::modeGUI)
-      if (gui->waitingSpinner->isSpinning())
-        gui->waitingSpinner->stop();
     return false;
   }
   Gui::displayPageNum = 1 + Gui::pa;

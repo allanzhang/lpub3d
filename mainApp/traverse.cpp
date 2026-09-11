@@ -53,7 +53,6 @@
 #include "pagepointer.h"
 #include "ranges_item.h"
 #include "separatorcombobox.h"
-#include "waitingspinnerwidget.h"
 #include "lc_application.h"
 
 // Set to enable write parts output file for debugging // TODO: delete from header
@@ -5591,8 +5590,6 @@ void Gui::pagesCounted()
                     emit gui->messageSig(LOG_ERROR, tr("LDraw file '%1' is invalid - nothing loaded.")
                                                  .arg(fileInfo.absoluteFilePath()));
                     gui->closeModelFile();
-                    if (waitingSpinner->isSpinning())
-                        waitingSpinner->stop();
                 }
             } // modeGUI and not exporting
         } else if (! Gui::ContinuousPage()) {
@@ -5610,8 +5607,6 @@ void Gui::pagesCounted()
                 emit gui->clearViewerWindowSig();
                 Gui::m_exportMode = Gui::m_saveExportMode;
             }
-            if (waitingSpinner->isSpinning())
-                waitingSpinner->stop();
         } // modeGUI and not exporting
     } // drawPage
 

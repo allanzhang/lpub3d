@@ -398,7 +398,6 @@ class QUndoStack;
 class QUndoCommand;
 class SeparatorComboBox;
 
-class WaitingSpinnerWidget;
 class MpdComboDelegate;
 
 class EditWindow;
@@ -1709,7 +1708,6 @@ private:
   EditWindow            *editModeWindow;     // the model file editable by the user in
   QProgressBar          *progressBarPerm;    // Right side progress bar
   QLabel                *progressLabelPerm;  // 
-  WaitingSpinnerWidget  *waitingSpinner;     // waiting spinner animation
   PliSubstituteParts     pliSubstituteParts; // internal list of PLI/BOM substitute parts
 
 #if QT_VERSION >= QT_VERSION_CHECK(5,14,0)

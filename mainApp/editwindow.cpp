@@ -62,7 +62,6 @@
 #include "step.h"
 #include "color.h"
 #include "messageboxresizable.h"
-#include "waitingspinnerwidget.h"
 #include "threadworkers.h"
 #include "lpub_qtcompat.h"
 #include "commonmenus.h"
@@ -2422,8 +2421,6 @@ void EditWindow::showLine(int lineNumber, int lineType)
           pages++;
 
       if (pages) {
-          waitingSpinnerStart();
-
           emit lpub->messageSig(LOG_INFO_STATUS,QString("Show Line %1 - Loading buffered page %2 lines...")
                                      .arg(lineNumber).arg(linesNeeded));
 
@@ -2437,7 +2434,6 @@ void EditWindow::showLine(int lineNumber, int lineType)
           emit lpub->messageSig(LOG_DEBUG,QString("Show Line add %1 %2 to line %3 from line %4.")
                                      .arg(pages).arg(pages == 1 ? "page" : "pages").arg(lineNumber).arg(_pageIndx + 1));
 #endif
-          waitingSpinnerStop();
       }
   }
 
@@ -2704,7 +2700,6 @@ void EditWindow::displayFile(
   lineCount       = 0;
   _pageIndx       = 0;
   _contentLoaded  = false;
-  _waitingSpinner = nullptr;
   displayTimer.start();
 
   disconnect(_textEdit->document(), SIGNAL(contentsChange(int,int,int)),
@@ -2743,8 +2738,6 @@ void EditWindow::displayFile(
       return;
     }
 
-    waitingSpinnerStart();
-
     fileWatcher.removePath(fileName);
 
     disconnect(_textEdit, SIGNAL(textChanged()),
@@ -2761,8 +2754,6 @@ void EditWindow::displayFile(
   {
     if (!ldrawFile)
         return;
-
-    waitingSpinnerStart();
 
     lineCount = ldrawFile->size(fileName);
 
@@ -2789,8 +2780,6 @@ void EditWindow::displayFile(
 
 void EditWindow::loadFinished()
 {
-    waitingSpinnerStop();
-
     const QString message = tr("%1 File %2: %3, %4 lines - %5")
             .arg(isIncludeFile ? "Include" : "Model")
             .arg(reloaded ? "Updated" : "Loaded")
@@ -2866,62 +2855,12 @@ void EditWindow::contentLoaded()
         connect(_textEdit->document(), SIGNAL(contentsChange(int,int,int)),
                 this,                  SLOT(  contentsChange(int,int,int)));;
 
-        waitingSpinnerStop();
-
         emit lpub->messageSig(LOG_ERROR, QString("Editor load failed for %1").arg(fileName));
 
         return;
     }
 
     loadFinished();
-}
-
-void EditWindow::waitingSpinnerStart()
-{
-    if (!Preferences::modeGUI)
-        return;
-
-    if (_waitingSpinner) {
-        if (_waitingSpinner->isSpinning())
-            _waitingSpinner->stop();
-    }
-
-    QColor spinnerColor(
-           Preferences::darkTheme ?
-           Preferences::themeColors[THEME_DARK_PALETTE_TEXT] : LPUB3D_DEFAULT_COLOUR);
-    _waitingSpinner = new WaitingSpinnerWidget(this);
-    _waitingSpinner->setColor(QColor(spinnerColor));
-    _waitingSpinner->setRoundness(70.0);
-    _waitingSpinner->setMinimumTrailOpacity(15.0);
-    _waitingSpinner->setTrailFadePercentage(70.0);
-    _waitingSpinner->setNumberOfLines(12);
-    _waitingSpinner->setLineLength(10);
-    _waitingSpinner->setLineWidth(5);
-    _waitingSpinner->setInnerRadius(10);
-    _waitingSpinner->setRevolutionsPerSecond(1);
-    _waitingSpinner->setTextColor(_waitingSpinner->color());
-    _waitingSpinner->setText(tr("Loading..."));
-    _waitingSpinner->start();
-
-#ifdef QT_DEBUG_MODE
-    emit lpub->messageSig(LOG_DEBUG,QString("2. Waiting Spinner Started"));
-#endif
-
-    //QApplication::processEvents();
-}
-
-void EditWindow::waitingSpinnerStop()
-{
-  if (!Preferences::modeGUI)
-      return;
-
-  if (_waitingSpinner && _waitingSpinner->isSpinning()) {
-    _waitingSpinner->stop();
-
-#ifdef QT_DEBUG_MODE
-    emit lpub->messageSig(LOG_DEBUG,QString("4. Waiting Spinner Stopped"));
-#endif
-  }
 }
 
 void EditWindow::redraw()

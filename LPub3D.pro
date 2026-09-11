@@ -130,10 +130,6 @@
 #  `--- /quazip
 #  |     |--- quazip.pri           Library declarations and directives project include
 #  |     |--- quazip.pro           Library project file - consumes common.pri, quazip.pri
-#  |
-#  `--- /waitingspinner
-#        |--- WaitingSpinner.pri   Library declarations and directives project include
-#        |--- waitingspinner.pro   Library project file - consumes common.pri, waitingspinner.pri
 
 TEMPLATE    = subdirs
 
@@ -315,12 +311,6 @@ lclib.makefile             = Makefile.lclib
 lclib.target               = sub-lclib
 lclib.depends              =
 
-SUBDIRS                   += waitingspinner
-waitingspinner.subdir      = waitingspinner
-waitingspinner.makefile    = Makefile.waitingspinner
-waitingspinner.target      = sub-waitingspinner
-waitingspinner.depends     =
-
 SUBDIRS                   += mainApp
 mainApp.subdir             = mainApp
 mainApp.makefile           = Makefile.mainapp
@@ -328,8 +318,7 @@ mainApp.target             = sub-mainapp
 mainApp.depends            = quazip \
                              ldrawini \
                              lclib \
-                             ldvqt_$${POSTFIX} \
-                             waitingspinner
+                             ldvqt_$${POSTFIX}
 
 RESOURCES                 += \
                              qsimpleupdater/etc/resources/qsimpleupdater.qrc \

@@ -114,7 +114,7 @@ DEFINES    += EXPORT_3DS
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-INCLUDEPATH += . ../lclib/common ../lclib/qt ../ldvlib ../waitingspinner ../ldrawini jsonconfig
+INCLUDEPATH += . ../lclib/common ../lclib/qt ../ldvlib ../ldrawini jsonconfig
 DEPENDPATH  += .
 
 #~~ LDView headers ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,13 +169,11 @@ CONFIG(debug, debug|release) {
         QUAZIP_LIB = QuaZIPd14
         LC_LIB = LCd259
         LDVQT_LIB = LDVQtd46
-        WAITING_SPINNER_LIB = WaitingSpinnerd10
         msys {
             LDRAWINI_LIB = $$lower($$LDRAWINI_LIB)
             QUAZIP_LIB = $$lower(lib$$QUAZIP_LIB)
             LC_LIB = $$lower($$LC_LIB)
             LDVQT_LIB = $$lower($$LDVQT_LIB)
-            WAITING_SPINNER_LIB = $$lower($$WAITING_SPINNER_LIB)
         }
     }
 
@@ -184,7 +182,6 @@ CONFIG(debug, debug|release) {
         QUAZIP_LIB = libQuaZIP_debug
         LC_LIB = LC_debug
         LDVQT_LIB = LDVQt_debug
-        WAITING_SPINNER_LIB = WaitingSpinner_debug
     }
 
     unix:!macx {
@@ -192,7 +189,6 @@ CONFIG(debug, debug|release) {
         QUAZIP_LIB = libquazipd
         LC_LIB = lcd
         LDVQT_LIB = ldvqtd
-        WAITING_SPINNER_LIB = waitingspinnerd
 
         # For Linux builds, simplify debug ops by using runtime content in build folders
         DEFINES += DEBUG_MODE_USE_BUILD_FOLDERS
@@ -219,13 +215,11 @@ CONFIG(debug, debug|release) {
         QUAZIP_LIB = QuaZIP14
         LC_LIB = LC259
         LDVQT_LIB = LDVQt46
-        WAITING_SPINNER_LIB = WaitingSpinner10
         msys {
             LDRAWINI_LIB = $$lower($$LDRAWINI_LIB)
             QUAZIP_LIB = $$lower(lib$$QUAZIP_LIB)
             LC_LIB = $$lower($$LC_LIB)
             LDVQT_LIB = $$lower($$LDVQT_LIB)
-            WAITING_SPINNER_LIB = $$lower($$WAITING_SPINNER_LIB)
         }
     }
 
@@ -234,7 +228,6 @@ CONFIG(debug, debug|release) {
         QUAZIP_LIB = libQuaZIP
         LC_LIB = LC
         LDVQT_LIB = LDVQt
-        WAITING_SPINNER_LIB = WaitingSpinner
     }
 
     unix:!macx {
@@ -242,7 +235,6 @@ CONFIG(debug, debug|release) {
         QUAZIP_LIB = libquazip
         LC_LIB = lc
         LDVQT_LIB = ldvqt
-        WAITING_SPINNER_LIB = waitingspinner
     }
 
     LDVQT_LIB = $${LDVQT_LIB}$${POSTFIX}
@@ -388,8 +380,6 @@ LIBS += $$absolute_path($$OUT_PWD/../quazip/$${DESTDIR}/$${QUAZIP_LIB}.$${EXT_S}
 #message("~~~ DEBUG_QUAZIP_LIB: $$absolute_path($$OUT_PWD/../quazip/$${DESTDIR}/$${QUAZIP_LIB}.$${EXT_S}) ~~~")
 
 LIBS += -L$$absolute_path($$OUT_PWD/../ldrawini/$$DESTDIR) -l$$LDRAWINI_LIB
-
-LIBS += -L$$absolute_path($$OUT_PWD/../waitingspinner/$$DESTDIR) -l$$WAITING_SPINNER_LIB
 
 LIBS += -L$$absolute_path($$OUT_PWD/../lclib/$$DESTDIR) -l$$LC_LIB
 

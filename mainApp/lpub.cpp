@@ -70,7 +70,6 @@
 #include "dialogexportpages.h"
 #include "numberitem.h"
 #include "progress_dialog.h"
-#include "waitingspinnerwidget.h"
 #include "qsimpleupdater.h"
 #include "commonmenus.h"
 
@@ -422,8 +421,6 @@ void Gui::displayPage()
         } else {
           Gui::setAbortProcess(false);
           gui->closeModelFile();
-          if (gui->waitingSpinner->isSpinning())
-            gui->waitingSpinner->stop();
         }
       }
     } else if (!Gui::exporting()) {
@@ -3427,20 +3424,6 @@ Gui::Gui()
         editWindow    = new EditWindow(this);         // remove inheritance 'this' to independently manage window
         editModeWindow= new EditWindow(nullptr,true); // true = this is a model file edit window
         parmsWindow   = new ParmsWindow();
-
-        QColor spinnerColor(
-               Preferences::darkTheme ?
-               Preferences::themeColors[THEME_DARK_PALETTE_TEXT] : LPUB3D_DEFAULT_COLOUR);
-        waitingSpinner = new WaitingSpinnerWidget(KpageView);
-        waitingSpinner->setColor(spinnerColor);
-        waitingSpinner->setRoundness(70.0);
-        waitingSpinner->setMinimumTrailOpacity(15.0);
-        waitingSpinner->setTrailFadePercentage(70.0);
-        waitingSpinner->setNumberOfLines(12);
-        waitingSpinner->setLineLength(10);
-        waitingSpinner->setLineWidth(5);
-        waitingSpinner->setInnerRadius(10);
-        waitingSpinner->setRevolutionsPerSecond(1);
 
         mpdCombo = new SeparatorComboBox(this);
         mpdCombo->setMinimumContentsLength(MPD_COMBO_MIN_ITEMS_DEFAULT);
