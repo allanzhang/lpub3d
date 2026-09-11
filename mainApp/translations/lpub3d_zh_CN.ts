@@ -28811,12 +28811,12 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="4329" />
         <source>  You can configure the Blender LDraw addon settings.&lt;br&gt;  - Blender Executable: set Blender path. On entry,&lt;br&gt;    %1 will automatically apply the setting and&lt;br&gt;    attempt the configure the LDraw addon.&lt;br&gt;  - %1 Blender LDraw Addon: you can update the LDraw&lt;br&gt;    addon which will downlod the latest addon or apply&lt;br&gt;    the current addon if the version is the same or newer&lt;br&gt;    than the online version.&lt;br&gt;    You can view the standard output log for the update.&lt;br&gt;&lt;br&gt;  - Enabled Addon Modules: check the desired import module.&lt;br&gt;    The LDraw Import TN import module is the long-standing&lt;br&gt;    Blender LDraw import addon, while the LDraw Import MM&lt;br&gt;    addon was recently introduced. The latter addon also&lt;br&gt;    offer LDraw export functionality.&lt;br&gt;    The %1 3D Image Render addon is mandatory but if&lt;br&gt;    no import module is enabled, none of the modules&lt;br&gt;    will be enabled in Blender so it will not be possible&lt;br&gt;    to perform an LDraw model import or render.&lt;br&gt;&lt;br&gt;  - LDraw Import Addon Paths: addon paths are specific&lt;br&gt;    to the enabled addon import module.&lt;br&gt;  - LDraw Import Addon Settings: addon settings are&lt;br&gt;    specific to the enabled addon import module.&lt;br&gt;  - Apply: apply the addon path and setting preferences.&lt;br&gt;  - Show/Hide Paths: show or hide the addon paths&lt;br&gt;    display box.&lt;br&gt;  - Reset: reset the addon path and setting preferences.&lt;br&gt;    You can select how to reset addon settings.&lt;br&gt;    The choice is since last apply or system default.&lt;br&gt;&lt;br&gt;  You can see the specific description of each setting&lt;br&gt;  if you hover over the setting to display its tooltip.&lt;br&gt;&lt;br&gt;  Image Width, Image Height and Render Percentage are&lt;br&gt;  always updated from the current step model when the&lt;br&gt;  this dialog is opened. These settngs can be manually&lt;br&gt;  overridden, Also, when Crop Image is checked the&lt;br&gt;  current step cropped image width and height is&lt;br&gt;  calculated and and used&lt;br&gt;&lt;br&gt;  Use the dialogue window scroll bar to access the&lt;br&gt;  complete selection of addon settings.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以配置 Blender LDraw 附加组件的设置。&lt;br&gt;  - Blender 可执行文件：设置 Blender 路径。填入后，&lt;br&gt;    %1 将自动应用该设置，并&lt;br&gt;    尝试配置 LDraw 附加组件。&lt;br&gt;  - %1 Blender LDraw 附加组件：你可以更新 LDraw&lt;br&gt;    附加组件，此操作将下载最新附加组件，或在&lt;br&gt;    当前附加组件版本与在线版本相同或更新时&lt;br&gt;    应用当前附加组件。&lt;br&gt;    你可以查看该更新的标准输出日志。&lt;br&gt;&lt;br&gt;  - 启用的附加模块：勾选所需的导入模块。&lt;br&gt;    LDraw Import TN 导入模块是历史悠久的&lt;br&gt;    Blender LDraw 导入附加组件，而 LDraw Import MM&lt;br&gt;    附加组件则是新近引入的。后者还&lt;br&gt;    提供 LDraw 导出功能。&lt;br&gt;    %1 3D Image Render 附加组件是必需的，但若&lt;br&gt;    未启用任何导入模块，则 Blender 中&lt;br&gt;    不会启用任何模块，因而无法&lt;br&gt;    执行 LDraw 模型导入或渲染。&lt;br&gt;&lt;br&gt;  - LDraw 导入附加组件路径：附加组件路径取决于&lt;br&gt;    已启用的附加组件导入模块。&lt;br&gt;  - LDraw 导入附加组件设置：附加组件设置取决于&lt;br&gt;    已启用的附加组件导入模块。&lt;br&gt;  - 应用：应用附加组件路径和设置偏好。&lt;br&gt;  - 显示/隐藏路径：显示或隐藏附加组件路径&lt;br&gt;    显示框。&lt;br&gt;  - 重置：重置附加组件路径和设置偏好。&lt;br&gt;    你可以选择重置附加组件设置的方式。&lt;br&gt;    可选择自上次应用以来或系统默认。&lt;br&gt;&lt;br&gt;  将鼠标悬停在某项设置上可显示其工具提示，&lt;br&gt;  从而查看该项设置的具体说明。&lt;br&gt;&lt;br&gt;  打开此对话框时，图像宽度、图像高度和渲染百分比&lt;br&gt;  会始终从当前步骤模型更新。这些设置&lt;br&gt;  可以手动覆盖。此外，勾选“裁剪图像”后，&lt;br&gt;  会计算当前步骤裁剪后的图像宽度和高度，&lt;br&gt;  并将该尺寸&lt;br&gt;  用于渲染&lt;br&gt;&lt;br&gt;  使用对话框的滚动条可访问&lt;br&gt;  全部附加组件设置。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4379" />
         <source>  Render the current step image using POV-Ray.&lt;br&gt;&lt;br&gt;  Configure the POV-Ray single image render&lt;br&gt;  settings and output.&lt;br&gt;  - Browse: Change the name and or location of&lt;br&gt;    the rendered image.&lt;br&gt;  - Render: Render the image.&lt;br&gt;  - Settings: launch the POV-Ray settings dialog.&lt;br&gt;  - Output: view the render process standard output log.&lt;br&gt;&lt;br&gt;  If you reset the rendered image, the default settings&lt;br&gt;  (except image width and height), will also be reset.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  使用 POV-Ray 渲染当前步骤图像。&lt;br&gt;&lt;br&gt;  配置 POV-Ray 单张图像渲染&lt;br&gt;  设置与输出。&lt;br&gt;  - 浏览：更改渲染图像的名称和/或&lt;br&gt;    保存位置。&lt;br&gt;  - 渲染：渲染图像。&lt;br&gt;  - 设置：启动 POV-Ray 设置对话框。&lt;br&gt;  - 输出：查看渲染过程的标准输出日志。&lt;br&gt;&lt;br&gt;  重置渲染图像时，默认设置&lt;br&gt;  （图像宽度和高度除外）也会一并重置。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4400" />
@@ -28831,7 +28831,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="4429" />
         <source>  Configure the default step rotation.&lt;br&gt;  Set the x-angle, y-angle and z-angle, which are &lt;br&gt;  the individual rotation angles for the different&lt;br&gt;  axes in degree (-360 to 360).&lt;br&gt;&lt;br&gt;  Set the step transformation using one of the three&lt;br&gt;  options - relative, absolute or additive.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置默认步骤旋转。&lt;br&gt;  设置 x 角度、y 角度和 z 角度，它们分别是&lt;br&gt;  不同坐标轴各自的旋转角度，&lt;br&gt;  单位为度（-360 到 360）。&lt;br&gt;&lt;br&gt;  使用以下三种方式之一设置步骤变换：&lt;br&gt;  相对、绝对或累加。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4446" />
@@ -28861,32 +28861,32 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="4521" />
         <source>  Edit the selected LDraw part category.&lt;br&gt;&lt;br&gt;  Part category attributes are:&lt;br&gt;  - Name: you can change the category name.&lt;br&gt;  - Keywords: add or edit category keyword(s).&lt;br&gt;&lt;br&gt;    Category keywords are taken from the LDraw&lt;br&gt;    part description and are prefixed with '^%',&lt;br&gt;    for example ^%Door.&lt;br&gt;&lt;br&gt;    When specifying multiple keyowrds, each keyword&lt;br&gt;    entry must be delimited by ' | ', do observe the&lt;br&gt;    single space padding so and example would be&lt;br&gt;    ^%Door | ^%Window.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  编辑选定的 LDraw 零件类别。&lt;br&gt;&lt;br&gt;  零件类别属性包括：&lt;br&gt;  - 名称：可以更改类别名称。&lt;br&gt;  - 关键词：添加或编辑类别关键词。&lt;br&gt;&lt;br&gt;    类别关键词取自 LDraw&lt;br&gt;    零件描述，并以 '^%' 为前缀，&lt;br&gt;    例如 ^%Door。&lt;br&gt;&lt;br&gt;    指定多个关键词时，每个关键词&lt;br&gt;    条目必须以 ' | ' 分隔，注意&lt;br&gt;    前后各有一个空格，例如&lt;br&gt;    ^%Door | ^%Window。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4543" />
         <source>  Add an new LDraw part category.&lt;br&gt;&lt;br&gt;  Part category attributes are:&lt;br&gt;  - Name: create a new category name.&lt;br&gt;  - Keywords: add category keyword(s).&lt;br&gt;&lt;br&gt;    Category keywords are taken from the LDraw&lt;br&gt;    part description and are prefixed with '^%',&lt;br&gt;    for example ^%Door.&lt;br&gt;&lt;br&gt;    When specifying multiple keyowrds, each keyword&lt;br&gt;    entry must be delimited by ' | ', do observe the&lt;br&gt;    single space padding so and example would be&lt;br&gt;    ^%Door | ^%Window.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  添加新的 LDraw 零件类别。&lt;br&gt;&lt;br&gt;  零件类别属性包括：&lt;br&gt;  - 名称：创建新的类别名称。&lt;br&gt;  - 关键词：添加类别关键词。&lt;br&gt;&lt;br&gt;    类别关键词取自 LDraw&lt;br&gt;    零件描述，并以 '^%' 为前缀，&lt;br&gt;    例如 ^%Door。&lt;br&gt;&lt;br&gt;    指定多个关键词时，每个关键词&lt;br&gt;    条目必须以 ' | ' 分隔，注意&lt;br&gt;    前后各有一个空格，例如&lt;br&gt;    ^%Door | ^%Window。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4568" />
         <source>  You can filter the command list to efficiently find your desired entry.&lt;br&gt;&lt;br&gt;  The filter dialog supports the following actions.&lt;br&gt;  - Auto-complete: keyword suggenstions are presented after the third entered character.&lt;br&gt;    This option is on by default.&lt;br&gt;&lt;br&gt;  - Case Sensitive: respect upper and lower case entries as unique.&lt;br&gt;&lt;br&gt;  - Fixed String: present entries matching the entered string. This option is on by default.&lt;br&gt;&lt;br&gt;  - Regular Expression: present entries matching the entered regular expression.&lt;br&gt;&lt;br&gt;  - Wildcard: present entries that satisfy the pattern created with the wildcard symbol '*'.&lt;br&gt;&lt;br&gt;  Click the filter icon to expose the filer actions menu which allow you to change the default filter actions.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以筛选命令列表，以便高效找到所需条目。&lt;br&gt;&lt;br&gt;  筛选对话框支持以下操作。&lt;br&gt;  - 自动补全：输入第三个字符后给出关键词建议。&lt;br&gt;    此选项默认开启。&lt;br&gt;&lt;br&gt;  - 区分大小写：将大小写不同的条目视为不同条目。&lt;br&gt;&lt;br&gt;  - 固定字符串：显示与所输入字符串匹配的条目。此选项默认开启。&lt;br&gt;&lt;br&gt;  - 正则表达式：显示与所输入正则表达式匹配的条目。&lt;br&gt;&lt;br&gt;  - 通配符：显示符合用通配符 '*' 构建的模式的条目。&lt;br&gt;&lt;br&gt;  点击筛选图标可展开筛选操作菜单，用于更改默认筛选操作。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4588" />
         <source>  This table view presents all %1 meta commands.&lt;br&gt;&lt;br&gt;  An editable copy of a selected meta command is displayed in the editor dialog.&lt;br&gt;  Use the editable copy to set appropriate values before inserting the command into the command editor.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  此表格视图列出全部 %1 元命令。&lt;br&gt;&lt;br&gt;  所选元命令的可编辑副本会显示在编辑器对话框中。&lt;br&gt;  请使用该可编辑副本设置合适的取值，然后再将命令插入命令编辑器。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4603" />
         <source>  You can insert meta commands and you can edit meta commands to reflect desired values or content important to you.&lt;br&gt;  A copy of the selected command with placeholder values is copied to the text editor to provide a starting point.&lt;br&gt;&lt;br&gt;  The following button actions enable your command edit and insert:&lt;br&gt;  - &lt;b&gt;Edit:&lt;/b&gt; make the read-only content in the text editor editable.&lt;br&gt;  - &lt;b&gt;Reset:&lt;/b&gt; reset the command to its original state at the session start.&lt;br&gt;  - &lt;b&gt;Insert Before:&lt;/b&gt; insert your command into the LPUB command editor.&lt;br&gt;  - &lt;b&gt;Insert After:&lt;/b&gt; insert your command into the LPUB command editor.&lt;br&gt;  - &lt;b&gt;Move Up/Down:&lt;/b&gt; tailor the position of your inserted command.&lt;br&gt;  - &lt;b&gt;Ok:&lt;/b&gt; accept and persist all changes in the currnt session.&lt;br&gt;  - &lt;b&gt;Cancel:&lt;/b&gt; discard all changes in the current session.&lt;br&gt;&lt;br&gt;  Meta Command Placeholder Symbols:&lt;br&gt;  &lt;b&gt;( )&lt;/b&gt; Items within curly brackets (parentheses) are built-in meta command options.&lt;br&gt;  &lt;b&gt;&amp;lt; &amp;gt;&lt;/b&gt; Items within chevron (greater,less than) indicate meta command value options required to complete the command.&lt;br&gt;  &lt;b&gt;[ ]&lt;/b&gt; Items within square brackets indicate optional meta command(s) and or value(s).&lt;br&gt;  &lt;b&gt;&amp;quot; &amp;quot;&lt;/b&gt; Items within double quotes are &amp;quot;string&amp;quot; values. Strings containing space require quotes. Numeric values are not quoted.&lt;br&gt;  &lt;b&gt;|&lt;/b&gt;  Items bisected by a pipe (or) indicate multiple options are available; however, only one option per command can be specified.&lt;br&gt;&lt;br&gt;  Meta Command Notes:&lt;br&gt;  - The &amp;lt;&amp;quot;page size id&amp;quot;&amp;gt; meta value captures paper size, e.g. A4, B4, Letter, Custom, etc...&lt;br&gt;    For custom page size use  &amp;lt;decimal width&amp;gt; &amp;lt;decimal height&amp;gt; &amp;quot;Custom&amp;quot;&lt;br&gt;&lt;br&gt;  - The SUBMODEL metas enable font and background settings for nested submodels and callouts.&lt;br&gt;  - SUBMODEL_FONT meta is supported for up to four levels.&lt;br&gt;  - SUBMODEL_FONT_COLOR meta is supported for up to four levels.&lt;br&gt;  - SUBMODEL_BACKGROUND_COLOR meta is supported for up to four levels.&lt;br&gt;    Four level colours #FFFFFF, #FFFFCC, #FFCCCC, and #CCCCFF are predefined.&lt;br&gt;&lt;br&gt;  - The &amp;lt;stud style integer 0-7&amp;gt; meta value captures the 7 stud style types.&lt;br&gt;    0 None, 1 Thin Line, 2 Outline, 3 Sharp Top, 4 Rounded Top, 5 Flattened, 6 High Contrast Without Logo, 7 High Contrast With Logo&lt;br&gt;&lt;br&gt;  - The &amp;lt;annotation style integer 0-4&amp;gt; meta value captures the 4 annotation icon style types.&lt;br&gt;    0 None, 1 Circle, 2 Square, 3 Rectangle, 4 LEGO element&lt;br&gt;&lt;br&gt;  - The &amp;lt;line integer 0-5&amp;gt; meta value captures the 5 border line types.&lt;br&gt;    0 None, 1 Solid (----), 2 Dash (- -), 3 Dot (....), 4 Dash dot (-.-.), 5 Dash dot dot (-..-)&lt;br&gt;&lt;br&gt;  - The &amp;lt;&amp;quot;font attributes...&amp;quot;&amp;gt; meta value is a comma-delimited &amp;lt;&amp;quot;string&amp;quot;&amp;gt; of 10 attributes.&lt;br&gt;     1 FamilyName - &amp;quot;Arial&amp;quot;&lt;br&gt;     2 PointSizeF - 64 size of font, -1 if using PixelSize&lt;br&gt;     3 PixelSize  - -1 size of font, -1 if using PointSizeF&lt;br&gt;     4 StyleHint  - 255 = no style hint set, 5 = any style, 4 = system font, 0 = Helvetica, etc...&lt;br&gt;     5 Weight     - 75 = bold, 50 = normal, etc...&lt;br&gt;     6 Underline  - 0 = disabled, 1 = enabled&lt;br&gt;     7 Strikeout  - 0 = disabled, 1 = enabled&lt;br&gt;     8 StrikeOut  - 0 = disabled, 1 = enabled&lt;br&gt;     9 FixedPitch - 0 = disabled, 1 = enabled&lt;br&gt;    10 RawMode    - 0 obsolete, use default value&lt;br&gt;    Example font attributes &amp;lt;&amp;quot; Arial, 64, -1, 255, 75, 0, 0, 0, 0, 0 &amp;quot;&amp;gt;&lt;br&gt;&lt;br&gt;  Saved edited commands are written to %1 which is loaded at application startup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以插入元命令，也可以编辑元命令以体现你关注的取值或内容。&lt;br&gt;  所选命令的副本会连同占位值一并复制到文本编辑器，作为起点。&lt;br&gt;&lt;br&gt;  以下按钮操作可完成命令的编辑与插入：&lt;br&gt;  - &lt;b&gt;编辑：&lt;/b&gt;使文本编辑器中的只读内容变为可编辑。&lt;br&gt;  - &lt;b&gt;重置：&lt;/b&gt;将命令恢复为本次会话开始时的原始状态。&lt;br&gt;  - &lt;b&gt;向前插入：&lt;/b&gt;将命令插入 LPUB 命令编辑器。&lt;br&gt;  - &lt;b&gt;向后插入：&lt;/b&gt;将命令插入 LPUB 命令编辑器。&lt;br&gt;  - &lt;b&gt;上移/下移：&lt;/b&gt;调整已插入命令的位置。&lt;br&gt;  - &lt;b&gt;确定：&lt;/b&gt;接受并保留本次会话中的全部更改。&lt;br&gt;  - &lt;b&gt;取消：&lt;/b&gt;放弃本次会话中的全部更改。&lt;br&gt;&lt;br&gt;  元命令占位符号：&lt;br&gt;  &lt;b&gt;( )&lt;/b&gt; 圆括号（小括号）内的条目是内置的元命令选项。&lt;br&gt;  &lt;b&gt;&amp;lt; &amp;gt;&lt;/b&gt; 尖括号（大于、小于号）内的条目表示完成该命令所必需的元命令取值选项。&lt;br&gt;  &lt;b&gt;[ ]&lt;/b&gt; 方括号内的条目表示可选的元命令和/或取值。&lt;br&gt;  &lt;b&gt;&amp;quot; &amp;quot;&lt;/b&gt; 双引号内的条目是&amp;quot;字符串&amp;quot;取值。含空格的字符串需要加引号。数值不加引号。&lt;br&gt;  &lt;b&gt;|&lt;/b&gt;  用竖线（或）分隔的条目表示有多个可用选项；但每条命令只能指定一个选项。&lt;br&gt;&lt;br&gt;  元命令说明：&lt;br&gt;  - &amp;lt;&amp;quot;page size id&amp;quot;&amp;gt; 元取值用于指定纸张大小，例如 A4、B4、Letter、Custom 等……&lt;br&gt;    自定义纸张大小时使用  &amp;lt;decimal width&amp;gt; &amp;lt;decimal height&amp;gt; &amp;quot;Custom&amp;quot;&lt;br&gt;&lt;br&gt;  - SUBMODEL 系列元命令用于为嵌套 Sub-model 和 Callout 启用字体与背景设置。&lt;br&gt;  - SUBMODEL_FONT 元命令最多支持四级。&lt;br&gt;  - SUBMODEL_FONT_COLOR 元命令最多支持四级。&lt;br&gt;  - SUBMODEL_BACKGROUND_COLOR 元命令最多支持四级。&lt;br&gt;    预定义了四级颜色 #FFFFFF、#FFFFCC、#FFCCCC 和 #CCCCFF。&lt;br&gt;&lt;br&gt;  - &amp;lt;stud style integer 0-7&amp;gt; 元取值用于指定 7 种凸点样式类型。&lt;br&gt;    0 None、1 Thin Line、2 Outline、3 Sharp Top、4 Rounded Top、5 Flattened、6 High Contrast Without Logo、7 High Contrast With Logo&lt;br&gt;&lt;br&gt;  - &amp;lt;annotation style integer 0-4&amp;gt; 元取值用于指定 4 种标注图标样式类型。&lt;br&gt;    0 None、1 Circle、2 Square、3 Rectangle、4 LEGO element&lt;br&gt;&lt;br&gt;  - &amp;lt;line integer 0-5&amp;gt; 元取值用于指定 5 种边框线类型。&lt;br&gt;    0 None、1 Solid (----)、2 Dash (- -)、3 Dot (....)、4 Dash dot (-.-.)、5 Dash dot dot (-..-)&lt;br&gt;&lt;br&gt;  - &amp;lt;&amp;quot;font attributes...&amp;quot;&amp;gt; 元取值是由逗号分隔的 &amp;lt;&amp;quot;string&amp;quot;&amp;gt;，包含 10 个属性。&lt;br&gt;     1 FamilyName - &amp;quot;Arial&amp;quot;&lt;br&gt;     2 PointSizeF - 字体大小 64，使用 PixelSize 时为 -1&lt;br&gt;     3 PixelSize  - 字体大小 -1，使用 PointSizeF 时为 -1&lt;br&gt;     4 StyleHint  - 255 = 未设置样式提示，5 = 任意样式，4 = 系统字体，0 = Helvetica 等……&lt;br&gt;     5 Weight     - 75 = 粗体，50 = 常规，等等……&lt;br&gt;     6 Underline  - 0 = 禁用，1 = 启用&lt;br&gt;     7 Strikeout  - 0 = 禁用，1 = 启用&lt;br&gt;     8 StrikeOut  - 0 = 禁用，1 = 启用&lt;br&gt;     9 FixedPitch - 0 = 禁用，1 = 启用&lt;br&gt;    10 RawMode    - 0 已废弃，使用默认值&lt;br&gt;    字体属性示例 &amp;lt;&amp;quot; Arial, 64, -1, 255, 75, 0, 0, 0, 0, 0 &amp;quot;&amp;gt;&lt;br&gt;&lt;br&gt;  保存的已编辑命令写入 %1，该文件在应用程序启动时加载。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4658" />
         <source>  Use this button to enable the editor.&lt;br&gt;  Your changes are automatically saved to the current&lt;br&gt;  session and permanently saved when you accept your changes by clicking the OK button.&lt;br&gt;  You may insert your saved content to the command editor at any time.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  使用此按钮启用编辑器。&lt;br&gt;  你的更改会自动保存到当前&lt;br&gt;  会话中，并在你点击“确定”按钮接受更改后永久保存。&lt;br&gt;  你可以随时将已保存的内容插入命令编辑器。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4673" />
@@ -28896,12 +28896,12 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="4687" />
         <source>  Insert the edited LPUB command at the cursor position in the command editor.&lt;br&gt;  This means the content at the current line - the line where the cursor&lt;br&gt;  is - will be moved down and the command will be palced at the current line.&lt;br&gt;  This action manipulates lines in the %1 command editor.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  将编辑后的 LPUB 命令插入命令编辑器的光标位置。&lt;br&gt;  这意味着当前行（即光标所在的行）&lt;br&gt;  的内容将下移，命令会被放置在当前行。&lt;br&gt;  此操作会操作 %1 命令编辑器中的行。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4703" />
         <source>  Insert the edited LPUB command after cursor position in the command editor.&lt;br&gt;  This means the content at the current line - the line where the cursor&lt;br&gt;  is - will be moved up and the command will be palced at the current line.&lt;br&gt;  This action manipulates lines in the %1 command editor.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  将编辑后的 LPUB 命令插入命令编辑器光标之后的位置。&lt;br&gt;  这意味着当前行（即光标所在的行）&lt;br&gt;  的内容将上移，命令会被放置在当前行。&lt;br&gt;  此操作会操作 %1 命令编辑器中的行。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4719" />
@@ -28921,22 +28921,22 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="4760" />
         <source>  When parts in an assembly, submodel or part list are&lt;br&gt;  submitted to the renderer, the default latitude&lt;br&gt;  and longitude camera angles are applied to properly&lt;br&gt;  orient the rendered image.&lt;br&gt;&lt;br&gt;  You can choose to have the default camera angles&lt;br&gt;  applied as follows:&lt;br&gt;&lt;br&gt;  - Locally: camera angles applied by %1 when the parts&lt;br&gt;    are rotated and then submitted to the preferred&lt;br&gt;    renderer.&lt;br&gt;&lt;br&gt;  - Renderer: camera angles applied by the the current&lt;br&gt;    preferred renderer %2. This is to say the angles&lt;br&gt;    are supplied to the renderer along with the parts.%3&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  当装配、Sub-model 或零件清单中的零件&lt;br&gt;  提交给渲染器时，会应用默认的纬度&lt;br&gt;  和经度相机角度，以正确&lt;br&gt;  调整渲染图像的方向。&lt;br&gt;&lt;br&gt;  你可以选择按以下方式&lt;br&gt;  应用默认相机角度：&lt;br&gt;&lt;br&gt;  - 本地：在零件&lt;br&gt;    旋转并随后提交给首选&lt;br&gt;    渲染器时，由 %1 应用相机角度。&lt;br&gt;&lt;br&gt;  - 渲染器：由当前&lt;br&gt;    首选渲染器 %2 应用相机角度。也就是说，角度&lt;br&gt;    随零件一并提供给渲染器。%3&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4785" />
         <source>  Configure document attributes and cover page display.&lt;br&gt;&lt;br&gt;  - Display all page attributes: when checked all %1&lt;br&gt;    page attributes are enabled for display.&lt;br&gt;&lt;br&gt;    Page attributes are automatically configured from&lt;br&gt;    entries in preferences and from the loaded LDraw&lt;br&gt;    file.&lt;br&gt;    Alternativly, you can interctively configure page&lt;br&gt;    attributes from the Configuration menu using the&lt;br&gt;    Build Instructions Setup menu action.&lt;br&gt;&lt;br&gt;    Page attributes are grouped by the the type of page&lt;br&gt;    they are allowed to be displayed on. The two&lt;br&gt;    types of pages are cover and content pages.&lt;br&gt;&lt;br&gt;    Page attributes (and default placement) by page type&lt;br&gt;    are:&lt;br&gt;&lt;br&gt;    - Front Cover: &lt;br&gt;      ° Logo (Bottom of page header)&lt;br&gt;      ° Model Name (Top Left of Title)&lt;br&gt;      ° Title (Left of Page - anchor attribute)&lt;br&gt;      ° Author (Bottom Left of Title)&lt;br&gt;      ° Part Count (Bottom Left of Title)&lt;br&gt;      ° Model Description (Bottom Left of Parts)&lt;br&gt;      ° Publisher Description (Bottom Left of&lt;br&gt;          Model Description)&lt;br&gt;      ° Cover Image (Center of page)&lt;br&gt;&lt;br&gt;    - Content Page: &lt;br&gt;      ° URL (Top Left of page)&lt;br&gt;      ° Email Address (Top Right of page)&lt;br&gt;      ° Copyright (Bottom Left of page)&lt;br&gt;      ° Author (Left Bottom of Page Number)&lt;br&gt;&lt;br&gt;    - Back Cover: &lt;br&gt;      ° Logo (Bottom of page header)&lt;br&gt;      ° Title (Center of page)&lt;br&gt;      ° Author (Bottom of Title)&lt;br&gt;      ° Copyright (Bottom of Author)&lt;br&gt;      ° URL (Bottom of Copyright)&lt;br&gt;      ° Email (Bottom of URL)&lt;br&gt;      ° LEGO Disclaimer (Bottom of Email)&lt;br&gt;      ° %1 Plug Text (Bottom of LEGO Disclaimer)&lt;br&gt;      ° %1 Plug Logo (Bottom of Plug Text)&lt;br&gt;&lt;br&gt;  - Generage conver pages: if you have not manually&lt;br&gt;    added cover page meta commands to your LDraw file,&lt;br&gt;    you can automatically create front and back cover&lt;br&gt;    pages by enabling this item.&lt;br&gt;&lt;br&gt;  - Generage PDF Table of Contents: this option is not&lt;br&gt;    currently enabled in %1.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置文档属性和封面页显示。&lt;br&gt;&lt;br&gt;  - 显示所有页面属性：勾选后，所有 %1&lt;br&gt;    页面属性都会启用显示。&lt;br&gt;&lt;br&gt;    页面属性会自动根据&lt;br&gt;    偏好设置中的条目以及已加载的 LDraw&lt;br&gt;    文件进行配置。&lt;br&gt;    此外，你也可以通过“配置”菜单中的&lt;br&gt;    “构建说明设置”菜单操作&lt;br&gt;    交互式配置页面属性。&lt;br&gt;&lt;br&gt;    页面属性按其允许显示的页面类型&lt;br&gt;    分组。两种&lt;br&gt;    页面类型是封面页和内容页。&lt;br&gt;&lt;br&gt;    按页面类型划分的页面属性（及默认位置）&lt;br&gt;    如下：&lt;br&gt;&lt;br&gt;    - 前封面：&lt;br&gt;      ° Logo（页眉底部）&lt;br&gt;      ° 模型名称（标题左上）&lt;br&gt;      ° 标题（页面左侧 - 锚点属性）&lt;br&gt;      ° 作者（标题左下）&lt;br&gt;      ° 零件数（标题左下）&lt;br&gt;      ° 模型描述（零件左下）&lt;br&gt;      ° 发布者描述（&lt;br&gt;          模型描述左下）&lt;br&gt;      ° 封面图像（页面居中）&lt;br&gt;&lt;br&gt;    - 内容页：&lt;br&gt;      ° URL（页面左上）&lt;br&gt;      ° 邮箱地址（页面右上）&lt;br&gt;      ° 版权（页面左下）&lt;br&gt;      ° 作者（页码左下）&lt;br&gt;&lt;br&gt;    - 后封面：&lt;br&gt;      ° Logo（页眉底部）&lt;br&gt;      ° 标题（页面居中）&lt;br&gt;      ° 作者（标题下方）&lt;br&gt;      ° 版权（作者下方）&lt;br&gt;      ° URL（版权下方）&lt;br&gt;      ° 邮箱（URL 下方）&lt;br&gt;      ° LEGO 免责声明（邮箱下方）&lt;br&gt;      ° %1 插件文本（LEGO 免责声明下方）&lt;br&gt;      ° %1 插件 Logo（插件文本下方）&lt;br&gt;&lt;br&gt;  - 生成封面页：如果你尚未手动&lt;br&gt;    向 LDraw 文件添加封面页元命令，&lt;br&gt;    启用此项即可自动创建前封面和后封面&lt;br&gt;    页。&lt;br&gt;&lt;br&gt;  - 生成 PDF 目录：此选项在 %1 中&lt;br&gt;    当前未启用。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4842" />
         <source>  Configure the Native renderer and 3DViewer default&lt;br&gt;  camera settings.&lt;br&gt;&lt;br&gt;  - Display properties: show or hide camera settings in&lt;br&gt;    the 3D viewer Properties window. An item's properties&lt;br&gt;    are displayed when it is selected.&lt;br&gt;&lt;br&gt;  - Field of View: the default Native renderer and&lt;br&gt;    3D viewer FOV value.&lt;br&gt;    Set the camera field of view in degrees.&lt;br&gt;&lt;br&gt;  - Near Plane: the default Native renderer and 3D viewer&lt;br&gt;    near Z plane value.&lt;br&gt;    Set the camera near plane using a decimal number.&lt;br&gt;&lt;br&gt;  - Far Plane: the default Native renderer and 3D viewer&lt;br&gt;    far Z plane value.&lt;br&gt;    Set the camera far plane using a decimal number.&lt;br&gt;&lt;br&gt;  - Default Distance Factor: used to adjust the camera&lt;br&gt;    position nearer to or farther away from the position&lt;br&gt;    of the assembly or part.&lt;br&gt;    Set the distance factor using a decimal number.&lt;br&gt;&lt;br&gt;  - Default Camera Position: sets the initial position&lt;br&gt;    of the camera relative to the part or assembly.&lt;br&gt;    Set the default position using a decimal number.&lt;br&gt;&lt;br&gt;  - Camera Distance Factor: this is the calculated value&lt;br&gt;    of the Default Camera Position divided by (Default&lt;br&gt;    Distance Factor multiplied by negative one).&lt;br&gt;&lt;br&gt;  You can manipulate the Camera Distance Factor to set&lt;br&gt;  your desired default 'Zoom' for Native rendered items&lt;br&gt;  and items displayed in the 3D viewer.&lt;br&gt;&lt;br&gt;  Use the reset button (...) to restore the camera&lt;br&gt;  defaults.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 Native 渲染器和 3D 查看器的默认&lt;br&gt;  相机设置。&lt;br&gt;&lt;br&gt;  - 显示属性：在 3D 查看器的属性窗口中&lt;br&gt;    显示或隐藏相机设置。选中某个项时&lt;br&gt;    会显示其属性。&lt;br&gt;&lt;br&gt;  - 视场角：Native 渲染器和&lt;br&gt;    3D 查看器的默认 FOV 值。&lt;br&gt;    以度为单位设置相机视场角。&lt;br&gt;&lt;br&gt;  - 近裁剪面：Native 渲染器和 3D 查看器的默认&lt;br&gt;    近 Z 平面值。&lt;br&gt;    使用十进制数设置相机近裁剪面。&lt;br&gt;&lt;br&gt;  - 远裁剪面：Native 渲染器和 3D 查看器的默认&lt;br&gt;    远 Z 平面值。&lt;br&gt;    使用十进制数设置相机远裁剪面。&lt;br&gt;&lt;br&gt;  - 默认距离系数：用于调整相机&lt;br&gt;    与装配或零件位置之间的&lt;br&gt;    远近。&lt;br&gt;    使用十进制数设置距离系数。&lt;br&gt;&lt;br&gt;  - 默认相机位置：设置相机&lt;br&gt;    相对于零件或装配的初始位置。&lt;br&gt;    使用十进制数设置默认位置。&lt;br&gt;&lt;br&gt;  - 相机距离系数：该值为计算所得，&lt;br&gt;    等于默认相机位置除以（默认&lt;br&gt;    距离系数乘以负一）。&lt;br&gt;&lt;br&gt;  你可以调整相机距离系数，为 Native 渲染项&lt;br&gt;  和 3D 查看器中显示的项设置&lt;br&gt;  所需的默认“缩放”。&lt;br&gt;&lt;br&gt;  使用重置按钮 (...) 恢复相机&lt;br&gt;  默认值。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4882" />
         <source>  The change log allows you to view %1 release change&lt;br&gt;  details stored online in the popular software&lt;br&gt;  development and integration website GitHub.&lt;br&gt;&lt;br&gt;  Change log options are as follows:&lt;br&gt;  - Download change log at startup: you can set %1 to&lt;br&gt;    download the online instance of the change log. The&lt;br&gt;    online log may have updates since after the installed&lt;br&gt;    log which is loaded by default.&lt;br&gt;    Note that there may be a material impact on the&lt;br&gt;    application load time, depending on your internet&lt;br&gt;    connect performance, when this option is enabled.&lt;br&gt;  - Update Chnage Log: interctively trigger %1 to&lt;br&gt;    download the latest online change log.&lt;br&gt;&lt;br&gt;  With an appropriate GitHub account, you can contribute&lt;br&gt;  or ask questions relating to changes displayed in the&lt;br&gt;  change log.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  更改日志允许你查看 %1 发布版的更改&lt;br&gt;  详情，这些内容在线存放于流行的软件&lt;br&gt;  开发与集成网站 GitHub 上。&lt;br&gt;&lt;br&gt;  更改日志选项如下：&lt;br&gt;  - 启动时下载更改日志：你可以设置 %1&lt;br&gt;    下载在线版本的更改日志。在线&lt;br&gt;    日志可能比默认加载的已安装日志&lt;br&gt;    更新。&lt;br&gt;    请注意，启用此选项后，视你的互联网&lt;br&gt;    连接性能而定，可能会对&lt;br&gt;    应用程序加载时间产生明显影响。&lt;br&gt;  - 更新更改日志：交互式触发 %1&lt;br&gt;    下载最新的在线更改日志。&lt;br&gt;&lt;br&gt;  拥有合适的 GitHub 账号后，你可以针对&lt;br&gt;  更改日志中显示的更改&lt;br&gt;  提出贡献或问题。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4910" />
@@ -28946,27 +28946,27 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="4924" />
         <source>  Configure the default publisher page attributes.&lt;br&gt;  - Default Author: set the instruction document author&lt;br&gt;  - Default URL: set the universal resource locator (URL).&lt;br&gt;  - Default Email: set the desired email address.&lt;br&gt;&lt;br&gt;  These attributes are part of the instruction document&lt;br&gt;  page attributes.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置默认的发布者页面属性。&lt;br&gt;  - 默认作者：设置说明书文档作者&lt;br&gt;  - 默认 URL：设置统一资源定位符（URL）。&lt;br&gt;  - 默认邮箱：设置所需的邮箱地址。&lt;br&gt;&lt;br&gt;  这些属性是说明书文档&lt;br&gt;  页面属性的一部分。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4941" />
         <source>  Extended search paths used during initial LDraw model file load.&lt;br&gt;  These paths are searched for parts, primitives, and textures&lt;br&gt;  encountered in your model file during the initial file load&lt;br&gt;  but are not in the model file or archive parts library.&lt;br&gt;&lt;br&gt;  Select among the available options, the search paths&lt;br&gt;  to include in your extended model file search paths list.&lt;br&gt;  This list is accessed when the extended search paths&lt;br&gt;  setting is enabled.&lt;br&gt;  If no items are selected %1 will only search the path of&lt;br&gt;  the current subfile being loaded.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  初始加载 LDraw 模型文件时使用的扩展搜索路径。&lt;br&gt;  这些路径用于查找模型文件中出现、&lt;br&gt;  但在初始加载时不在模型文件或&lt;br&gt;  归档零件库中的零件、图元和纹理。&lt;br&gt;&lt;br&gt;  在可用选项中，选择要加入扩展模型&lt;br&gt;  文件搜索路径列表的搜索路径。&lt;br&gt;  启用扩展搜索路径设置后，&lt;br&gt;  可访问此列表。&lt;br&gt;  如果未选择任何项，%1 只会搜索当前&lt;br&gt;  正在加载的子文件所在路径。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="4963" />
         <source>  Configure %1 fade previous steps default settings.&lt;br&gt;&lt;br&gt;  - Enable Fade Previous Steps: turn on or off this&lt;br&gt;    feature.&lt;br&gt;&lt;br&gt;  - Use Parts Global Fade Color: turn on or off using the&lt;br&gt;    specified fade color for all faded items.&lt;br&gt;    Meta commands using LDraw colors will display the LDraw&lt;br&gt;    color safe name (spaces replaced with '_') versus a&lt;br&gt;    hex [A]RGB value as there are multiple LDraw colours&lt;br&gt;    that use the same hex [A]RGB value.&lt;br&gt;&lt;br&gt;    You can also manually enter any color using the&lt;br&gt;    (#|0x)([AA]RRGGBB) hex [A]RGB value syntax.&lt;br&gt;    When this option is enabled, use the dropdown list&lt;br&gt;    to select your desired global fade color.&lt;br&gt;&lt;br&gt;    When this option is not enabled, %1 faded parts&lt;br&gt;    will display their assigned part color faded to the&lt;br&gt;    specified opacity.&lt;br&gt;&lt;br&gt;    When the LDraw LEGO parts library is in use, the&lt;br&gt;    global fade color list is loaded from the LDraw&lt;br&gt;    parts LDConfig file.&lt;br&gt;&lt;br&gt;  - Fade Percent: sets the fade color transparency&lt;br&gt;    between 0 and 100 percent where 0 is fully&lt;br&gt;    transparent and 100 is fully opaque.&lt;br&gt;    This value is translated to the fade color&lt;br&gt;    opacity and alpha channel - for example, 60% fade&lt;br&gt;    is 40% opacity, 102/255 alpha channel and 66 hex.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 %1 淡出先前步骤的默认设置。&lt;br&gt;&lt;br&gt;  - 启用淡出先前步骤：开启或关闭此&lt;br&gt;    功能。&lt;br&gt;&lt;br&gt;  - 使用零件全局淡出颜色：开启或关闭对&lt;br&gt;    所有淡出项使用指定的淡出颜色。&lt;br&gt;    使用 LDraw 颜色的元命令将显示 LDraw&lt;br&gt;    颜色安全名称（空格替换为 '_'），而非&lt;br&gt;    十六进制 [A]RGB 值，因为存在多个 LDraw 颜色&lt;br&gt;    使用相同的十六进制 [A]RGB 值。&lt;br&gt;&lt;br&gt;    你也可以使用&lt;br&gt;    (#|0x)([AA]RRGGBB) 十六进制 [A]RGB 值语法手动输入任意颜色。&lt;br&gt;    启用此选项后，使用下拉列表&lt;br&gt;    选择所需的全局淡出颜色。&lt;br&gt;&lt;br&gt;    未启用此选项时，%1 淡出零件&lt;br&gt;    将按其指定零件颜色淡出到&lt;br&gt;    指定不透明度显示。&lt;br&gt;&lt;br&gt;    使用 LDraw LEGO 零件库时，&lt;br&gt;    全局淡出颜色列表从 LDraw&lt;br&gt;    零件 LDConfig 文件加载。&lt;br&gt;&lt;br&gt;  - 淡出百分比：设置淡出颜色透明度，&lt;br&gt;    范围为 0 到 100 百分比，其中 0 为完全&lt;br&gt;    透明，100 为完全不透明。&lt;br&gt;    该值会换算为淡出颜色的&lt;br&gt;    不透明度和 alpha 通道 - 例如，60% 淡出&lt;br&gt;    即 40% 不透明度、102/255 alpha 通道、66 十六进制。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5000" />
         <source>  Configure the following %1 general settings.&lt;br&gt;&lt;br&gt;  - Load the last opened file on startup: as the title&lt;br&gt;    states, the last file opened in %1 is automatically&lt;br&gt;    loaded when %1 is launched.&lt;br&gt;&lt;br&gt;  - Load the last displayed page: this setting will load&lt;br&gt;    the last opened page of the last opened file.&lt;br&gt;    This behaviour will occur on automatic application&lt;br&gt;    restart after an abnormal end, normal application&lt;br&gt;    restart after setting change or when load last opened&lt;br&gt;    file on startup is enabled.&lt;br&gt;&lt;br&gt;  - Show load status: set %1 to display a load status&lt;br&gt;    dialog upon completion of LDraw file load.&lt;br&gt;    The load status dialog can be set to display on the&lt;br&gt;    following triggers:&lt;br&gt;&lt;br&gt;    * Never: do not display the load status dialog.&lt;br&gt;&lt;br&gt;    * On Error: display dialog when an error condition,&lt;br&gt;      for example, when an invalid (missing) part is&lt;br&gt;      encountered&lt;br&gt;&lt;br&gt;    * On Warning: display dialog when a warning condition,&lt;br&gt;      for example, when a subpart or primitive part is&lt;br&gt;      encountered.&lt;br&gt;&lt;br&gt;    * On Message: display dialog when either a warning or&lt;br&gt;      an error condition is encountered.&lt;br&gt;&lt;br&gt;    * Always: display dialog each time an LDraw file is&lt;br&gt;      loaded.&lt;br&gt;&lt;br&gt;  - Extended search paths: search the current folder,&lt;br&gt;    LDraw search directories and LDraw disc library&lt;br&gt;    subfolders for model subfile references.&lt;br&gt;&lt;br&gt;  - Save on Update: save the current model file when&lt;br&gt;    the command editor update action is triggered.&lt;br&gt;&lt;br&gt;  - Save on Redraw: save the current model file when&lt;br&gt;    the command editor redraw or application reset&lt;br&gt;    cache menu action is triggered.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置以下 %1 常规设置。&lt;br&gt;&lt;br&gt;  - 启动时加载上次打开的文件：正如标题&lt;br&gt;    所述，启动 %1 时会自动加载&lt;br&gt;    上次在 %1 中打开的文件。&lt;br&gt;&lt;br&gt;  - 加载上次显示的页面：此设置将加载&lt;br&gt;    上次打开文件的上次打开页面。&lt;br&gt;    在以下情况下会发生此行为：异常结束&lt;br&gt;    后自动重启应用程序、更改设置后正常&lt;br&gt;    重启应用程序，或启用了启动时&lt;br&gt;    加载上次打开的文件。&lt;br&gt;&lt;br&gt;  - 显示加载状态：设置 %1 在完成 LDraw&lt;br&gt;    文件加载后显示加载状态对话框。&lt;br&gt;    加载状态对话框可设置为在以下&lt;br&gt;    触发条件下显示：&lt;br&gt;&lt;br&gt;    * 从不：不显示加载状态对话框。&lt;br&gt;&lt;br&gt;    * 出错时：出现错误状况时显示对话框，&lt;br&gt;      例如遇到无效（缺失）的零件&lt;br&gt;      时&lt;br&gt;&lt;br&gt;    * 警告时：出现警告状况时显示对话框，&lt;br&gt;      例如遇到子零件或图元零件&lt;br&gt;      时。&lt;br&gt;&lt;br&gt;    * 消息时：出现警告或&lt;br&gt;      错误状况时显示对话框。&lt;br&gt;&lt;br&gt;    * 总是：每次加载 LDraw 文件时&lt;br&gt;      都显示对话框。&lt;br&gt;&lt;br&gt;  - 扩展搜索路径：在模型子文件引用中搜索当前文件夹、&lt;br&gt;    LDraw 搜索目录以及 LDraw 光盘库&lt;br&gt;    子文件夹。&lt;br&gt;&lt;br&gt;  - 更新时保存：触发命令编辑器&lt;br&gt;    更新操作时保存当前模型文件。&lt;br&gt;&lt;br&gt;  - 重绘时保存：触发命令编辑器重绘&lt;br&gt;    或应用程序重置缓存&lt;br&gt;    菜单操作时保存当前模型文件。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5045" />
         <source>  Configure %1 highlight current step default settings.&lt;br&gt;&lt;br&gt;  - Enable Highlight Current Step: turn on or off this&lt;br&gt;    feature.&lt;br&gt;&lt;br&gt;  - Highlight first step: turn on or off highlighting the&lt;br&gt;    first step in the in the instruction document.&lt;br&gt;&lt;br&gt;  - Highlight Color: use the dropdown list&lt;br&gt;    select your desired highlight color using the Color&lt;br&gt;    picker.%2%3&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 %1 高亮当前步骤的默认设置。&lt;br&gt;&lt;br&gt;  - 启用高亮当前步骤：开启或关闭此&lt;br&gt;    功能。&lt;br&gt;&lt;br&gt;  - 高亮第一步：开启或关闭对说明书文档&lt;br&gt;    中第一步的高亮。&lt;br&gt;&lt;br&gt;  - 高亮颜色：使用下拉列表&lt;br&gt;    配合颜色选择器选择所需的高亮&lt;br&gt;    颜色。%2%3&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5056" />
@@ -28976,37 +28976,37 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5070" />
         <source>  You can configure a keyboard shortcut for the selected&lt;br&gt;  menu action.&lt;br&gt;&lt;br&gt;  - Key sequence: enter your desired shortcut key&lt;br&gt;    sequence.&lt;br&gt;  - Assign: click this button to add our custom defined&lt;br&gt;    shortcut to the selected menu action.&lt;br&gt;&lt;br&gt;  - Remove: You can remove an assigned custom shortcut using&lt;br&gt;    the Remove button.&lt;br&gt;&lt;br&gt;  - Use the Reset button in the key sequence dialog to&lt;br&gt;    restore the default menu action keyboard shortuct.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以为所选菜单操作配置&lt;br&gt;  键盘快捷键。&lt;br&gt;&lt;br&gt;  - 按键序列：输入所需的快捷键&lt;br&gt;    序列。&lt;br&gt;  - 分配：点击此按钮可将自定义&lt;br&gt;    快捷键添加到所选菜单操作。&lt;br&gt;&lt;br&gt;  - 移除：你可以使用“移除”按钮移除已分配的&lt;br&gt;    自定义快捷键。&lt;br&gt;&lt;br&gt;  - 使用按键序列对话框中的“重置”按钮&lt;br&gt;    可恢复默认的菜单操作键盘快捷键。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5091" />
         <source>  View and select %1 menu action keyboard shortcuts.&lt;br&gt;&lt;br&gt;  - Table: all editable keyboard shortcuts are presented&lt;br&gt;    in the view table grouped by their parent dialog&lt;br&gt;    menu and action category.&lt;br&gt;&lt;br&gt;  - Filter: filter the shortcut table using menu action&lt;br&gt;    name. The auto-complete functionality will&lt;br&gt;    provide suggestions based on the characters you&lt;br&gt;    enter.&lt;br&gt;&lt;br&gt;  - Import: import custom menu action shortucts.&lt;br&gt;&lt;br&gt;  - Export: export the entire list of shortcuts to&lt;br&gt;    an external file.&lt;br&gt;&lt;br&gt;  - Reset: reload all menu actions and their default&lt;br&gt;    keyboard shortcut.&lt;br&gt;&lt;br&gt;  Your shortcut changes are accepted when you click the&lt;br&gt;  Ok button, conversely, clicking the Cancel button will&lt;br&gt;  discard any custom keyboard shortcuts created during&lt;br&gt;  session.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  查看并选择 %1 菜单操作的键盘快捷键。&lt;br&gt;&lt;br&gt;  - 表格：所有可编辑的键盘快捷键都会显示&lt;br&gt;    在视图表格中，按其所属对话框&lt;br&gt;    菜单和操作类别分组。&lt;br&gt;&lt;br&gt;  - 筛选：使用菜单操作名称&lt;br&gt;    筛选快捷键表格。自动补全功能&lt;br&gt;    会根据你输入的字符&lt;br&gt;    给出建议。&lt;br&gt;&lt;br&gt;  - 导入：导入自定义菜单操作快捷键。&lt;br&gt;&lt;br&gt;  - 导出：将完整快捷键列表导出到&lt;br&gt;    外部文件。&lt;br&gt;&lt;br&gt;  - 重置：重新加载所有菜单操作及其默认&lt;br&gt;    键盘快捷键。&lt;br&gt;&lt;br&gt;  点击“确定”按钮后，快捷键更改&lt;br&gt;  才会生效；反之，点击“取消”按钮将&lt;br&gt;  放弃本次会话中创建的所有自定义&lt;br&gt;  键盘快捷键。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5120" />
         <source>  View the LDGLite renderer application path when this&lt;br&gt;  renderer is installed. The LDGLite renderer is packaged&lt;br&gt;  with %1 and is automatically installed.&lt;br&gt;&lt;br&gt;  By default LDGLite and automatically configured&lt;br&gt;  at application startup using the %1 default&lt;br&gt;  options.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  查看安装此渲染器后的 LDGLite 渲染器&lt;br&gt;  应用程序路径。LDGLite 渲染器随 %1&lt;br&gt;  打包，并会自动安装。&lt;br&gt;&lt;br&gt;  默认情况下，LDGLite 会在应用程序启动时&lt;br&gt;  使用 %1 的默认&lt;br&gt;  选项自动完成配置。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5138" />
         <source>  In the event LDGLite is not installed or have been&lt;br&gt;  removed. %1 will display this dialog to download and&lt;br&gt;  install the LDGLite renderer.&lt;br&gt;&lt;br&gt;  Use the Install button to initiate the download and&lt;br&gt;  installation.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  如果 LDGLite 未安装或已被&lt;br&gt;  移除，%1 会显示此对话框以下载并&lt;br&gt;  安装 LDGLite 渲染器。&lt;br&gt;&lt;br&gt;  使用“安装”按钮开始下载和&lt;br&gt;  安装。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5155" />
         <source>  Configure the path to the LDraw parts disc library.&lt;br&gt;&lt;br&gt;  %1 primarilly uses the official and unofficial LDraw&lt;br&gt;  archive part libraries; however, as the LDView and&lt;br&gt;  LDGLite 3rd party renderers do not recognize the&lt;br&gt;  archive libraries, the traditional disc library is&lt;br&gt;  also required.&lt;br&gt;&lt;br&gt;  You can use the Browse button to select the disc&lt;br&gt;  library or interactively enter the path in the line&lt;br&gt;  edit dialog.&lt;br&gt;&lt;br&gt;  %1 will attempt to validate the specified LDraw parts&lt;br&gt;  library returning a 'Suspicious LDraw Directory message&lt;br&gt;  when the library path is deemed to be invalid.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDraw 零件光盘库的路径。&lt;br&gt;&lt;br&gt;  %1 主要使用官方和非官方 LDraw&lt;br&gt;  归档零件库；不过，由于 LDView 和&lt;br&gt;  LDGLite 第三方渲染器无法识别&lt;br&gt;  归档库，因此还需要传统的&lt;br&gt;  光盘库。&lt;br&gt;&lt;br&gt;  你可以使用“浏览”按钮选择光盘&lt;br&gt;  库，也可以在线编辑对话框中&lt;br&gt;  交互式输入路径。&lt;br&gt;&lt;br&gt;  当库路径被判定为无效时，%1 会尝试&lt;br&gt;  校验指定的 LDraw 零件库，并返回&lt;br&gt;  “可疑的 LDraw 目录”消息。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5179" />
         <source>  Configure the LDView renderer settings.&lt;br&gt;  - Use Mulitple File Single Call: submit all the ldraw&lt;br&gt;    files (parts, assembly, submodel preview) for the&lt;br&gt;    current page in a single LDView render request&lt;br&gt;    instead of individually at each step.&lt;br&gt;&lt;br&gt;  - Use Snapshots List File: this option extends and&lt;br&gt;    requires LDView Single Call whereby a list files&lt;br&gt;    for ldraw part or assembly files are created and&lt;br&gt;    submitted to LDView.&lt;br&gt;&lt;br&gt;    As only one submodel preview per page is generated,&lt;br&gt;    these options are ignored for submodel preview images.&lt;br&gt;    Additionally, when there is less than 2 image files&lt;br&gt;    for a page's parts list or step group, these options&lt;br&gt;    are ignored.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 渲染器设置。&lt;br&gt;  - 使用多文件单次调用：将当前页面的所有 LDraw&lt;br&gt;    文件（零件、装配、Sub-model 预览）&lt;br&gt;    放在单个 LDView 渲染请求中提交，&lt;br&gt;    而不是在每个步骤单独提交。&lt;br&gt;&lt;br&gt;  - 使用快照列表文件：此选项扩展并&lt;br&gt;    要求启用 LDView 单次调用，即创建&lt;br&gt;    LDraw 零件或装配文件的列表文件&lt;br&gt;    并提交给 LDView。&lt;br&gt;&lt;br&gt;    由于每页只生成一个 Sub-model 预览，&lt;br&gt;    这些选项对 Sub-model 预览图像无效。&lt;br&gt;    此外，当某页的零件清单或步骤组少于&lt;br&gt;    2 个图像文件时，这些选项&lt;br&gt;    也会被忽略。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5204" />
         <source>  In the event LDView is not installed or have been&lt;br&gt;  removed. %1 will display this dialog to download and&lt;br&gt;  install the LDView renderer.&lt;br&gt;&lt;br&gt;  Use the Install button to initiate the download and&lt;br&gt;  installation.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  如果 LDView 未安装或已被&lt;br&gt;  移除，%1 会显示此对话框以下载并&lt;br&gt;  安装 LDView 渲染器。&lt;br&gt;&lt;br&gt;  使用“安装”按钮开始下载和&lt;br&gt;  安装。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5221" />
@@ -29016,12 +29016,12 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5234" />
         <source>  Configure %1 logging settings.&lt;br&gt;  - Path: you can configure the log file path and&lt;br&gt;    file name.&lt;br&gt;  - Line Attributes: select the log line attributes you&lt;br&gt;    wish to see for log entry lines.&lt;br&gt;  - Logging Level: set the logging level.&lt;br&gt;  - Individual Log Level Messages: you can select your&lt;br&gt;    desired log level messages.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 %1 日志设置。&lt;br&gt;  - 路径：你可以配置日志文件路径和&lt;br&gt;    文件名。&lt;br&gt;  - 行属性：选择你希望在日志条目行中&lt;br&gt;    看到的日志行属性。&lt;br&gt;  - 日志级别：设置日志级别。&lt;br&gt;  - 各日志级别消息：你可以选择所需&lt;br&gt;    的日志级别消息。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5254" />
         <source>  Select your desired %1 log messages.&lt;br&gt;&lt;br&gt;  - STATUS: display status messages (default level).&lt;br&gt;  - INFO: log information messages.&lt;br&gt;  - TRACE: log trace messages.&lt;br&gt;  - DEBUG: log debug messages.&lt;br&gt;  - NOTICE: log notice messages.&lt;br&gt;  - ERROR: log error messages.&lt;br&gt;  - FATAL: log fatal messages.&lt;br&gt;  - OFF: do not log any messages.&lt;br&gt;&lt;br&gt;  Levels at and below the selected level are written to&lt;br&gt;  the log file. For example, setting the level to DEBUG&lt;br&gt;  will write DEBUG, NOTICE, ERROR, and FATAL messages to&lt;br&gt;  the log file.&lt;br&gt;&lt;br&gt;  When this setting is configured. Individual Log&lt;br&gt;  Level Messages settings are disabled.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  选择所需的 %1 日志消息。&lt;br&gt;&lt;br&gt;  - STATUS：显示状态消息（默认级别）。&lt;br&gt;  - INFO：记录信息消息。&lt;br&gt;  - TRACE：记录跟踪消息。&lt;br&gt;  - DEBUG：记录调试消息。&lt;br&gt;  - NOTICE：记录通知消息。&lt;br&gt;  - ERROR：记录错误消息。&lt;br&gt;  - FATAL：记录致命消息。&lt;br&gt;  - OFF：不记录任何消息。&lt;br&gt;&lt;br&gt;  所选级别及其以下级别的消息都会写入&lt;br&gt;  日志文件。例如，将级别设为 DEBUG&lt;br&gt;  会把 DEBUG、NOTICE、ERROR 和 FATAL 消息写入&lt;br&gt;  日志文件。&lt;br&gt;&lt;br&gt;  配置此设置后，各日志&lt;br&gt;  级别消息设置将被禁用。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5281" />
@@ -29031,7 +29031,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5296" />
         <source>  Configure the attributes you wish to see for log entry&lt;br&gt;  lines.&lt;br&gt;&lt;br&gt;  - Logging Level: show log level, Fatal, Error, Status,&lt;br&gt;    Trace, Debug, and Information.&lt;br&gt;&lt;br&gt;  - Timestamp: show the YYYY-MM-DDTH:M:S:MS timestamp.&lt;br&gt;&lt;br&gt;  - Line Number: show the file line number '@ln NNN'.&lt;br&gt;&lt;br&gt;  - Class Name: show the class name where the log entry&lt;br&gt;    was triggered.&lt;br&gt;&lt;br&gt;  - Function: show the function where the log entry was&lt;br&gt;    triggered.&lt;br&gt;&lt;br&gt;  - All attributes: show logging level, timestamp, line&lt;br&gt;    number, class name, and function.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置你希望在日志条目行中&lt;br&gt;  看到的属性。&lt;br&gt;&lt;br&gt;  - 日志级别：显示日志级别，即 Fatal、Error、Status、&lt;br&gt;    Trace、Debug 和 Information。&lt;br&gt;&lt;br&gt;  - 时间戳：显示 YYYY-MM-DDTH:M:S:MS 格式的时间戳。&lt;br&gt;&lt;br&gt;  - 行号：显示文件行号 '@ln NNN'。&lt;br&gt;&lt;br&gt;  - 类名：显示触发该日志条目&lt;br&gt;    所在的类名。&lt;br&gt;&lt;br&gt;  - 函数：显示触发该日志条目&lt;br&gt;    所在的函数。&lt;br&gt;&lt;br&gt;  - 所有属性：显示日志级别、时间戳、行&lt;br&gt;    号、类名和函数。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5319" />
@@ -29041,7 +29041,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5331" />
         <source>  You can configure printing output messages to&lt;br&gt;  standard output&lt;br&gt;  To prevent double log entries, This setting is&lt;br&gt;  usually enabled on Windows and disabled on Unix&lt;br&gt;  when logging is enabled or when executing in&lt;br&gt;  console mode.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以配置是否将输出消息打印到&lt;br&gt;  标准输出&lt;br&gt;  为避免出现重复日志条目，此设置&lt;br&gt;  在 Windows 上通常启用，在 Unix 上禁用，&lt;br&gt;  且仅在启用日志记录或以&lt;br&gt;  控制台模式运行时生效。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5348" />
@@ -29051,47 +29051,47 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5361" />
         <source>  Configure %1 continuous page processing settings.&lt;br&gt;&lt;br&gt;  - Display page for n seconds: set the duration to&lt;br&gt;    display each page when processing, or exporting&lt;br&gt;    instruction document pages.&lt;br&gt;&lt;br&gt;  - Display options dialog: set and reset displaying&lt;br&gt;    the continuous page processing and export dialog.&lt;br&gt;&lt;br&gt;    The continuous page processing and export dialog&lt;br&gt;    offers the option to turn off displaying it.&lt;br&gt;    When display is turned off, you can use this setting&lt;br&gt;    to reset (restore) the continuous page processing and&lt;br&gt;    export dialog display.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 %1 连续页面处理设置。&lt;br&gt;&lt;br&gt;  - 页面显示 n 秒：设置处理或导出&lt;br&gt;    说明书文档页面时&lt;br&gt;    每页的显示时长。&lt;br&gt;&lt;br&gt;  - 显示选项对话框：设置和重置连续页面&lt;br&gt;    处理与导出对话框的显示。&lt;br&gt;&lt;br&gt;    连续页面处理与导出对话框&lt;br&gt;    提供关闭其显示的选项。&lt;br&gt;    关闭显示后，你可以使用此设置&lt;br&gt;    重置（恢复）连续页面处理与&lt;br&gt;    导出对话框的显示。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5384" />
         <source>  Select and clear %1 file parse messages.&lt;br&gt;&lt;br&gt;  When an LDraw file is being processed, encountered&lt;br&gt;  parse errors are displayed to give the editor an&lt;br&gt;  opportunity to perform correction.&lt;br&gt;&lt;br&gt;  Parse error messages are grouped by the type of error.&lt;br&gt;&lt;br&gt;  You can toggle on and off displaying each type of&lt;br&gt;  parse error message.&lt;br&gt;&lt;br&gt;  When a message is displayed, the editor can elect to&lt;br&gt;  not display the message in the future.&lt;br&gt;  Messages set to not be displayed can be reset here by&lt;br&gt;  clicking the enabled 'Clear' button.&lt;br&gt;  You can clear individual message categories or clear&lt;br&gt;  all message categories with a single action.&lt;br&gt;  The 'Clear' button is enabled when there are messages&lt;br&gt;  to be cleared.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  选择和清除 %1 文件解析消息。&lt;br&gt;&lt;br&gt;  处理 LDraw 文件时，会显示遇到的&lt;br&gt;  解析错误，以便编辑者&lt;br&gt;  有机会进行修正。&lt;br&gt;&lt;br&gt;  解析错误消息按错误类型分组。&lt;br&gt;&lt;br&gt;  你可以开启或关闭每类解析错误&lt;br&gt;  消息的显示。&lt;br&gt;&lt;br&gt;  显示某条消息时，编辑者可以选择&lt;br&gt;  以后不再显示该消息。&lt;br&gt;  设为不再显示的消息可在此处重置：&lt;br&gt;  点击已启用的“清除”按钮。&lt;br&gt;  你可以清除单个消息类别，也可以用&lt;br&gt;  一个操作清除全部消息类别。&lt;br&gt;  当存在待清除的消息时，&lt;br&gt;  “清除”按钮才会启用。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5411" />
         <source>  Configure the part list instance (PLI) control file.&lt;br&gt;  You can toggle on and off use of the PLI control file&lt;br&gt;  and you can also specify its path path and file name.&lt;br&gt;&lt;br&gt;  The PLI control file is used to specify the default&lt;br&gt;  orientation and size of parts in the Parts List and&lt;br&gt;  Bill Of Material instances.&lt;br&gt;&lt;br&gt;  You can add and edit entries in the PLI control file&lt;br&gt;  from the Configuration menu then Edit Parameter&lt;br&gt;  Files... menu and the PLI Parts Control File action.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置零件清单实例（PLI）控制文件。&lt;br&gt;  你可以开启或关闭 PLI 控制文件的使用，&lt;br&gt;  也可以指定其路径和文件名。&lt;br&gt;&lt;br&gt;  PLI 控制文件用于指定零件清单和&lt;br&gt;  BOM 实例中零件的默认&lt;br&gt;  方向和尺寸。&lt;br&gt;&lt;br&gt;  你可以在 PLI 控制文件中添加和编辑条目：&lt;br&gt;  从“配置”菜单进入“编辑参数&lt;br&gt;  文件...”菜单，然后选择“PLI 零件控制文件”操作。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5431" />
         <source>  Configure %1 POV-Ray renderer settings.&lt;br&gt;  - Quality: you can set render quality options High,&lt;br&gt;    Medium and Low.&lt;br&gt;&lt;br&gt;  - Auto-crop Image: You can toggle on or off&lt;br&gt;    automatically cropping rendered images.&lt;br&gt;&lt;br&gt;  - Display Image Progeress: show a progress dialog that&lt;br&gt;    presents the rendered image at its state of&lt;br&gt;    completeness.&lt;br&gt;&lt;br&gt;  - Path: show the POV-Ray application path and file name.&lt;br&gt;&lt;br&gt;  - POV-File Generation Renderer: select between Native or&lt;br&gt;    LDView.&lt;br&gt;&lt;br&gt;  - POV File Generation Settings: configure POV generation&lt;br&gt;    options and LDView preferences to fine tune the POV-Ray&lt;br&gt;    rendered image.&lt;br&gt;&lt;br&gt;  - LGEO Is Available: when the LEGO Geometrical Equivalent&lt;br&gt;    Objects (LGEO) library is available, this attribute is&lt;br&gt;    enabled and the library path is provided.&lt;br&gt;  - LGEO Stereolithography (STL) library is available: is&lt;br&gt;    displayed when the LGEO STL library from Darat is&lt;br&gt;    present.&lt;br&gt;&lt;br&gt;  You can customize additional POV-Ray renderer options&lt;br&gt;  from its INI configuration file using the application&lt;br&gt;  menu action at Configuration, Edit Parameter Files...&lt;br&gt;&lt;br&gt;  Note that some settings will be overridden by LPUB&lt;br&gt;  meta commands in your loaded model file.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 %1 的 POV-Ray 渲染器设置。&lt;br&gt;  - 质量：你可以设置渲染质量选项&lt;br&gt;    高、中、低。&lt;br&gt;&lt;br&gt;  - 自动裁剪图像：你可以开启或关闭&lt;br&gt;    自动裁剪渲染图像。&lt;br&gt;&lt;br&gt;  - 显示图像进度：显示进度对话框，&lt;br&gt;    呈现渲染图像当前的&lt;br&gt;    完成状态。&lt;br&gt;&lt;br&gt;  - 路径：显示 POV-Ray 应用程序路径和文件名。&lt;br&gt;&lt;br&gt;  - POV 文件生成渲染器：在 Native 或&lt;br&gt;    LDView 之间选择。&lt;br&gt;&lt;br&gt;  - POV 文件生成设置：配置 POV 生成&lt;br&gt;    选项和 LDView 偏好设置，以微调 POV-Ray&lt;br&gt;    渲染图像。&lt;br&gt;&lt;br&gt;  - LGEO 可用：当 LEGO 几何等效对象&lt;br&gt;    （LGEO）库可用时，此属性&lt;br&gt;    启用并给出库路径。&lt;br&gt;  - LGEO 立体光刻（STL）库可用：当&lt;br&gt;    Darat 提供的 LGEO STL 库存在时&lt;br&gt;    显示。&lt;br&gt;&lt;br&gt;  你可以通过“配置”菜单的“编辑参数文件...”&lt;br&gt;  应用程序菜单操作，从 POV-Ray 的 INI&lt;br&gt;  配置文件自定义更多渲染器选项。&lt;br&gt;&lt;br&gt;  请注意，部分设置会被已加载模型文件中的 LPUB&lt;br&gt;  元命令覆盖。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5468" />
         <source>  In the event POV-Ray is not installed or have been&lt;br&gt;  removed. %1 will display this dialog to download and&lt;br&gt;  install the POV-Ray renderer.&lt;br&gt;&lt;br&gt;  Use the Install button to initiate the download and&lt;br&gt;  installation.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  如果 POV-Ray 未安装或已被&lt;br&gt;  移除，%1 会显示此对话框以下载并&lt;br&gt;  安装 POV-Ray 渲染器。&lt;br&gt;&lt;br&gt;  使用“安装”按钮开始下载和&lt;br&gt;  安装。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5485" />
         <source>  You can choose between Native and LDView POV file&lt;br&gt;  generation.&lt;br&gt;&lt;br&gt;  - Native: this is %1's integrated instance of the&lt;br&gt;    LDView POV file generation behaviour.&lt;br&gt; This option&lt;br&gt;    offers a performance benefit over using the LDView&lt;br&gt;    instance.&lt;br&gt;&lt;br&gt;  - LDView: %1 will pass the POV generation parameters to&lt;br&gt;    the third party LDView instance. The LDView renderer&lt;br&gt;    will then generate the POV file.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以在 Native 和 LDView POV 文件&lt;br&gt;  生成方式之间选择。&lt;br&gt;&lt;br&gt;  - Native：这是 %1 内置的&lt;br&gt;    LDView POV 文件生成行为的实例。&lt;br&gt; 此选项&lt;br&gt;    相比使用 LDView 实例&lt;br&gt;    具有性能优势。&lt;br&gt;&lt;br&gt;  - LDView：%1 会把 POV 生成参数传递给&lt;br&gt;    第三方 LDView 实例。随后由 LDView 渲染器&lt;br&gt;    生成 POV 文件。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5506" />
         <source>  Configure the LEGO® Geometrical Equivalent Objects&lt;br&gt;  (LGEO) part library created by Lutz Uhlmann (El Lutzo),&lt;br&gt;  updated by Owen Burgoyne (C3POwen) and extended with&lt;br&gt;  Stereolithography STL object files by&lt;br&gt;  Damien Roux (Darats).&lt;br&gt;&lt;br&gt;  - LGEO Is Available: when the LGEO part library is&lt;br&gt;    available, this attribute is enabled.&lt;br&gt;&lt;br&gt;  - LGEO Stereolithography (STL) library is available&lt;br&gt;    label is displayed when the STL library from&lt;br&gt;    Damien Roux (Darats) is present.&lt;br&gt;&lt;br&gt;  - Path: when the LGEO part library is detected,&lt;br&gt;    the library path is provided.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置由 Lutz Uhlmann (El Lutzo) 创建、&lt;br&gt;  由 Owen Burgoyne (C3POwen) 更新，并由&lt;br&gt;  Damien Roux (Darats) 扩展立体光刻 STL 对象文件的&lt;br&gt;  LEGO® 几何等效对象&lt;br&gt;  （LGEO）零件库。&lt;br&gt;&lt;br&gt;  - LGEO 可用：当 LGEO 零件库&lt;br&gt;    可用时，此属性启用。&lt;br&gt;&lt;br&gt;  - LGEO 立体光刻（STL）库可用：&lt;br&gt;    当 Damien Roux (Darats) 提供的 STL 库&lt;br&gt;    存在时显示该标签。&lt;br&gt;&lt;br&gt;  - 路径：检测到 LGEO 零件库时，&lt;br&gt;    会给出库路径。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5529" />
         <source>  Configure the POV generation and LDView renderer&lt;br&gt;  preference settings for POV file generation.&lt;br&gt;&lt;br&gt;  POV generation options are grouped into general,&lt;br&gt;  geometry, pov geometry, lighting, pov lights, material&lt;br&gt;  properties, transparent material properties,&lt;br&gt;  rubber material properties, and chrome material&lt;br&gt;  properties settings.&lt;br&gt;&lt;br&gt;  Configure or reset the LDView renderer settings for&lt;br&gt;  POV file generation.&lt;br&gt; Settings are grouped into&lt;br&gt;  general, gemometry, effects, primitives,&lt;br&gt;  updates and preference set.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 POV 生成与 LDView 渲染器的&lt;br&gt;  POV 文件生成偏好设置。&lt;br&gt;&lt;br&gt;  POV 生成选项分为常规、&lt;br&gt;  几何、POV 几何、光照、POV 灯光、材质&lt;br&gt;  属性、透明材质属性、&lt;br&gt;  橡胶材质属性和镀铬材质&lt;br&gt;  属性等设置。&lt;br&gt;&lt;br&gt;  配置或重置用于 POV 文件生成的&lt;br&gt;  LDView 渲染器设置。&lt;br&gt; 设置分为&lt;br&gt;  常规、几何、效果、图元、&lt;br&gt;  更新和偏好集。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5551" />
         <source>  Configure the default publisher description page&lt;br&gt;  attribute.&lt;br&gt;&lt;br&gt;  - Default Publish Description: set the instruction&lt;br&gt;    document publish description. This value is&lt;br&gt;    automatically converted from the loaded LDraw&lt;br&gt;    document description when this information is&lt;br&gt;    available.&lt;br&gt;    Updates make here will, of course, override the&lt;br&gt;    automatically configured value.&lt;br&gt;&lt;br&gt;  This attribute is part of the instruction document&lt;br&gt;  page attributes.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置默认的发布者描述页面&lt;br&gt;  属性。&lt;br&gt;&lt;br&gt;  - 默认发布描述：设置说明书&lt;br&gt;    文档的发布描述。当该信息&lt;br&gt;    可用时，此值会自动从已加载的 LDraw&lt;br&gt;    文档描述&lt;br&gt;    转换而来。&lt;br&gt;    当然，在此处所做的更新会覆盖&lt;br&gt;    自动配置的值。&lt;br&gt;&lt;br&gt;  此属性是说明书文档&lt;br&gt;  页面属性的一部分。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5573" />
@@ -29101,12 +29101,12 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5589" />
         <source>  Configure %1 preferred renderer, projection and&lt;br&gt;  image processing timeout settings:&lt;br&gt;&lt;br&gt;  - Preferred Renderer:&lt;br&gt;    * POVRay: %1 ray tracing renderer offering feature&lt;br&gt;      rich, photo-realistic rendering ideal for document&lt;br&gt;      covers and final model or assembly displays.&lt;br&gt;&lt;br&gt;    * LDGLite: %1 legacy renderer written in 'c' offering&lt;br&gt;      fast image rendering ideal for proofing.&lt;br&gt;&lt;br&gt;    * LDView: This is a custom instance of LDView specially&lt;br&gt;      adapted for %1 using the latest code base.&lt;br&gt;      LDView offers high quality, rendering plus POV scene&lt;br&gt;      file generation.&lt;br&gt;&lt;br&gt;    * Native: %1 'native' renderer and 3D viewer adapted&lt;br&gt;      from LeoCAD. The Native renderer is performant and&lt;br&gt;      provides 'true fade' rendering which enable powerful,&lt;br&gt;      high quality and complex model rendering options.&lt;br&gt;&lt;br&gt;  - Projection:&lt;br&gt;&lt;br&gt;    * Perspective: linear project where distant objects&lt;br&gt;      appear smaller.&lt;br&gt;&lt;br&gt;    * Orthographic: parallel projection, where all&lt;br&gt;      projection lines are orthogonal to the projection&lt;br&gt;      plane.&lt;br&gt;&lt;br&gt;  - Timeout: set the time in minutes before a render&lt;br&gt;    process will terminate if the process has not been&lt;br&gt;    completed by the renderer&lt;br&gt;    The default value is 6 minutes.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 %1 的首选渲染器、投影和&lt;br&gt;  图像处理超时设置：&lt;br&gt;&lt;br&gt;  - 首选渲染器：&lt;br&gt;    * POVRay：%1 光线跟踪渲染器，提供功能&lt;br&gt;      丰富、照片级真实的渲染，非常适合文档&lt;br&gt;      封面以及最终模型或装配展示。&lt;br&gt;&lt;br&gt;    * LDGLite：%1 早期渲染器，以 'c' 编写，提供&lt;br&gt;      快速图像渲染，非常适合校对。&lt;br&gt;&lt;br&gt;    * LDView：这是基于最新代码库专门&lt;br&gt;      为 %1 适配的 LDView 定制实例。&lt;br&gt;      LDView 提供高质量渲染以及 POV 场景&lt;br&gt;      文件生成。&lt;br&gt;&lt;br&gt;    * Native：%1 的“原生”渲染器和 3D 查看器，改编自&lt;br&gt;      LeoCAD。Native 渲染器性能出色，&lt;br&gt;      并提供“真淡出”渲染，可实现强大、&lt;br&gt;      高质量且复杂的模型渲染选项。&lt;br&gt;&lt;br&gt;  - 投影：&lt;br&gt;&lt;br&gt;    * 透视：线性投影，远处物体&lt;br&gt;      看起来更小。&lt;br&gt;&lt;br&gt;    * 正交：平行投影，所有&lt;br&gt;      投影线都正交于投影&lt;br&gt;      平面。&lt;br&gt;&lt;br&gt;  - 超时：设置渲染进程在未被&lt;br&gt;    渲染器完成时终止前的&lt;br&gt;    时间（分钟）&lt;br&gt;    默认值为 6 分钟。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5627" />
         <source>  Configure what to do with the LDraw MODELS, LSynth&lt;br&gt;  and Helper parts paths in reference to including&lt;br&gt;  these paths in the LDraw Content Search Directories.&lt;br&gt;  Note that, by default, both helper and LSynth parts&lt;br&gt;  are included in the %1 unofficial parts zip archive.&lt;br&gt;&lt;br&gt;  - Exclude MODELS Path: Exclude MODELS folder path&lt;br&gt;    from the LDraw search parths list. This path is&lt;br&gt;    hard-coded to the root of the LDraw folder&lt;br&gt;    e.g. ./LDraw/models.&lt;br&gt;    It could be helpful performance-wise to uncheck&lt;br&gt;    this if you are not using the LDraw MODELS folder.&lt;br&gt;&lt;br&gt;  - Add LSynth Path: Add LSynth folder path to LDraw search&lt;br&gt;    paths if not already included in search paths.&lt;br&gt;    This path is hard-coded the root of the unofficial folder&lt;br&gt;    e.g. ./LDraw/unofficial/LSynth.&lt;br&gt;&lt;br&gt;  - Add Helper Path: Add Helper folder path to LDraw search&lt;br&gt;    paths. This path is hard-coded to the root of the&lt;br&gt;    unofficial folder e.g. ./LDraw/unofficial/helper.&lt;br&gt;    If you wish to export your custom helper parts with&lt;br&gt;    the renderers and/or Blender addon, then&lt;br&gt;&lt;br&gt;    check this setting.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置如何处理 LDraw MODELS、LSynth&lt;br&gt;  和 Helper 零件路径，以决定是否将这些&lt;br&gt;  路径纳入 LDraw 内容搜索目录。&lt;br&gt;  请注意，默认情况下 helper 和 LSynth 零件&lt;br&gt;  都包含在 %1 非官方零件 zip 归档中。&lt;br&gt;&lt;br&gt;  - 排除 MODELS 路径：从 LDraw 搜索&lt;br&gt;    路径列表中排除 MODELS 文件夹路径。此路径&lt;br&gt;    硬编码为 LDraw 文件夹的根目录，&lt;br&gt;    例如 ./LDraw/models。&lt;br&gt;    如果你不使用 LDraw MODELS 文件夹，&lt;br&gt;    取消勾选此项可能有助于提升性能。&lt;br&gt;&lt;br&gt;  - 添加 LSynth 路径：将 LSynth 文件夹路径加入 LDraw 搜索&lt;br&gt;    路径（若尚未包含在搜索路径中）。&lt;br&gt;    此路径硬编码为非官方文件夹的根目录，&lt;br&gt;    例如 ./LDraw/unofficial/LSynth。&lt;br&gt;&lt;br&gt;  - 添加 Helper 路径：将 Helper 文件夹路径加入 LDraw 搜索&lt;br&gt;    路径。此路径硬编码为&lt;br&gt;    非官方文件夹的根目录，例如 ./LDraw/unofficial/helper。&lt;br&gt;    如果你希望随渲染器和/或 Blender 附加组件&lt;br&gt;    导出自定义 helper 零件，&lt;br&gt;&lt;br&gt;    请勾选此设置。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5660" />
@@ -29116,7 +29116,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5673" />
         <source>  Configure the Native renderer and 3DViewer default&lt;br&gt;  rendering settings.&lt;br&gt;&lt;br&gt;  - Anti-aliasing: toggle on or off and select between&lt;br&gt;    2x, 4x, and 8x using the drop-down menu.&lt;br&gt;&lt;br&gt;  - Edge Lines: toggle on or off edge lines and select&lt;br&gt;    edge line width using the slide bar.&lt;br&gt;&lt;br&gt;  - Mesh LOD: toggle on or off the mesh level of detaul&lt;br&gt;    and select the LOD value between 0 and 1500 using the&lt;br&gt;    slide bar.&lt;br&gt;&lt;br&gt;  - Shading Mode: select the shading mode from default&lt;br&gt;    lights, wireframe, or flat shading.&lt;br&gt;&lt;br&gt;  - Stud Style: stud style decorate studs with one of&lt;br&gt;    seven (7) LEGO inscribed styles.&lt;br&gt;&lt;br&gt;    High contrast stud styles paint stud cylinder&lt;br&gt;    and part edge colors.&lt;br&gt;&lt;br&gt;    Available stud styles:&lt;br&gt;    ° 0 Plain&lt;br&gt;    ° 1 Thin Line Logo&lt;br&gt;    ° 2 Outline Logo&lt;br&gt;    ° 3 Sharp Top Logo&lt;br&gt;    ° 4 Rounded Top Logo&lt;br&gt;    ° 5 Flattened Logo&lt;br&gt;    ° 6 High Contrast&lt;br&gt;    ° 7 High Contrast With Logo&lt;br&gt;&lt;br&gt;    High Contrast Stud And Edge Color Setttings allow&lt;br&gt;    you to configure part edge and stud cylinder&lt;br&gt;    color settings.&lt;br&gt;&lt;br&gt;  - LPub Fade and Highlight: toggle on or off rendering&lt;br&gt;    fade and highlight parts using %1 behaviour.&lt;br&gt;    When enabled, the back faces of faded parts will&lt;br&gt;    not be drawn. Also, when enabled, Highlight New&lt;br&gt;    Parts and Fade Previous Steps are disabled.&lt;br&gt;&lt;br&gt;  - Draw Conditional Lines: toggle on or off drawing&lt;br&gt;    conditional lines.&lt;br&gt;&lt;br&gt;  - Fade Parts: toggle on or off fade parts using the&lt;br&gt;    Visual Editor/Native Renderer fade behaviour.&lt;br&gt;&lt;br&gt;  - Highlight Parts: toggle on or off highlight parts&lt;br&gt;    using the Visual Editor/Native highlight behavoiur.&lt;br&gt;&lt;br&gt;    When Fade or Highlight Parts is enabled, LPub Fade&lt;br&gt;    and Highlight is disabled. Also, These settings are&lt;br&gt;    applied when exporting HTML steps.&lt;br&gt;&lt;br&gt;  - Automate Edge Color: automatically adjust part edge&lt;br&gt;    colors based on the following configured settings:&lt;br&gt;    * Contrast: the amount of contrast.&lt;br&gt;&lt;br&gt;    * Saturation: the amount of edge color tint&lt;br&gt;      or shade.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 Native 渲染器和 3D 查看器的默认&lt;br&gt;  渲染设置。&lt;br&gt;&lt;br&gt;  - 抗锯齿：使用下拉菜单开启或关闭，&lt;br&gt;    并在 2x、4x 和 8x 之间选择。&lt;br&gt;&lt;br&gt;  - 边线：开启或关闭边线，并使用&lt;br&gt;    滑块选择边线宽度。&lt;br&gt;&lt;br&gt;  - 网格 LOD：开启或关闭网格细节级别，&lt;br&gt;    并使用滑块在 0 到 1500 之间&lt;br&gt;    选择 LOD 值。&lt;br&gt;&lt;br&gt;  - 着色模式：从默认&lt;br&gt;    灯光、线框或平面着色中选择着色模式。&lt;br&gt;&lt;br&gt;  - 凸点样式：凸点样式用七（7）种&lt;br&gt;    LEGO 刻印样式之一来装饰凸点。&lt;br&gt;&lt;br&gt;    高对比度凸点样式会为凸点圆柱&lt;br&gt;    和零件边缘上色。&lt;br&gt;&lt;br&gt;    可用的凸点样式：&lt;br&gt;    ° 0 素面&lt;br&gt;    ° 1 细线标志&lt;br&gt;    ° 2 轮廓标志&lt;br&gt;    ° 3 尖顶标志&lt;br&gt;    ° 4 圆顶标志&lt;br&gt;    ° 5 扁平标志&lt;br&gt;    ° 6 高对比度&lt;br&gt;    ° 7 带标志的高对比度&lt;br&gt;&lt;br&gt;    高对比度凸点与边缘颜色设置允许&lt;br&gt;    你配置零件边缘和凸点圆柱&lt;br&gt;    颜色设置。&lt;br&gt;&lt;br&gt;  - LPub 淡出与高亮：开启或关闭按 %1&lt;br&gt;    行为渲染淡出和高亮零件。&lt;br&gt;    启用后，淡出零件的背面&lt;br&gt;    将不被绘制。同时启用后，高亮新&lt;br&gt;    零件和淡出先前步骤将被禁用。&lt;br&gt;&lt;br&gt;  - 绘制条件线：开启或关闭绘制&lt;br&gt;    条件线。&lt;br&gt;&lt;br&gt;  - 淡出零件：使用视觉编辑器/Native 渲染器&lt;br&gt;    的淡出行为开启或关闭淡出零件。&lt;br&gt;&lt;br&gt;  - 高亮零件：使用视觉编辑器/Native&lt;br&gt;    高亮行为开启或关闭高亮零件。&lt;br&gt;&lt;br&gt;    启用淡出或高亮零件时，LPub 淡出&lt;br&gt;    与高亮将被禁用。此外，这些设置&lt;br&gt;    在导出 HTML 步骤时生效。&lt;br&gt;&lt;br&gt;  - 自动边缘颜色：根据以下配置设置自动&lt;br&gt;    调整零件边缘颜色：&lt;br&gt;    * 对比度：对比度的量。&lt;br&gt;&lt;br&gt;    * 饱和度：边缘颜色色调&lt;br&gt;      或明暗的量。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5731" />
@@ -29126,12 +29126,12 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5744" />
         <source>  Configure and reset %1 scene colors.&lt;br&gt;&lt;br&gt;  - Background: set or change the scene background color&lt;br&gt;    using the color picker.&lt;br&gt;&lt;br&gt;  - Ruler: set or change the scene ruler color using the&lt;br&gt;    color picker.&lt;br&gt;&lt;br&gt;  - Guide: set or change the scene guide bar color using&lt;br&gt;    the color picker.&lt;br&gt;&lt;br&gt;  - Grid: set or change the scene grid color using the&lt;br&gt;    color picker.&lt;br&gt;&lt;br&gt;  - Tracking: set or change the scene tracking bar color&lt;br&gt;    using the color picker.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置并重置 %1 的场景颜色。&lt;br&gt;&lt;br&gt;  - 背景：使用颜色选择器设置或&lt;br&gt;    更改场景背景颜色。&lt;br&gt;&lt;br&gt;  - 标尺：使用颜色选择器设置或更改&lt;br&gt;    场景标尺颜色。&lt;br&gt;&lt;br&gt;  - 参考线：使用颜色选择器设置或更改&lt;br&gt;    场景参考线颜色。&lt;br&gt;&lt;br&gt;  - 网格：使用颜色选择器设置或更改&lt;br&gt;    场景网格颜色。&lt;br&gt;&lt;br&gt;  - 追踪：使用颜色选择器设置或更改&lt;br&gt;    场景追踪条颜色。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5767" />
         <source>  You can select the %1 theme from Default, Dark and,&lt;br&gt;  on Windows, System. Selecting System will set the %1&lt;br&gt;  theme to the operating system color palette when&lt;br&gt;  %1 starts. To override this behaviour, change the&lt;br&gt;  theme setting.&lt;br&gt;&lt;br&gt;  Additionally, you can set and reset individual theme&lt;br&gt;  colors using the Theme Colors... button.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  你可以从 Default、Dark 以及（在 Windows 上）&lt;br&gt;  System 中选择 %1 主题。选择 System 会在 %1&lt;br&gt;  启动时把 %1 主题设为操作系统的&lt;br&gt;  调色板。要覆盖此行为，请更改&lt;br&gt;  主题设置。&lt;br&gt;&lt;br&gt;  此外，你还可以使用“主题颜色...”按钮&lt;br&gt;  设置和重置各个主题颜色。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5786" />
@@ -29141,12 +29141,12 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5800" />
         <source>  %1 check for updates settings are disabled for&lt;br&gt;  %2 builds. Updates are performed by the %2 manager.&lt;br&gt;  %3&lt;br&gt;  Configure %1 check for updates settings.&lt;br&gt;  - Frequency: select from never, once a day, once a week&lt;br&gt;    or once a month.&lt;br&gt;&lt;br&gt;  - Show Progress Details: toggle on or off showing&lt;br&gt;    progress details while checking for updates.&lt;br&gt;&lt;br&gt;  - Show Update Available: toggle on or off automatic&lt;br&gt;    notification when an update is available.&lt;br&gt;&lt;br&gt;  - Version Installed: the version installed dialog&lt;br&gt;    will automatically display the currently installed&lt;br&gt;    version of %1.&lt;br&gt;&lt;br&gt;  - Enable Downloader: download the available update&lt;br&gt;    directly instead of opening the download link&lt;br&gt;    through a browser.&lt;br&gt;&lt;br&gt;  - Show Redirects: show the download URL redirect accept&lt;br&gt;    message prompt when redirected.&lt;br&gt;&lt;br&gt;  - Check For Updates...: interactively trigger an update&lt;br&gt;    check.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  %1 的检查更新设置对&lt;br&gt;  %2 构建已禁用。更新由 %2 管理器执行。&lt;br&gt;  %3&lt;br&gt;  配置 %1 的检查更新设置。&lt;br&gt;  - 频率：从从不、每天一次、每周一次&lt;br&gt;    或每月一次中选择。&lt;br&gt;&lt;br&gt;  - 显示进度详情：开启或关闭在检查&lt;br&gt;    更新时显示进度详情。&lt;br&gt;&lt;br&gt;  - 显示有可用更新：开启或关闭有更新&lt;br&gt;    可用时的自动通知。&lt;br&gt;&lt;br&gt;  - 已安装版本：已安装版本对话框&lt;br&gt;    会自动显示当前已安装的&lt;br&gt;    %1 版本。&lt;br&gt;&lt;br&gt;  - 启用下载器：直接下载可用的更新，&lt;br&gt;    而不是通过浏览器打开&lt;br&gt;    下载链接。&lt;br&gt;&lt;br&gt;  - 显示重定向：在发生重定向时显示&lt;br&gt;    下载 URL 重定向接受提示消息。&lt;br&gt;&lt;br&gt;  - 检查更新...：交互式触发一次更新&lt;br&gt;    检查。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5839" />
         <source>  Configure the Native renderer and 3DViewer default&lt;br&gt;  viewpoint, projection and zoom settings.&lt;br&gt;&lt;br&gt;  - Viewpoint: set the pre-defined camera angle latitude&lt;br&gt;    and longitude settings which offer the following&lt;br&gt;    options in degrees:&lt;br&gt;    * Front: set the camera view at 0 lat, 0 lon.&lt;br&gt;    * Back: set the camera view at 0 lat, 180 lon.&lt;br&gt;    * Top: set the camera view at 90 lat, 0 lon.&lt;br&gt;    * Bottom: set the camera view at -90 lat, 0 lon.&lt;br&gt;    * Left: set the camera view at 0 lat, 90 lon.&lt;br&gt;    * Right: set the camera view at 0 lat, -90 lon.&lt;br&gt;    * Home: set the camera view at 30 lat, 45 lon.&lt;br&gt;    * Latitude/Loingitude: when set here, the camera&lt;br&gt;      view will be set to 23 lat, 45 lon.&lt;br&gt;    * Default: do not set a camera view, instead&lt;br&gt;      use the camera projection setting.&lt;br&gt;    Note that setting the camera viewpoint will override&lt;br&gt;    the camera projection setting.&lt;br&gt;&lt;br&gt;  - Projection: set the default projection from:&lt;br&gt;&lt;br&gt;    * Perspective: linear project where distant objects&lt;br&gt;      appear smaller.&lt;br&gt;    * Orthographic: parallel projection, where all&lt;br&gt;      projection lines are orthogonal to the projection&lt;br&gt;      plane.&lt;br&gt;    * Default: do not apply camera projection, instead&lt;br&gt;      use the camera viewpoint setting.&lt;br&gt;&lt;br&gt;    Note that when the projection setting in the&lt;br&gt;    Preferred Renderer dialog is changed, this setting&lt;br&gt;    is also automatically updated to the new setting.&lt;br&gt;&lt;br&gt;    Also note that when the camera viewpoint is set,&lt;br&gt;    the camera projection is automatically set to&lt;br&gt;    default and vice versa.&lt;br&gt;&lt;br&gt;  - Zoom Extents: set the automatic camera zoom to&lt;br&gt;    optimize the current image in the view port.&lt;br&gt;    You can select from the following options:&lt;br&gt;    * Default: do not apply zoom extents.&lt;br&gt;    * On Orthographic: automatically apply zoom extents&lt;br&gt;      when camera projection mode is orthographic.&lt;br&gt;    * Always: always apply zoom extents.&lt;br&gt;&lt;br&gt;  Settings configured here will be overridden by meta&lt;br&gt;  commands with the same settings in loaded LDraw file.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 Native 渲染器和 3D 查看器的默认&lt;br&gt;  视点、投影和缩放设置。&lt;br&gt;&lt;br&gt;  - 视点：设置预定义的相机角度纬度和&lt;br&gt;    经度设置，提供以下&lt;br&gt;    以度为单位的选项：&lt;br&gt;    * 前：将相机视图设为纬度 0、经度 0。&lt;br&gt;    * 后：将相机视图设为纬度 0、经度 180。&lt;br&gt;    * 顶：将相机视图设为纬度 90、经度 0。&lt;br&gt;    * 底：将相机视图设为纬度 -90、经度 0。&lt;br&gt;    * 左：将相机视图设为纬度 0、经度 90。&lt;br&gt;    * 右：将相机视图设为纬度 0、经度 -90。&lt;br&gt;    * 归位：将相机视图设为纬度 30、经度 45。&lt;br&gt;    * 纬度/经度：在此设置后，相机&lt;br&gt;      视图将设为纬度 23、经度 45。&lt;br&gt;    * 默认：不设置相机视图，而&lt;br&gt;      使用相机投影设置。&lt;br&gt;    请注意，设置相机视点将覆盖&lt;br&gt;    相机投影设置。&lt;br&gt;&lt;br&gt;  - 投影：设置默认投影，可选：&lt;br&gt;&lt;br&gt;    * 透视：线性投影，远处物体&lt;br&gt;      看起来更小。&lt;br&gt;    * 正交：平行投影，所有&lt;br&gt;      投影线都正交于投影&lt;br&gt;      平面。&lt;br&gt;    * 默认：不应用相机投影，而&lt;br&gt;      使用相机视点设置。&lt;br&gt;&lt;br&gt;    请注意，当“首选渲染器”对话框中&lt;br&gt;    的投影设置更改时，此设置&lt;br&gt;    也会自动更新为新设置。&lt;br&gt;&lt;br&gt;    另请注意，设置相机视点后，&lt;br&gt;    相机投影会自动设为&lt;br&gt;    默认，反之亦然。&lt;br&gt;&lt;br&gt;  - 缩放范围：设置自动相机缩放，&lt;br&gt;    以优化视口中的当前图像。&lt;br&gt;    你可以从以下选项中选择：&lt;br&gt;    * 默认：不应用缩放范围。&lt;br&gt;    * 正交时：当相机投影模式为&lt;br&gt;      正交时自动应用缩放范围。&lt;br&gt;    * 总是：始终应用缩放范围。&lt;br&gt;&lt;br&gt;  在此配置的设置会被已加载 LDraw 文件中&lt;br&gt;  具有相同设置的元命令覆盖。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5891" />
@@ -29166,7 +29166,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5937" />
         <source>  Configure the 3D viewer base grid attributes.&lt;br&gt;  - Draw Studs: toggle on and off drawing studs on the&lt;br&gt;    base grid.&lt;br&gt;  - Draw Lines Every n Studs: toggle on or off drawing&lt;br&gt;    grid lines evey n studs, by default n is 5 studs.&lt;br&gt;  - Draw Origin Lines: draw X and Y axis guidelines that&lt;br&gt;    intersect at the selected part or assembly origin.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器基准网格属性。&lt;br&gt;  - 绘制凸点：开启或关闭在基准网格上&lt;br&gt;    绘制凸点。&lt;br&gt;  - 每 n 个凸点绘制线条：开启或关闭每 n 个&lt;br&gt;    凸点绘制网格线，默认 n 为 5 个凸点。&lt;br&gt;  - 绘制原点线：绘制在所选零件或装配&lt;br&gt;    原点相交的 X、Y 轴参考线。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5955" />
@@ -29176,27 +29176,27 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="5970" />
         <source>  View, import, export or reset LDraw part categories.&lt;br&gt;  - Categories: Part categories are taken from the&lt;br&gt;    part description.&lt;br&gt;    You can select a part category in the category column&lt;br&gt;    and the all parts under this category will displayin&lt;br&gt;    the right column. Parts are displayed by their name&lt;br&gt;    number attributes.&lt;br&gt;&lt;br&gt;  You can perform the following actions on&lt;br&gt;  part categories.&lt;br&gt;&lt;br&gt;  - Import: import custom part categories.&lt;br&gt;&lt;br&gt;  - Export: export the entire list of part categories to&lt;br&gt;    an external file.&lt;br&gt;&lt;br&gt;  - Reset: reload all part categories and their default&lt;br&gt;    definitions.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  查看、导入、导出或重置 LDraw 零件类别。&lt;br&gt;  - 类别：零件类别取自&lt;br&gt;    零件描述。&lt;br&gt;    你可以在类别列中选择一个零件类别，&lt;br&gt;    该类别下的所有零件会显示在&lt;br&gt;    右侧列中。零件按其名称&lt;br&gt;    编号属性显示。&lt;br&gt;&lt;br&gt;  你可以对零件类别执行&lt;br&gt;  以下操作。&lt;br&gt;&lt;br&gt;  - 导入：导入自定义零件类别。&lt;br&gt;&lt;br&gt;  - 导出：将完整零件类别列表导出到&lt;br&gt;    外部文件。&lt;br&gt;&lt;br&gt;  - 重置：重新加载所有零件类别及其默认&lt;br&gt;    定义。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="5995" />
         <source>  Create, edit or delete LDraw part categories.&lt;br&gt;  - New: create a new part category.&lt;br&gt;  - Edit: edit the selected part category.&lt;br&gt;  - Delete: remove the selected part category.&lt;br&gt;    Edited and removed part categories can b restored&lt;br&gt;    using the Reset button in the Parts Library&lt;br&gt;    Categories dialog.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  创建、编辑或删除 LDraw 零件类别。&lt;br&gt;  - 新建：创建新的零件类别。&lt;br&gt;  - 编辑：编辑选定的零件类别。&lt;br&gt;  - 删除：移除选定的零件类别。&lt;br&gt;    已编辑和已移除的零件类别可以使用&lt;br&gt;    “零件库类别”对话框中的&lt;br&gt;    “重置”按钮恢复。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6013" />
         <source>  Configure the 3D viewer and Native renderer general&lt;br&gt;  settings.&lt;br&gt;&lt;br&gt;  - Prompt On Redraw LPub Document Page: toggle on or off&lt;br&gt;    a display message asking to redraw the current page&lt;br&gt;    when a preference setting that affects the rendered&lt;br&gt;    image is changed.&lt;br&gt;&lt;br&gt;  - Prefer Official Parts: toggle on or off ignoring&lt;br&gt;    unofficial LDraw parts that also appear in the&lt;br&gt;    official parts archive library.&lt;br&gt;&lt;br&gt;    There may be cases where you may wish to use an&lt;br&gt;    'altered' instance of an official part in which&lt;br&gt;    case this setting can be toggled off to enable&lt;br&gt;    this behaviour.&lt;br&gt;&lt;br&gt;    Keep in mind custom parts, or any unofficial part,&lt;br&gt;    exposed to %1 using LDraw Search Directories, will&lt;br&gt;    ultimately be added to the LDraw unofficial parts&lt;br&gt;    archive library.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器和 Native 渲染器的常规&lt;br&gt;  设置。&lt;br&gt;&lt;br&gt;  - 重绘 LPub 文档页面时提示：开启或关闭&lt;br&gt;    在影响渲染图像的偏好设置发生&lt;br&gt;    更改时显示消息，询问是否&lt;br&gt;    重绘当前页面。&lt;br&gt;&lt;br&gt;  - 优先使用官方零件：开启或关闭忽略&lt;br&gt;    同样出现在官方零件归档库中的&lt;br&gt;    非官方 LDraw 零件。&lt;br&gt;&lt;br&gt;    有时你可能希望使用某个官方零件的&lt;br&gt;    “改动”版本，此时可以关闭&lt;br&gt;    此设置以启用&lt;br&gt;    该行为。&lt;br&gt;&lt;br&gt;    请记住，通过 LDraw 搜索目录暴露给 %1 的&lt;br&gt;    自定义零件或任何非官方零件，&lt;br&gt;    最终都会被添加到 LDraw 非官方零件&lt;br&gt;    归档库中。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6042" />
         <source>  Configure the 3D viewer XYZ axis icon settings and&lt;br&gt;  select the axis icon location within the 3D viewer&lt;br&gt;  viewport.&lt;br&gt;&lt;br&gt;  - Axis Icon: toggle on or off the axis icon display.&lt;br&gt;  - Location: XYZ axis icon location options&lt;br&gt;    ° Top Left&lt;br&gt;    ° Top Rightn&lt;br&gt;    ° Bottom Left&lt;br&gt;    ° Bottom Right%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器 XYZ 轴图标设置，并&lt;br&gt;  选择轴图标在 3D 查看器&lt;br&gt;  视口中的位置。&lt;br&gt;&lt;br&gt;  - 轴图标：开启或关闭轴图标显示。&lt;br&gt;  - 位置：XYZ 轴图标位置选项&lt;br&gt;    ° 左上&lt;br&gt;    ° 右上&lt;br&gt;    ° 左下&lt;br&gt;    ° 右下%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6062" />
         <source>  Configure the 3D viewer interface object colors&lt;br&gt;  using the color picker.&lt;br&gt;&lt;br&gt;  - Axis Labels: axis icon X,Y,Z labels.&lt;br&gt;  - Overlay Color: object overlay.&lt;br&gt;  - Marquee Border: selection area border.&lt;br&gt;  - Marquee Fill: selection area fill.&lt;br&gt;  - Active View: active 3D viewwer viewport border.&lt;br&gt;  - Inactive View: inactive 3D viewwer viewport border.&lt;br&gt;  - Camera Name: custom camera label.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  使用颜色选择器配置 3D 查看器&lt;br&gt;  界面对象颜色。&lt;br&gt;&lt;br&gt;  - 轴标签：轴图标的 X、Y、Z 标签。&lt;br&gt;  - 叠加颜色：对象叠加层。&lt;br&gt;  - 选框边框：选择区域边框。&lt;br&gt;  - 选框填充：选择区域填充。&lt;br&gt;  - 活动视图：活动的 3D 查看器视口边框。&lt;br&gt;  - 非活动视图：非活动的 3D 查看器视口边框。&lt;br&gt;  - 相机名称：自定义相机标签。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6082" />
@@ -29214,47 +29214,47 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="6131" />
         <source>  Configure the 3D viewer model object colors.&lt;br&gt;  using the color picker.&lt;br&gt;&lt;br&gt;  - Focused: clicken on item color.&lt;br&gt;  - Selected: selection item color.&lt;br&gt;  - Camera: drawn camera color.&lt;br&gt;  - Control Point: flexible parts control point color.&lt;br&gt;  - Control Point Focused: clicked on flexible parts&lt;br&gt;    control point color.&lt;br&gt;  - Build Mod Selected: selected item when Build&lt;br&gt;    Modifications is enabled color.&lt;br&gt;  - Light: drawn light color.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器模型对象颜色。&lt;br&gt;  使用颜色选择器。&lt;br&gt;&lt;br&gt;  - 聚焦：点击项的颜色。&lt;br&gt;  - 选中：选择项的颜色。&lt;br&gt;  - 相机：绘制的相机颜色。&lt;br&gt;  - 控制点：柔性零件控制点颜色。&lt;br&gt;  - 聚焦控制点：点击的柔性零件&lt;br&gt;    控制点颜色。&lt;br&gt;  - 构建修改选中：启用构建修改时&lt;br&gt;    选中项的颜色。&lt;br&gt;  - 光照：绘制的光照颜色。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6153" />
         <source>  Configure the 3D viewer part preview settings.&lt;br&gt;&lt;br&gt;  - Preview Size: size options&lt;br&gt;    * Docked: the part preview window is docked as a tab&lt;br&gt;      in the 3D viewer.&lt;br&gt;    * Small: 300 pixels.&lt;br&gt;    * Medium: 400 pixels.&lt;br&gt;  - Location: location options&lt;br&gt;    ° Top Right&lt;br&gt;    ° Tob Left&lt;br&gt;    ° Bottom Right&lt;br&gt;    ° Bottom Left&lt;br&gt;&lt;br&gt;  - Position: position options&lt;br&gt;    * Floating: the part preview windows is floating.&lt;br&gt;    * Docked: the part preview window is docked as a tab&lt;br&gt;      in the 3D viewer.&lt;br&gt;&lt;br&gt;  - View Sphere Size: size options&lt;br&gt;    * Disabled: the view sphere is not dislayed.&lt;br&gt;    * Small: 50 pixels.&lt;br&gt;    * Medium: 100 pixels.&lt;br&gt;    * Large: 200 pixels.&lt;br&gt;&lt;br&gt;  - View Sphere Location: location options&lt;br&gt;    ° Top Right&lt;br&gt;    ° Tob Left&lt;br&gt;    ° Bottom Right&lt;br&gt;    ° Bottom Left&lt;br&gt;&lt;br&gt;  - Axis Icon: toggle on or off the XYZ axis icon display.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器零件预览设置。&lt;br&gt;&lt;br&gt;  - 预览尺寸：尺寸选项&lt;br&gt;    * 停靠：零件预览窗口作为标签页停靠在&lt;br&gt;      3D 查看器中。&lt;br&gt;    * 小：300 像素。&lt;br&gt;    * 中：400 像素。&lt;br&gt;  - 位置：位置选项&lt;br&gt;    ° 右上&lt;br&gt;    ° 左上&lt;br&gt;    ° 右下&lt;br&gt;    ° 左下&lt;br&gt;&lt;br&gt;  - 放置方式：放置方式选项&lt;br&gt;    * 浮动：零件预览窗口浮动显示。&lt;br&gt;    * 停靠：零件预览窗口作为标签页停靠在&lt;br&gt;      3D 查看器中。&lt;br&gt;&lt;br&gt;  - 视图球尺寸：尺寸选项&lt;br&gt;    * 禁用：不显示视图球。&lt;br&gt;    * 小：50 像素。&lt;br&gt;    * 中：100 像素。&lt;br&gt;    * 大：200 像素。&lt;br&gt;&lt;br&gt;  - 视图球位置：位置选项&lt;br&gt;    ° 右上&lt;br&gt;    ° 左上&lt;br&gt;    ° 右下&lt;br&gt;    ° 左下&lt;br&gt;&lt;br&gt;  - 轴图标：开启或关闭 XYZ 轴图标显示。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6190" />
         <source>  View the 3D viewer and Native renderer paths.&lt;br&gt;  These setting are read only and are configured from&lt;br&gt;  %1.&lt;br&gt;&lt;br&gt;  - Parts Library: the official LDraw archive parts&lt;br&gt;    library.&lt;br&gt;    This location should also contain the unofficial&lt;br&gt;    LDraw archive parts library.&lt;br&gt;  - Color Configuration: when an alternate LDConfig&lt;br&gt;    LDraw color configuration file is specified in %1&lt;br&gt;    Preferences, that file path is reflected here.&lt;br&gt;  - POV-Ray Executable: here we have the loction of the&lt;br&gt;    %1 POV-Ray renderer.&lt;br&gt;  - LGEO Library: when the LEGO Geometrical Equivalent&lt;br&gt;    Objects (LGEO) library is available, the library path&lt;br&gt;    is specified here.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  查看 3D 查看器和 Native 渲染器路径。&lt;br&gt;  这些设置是只读的，通过&lt;br&gt;  %1 配置。&lt;br&gt;&lt;br&gt;  - 零件库：官方 LDraw 归档零件&lt;br&gt;    库。&lt;br&gt;    此位置还应包含非官方&lt;br&gt;    LDraw 归档零件库。&lt;br&gt;  - 颜色配置：当在 %1 偏好设置中指定了&lt;br&gt;    替代的 LDConfig LDraw 颜色配置文件时，&lt;br&gt;    此处会反映该文件路径。&lt;br&gt;  - POV-Ray 可执行文件：此处为&lt;br&gt;    %1 POV-Ray 渲染器的位置。&lt;br&gt;  - LGEO 库：当 LEGO 几何等效对象&lt;br&gt;    （LGEO）库可用时，此处会给出&lt;br&gt;    库路径。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6229" />
         <source>  Configure the 3D viewer timeline settings.&lt;br&gt;  - Show Timeline Piece Icons: display timeline icon as&lt;br&gt;    a scaled image of the timeline part or assembly.&lt;br&gt;&lt;br&gt;  - Show Timeline Color Icons: display timeline icon as&lt;br&gt;    a circular image colored the same as the part&lt;br&gt;    represents. Assemblies are assigned the LDraw default&lt;br&gt;    color.&lt;br&gt;&lt;br&gt;    By default, timeline icons is set to Show Timeline&lt;br&gt;    Color Icons. This setting allows you to set&lt;br&gt;    Show Timeline Piece Icons.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器时间线设置。&lt;br&gt;  - 显示时间线零件图标：将时间线图标显示为&lt;br&gt;    时间线零件或装配的缩放图像。&lt;br&gt;&lt;br&gt;  - 显示时间线颜色图标：将时间线图标显示为&lt;br&gt;    与所代表零件同色的圆形&lt;br&gt;    图像。装配会被赋予 LDraw 默认&lt;br&gt;    颜色。&lt;br&gt;&lt;br&gt;    默认情况下，时间线图标设为“显示时间线&lt;br&gt;    颜色图标”。此设置允许你改为&lt;br&gt;    “显示时间线零件图标”。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6250" />
         <source>  Configure the 3D viewer view sphere size and location.&lt;br&gt;&lt;br&gt;  - Size: size options&lt;br&gt;    * Disabled: the view sphere is not dislayed.&lt;br&gt;    * Small: 50 pixels.&lt;br&gt;    * Medium: 100 pixels.&lt;br&gt;    * Large: 200 pixels.&lt;br&gt;&lt;br&gt;  - Location: location options&lt;br&gt;    ° Top Right&lt;br&gt;    ° Tob Left&lt;br&gt;    ° Bottom Right&lt;br&gt;    ° Bottom Left%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 3D 查看器视图球尺寸和位置。&lt;br&gt;&lt;br&gt;  - 尺寸：尺寸选项&lt;br&gt;    * 禁用：不显示视图球。&lt;br&gt;    * 小：50 像素。&lt;br&gt;    * 中：100 像素。&lt;br&gt;    * 大：200 像素。&lt;br&gt;&lt;br&gt;  - 位置：位置选项&lt;br&gt;    ° 右上&lt;br&gt;    ° 左上&lt;br&gt;    ° 右下&lt;br&gt;    ° 左下%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6272" />
         <source>  Configure the 3D viewer view sphere colors&lt;br&gt;  using the color picker.&lt;br&gt;&lt;br&gt;  - Color: view sphere background color.&lt;br&gt;  - Text Color: view plane text color.&lt;br&gt;  - Highlight Color: view plane hover highlight color.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  使用颜色选择器配置 3D 查看器&lt;br&gt;  视图球颜色。&lt;br&gt;&lt;br&gt;  - 颜色：视图球背景颜色。&lt;br&gt;  - 文本颜色：视图平面文本颜色。&lt;br&gt;  - 高亮颜色：视图平面悬停高亮颜色。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6288" />
         <source>  Configure LDView antialiasing settings.&lt;br&gt;&lt;br&gt;  - FSAA: This allows you to select what level of&lt;br&gt;    full-scene antialiasing to use.&lt;br&gt;    Note that if your video card does&lt;br&gt;    not support full-scene antialiasing, then None will&lt;br&gt;    be the only available item.&lt;br&gt;    If your video card does support full-scene&lt;br&gt;    antialiasing, then all available FSAA modes should be&lt;br&gt;    available to choose from. If you have an nVIDIA®&lt;br&gt;    video card with Quincunx support, then 2x Enhanced&lt;br&gt;    and 4x Enhanced should show up as options. These use&lt;br&gt;    nVIDIA's advanced FSAA filter.&lt;br&gt;&lt;br&gt;  - Antialiased lines: Enabling this option causes lines&lt;br&gt;    to be drawn using antialiasing. This does not effect&lt;br&gt;    wireframe mode. Line antialiasing can significantly&lt;br&gt;    improve the visual quality of lines, but it can also&lt;br&gt;    significantly impact the frame rate.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 抗锯齿设置。&lt;br&gt;&lt;br&gt;  - FSAA：用于选择要使用的&lt;br&gt;    全场景抗锯齿级别。&lt;br&gt;    请注意，如果你的显卡&lt;br&gt;    不支持全场景抗锯齿，则只有&lt;br&gt;    None 一个可用项。&lt;br&gt;    如果你的显卡支持全场景&lt;br&gt;    抗锯齿，则所有可用的 FSAA 模式&lt;br&gt;    都可以选择。如果你使用的是支持 Quincunx 的&lt;br&gt;    nVIDIA® 显卡，则 2x Enhanced&lt;br&gt;    和 4x Enhanced 会作为选项出现。它们使用&lt;br&gt;    nVIDIA 的高级 FSAA 滤镜。&lt;br&gt;&lt;br&gt;  - 抗锯齿线条：启用此选项后，线条&lt;br&gt;    会使用抗锯齿绘制。这不影响&lt;br&gt;    线框模式。线条抗锯齿可以显著&lt;br&gt;    提升线条的视觉质量，但也会&lt;br&gt;    显著影响帧率。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6316" />
         <source>  Configure LDView color settings.&lt;br&gt;&lt;br&gt;  - Background: This allows you to set the color used to&lt;br&gt;    draw the background behind the model.&lt;br&gt;&lt;br&gt;  - Default Color: This allows you to set the default&lt;br&gt;    color.&lt;br&gt;    Note that edge lines on default-colored objects will&lt;br&gt;    be black.&lt;br&gt;    Resetting the General preferences also resets these&lt;br&gt;    colors.&lt;br&gt;&lt;br&gt;  - Transparent: Enabling this option causes&lt;br&gt;    default-colored items to be transparent.&lt;br&gt;&lt;br&gt;  - Random colors: Enabling this option causes the colors&lt;br&gt;    used in the model to be randomized.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 颜色设置。&lt;br&gt;&lt;br&gt;  - 背景：用于设置绘制模型&lt;br&gt;    背后背景的颜色。&lt;br&gt;&lt;br&gt;  - 默认颜色：用于设置默认&lt;br&gt;    颜色。&lt;br&gt;    请注意，默认颜色对象上的边线&lt;br&gt;    会显示为黑色。&lt;br&gt;    重置常规偏好设置也会重置这些&lt;br&gt;    颜色。&lt;br&gt;&lt;br&gt;  - 透明：启用此选项后，&lt;br&gt;    默认颜色项会变为透明。&lt;br&gt;&lt;br&gt;  - 随机颜色：启用此选项后，模型&lt;br&gt;    中使用的颜色会随机化。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6340" />
         <source>  This text field allows you to enter or paste the full path to&lt;br&gt;  an LDraw file that you want to use for custom config. It is&lt;br&gt;  expected that a custom config file would normally contain&lt;br&gt;  custom color definitions that get loaded after the standard&lt;br&gt;  ones in LDConfig.ldr (if that is enabled). It can thus override&lt;br&gt;  any colors that are defined in LDConfig.ldr, as well as define&lt;br&gt;  new colors.&lt;br&gt;  The file can contain any valid LDraw statements, including&lt;br&gt;  geometry, but any geometry specified by this file will be drawn&lt;br&gt;  in addition to any file that is loaded. The geometry will not&lt;br&gt;  be included in model size calculations, so it may be cropped.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  此文本字段允许你输入或粘贴要用作自定义配置的&lt;br&gt;  LDraw 文件的完整路径。通常自定义配置文件&lt;br&gt;  会包含自定义颜色定义，这些定义会在&lt;br&gt;  LDConfig.ldr 中的标准定义之后加载（若此项已启用）。&lt;br&gt;  因此它可以覆盖&lt;br&gt;  LDConfig.ldr 中定义的任何颜色，也可以定义&lt;br&gt;  新颜色。&lt;br&gt;  该文件可以包含任何有效的 LDraw 语句，包括&lt;br&gt;  几何体，但此文件指定的任何几何体都会与&lt;br&gt;  已加载的文件一同绘制。这些几何体不会&lt;br&gt;  计入模型尺寸计算，因此可能会被裁剪。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6362" />
@@ -29264,97 +29264,97 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="6377" />
         <source>  Configure LDView general miscellaneous settings.&lt;br&gt;&lt;br&gt;  - Auto-crop rendered image: Enabling this option will&lt;br&gt;    automatically remove unnecessary negative space&lt;br&gt;    from the rendered image.&lt;br&gt;&lt;br&gt;  - Rendered image background transparent: Enabling this&lt;br&gt;    option causes the rendered image background to be&lt;br&gt;    transparent.&lt;br&gt;&lt;br&gt;  - Don't use pixel buffer: Enabling this option will not&lt;br&gt;    use the pixel buffer when rendering images.&lt;br&gt;    This setting is only available on Windows.&lt;br&gt;&lt;br&gt;  - Field of view: Enter a number in this field to&lt;br&gt;    control the field of view (in degrees).&lt;br&gt;    Setting this to the minimum value of 0.1 will produce&lt;br&gt;    an image that is essentially orthographic.&lt;br&gt;    Setting it to the maximum value of 90 will produce a&lt;br&gt;    wide-angle view.&lt;br&gt;&lt;br&gt;  - Memory usage: This allows you to have some control&lt;br&gt;    over how much memory LDView uses. Normally, setting&lt;br&gt;    this to High will result in the best performance.&lt;br&gt;    However, if you load a large model that uses more&lt;br&gt;    memory than you have available, setting this to&lt;br&gt;    Medium or Low may improve performance.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 常规杂项设置。&lt;br&gt;&lt;br&gt;  - 自动裁剪渲染图像：启用此选项会&lt;br&gt;    自动移除渲染图像中&lt;br&gt;    多余留白。&lt;br&gt;&lt;br&gt;  - 渲染图像背景透明：启用此&lt;br&gt;    选项后，渲染图像背景会变为&lt;br&gt;    透明。&lt;br&gt;&lt;br&gt;  - 不使用像素缓冲区：启用此选项将不&lt;br&gt;    在渲染图像时使用像素缓冲区。&lt;br&gt;    此设置仅在 Windows 上可用。&lt;br&gt;&lt;br&gt;  - 视场角：在此字段中输入数字，&lt;br&gt;    以控制视场角（单位为度）。&lt;br&gt;    将其设为最小值 0.1 会生成&lt;br&gt;    基本正交的图像。&lt;br&gt;    将其设为最大值 90 会生成&lt;br&gt;    广角视图。&lt;br&gt;&lt;br&gt;  - 内存占用：用于在一定程度上控制&lt;br&gt;    LDView 使用的内存量。通常，将其&lt;br&gt;    设为“高”会获得最佳性能。&lt;br&gt;    但是，如果你加载的大型模型使用的&lt;br&gt;    内存超过可用内存，将其设为&lt;br&gt;    “中”或“低”可能会提升性能。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6410" />
         <source>  The default save directories box allows you to decide&lt;br&gt;  what directory to use when saving files. Each save&lt;br&gt;  operation has three possible options:&lt;br&gt;&lt;br&gt;  - Model: The default directory is the same directory&lt;br&gt;    as the currently loaded model.&lt;br&gt;  - Last Saved: The default directory is whatever&lt;br&gt;    directory was used last for this file type. (The&lt;br&gt;    first time you save a file of a given type, the&lt;br&gt;    default directory is the model's directory.)&lt;br&gt;&lt;br&gt;  Save directory can be set for the following:&lt;br&gt;  - Renderings: LDView rendered images.&lt;br&gt;  - Part Lists: HTML generated part list.&lt;br&gt;  - POV Exports: POV file generation used by the POV-Ray&lt;br&gt;    renderer.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  默认保存目录框允许你决定&lt;br&gt;  保存文件时使用哪个目录。每种保存&lt;br&gt;  操作都有三个可能的选项：&lt;br&gt;&lt;br&gt;  - 模型：默认目录与当前加载的&lt;br&gt;    模型所在目录相同。&lt;br&gt;  - 上次保存：默认目录为此文件类型&lt;br&gt;    上次使用的目录。（首次保存&lt;br&gt;    某类型的文件时，默认目录&lt;br&gt;    为模型所在目录。）&lt;br&gt;&lt;br&gt;  可为以下内容设置保存目录：&lt;br&gt;  - 渲染图：LDView 渲染的图像。&lt;br&gt;  - 零件清单：HTML 生成的零件清单。&lt;br&gt;  - POV 导出：POV-Ray 渲染器使用的&lt;br&gt;    POV 文件生成。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6435" />
         <source>  Configure LDView model settings.&lt;br&gt;&lt;br&gt;  - Seam width: Enabling this option allows you to set&lt;br&gt;    the width of the seams between parts using the spin&lt;br&gt;    box up and down arrows to the right. The field then&lt;br&gt;    displays the current seam width. Use the spin box&lt;br&gt;    arrows to set the seam width to a range of numbers&lt;br&gt;    between 0.00 and 5.00.&lt;br&gt;&lt;br&gt;  - Part bounding boxes only: Enabling this option makes&lt;br&gt;    it so that all parts in the model are drawn as just&lt;br&gt;    bounding boxes. A bounding box is the minimum&lt;br&gt;    axis-aligned box that can completely contain the part.&lt;br&gt;    Geometry that isn't detected as being inside a part is&lt;br&gt;    drawn normally.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 模型设置。&lt;br&gt;&lt;br&gt;  - 接缝宽度：启用此选项后，你可以使用&lt;br&gt;    右侧的微调框上下箭头设置零件间&lt;br&gt;    接缝的宽度。随后该字段会&lt;br&gt;    显示当前接缝宽度。使用微调框&lt;br&gt;    箭头可将接缝宽度设为&lt;br&gt;    0.00 到 5.00 之间的数值。&lt;br&gt;&lt;br&gt;  - 仅零件包围盒：启用此选项后，&lt;br&gt;    模型中的所有零件都只绘制为&lt;br&gt;    包围盒。包围盒是能够完全包含该零件的&lt;br&gt;    最小轴对齐长方体。&lt;br&gt;    未被识别为位于零件内部的几何体&lt;br&gt;    会正常绘制。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6459" />
         <source>  Configure LDView wire frame settings.&lt;br&gt;&lt;br&gt;  - Wireframe: Enabling this option causes the model to&lt;br&gt;    be drawn in wireframe. Note that with many 3D&lt;br&gt;    accelerators, this actually runs slower than when&lt;br&gt;    drawing as a solid.&lt;br&gt;&lt;br&gt;  - Fog: This option is only enabled if wireframe drawing&lt;br&gt;    is enabled. Enabling it causes fog to be used to make&lt;br&gt;    it so that the lines that are farther away are drawn&lt;br&gt;    more dimly.&lt;br&gt;&lt;br&gt;  - Remove hidden lines: This option is only available if&lt;br&gt;    wireframe drawing is enabled. Enabling it causes the&lt;br&gt;    solid (non-transparent) portions of the model to hide&lt;br&gt;    lines that are behind them, even though these portions&lt;br&gt;    themselves aren't actually drawn.&lt;br&gt;&lt;br&gt;  - Thickness: This option is only available if wireframe&lt;br&gt;    drawing is enabled. It adjusts the thickness of the&lt;br&gt;    lines used to draw the model in wireframe mode.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 线框设置。&lt;br&gt;&lt;br&gt;  - 线框：启用此选项后，模型会&lt;br&gt;    以线框方式绘制。请注意，在许多 3D&lt;br&gt;    加速器上，这实际上比&lt;br&gt;    实体绘制运行得更慢。&lt;br&gt;&lt;br&gt;  - 雾：仅当启用线框绘制时&lt;br&gt;    此选项才可用。启用后，会使用雾效&lt;br&gt;    使距离较远的线条&lt;br&gt;    绘制得更暗淡。&lt;br&gt;&lt;br&gt;  - 移除隐藏线：仅当启用线框&lt;br&gt;    绘制时此选项才可用。启用后，模型中的&lt;br&gt;    实体（非透明）部分会遮挡&lt;br&gt;    其背后的线条，即使这些部分&lt;br&gt;    本身并未实际绘制。&lt;br&gt;&lt;br&gt;  - 粗细：仅当启用线框绘制时&lt;br&gt;    此选项才可用。它用于调整&lt;br&gt;    线框模式下绘制模型所用线条的粗细。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6487" />
         <source>  Configure LDView Back-face Culling (BFC) settings.&lt;br&gt;&lt;br&gt;  - BFC: Enabling this option turns on back-face culling.&lt;br&gt;    BFC is a technique that can improve rendering&lt;br&gt;    erformance by not drawing the back faces of polygons.&lt;br&gt;    (Only BFC-certified parts have their back faces&lt;br&gt;    removed.)&lt;br&gt;&lt;br&gt;  - Red back faces: This option is only available while&lt;br&gt;    BFC is enabled. Enabling it causes the back faces of&lt;br&gt;    polygons to be drawn in red. This is mainly useful for&lt;br&gt;    part authors.&lt;br&gt;&lt;br&gt;  - Green front faces: This option is only available while&lt;br&gt;    BFC is enabled. Enabling it causes the front faces of&lt;br&gt;    polygons to be drawn in green. This is mainly useful&lt;br&gt;    for part authors.&lt;br&gt;&lt;br&gt;  - Blue neutral faces: This option is only available&lt;br&gt;    while BFC is enabled. Enabling it causes the faces of&lt;br&gt;    non BFC certified polygons to be drawn in blue. This&lt;br&gt;    is mainly useful for part authors.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 背面剔除（BFC）设置。&lt;br&gt;&lt;br&gt;  - BFC：启用此选项会开启背面剔除。&lt;br&gt;    BFC 是一种通过不绘制多边形背面&lt;br&gt;    来提升渲染性能的技术。&lt;br&gt;    （仅 BFC 认证零件的背面&lt;br&gt;    会被移除。）&lt;br&gt;&lt;br&gt;  - 红色背面：仅当启用&lt;br&gt;    BFC 时此选项才可用。启用后，&lt;br&gt;    多边形的背面会以红色绘制。这主要对&lt;br&gt;    零件作者有用。&lt;br&gt;&lt;br&gt;  - 绿色正面：仅当启用&lt;br&gt;    BFC 时此选项才可用。启用后，&lt;br&gt;    多边形的正面会以绿色绘制。这主要&lt;br&gt;    对零件作者有用。&lt;br&gt;&lt;br&gt;  - 蓝色中性面：仅当启用&lt;br&gt;    BFC 时此选项才可用。启用后，&lt;br&gt;    非 BFC 认证多边形的面会以蓝色绘制。这&lt;br&gt;    主要对零件作者有用。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6516" />
         <source>  Configure LDView edge lines settings.&lt;br&gt;&lt;br&gt;  - Edge Lines: Enabling this option causes the edge&lt;br&gt;    lines that outline all the pieces to be drawn.&lt;br&gt;&lt;br&gt;  - Show edges only: This option is only available if&lt;br&gt;    edge lines are enabled. Enabling it causes LDView&lt;br&gt;    to only show edge lines. Unless you also select the&lt;br&gt;    Wireframe option, the portions of the edge lines that&lt;br&gt;    are hidden by the model will still be hidden, even&lt;br&gt;    thought the model isn't being shown.&lt;br&gt;&lt;br&gt;  - Conditional lines: This option is only available if&lt;br&gt;    edge lines are enabled. Enabling it causes conditional&lt;br&gt;    edge lines to be computed and drawn. Conditional edge&lt;br&gt;    lines show up as a silhouette of curved surfaces; they&lt;br&gt;    are only drawn when they are visually at the edge of&lt;br&gt;    the surface from the current viewing angle.&lt;br&gt;&lt;br&gt;  - Show all: This option is only available if edge lines&lt;br&gt;    and conditional lines are enabled. Enabling it causes&lt;br&gt;    all conditional edge lines to be drawn, whether or not&lt;br&gt;    they are on a silhouette.&lt;br&gt;&lt;br&gt;  - Show control pts: This option is only available if&lt;br&gt;    edge lines and conditional lines are enabled.&lt;br&gt;    Enabling it causes lines to be drawn from the first&lt;br&gt;    point of each conditional line to each of its two&lt;br&gt;    control points.&lt;br&gt;&lt;br&gt;  - High quality: This option is only available if edge&lt;br&gt;    lines are enabled. Enabling it causes edge lines to be&lt;br&gt;    drawn slightly closer to the eye than everything else,&lt;br&gt;    resulting in much better looking lines.&lt;br&gt;&lt;br&gt;  - Always black: This option is only available if edge&lt;br&gt;    lines are enabled. Enabling it causes all edge lines&lt;br&gt;    to be drawn in black or dark gray.&lt;br&gt;&lt;br&gt;    If Process LDConfig.ldr is checked in the General&lt;br&gt;    Preferences, LDView will look for a entries in&lt;br&gt;    LDConfig.ldr with color names of Black_Edge and&lt;br&gt;    Dark_Gray_Edge. If it finds either entry, it will use&lt;br&gt;    that color instead of black or dark gray.&lt;br&gt;&lt;br&gt;  - Thickness: This option is only available if edge lines&lt;br&gt;    are enabled. It adjusts the thickness of the lines&lt;br&gt;    used to draw the edges around parts.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 边线设置。&lt;br&gt;&lt;br&gt;  - 边线：启用此选项后，会绘制&lt;br&gt;    勾勒所有零件轮廓的边线。&lt;br&gt;&lt;br&gt;  - 仅显示边线：仅当启用边线时&lt;br&gt;    此选项才可用。启用后，LDView&lt;br&gt;    只显示边线。除非你同时勾选&lt;br&gt;    线框选项，否则被模型遮挡的边线&lt;br&gt;    部分仍会被隐藏，即使&lt;br&gt;    模型本身并未显示。&lt;br&gt;&lt;br&gt;  - 条件线：仅当启用边线时&lt;br&gt;    此选项才可用。启用后，会计算并绘制&lt;br&gt;    条件边线。条件边线&lt;br&gt;    表现为曲面的轮廓线；它们&lt;br&gt;    仅在当前视角下位于曲面&lt;br&gt;    视觉边缘时才绘制。&lt;br&gt;&lt;br&gt;  - 显示全部：仅当启用边线和&lt;br&gt;    条件线时此选项才可用。启用后，&lt;br&gt;    会绘制所有条件边线，无论&lt;br&gt;    它们是否位于轮廓上。&lt;br&gt;&lt;br&gt;  - 显示控制点：仅当启用边线&lt;br&gt;    和条件线时此选项才可用。&lt;br&gt;    启用后，会从每条条件线的&lt;br&gt;    第一个点向其两个&lt;br&gt;    控制点绘制连线。&lt;br&gt;&lt;br&gt;  - 高质量：仅当启用边线时&lt;br&gt;    此选项才可用。启用后，边线会&lt;br&gt;    绘制得比其他所有内容略靠近视点，&lt;br&gt;    从而使线条观感更好。&lt;br&gt;&lt;br&gt;  - 始终为黑：仅当启用边线时&lt;br&gt;    此选项才可用。启用后，所有边线&lt;br&gt;    都会以黑色或深灰色绘制。&lt;br&gt;&lt;br&gt;    如果在常规偏好设置中勾选了处理&lt;br&gt;    LDConfig.ldr，LDView 会在&lt;br&gt;    LDConfig.ldr 中查找名为 Black_Edge 和&lt;br&gt;    Dark_Gray_Edge 的颜色条目。若找到任一条目，&lt;br&gt;    将使用该颜色代替黑色或深灰色。&lt;br&gt;&lt;br&gt;  - 粗细：仅当启用边线时&lt;br&gt;    此选项才可用。它用于调整&lt;br&gt;    绘制零件边缘所用线条的粗细。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6566" />
         <source>  Configure LDView lighting settings.&lt;br&gt;&lt;br&gt; - Lighting: Enabling this option enables lighting.&lt;br&gt;   If you disable lighting, it is strongly recommended&lt;br&gt;   that you enable edge lines, unless you are in&lt;br&gt;   wireframe mode.&lt;br&gt;&lt;br&gt; - High quality: This option is only available if&lt;br&gt;   lighting is enabled. Selecting this enables high&lt;br&gt;   quality lighting. Enabling this can significantly&lt;br&gt;   decrease performance, especially with large models.&lt;br&gt;&lt;br&gt; - Subdued: This option is only available if lighting is&lt;br&gt;   enabled. Selecting this sets the lighting to a subdued&lt;br&gt;   level. Subdued lighting is about halfway in between&lt;br&gt;   standard lighting and no lighting at all.&lt;br&gt;&lt;br&gt; - Specular highlight: This option is only available if&lt;br&gt;   lighting is enabled. Selecting this turns on the&lt;br&gt;   specular highlight. This causes the model to appear&lt;br&gt;   shiny.&lt;br&gt;&lt;br&gt; - Alternate setup: This option is only available if&lt;br&gt;   lighting is enabled. Selecting this causes LDView to&lt;br&gt;   use an alternate lighting setup, which may improve&lt;br&gt;   performance on some video cards. The alternate setup&lt;br&gt;   is used automatically when specular highlight&lt;br&gt;   is enabled.&lt;br&gt;&lt;br&gt; - Light direction: Set the direction the light comes from&lt;br&gt;   to a pre-set angle.&lt;br&gt;&lt;br&gt; - Use LIGHT.DAT lights: This option is only available if&lt;br&gt;   lighting is enabled. Selecting this causes LDView to&lt;br&gt;   put point light sources in the scene in the locations&lt;br&gt;   where LIGHT.DAT is used as a part.&lt;br&gt;&lt;br&gt; - Replace standard light: This option is only available&lt;br&gt;   if lighting is enabled and Use LIGHT.DAT lights is&lt;br&gt;   checked. Selecting this causes LDView to not use its&lt;br&gt;   standard light source any time a model is loaded that&lt;br&gt;   contains one or more LIGHT.DAT parts. Models that&lt;br&gt;   don't contain any LIGHT.DAT parts will still be&lt;br&gt;   illuminated using LDView's standard light source.&lt;br&gt;&lt;br&gt; - Hide LIGHT.DAT geometry: Selecting this causes LDView&lt;br&gt;   to not display the geometry from LIGHT.DAT parts.&lt;br&gt;   Since the geometry is a small set of 3D coordinate&lt;br&gt;   axes, you often don't want to see it.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 光照设置。&lt;br&gt;&lt;br&gt; - 光照：启用此选项会开启光照。&lt;br&gt;   如果禁用光照，强烈建议&lt;br&gt;   你启用边线，除非你处于&lt;br&gt;   线框模式。&lt;br&gt;&lt;br&gt; - 高质量：仅当启用光照时&lt;br&gt;   此选项才可用。选择后会启用高&lt;br&gt;   质量光照。启用此选项会显著&lt;br&gt;   降低性能，尤其是在大型模型上。&lt;br&gt;&lt;br&gt; - 柔和：仅当启用光照时&lt;br&gt;   此选项才可用。选择后会将光照设为柔和&lt;br&gt;   级别。柔和光照大约介于&lt;br&gt;   标准光照和无光照之间。&lt;br&gt;&lt;br&gt; - 镜面高光：仅当启用光照时&lt;br&gt;   此选项才可用。选择后会开启&lt;br&gt;   镜面高光。这会让模型看起来&lt;br&gt;   有光泽。&lt;br&gt;&lt;br&gt; - 备用设置：仅当启用光照时&lt;br&gt;   此选项才可用。选择后会让 LDView&lt;br&gt;   使用备用光照设置，这可能会提升&lt;br&gt;   某些显卡上的性能。启用镜面高光时&lt;br&gt;   会自动使用备用&lt;br&gt;   设置。&lt;br&gt;&lt;br&gt; - 光照方向：设置光线来向&lt;br&gt;   为预设角度。&lt;br&gt;&lt;br&gt; - 使用 LIGHT.DAT 灯光：仅当启用光照时&lt;br&gt;   此选项才可用。选择后会让 LDView&lt;br&gt;   在场景中 LIGHT.DAT 作为零件使用&lt;br&gt;   的位置放置点光源。&lt;br&gt;&lt;br&gt; - 替换标准光源：仅当&lt;br&gt;   启用光照且勾选了“使用 LIGHT.DAT 灯光”时&lt;br&gt;   此选项才可用。选择后，LDView 在加载&lt;br&gt;   含有一个或多个 LIGHT.DAT 零件的模型时&lt;br&gt;   不会使用标准光源。不含&lt;br&gt;   任何 LIGHT.DAT 零件的模型仍会&lt;br&gt;   使用 LDView 的标准光源照明。&lt;br&gt;&lt;br&gt; - 隐藏 LIGHT.DAT 几何体：选择后会让 LDView&lt;br&gt;   不显示 LIGHT.DAT 零件的几何体。&lt;br&gt;   由于该几何体是一小组 3D 坐标&lt;br&gt;   轴，通常你不会希望看到它。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6617" />
         <source>  Configure LDView stereo settings.&lt;br&gt;&lt;br&gt; - Stereo: Enabling this option turns on stereo mode.&lt;br&gt;   Stereo mode draws two images, a slightly different one&lt;br&gt;   for each eye.&lt;br&gt;&lt;br&gt; - Cross-eyed: This option is only available if stereo is&lt;br&gt;   enabled. Selecting this sets the stereo mode to&lt;br&gt;   cross-eyed stereo. The two images are drawn side by&lt;br&gt;   side, with the image for the right eye on the left and&lt;br&gt;   the image for the left eye on the right.&lt;br&gt;&lt;br&gt; - Parallel: This option is only available if stereo is&lt;br&gt;   enabled. Selecting this sets the stereo mode to&lt;br&gt;   parallel stereo. The two images are drawn side by&lt;br&gt;   side, with the image for the right eye on the right&lt;br&gt;   and the image for the left eye on the left.&lt;br&gt;&lt;br&gt; - Amount: This option is only available if stereo is&lt;br&gt;   enabled. The slider controls the stereo spacing.&lt;br&gt;   A small value will result in a very subtle stereoscopic&lt;br&gt;   effect, as if you were looking at a very large object&lt;br&gt;   from a very long distance. (The minimum value results&lt;br&gt;   in no stereoscopic effect at all.) A large value will&lt;br&gt;   result in a pronounced stereoscopic effect, as if you&lt;br&gt;   were looking at a small object from a very short&lt;br&gt;   distance.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 立体设置。&lt;br&gt;&lt;br&gt; - 立体：启用此选项会开启立体模式。&lt;br&gt;   立体模式会绘制两幅图像，双眼各&lt;br&gt;   一幅，略有差异。&lt;br&gt;&lt;br&gt; - 交叉眼：仅当启用立体时&lt;br&gt;   此选项才可用。选择后会将立体模式设为&lt;br&gt;   交叉眼立体。两幅图像并排&lt;br&gt;   绘制，右眼的图像在左侧，&lt;br&gt;   左眼的图像在右侧。&lt;br&gt;&lt;br&gt; - 平行：仅当启用立体时&lt;br&gt;   此选项才可用。选择后会将立体模式设为&lt;br&gt;   平行立体。两幅图像并排&lt;br&gt;   绘制，右眼的图像在右侧，&lt;br&gt;   左眼的图像在左侧。&lt;br&gt;&lt;br&gt; - 强度：仅当启用立体时&lt;br&gt;   此选项才可用。滑块控制立体间距。&lt;br&gt;   较小的值会产生非常轻微的立体&lt;br&gt;   效果，就像从很远处&lt;br&gt;   观察一个很大的物体。（最小值会&lt;br&gt;   完全没有立体效果。）较大的值会&lt;br&gt;   产生明显的立体效果，就像从很近处&lt;br&gt;   观察一个小物体&lt;br&gt;   一样。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6651" />
         <source>  Configure LDView wireframe cutaway settings.&lt;br&gt;&lt;br&gt; - Wireframe cutaway: Enabling this option causes the&lt;br&gt;   cutaway portion of the model to be drawn in&lt;br&gt;   wireframe.&lt;br&gt;&lt;br&gt; - Color: This option is only available if wireframe&lt;br&gt;   cutaway is enabled. Selecting it causes the wireframe&lt;br&gt;   cutaway to be drawn in color.&lt;br&gt;&lt;br&gt; - Monochrome: This option is only available if wireframe&lt;br&gt;   cutaway is enabled. Selecting it causes the wireframe&lt;br&gt;   cutaway to be drawn in monochrome.&lt;br&gt;&lt;br&gt; - Opacity: This option is only available if wireframe&lt;br&gt;   cutaway is enabled. The slider controls the opacity&lt;br&gt;   of the wireframe cutaway.&lt;br&gt;&lt;br&gt; - Thickness: This option is only available if wireframe&lt;br&gt;   cutaway is enabled. The slider controls the thickness&lt;br&gt;   of the lines in the wireframe cutaway.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 线框剖切设置。&lt;br&gt;&lt;br&gt; - 线框剖切：启用此选项后，模型的&lt;br&gt;   剖切部分会以&lt;br&gt;   线框方式绘制。&lt;br&gt;&lt;br&gt; - 彩色：仅当启用线框剖切时&lt;br&gt;   此选项才可用。选择后，线框&lt;br&gt;   剖切会以彩色绘制。&lt;br&gt;&lt;br&gt; - 单色：仅当启用线框剖切时&lt;br&gt;   此选项才可用。选择后，线框&lt;br&gt;   剖切会以单色绘制。&lt;br&gt;&lt;br&gt; - 不透明度：仅当启用线框剖切时&lt;br&gt;   此选项才可用。滑块控制线框&lt;br&gt;   剖切的不透明度。&lt;br&gt;&lt;br&gt; - 粗细：仅当启用线框剖切时&lt;br&gt;   此选项才可用。滑块控制线框剖切中&lt;br&gt;   线条的粗细。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6678" />
         <source>  Configure LDView transparency settings.&lt;br&gt;&lt;br&gt; - Sort transparent polygons: Enabling this option causes&lt;br&gt;   transparent shapes to be drawn in back-to-front order&lt;br&gt;   in order to produce a correct result.&lt;br&gt;   This option is mutually exclusive with the use stipple&lt;br&gt;   pattern option.&lt;br&gt;&lt;br&gt; - Use stipple pattern: Enabling this option causes&lt;br&gt;   transparent shapes to be drawn using a stipple&lt;br&gt;   (checkerboard) pattern.&lt;br&gt;   This option is mutually exclusive with the sort&lt;br&gt;   transparent polygons option.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 透明设置。&lt;br&gt;&lt;br&gt; - 排序透明多边形：启用此选项后，&lt;br&gt;   透明形状会按从后到前的顺序绘制，&lt;br&gt;   以获得正确的结果。&lt;br&gt;   此选项与使用点画&lt;br&gt;   图案选项互斥。&lt;br&gt;&lt;br&gt; - 使用点画图案：启用此选项后，&lt;br&gt;   透明形状会使用点画&lt;br&gt;   （棋盘格）图案绘制。&lt;br&gt;   此选项与排序透明&lt;br&gt;   多边形选项互斥。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6700" />
         <source>  Configure LDView effects miscellaneous settings.&lt;br&gt;&lt;br&gt; - Flat shading: Enabling this option causes flat shading&lt;br&gt;   to be used. This option is mutually exclusive with the&lt;br&gt;   smooth curves option.&lt;br&gt;&lt;br&gt; - Smooth curves: Enabling this option causes curved&lt;br&gt;   surfaces to be shaded as curved surfaces instead of&lt;br&gt;   as facets.&lt;br&gt;   This option is mutually exclusive with the flat&lt;br&gt;   shading option.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 效果杂项设置。&lt;br&gt;&lt;br&gt; - 平面着色：启用此选项后会使用&lt;br&gt;   平面着色。此选项与平滑曲线&lt;br&gt;   选项互斥。&lt;br&gt;&lt;br&gt; - 平滑曲线：启用此选项后，曲面&lt;br&gt;   会作为曲面着色，而不是&lt;br&gt;   作为小平面着色。&lt;br&gt;   此选项与平面&lt;br&gt;   着色选项互斥。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6720" />
         <source>  Configure LDView primitive substitution settings.&lt;br&gt;&lt;br&gt; - Primitive substitution: Enabling this option causes&lt;br&gt;   LDView to use its own optimized version of many of the&lt;br&gt;   primitives (such as cylinders, cones, etc). As well as&lt;br&gt;   providing enhanced performance, this also provides&lt;br&gt;   improved visual quality, since smooth shaded primitives&lt;br&gt;   are generated where appropriate.&lt;br&gt;&lt;br&gt; - Curve quality: This option is only available if&lt;br&gt;   primitive substitution is enabled. It adjusts the&lt;br&gt;   quality of substituted primitives by changing the&lt;br&gt;   number of facets used to draw curved primitives.&lt;br&gt;   Changing this from its default value can lead to holes&lt;br&gt;   in the model between the substitute primitives and&lt;br&gt;   other geometry. Be very careful with this setting.&lt;br&gt;   Setting it too high can lead to huge slow-downs.&lt;br&gt;   The default setting of 2 is fine for most models.&lt;br&gt;   Note: Setting this to the minimum value will result&lt;br&gt;   in incorrect rendering of n-16 primitives.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 图元替换设置。&lt;br&gt;&lt;br&gt; - 图元替换：启用此选项后，&lt;br&gt;   LDView 会对许多图元（如圆柱、圆锥等）&lt;br&gt;   使用自己优化的版本。除了&lt;br&gt;   提升性能，这还能改善&lt;br&gt;   视觉质量，因为在适当情况下会生成&lt;br&gt;   平滑着色的图元。&lt;br&gt;&lt;br&gt; - 曲线质量：仅当启用图元&lt;br&gt;   替换时此选项才可用。它通过改变&lt;br&gt;   绘制曲线图元所用的小平面数量&lt;br&gt;   来调整替换图元的质量。&lt;br&gt;   将其从默认值改掉可能导致模型在&lt;br&gt;   替换图元与其他几何体之间出现孔洞。&lt;br&gt;   请非常谨慎地使用此设置。&lt;br&gt;   设置过高会导致严重变慢。&lt;br&gt;   默认值 2 对大多数模型都合适。&lt;br&gt;   注意：将其设为最小值会导致&lt;br&gt;   n-16 图元渲染错误。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6749" />
         <source>  Configure LDView texture settings.&lt;br&gt;&lt;br&gt; - Use texture mapping: Enabling this options causes&lt;br&gt;   LDView to display texture maps referenced in LDraw&lt;br&gt;   files.&lt;br&gt;&lt;br&gt; - Offset: This option is only available if texture&lt;br&gt;   mapping is enabled. It controls how far textures are&lt;br&gt;   pulled toward the camera before being drawn.&lt;br&gt;&lt;br&gt; - Texture studs: This option is only available if&lt;br&gt;   primitive substitution is enabled. Enabling it causes&lt;br&gt;   a LEGO® logo to be textured onto all the standard&lt;br&gt;   studs.&lt;br&gt;&lt;br&gt; - Nearest filtering: This option is only available if&lt;br&gt;   primitive substitution and texture studs are both&lt;br&gt;   enabled. Selecting it causes nearest texel texture&lt;br&gt;   filtering to be used. This is the lowest quality&lt;br&gt;   texture filtering.&lt;br&gt;&lt;br&gt; - Bilinear filtering: This option is only available if&lt;br&gt;   primitive substitution and texture studs are both&lt;br&gt;   enabled. Selecting it causes bilinear texture filtering&lt;br&gt;   to be used. This is the middle quality texture&lt;br&gt;   filtering.&lt;br&gt;&lt;br&gt; - Trilinear filtering: This option is only available if&lt;br&gt;   primitive substitution and texture studs are both&lt;br&gt;   enabled. Selecting it causes trilinear texture&lt;br&gt;   filtering to be used. This is the highest quality&lt;br&gt;   texture filtering.&lt;br&gt;&lt;br&gt; - Anisotropic filtering: This option is only available&lt;br&gt;   if primitive substitution and texture studs are both&lt;br&gt;   enabled, and your video card supports it. Selecting it&lt;br&gt;   causes anisotropic texture filtering to be used.&lt;br&gt;   This is the highest quality texture filtering.&lt;br&gt;&lt;br&gt; - Anisotropic filtering level: This option is only&lt;br&gt;   available if primitive substitution and texture studs&lt;br&gt;   are both enabled, and anisotropic filtering is selected&lt;br&gt;   as the filtering type. It adjusts the anisotropic&lt;br&gt;   filtering level. Higher numbers produce higher quality&lt;br&gt;   filtering.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 纹理设置。&lt;br&gt;&lt;br&gt; - 使用纹理映射：启用此选项后，&lt;br&gt;   LDView 会显示 LDraw 文件中&lt;br&gt;   引用的纹理贴图。&lt;br&gt;&lt;br&gt; - 偏移：仅当启用纹理映射时&lt;br&gt;   此选项才可用。它控制绘制前纹理向&lt;br&gt;   相机方向拉近的程度。&lt;br&gt;&lt;br&gt; - 纹理凸点：仅当启用图元&lt;br&gt;   替换时此选项才可用。启用后，&lt;br&gt;   LEGO® 标志会以纹理方式贴到所有标准&lt;br&gt;   凸点上。&lt;br&gt;&lt;br&gt; - 最近邻过滤：仅当同时启用图元&lt;br&gt;   替换和纹理凸点时&lt;br&gt;   此选项才可用。选择后会使用最近&lt;br&gt;   纹素纹理过滤。这是质量最低的&lt;br&gt;   纹理过滤。&lt;br&gt;&lt;br&gt; - 双线性过滤：仅当同时启用图元&lt;br&gt;   替换和纹理凸点时&lt;br&gt;   此选项才可用。选择后会使用双线性&lt;br&gt;   纹理过滤。这是质量中等的&lt;br&gt;   纹理过滤。&lt;br&gt;&lt;br&gt; - 三线性过滤：仅当同时启用图元&lt;br&gt;   替换和纹理凸点时&lt;br&gt;   此选项才可用。选择后会使用三线性&lt;br&gt;   纹理过滤。这是质量最高的&lt;br&gt;   纹理过滤。&lt;br&gt;&lt;br&gt; - 各向异性过滤：仅当同时启用图元&lt;br&gt;   替换和纹理凸点，且你的&lt;br&gt;   显卡支持时此选项才可用。选择后&lt;br&gt;   会使用各向异性纹理过滤。&lt;br&gt;   这是质量最高的纹理过滤。&lt;br&gt;&lt;br&gt; - 各向异性过滤级别：仅当同时&lt;br&gt;   启用图元替换和纹理凸点，&lt;br&gt;   且将各向异性过滤选为过滤类型时&lt;br&gt;   此选项才可用。它用于调整各向异性&lt;br&gt;   过滤级别。数值越大，过滤质量&lt;br&gt;   越高。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6797" />
         <source>  Configure LDView primitives miscellaneous settings.&lt;br&gt;&lt;br&gt;  - Stud Style: stud style decorate studs with one of&lt;br&gt;    seven (7) LEGO inscribed styles.&lt;br&gt;&lt;br&gt;    High contrast stud styles paint stud cylinder&lt;br&gt;    and part edge colors.&lt;br&gt;&lt;br&gt;    Available stud styles:&lt;br&gt;    ° 0 Plain&lt;br&gt;    ° 1 Thin Line Logo&lt;br&gt;    ° 2 Outline Logo&lt;br&gt;    ° 3 Sharp Top Logo&lt;br&gt;    ° 4 Rounded Top Logo&lt;br&gt;    ° 5 Flattened Logo&lt;br&gt;    ° 6 High Contrast&lt;br&gt;    ° 7 High Contrast With Logo&lt;br&gt;&lt;br&gt;    High Contrast Stud And Edge Color Setttings allow&lt;br&gt;    you to configure part edge and stud cylinder&lt;br&gt;    color settings.&lt;br&gt;&lt;br&gt;  - Automate Edge Color: automatically adjust part edge&lt;br&gt;    colors based on the following configured settings:&lt;br&gt;    * Contrast: the amount of contrast.&lt;br&gt;&lt;br&gt;    * Saturation: the amount of edge color tint&lt;br&gt;      or shade.&lt;br&gt; - Low quality studs: Enabling this option switches to&lt;br&gt;   using the low-resolution stud files instead of the&lt;br&gt;   normal-resolution stud files. This can produce&lt;br&gt;   significantly faster rendering.&lt;br&gt;&lt;br&gt; - Use hi-res primitives when available: Enabling this&lt;br&gt;   option causes LDView to attempt to load hi-res versions&lt;br&gt;   of primitives before loading the standard ones. The&lt;br&gt;   hi-res primitives are otherwise known as 48-sided&lt;br&gt;   primitives, because they approximate circular features&lt;br&gt;   with 48-sided features. Since not all primitives have&lt;br&gt;   hi-res versions, enabling this can create gaps between&lt;br&gt;   the standard resolution primitives and the hi-res ones.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 图元杂项设置。&lt;br&gt;&lt;br&gt;  - 凸点样式：凸点样式用七（7）种&lt;br&gt;    LEGO 刻印样式之一来装饰凸点。&lt;br&gt;&lt;br&gt;    高对比度凸点样式会为凸点圆柱&lt;br&gt;    和零件边缘上色。&lt;br&gt;&lt;br&gt;    可用的凸点样式：&lt;br&gt;    ° 0 素面&lt;br&gt;    ° 1 细线标志&lt;br&gt;    ° 2 轮廓标志&lt;br&gt;    ° 3 尖顶标志&lt;br&gt;    ° 4 圆顶标志&lt;br&gt;    ° 5 扁平标志&lt;br&gt;    ° 6 高对比度&lt;br&gt;    ° 7 带标志的高对比度&lt;br&gt;&lt;br&gt;    高对比度凸点与边缘颜色设置允许&lt;br&gt;    你配置零件边缘和凸点圆柱&lt;br&gt;    颜色设置。&lt;br&gt;&lt;br&gt;  - 自动边缘颜色：根据以下配置设置自动&lt;br&gt;    调整零件边缘颜色：&lt;br&gt;    * 对比度：对比度的量。&lt;br&gt;&lt;br&gt;    * 饱和度：边缘颜色色调&lt;br&gt;      或明暗。&lt;br&gt; - 低质量凸点：启用此选项后会改用&lt;br&gt;   低分辨率的凸点文件，而不是&lt;br&gt;   普通分辨率的凸点文件。这可以&lt;br&gt;   显著加快渲染速度。&lt;br&gt;&lt;br&gt; - 可用时使用高分辨率图元：启用此&lt;br&gt;   选项后，LDView 会尝试在加载标准图元之前&lt;br&gt;   先加载高分辨率版本的图元。&lt;br&gt;   高分辨率图元又称 48 边&lt;br&gt;   图元，因为它们用 48 边形特征&lt;br&gt;   近似圆形特征。由于并非所有图元都有&lt;br&gt;   高分辨率版本，启用此选项可能在&lt;br&gt;   标准分辨率图元与高分辨率图元之间产生缝隙。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6842" />
         <source>  Configure LDView internet proxy settings.&lt;br&gt;&lt;br&gt;  - Direct connection to the Internet: Select this if you&lt;br&gt;    have a direct connection to the Internet and don't want&lt;br&gt;    to use a proxy server.&lt;br&gt;&lt;br&gt;  - Use simple Windows proxy configuration: Select this if&lt;br&gt;    you want to use the HTTP proxy setting that you&lt;br&gt;    configured in Windows, Settings, Network &amp; Internet,&lt;br&gt;    Proxy.&lt;br&gt;    This only works if you have a proxy server manually&lt;br&gt;    configured. Automatic proxy configurations are not&lt;br&gt;    supported.&lt;br&gt;    This option is only available in the Windows version&lt;br&gt;    of LDView.&lt;br&gt;&lt;br&gt;  - Manual proxy configuration: Select this to manually&lt;br&gt;    configure your HTTP proxy server in the space provided&lt;br&gt;    below.&lt;br&gt;&lt;br&gt;  - Proxy: Set this to the name or IP address of your HTTP&lt;br&gt;    proxy server. This can only be entered if Manual proxy&lt;br&gt;    configuration is selected above.&lt;br&gt;&lt;br&gt;  - Port: Set this to the port of your HTTP proxy server.&lt;br&gt;    This can only be entered if Manual proxy configuration&lt;br&gt;    is selected above.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 互联网代理设置。&lt;br&gt;&lt;br&gt;  - 直接连接互联网：如果你的计算机&lt;br&gt;    直接连接互联网且不希望&lt;br&gt;    使用代理服务器，请选择此项。&lt;br&gt;&lt;br&gt;  - 使用简单的 Windows 代理配置：如果你希望&lt;br&gt;    使用在 Windows 的“设置 - 网络和 Internet -&lt;br&gt;    代理”中配置的&lt;br&gt;    HTTP 代理设置，请选择此项。&lt;br&gt;    仅当你手动配置了代理服务器时&lt;br&gt;    此选项才有效。不支持自动&lt;br&gt;    代理配置。&lt;br&gt;    此选项仅在 LDView 的 Windows&lt;br&gt;    版本中可用。&lt;br&gt;&lt;br&gt;  - 手动代理配置：选择此项可在下方&lt;br&gt;    提供的空白处手动配置&lt;br&gt;    你的 HTTP 代理服务器。&lt;br&gt;&lt;br&gt;  - 代理：设置你的 HTTP 代理服务器的&lt;br&gt;    名称或 IP 地址。仅当上方选择了&lt;br&gt;    手动代理配置时才能输入。&lt;br&gt;&lt;br&gt;  - 端口：设置你的 HTTP 代理服务器端口。&lt;br&gt;    仅当上方选择了手动代理配置时&lt;br&gt;    才能输入。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6875" />
         <source>  Configure LDView internet proxy, missing parts and&lt;br&gt;  check for LDraw library updates settings.&lt;br&gt;&lt;br&gt;  - Automatically check LDraw.org for missing parts: &lt;br&gt;    Enabling this causes LDView to automatically check the&lt;br&gt;    LDraw.org Parts Tracker when it can't find a file. If&lt;br&gt;    the part exists on the Parts Tracker, it will&lt;br&gt;    automatically be downloaded and used.&lt;br&gt;&lt;br&gt;    If LDView fails to connect to the LDraw.org server&lt;br&gt;    while checking for an unofficial part, it will&lt;br&gt;    automatically disable this setting. You have to&lt;br&gt;    manually re-enable it once you have a working Internet&lt;br&gt;    connection again.&lt;br&gt;&lt;br&gt;  - Days between missing part checks: Set this to the&lt;br&gt;    number of days you want LDView to wait between checks&lt;br&gt;    to the LDraw.org Parts Tracker when a part cannot be&lt;br&gt;    found. This number must be greater than zero.&lt;br&gt;&lt;br&gt;  - Days between updated part checks: Set this to the&lt;br&gt;    number of days you want LDView to wait between checks&lt;br&gt;    for updates to an unofficial part that it has&lt;br&gt;    successfully downloaded from the LDraw.org Parts&lt;br&gt;    Tracker. Since unofficial parts can update on the&lt;br&gt;    Parts Tracker, LDView will check for updates with the&lt;br&gt;    specified frequency when it encounters unofficial parts&lt;br&gt;    in a model. This number must be greater than zero.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 互联网代理、缺失零件和&lt;br&gt;  检查 LDraw 库更新的设置。&lt;br&gt;&lt;br&gt;  - 自动在 LDraw.org 上检查缺失零件：&lt;br&gt;    启用后，LDView 在找不到文件时会自动检查&lt;br&gt;    LDraw.org 零件追踪器。如果&lt;br&gt;    该零件存在于零件追踪器上，将&lt;br&gt;    自动下载并使用。&lt;br&gt;&lt;br&gt;    如果 LDView 在检查非官方零件时&lt;br&gt;    无法连接到 LDraw.org 服务器，&lt;br&gt;    它会自动禁用此设置。在你恢复可用的&lt;br&gt;    互联网连接后，必须&lt;br&gt;    手动重新启用。&lt;br&gt;&lt;br&gt;  - 缺失零件检查间隔天数：将其设为&lt;br&gt;    你希望 LDView 在找不到零件时&lt;br&gt;    两次检查 LDraw.org 零件追踪器之间&lt;br&gt;    等待的天数。此数值必须大于零。&lt;br&gt;&lt;br&gt;  - 更新零件检查间隔天数：将其设为&lt;br&gt;    你希望 LDView 对已成功从 LDraw.org 零件&lt;br&gt;    追踪器下载的非官方零件&lt;br&gt;    检查更新之间&lt;br&gt;    等待的天数。由于非官方零件会在&lt;br&gt;    零件追踪器上更新，LDView 在模型中遇到&lt;br&gt;    非官方零件时会按指定频率&lt;br&gt;    检查更新。此数值必须大于零。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6910" />
         <source>  Allows you to specify and organize any number of extra&lt;br&gt;  LDraw parts search directories. When LDView loads a model,&lt;br&gt;  and the model references a part or sub-model, it searches&lt;br&gt;  for that part or sub-model in a number of locations. No&lt;br&gt;  matter what you enter here, it will search the directory&lt;br&gt;  the model is located in, as well as the P, PARTS, and&lt;br&gt;  MODELS directories inside the LDraw directory (in that&lt;br&gt;  order). If it doesn't find the file in any of those&lt;br&gt;  directories, it will then search all the directories&lt;br&gt;  listed in the Extra Search Dirs dialog accessed via this&lt;br&gt;  menu item. It searches them in the order they are listed&lt;br&gt;  in the box, so you can move directories in the box up and&lt;br&gt;  down to get them in the order you want them to be in.  - Add button: Add a search directory to the list.&lt;br&gt;&lt;br&gt;  - Delete button: Remove a search directory from the list.&lt;br&gt;&lt;br&gt;  - Up button: Move a search directory up in the list.&lt;br&gt;&lt;br&gt;  - Down button: Move a search directory down in the list.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  允许你指定并整理任意数量的额外&lt;br&gt;  LDraw 零件搜索目录。当 LDView 加载模型，&lt;br&gt;  而模型引用了某个零件或 Sub-model 时，它会在&lt;br&gt;  多个位置搜索该零件或 Sub-model。无论&lt;br&gt;  你在此输入什么，它都会搜索模型&lt;br&gt;  所在目录，以及 LDraw 目录内的&lt;br&gt;  P、PARTS 和 MODELS 目录（按此&lt;br&gt;  顺序）。如果在这些目录中都找不到该文件，&lt;br&gt;  它会再搜索通过此菜单项访问的&lt;br&gt;  “额外搜索目录”对话框中列出的&lt;br&gt;  所有目录。它按框中的列出顺序&lt;br&gt;  进行搜索，因此你可以在框中上下移动目录&lt;br&gt;  以调整为你想要的顺序。  - 添加按钮：向列表添加一个搜索目录。&lt;br&gt;&lt;br&gt;  - 删除按钮：从列表中移除一个搜索目录。&lt;br&gt;&lt;br&gt;  - 上移按钮：将搜索目录在列表中上移。&lt;br&gt;&lt;br&gt;  - 下移按钮：将搜索目录在列表中下移。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6938" />
         <source>  Checks to see if there are any LDraw parts library updates on&lt;br&gt;  LDraw.org that aren't yet installed, and download and&lt;br&gt;  install them if any are found.&lt;br&gt;&lt;br&gt;  - Browse... button: Allows you to launch the download and&lt;br&gt;    update dialog which shows the update progress.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  检查 LDraw.org 上是否有尚未安装的&lt;br&gt;  LDraw 零件库更新，若发现更新&lt;br&gt;  则下载并安装。&lt;br&gt;&lt;br&gt;  - 浏览...按钮：允许你启动下载与&lt;br&gt;    更新对话框，其中会显示更新进度。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6954" />
         <source>  Configure LDView missing parts settings.&lt;br&gt;&lt;br&gt;  - Use the following preference set: This list shows all&lt;br&gt;    of the available preference sets. Selecting a set from&lt;br&gt;    this list will cause LDView to use the preferences&lt;br&gt;    stored in that set after you hit Apply.&lt;br&gt;&lt;br&gt;    If you have made any changes to preferences on other&lt;br&gt;    tabs and select a new preference set, it will prompt&lt;br&gt;    you whether you want to apply those changes, abandon&lt;br&gt;    them, or cancel your selection.&lt;br&gt;&lt;br&gt;  - Hot Key: This allows you to assign a hot key to the&lt;br&gt;    currently selected preference set. There are 10&lt;br&gt;    possible hot keys: Ctrl + Shift + 1 through&lt;br&gt;    Ctrl + Shift + 0. Once a hot key has been assigned to&lt;br&gt;    a preference set, you can use it when viewing a model&lt;br&gt;    to immediately switch to that preference set.&lt;br&gt;&lt;br&gt;  - Delete: This deletes the currently selected preference&lt;br&gt;    set.&lt;br&gt;&lt;br&gt;  - New: This creates a new preference set that will&lt;br&gt;    initially contain all the current settings.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 LDView 缺失零件设置。&lt;br&gt;&lt;br&gt;  - 使用以下偏好集：此列表显示所有&lt;br&gt;    可用的偏好集。从此列表中选择一个集&lt;br&gt;    会使 LDView 在你点击“应用”后&lt;br&gt;    使用该集中存储的偏好设置。&lt;br&gt;&lt;br&gt;    如果你已在其他标签页更改了偏好设置&lt;br&gt;    并选择了新的偏好集，它会提示&lt;br&gt;    你是要应用这些更改、放弃&lt;br&gt;    它们，还是取消你的选择。&lt;br&gt;&lt;br&gt;  - 热键：用于为当前选定的偏好集&lt;br&gt;    分配热键。共有 10 个&lt;br&gt;    可用热键：Ctrl + Shift + 1 到&lt;br&gt;    Ctrl + Shift + 0。为某个偏好集&lt;br&gt;    分配热键后，你可以在查看模型时&lt;br&gt;    使用它立即切换到该偏好集。&lt;br&gt;&lt;br&gt;  - 删除：删除当前选定的偏好&lt;br&gt;    集。&lt;br&gt;&lt;br&gt;  - 新建：创建新的偏好集，&lt;br&gt;    初始包含所有当前设置。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="6984" />
@@ -29419,7 +29419,7 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7133" />
         <source>  Configure POV file generation general, geometry,&lt;br&gt;  pov geometry, lighting, pov lights, material&lt;br&gt;  properties, transparent material properties,&lt;br&gt;  rubber material properties, and chrome material&lt;br&gt;  properties settings.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 POV 文件生成的常规、几何、&lt;br&gt;  POV 几何、光照、POV 灯光、材质&lt;br&gt;  属性、透明材质属性、&lt;br&gt;  橡胶材质属性和镀铬材质&lt;br&gt;  属性设置。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7149" />
@@ -29434,17 +29434,17 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7176" />
         <source>  Add a new command snippet to the snippet collection.&lt;br&gt;&lt;br&gt;  When the Add button is clicked, a new snippet line&lt;br&gt;  entry is created in the snippets table and the&lt;br&gt;  snippet editor is enabled allowing you to edit&lt;br&gt;  the commands that will make up this snippet.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  向片段集合中添加新的命令片段。&lt;br&gt;&lt;br&gt;  点击“添加”按钮后，会在片段表格中&lt;br&gt;  创建新的片段行条目，并启用&lt;br&gt;  片段编辑器，让你编辑&lt;br&gt;  构成该片段的命令。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7192" />
         <source>  Add meta commands to your snippet as desired.&lt;br&gt;&lt;br&gt;  Use '$|' to indicate where the cursor will be&lt;br&gt;  positioned when the snippet is inserted into your&lt;br&gt;  instruction document.&lt;br&gt;&lt;br&gt;  Any combination of meta commands can be added; however,&lt;br&gt;  it would not be wise to add command values that are&lt;br&gt;  subject to change. For example if you wish to add a&lt;br&gt;  command that defines the default page size, use the&lt;br&gt;  page size type (A4, Letter etc...) versus the width&lt;br&gt;  and height.&lt;br&gt;Perhaps a better example is the OFFSET&lt;br&gt;  command. Unless you are certain the offset value will&lt;br&gt;  remain constant across the snippet's use cases, it&lt;br&gt;  might be better to not include the offset command.&lt;br&gt;&lt;br&gt;  Multi-line snippets are supported.&lt;br&gt;&lt;br&gt;  The following buttons will complete your snippet edit:&lt;br&gt;  - Ok: accept all changes in the currnt session.&lt;br&gt;&lt;br&gt;  - Cancel: discard all changes in the current session.&lt;br&gt;&lt;br&gt;  User defined snippets are saved to an external file&lt;br&gt;  which is loaded at application startup.&lt;br&gt;&lt;br&gt;  To apply a snippet in the command editor, after typing&lt;br&gt;  the snippet trigger - e.g. '1' for 0 STEP, use&lt;br&gt;  'CTRL+Space' to trigger the snippet insert dialog.&lt;br&gt;  When the desired snippet is highlighted, hit ENTER to&lt;br&gt;  insert the snippet. User-defined snippets are written to&lt;br&gt;  %1 which is loaded at application startup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  按需向片段中添加元命令。&lt;br&gt;&lt;br&gt;  使用 '$|' 指示将片段插入到说明书&lt;br&gt;  文档中时光标的&lt;br&gt;  位置。&lt;br&gt;&lt;br&gt;  可以添加任意组合的元命令；不过，&lt;br&gt;  添加会变化的命令值并不明智。&lt;br&gt;  例如，如果你想添加一条定义默认页面尺寸的&lt;br&gt;  命令，请使用页面尺寸类型&lt;br&gt;  （A4、Letter 等……）而不是宽度&lt;br&gt;  和高度。&lt;br&gt;或许更好的例子是 OFFSET&lt;br&gt;  命令。除非你确信偏移值在&lt;br&gt;  该片段的各种使用场景中保持不变，&lt;br&gt;  否则最好不要包含偏移命令。&lt;br&gt;&lt;br&gt;  支持多行片段。&lt;br&gt;&lt;br&gt;  以下按钮可完成片段编辑：&lt;br&gt;  - 确定：接受本次会话中的所有更改。&lt;br&gt;&lt;br&gt;  - 取消：放弃本次会话中的所有更改。&lt;br&gt;&lt;br&gt;  用户定义的片段会保存到外部文件，&lt;br&gt;  该文件在应用程序启动时加载。&lt;br&gt;&lt;br&gt;  要在命令编辑器中应用片段，输入&lt;br&gt;  片段触发词（例如 0 STEP 用 '1'）后，&lt;br&gt;  使用 'CTRL+Space' 触发片段插入对话框。&lt;br&gt;  高亮所需片段后，按 ENTER&lt;br&gt;  插入该片段。用户定义的片段写入&lt;br&gt;  %1，该文件在应用程序启动时加载。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7229" />
         <source>  This table view lists the defined snippets currently loaded.&lt;br&gt;&lt;br&gt;  There are two types of snippets, built-in and user-defined.&lt;br&gt;&lt;br&gt;  Built-in snippets are read-only.&lt;br&gt;  This is to say, the Remove button is not enabled when you select a built-in snippet.&lt;br&gt;&lt;br&gt;  User-defined snippets are created using the Add button which also enables the snippet editor.&lt;br&gt;&lt;br&gt;  When a new snippet is created, you must edit the snippet trigger and description in this table.&lt;br&gt;&lt;br&gt;  - Trigger: a short name that uniquely identifies the user-defined snippet.&lt;br&gt;&lt;br&gt;  - Description: a concise description of the snippet.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  此表格视图列出当前已加载的已定义片段。&lt;br&gt;&lt;br&gt;  片段分两类：内置片段和用户定义片段。&lt;br&gt;&lt;br&gt;  内置片段为只读。&lt;br&gt;  也就是说，选中内置片段时“移除”按钮不可用。&lt;br&gt;&lt;br&gt;  用户定义片段通过“添加”按钮创建，该按钮同时会启用片段编辑器。&lt;br&gt;&lt;br&gt;  创建新片段后，你必须在此表格中编辑片段触发词和描述。&lt;br&gt;&lt;br&gt;  - 触发词：唯一标识该用户定义片段的简短名称。&lt;br&gt;&lt;br&gt;  - 描述：该片段的简明描述。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7248" />
@@ -29459,42 +29459,42 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7273" />
         <source>  This dialogue presents the main editable&lt;br&gt;  substitute part attributes.&lt;br&gt;  - Substitute: enter your desired substitute&lt;br&gt;    part or use the Lookup button to select a&lt;br&gt;    part from the part lookup dialogue.&lt;br&gt;    The substitute part title will display in&lt;br&gt;    Substitute Title.&lt;br&gt;&lt;br&gt;  - Color: select your desired part color or&lt;br&gt;    use the Change button to select the part&lt;br&gt;    color using the color picker.&lt;br&gt;&lt;br&gt;  - LDraw Part: if the substitute part is a&lt;br&gt;    generated part, you can optionally use this&lt;br&gt;    dialogue to display the appropriate LDraw part&lt;br&gt;    name and part title description.&lt;br&gt;&lt;br&gt;    This option is useful when you wish to show&lt;br&gt;    a custom representation of the part in the&lt;br&gt;    part list.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  此对话框显示主要的可编辑&lt;br&gt;  替换零件属性。&lt;br&gt;  - 替换件：输入所需的替换零件，或&lt;br&gt;    使用“查找”按钮从零件查找&lt;br&gt;    对话框中选择一个零件。&lt;br&gt;    替换零件标题会显示在&lt;br&gt;    “替换标题”中。&lt;br&gt;&lt;br&gt;  - 颜色：选择所需的零件颜色，或&lt;br&gt;    使用“更改”按钮通过颜色&lt;br&gt;    选择器选择零件颜色。&lt;br&gt;&lt;br&gt;  - LDraw 零件：如果替换零件是&lt;br&gt;    生成零件，你可以选择使用此&lt;br&gt;    对话框显示相应的 LDraw 零件&lt;br&gt;    名称和零件标题描述。&lt;br&gt;&lt;br&gt;    当你希望在零件清单中显示&lt;br&gt;    该零件的自定义&lt;br&gt;    表示形式时，此选项很有用。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7301" />
         <source>  This dialogue presents additional editable&lt;br&gt;  substitute part attributes.&lt;br&gt;  - Scale: resize the displayed substitute part.&lt;br&gt;&lt;br&gt;  - Field of View: edit the camera FOV for the&lt;br&gt;    substitute part.&lt;br&gt;&lt;br&gt;  - Camera Latitude: set the camera angle x-axis&lt;br&gt;    in degrees.&lt;br&gt;&lt;br&gt;  - Camera Longitude: set the camera angle y-axis&lt;br&gt;    in degrees.&lt;br&gt;&lt;br&gt;  - Target: using integers set the the 'Look At'&lt;br&gt;    position using the x-axes, y-axes and z-axes.&lt;br&gt;&lt;br&gt;  - Rotation: rotate the substitute part using&lt;br&gt;    x-angle, y-angle and z-angle.&lt;br&gt;    These are the individual rotation angles for&lt;br&gt;    the different axes in degrees (-360 to 360).&lt;br&gt;  - Transform: set the step transformation using&lt;br&gt;    options - relative, absolute or additive.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  此对话框显示额外的可编辑&lt;br&gt;  替换零件属性。&lt;br&gt;  - 缩放：调整所显示替换零件的大小。&lt;br&gt;&lt;br&gt;  - 视场角：编辑替换零件的&lt;br&gt;    相机 FOV。&lt;br&gt;&lt;br&gt;  - 相机纬度：以度为单位设置相机&lt;br&gt;    角度的 x 轴。&lt;br&gt;&lt;br&gt;  - 相机经度：以度为单位设置相机&lt;br&gt;    角度的 y 轴。&lt;br&gt;&lt;br&gt;  - 目标：使用整数设置 'Look At'&lt;br&gt;    位置的 x 轴、y 轴和 z 轴。&lt;br&gt;&lt;br&gt;  - 旋转：使用 x 角度、y 角度和 z 角度&lt;br&gt;    旋转替换零件。&lt;br&gt;    这些是不同坐标轴各自的旋转角度，&lt;br&gt;    单位为度（-360 到 360）。&lt;br&gt;  - 变换：使用相对、绝对或累加&lt;br&gt;    选项设置步骤变换。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7332" />
         <source>  Configure the page size and orientation settings.&lt;br&gt;  - Size: set the page size using standard sizes like&lt;br&gt;    A4, Letter etc... You can also specify the 'Custom'&lt;br&gt;    size options along with its corresponding height and&lt;br&gt;    width values in %1.&lt;br&gt;&lt;br&gt;    The page size custom height and width unit values&lt;br&gt;    are determined by the resolution units specified&lt;br&gt;    in Project Global Setup.&lt;br&gt;    Dot unit options are dots per inch (DPI) or&lt;br&gt;    dots per centimetre (DPC)&lt;br&gt;  - Orientation: set the page orientation to&lt;br&gt;    portrait or landscape.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置页面尺寸和方向设置。&lt;br&gt;  - 尺寸：使用 A4、Letter 等标准尺寸&lt;br&gt;    设置页面尺寸……你也可以在 %1 中指定&lt;br&gt;    'Custom' 尺寸选项及其对应的&lt;br&gt;    高度和宽度值。&lt;br&gt;&lt;br&gt;    页面尺寸的自定义高度和宽度单位值&lt;br&gt;    由“项目全局设置”中指定的&lt;br&gt;    分辨率单位决定。&lt;br&gt;    点单位选项为每英寸点数（DPI）或&lt;br&gt;    每厘米点数（DPC）&lt;br&gt;  - 方向：将页面方向设为&lt;br&gt;    纵向或横向。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7356" />
         <source>  Configure the background.&lt;br&gt;  - Background: set the background option from&lt;br&gt;    the drop-down control:&lt;br&gt;    - None (Transparent)&lt;br&gt;    - Solid Color&lt;br&gt;    - Gradient&lt;br&gt;    - Picture&lt;br&gt;    - Submodel Level Color.&lt;br&gt;&lt;br&gt;  - Change: select the background color from the&lt;br&gt;    color picker if Solid Color option selected.&lt;br&gt;&lt;br&gt;  - Browse: set or select the image path if background&lt;br&gt;    image option selected.&lt;br&gt;&lt;br&gt;  - Image Fill: select stretch or tile of the front&lt;br&gt;    cover image.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置背景。&lt;br&gt;  - 背景：从下拉控件中设置&lt;br&gt;    背景选项：&lt;br&gt;    - 无（透明）&lt;br&gt;    - 纯色&lt;br&gt;    - 渐变&lt;br&gt;    - 图片&lt;br&gt;    - Sub-model 层级颜色。&lt;br&gt;&lt;br&gt;  - 更改：如果选择了纯色选项，从&lt;br&gt;    颜色选择器中选择背景颜色。&lt;br&gt;&lt;br&gt;  - 浏览：如果选择了背景图片&lt;br&gt;    选项，设置或选择图像路径。&lt;br&gt;&lt;br&gt;  - 图像填充：选择前封面图像的&lt;br&gt;    拉伸或平铺。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7381" />
         <source>  Configure the background.&lt;br&gt;  - Background: set the background option from the&lt;br&gt;    drop-down control:&lt;br&gt;    ° None (Transparent)&lt;br&gt;    ° Solid Color&lt;br&gt;    ° Gradient&lt;br&gt;    ° Submodel Level Color.&lt;br&gt;&lt;br&gt;  - Change: select the background color from the&lt;br&gt;    color picker if Solid Color option selected.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置背景。&lt;br&gt;  - 背景：从下拉控件中设置&lt;br&gt;    背景选项：&lt;br&gt;    ° 无（透明）&lt;br&gt;    ° 纯色&lt;br&gt;    ° 渐变&lt;br&gt;    ° Sub-model 层级颜色。&lt;br&gt;&lt;br&gt;  - 更改：如果选择了纯色选项，从&lt;br&gt;    颜色选择器中选择背景颜色。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7401" />
         <source>  Configure the border.&lt;br&gt;  - Border: set the border corner square, round or&lt;br&gt;    borderless.&lt;br&gt;&lt;br&gt;  - Line: set the border line type.&lt;br&gt;&lt;br&gt;  - Color: select the border line color.&lt;br&gt;&lt;br&gt;  - Margins: set the border margins width and height.&lt;br&gt;    Enter margin values using a decimal number&lt;br&gt;    in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置边框。&lt;br&gt;  - 边框：将边框拐角设为方形、圆角或&lt;br&gt;    无边框。&lt;br&gt;&lt;br&gt;  - 线条：设置边框线条类型。&lt;br&gt;&lt;br&gt;  - 颜色：选择边框线条颜色。&lt;br&gt;&lt;br&gt;  - 边距：设置边框边距的宽度和高度。&lt;br&gt;    在 %1 中使用十进制数&lt;br&gt;    输入边距值。&lt;br&gt;    点单位在“项目全局设置”中定义。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7422" />
         <source>  Configure the camera angles.&lt;br&gt;  - Latitude: set the camera angle x-axis in degrees.&lt;br&gt;&lt;br&gt;  - Longitude: set the camera angle y-axis in degrees.&lt;br&gt;&lt;br&gt;  - Camera Viewpoint: pre-defined camera angle latitude&lt;br&gt;    and longitude settings which offer the following&lt;br&gt;    options in degrees:&lt;br&gt;    * Front: set the camera view at 0 lat, 0 lon.&lt;br&gt;    * Back: set the camera view at 0 lat, 180 lon.&lt;br&gt;    * Top: set the camera view at 90 lat, 0 lon.&lt;br&gt;    * Bottom: set the camera view at -90 lat, 0 lon.&lt;br&gt;    * Left: set the camera view at 0 lat, 90 lon.&lt;br&gt;    * Right: set the camera view at 0 lat, -90 lon.&lt;br&gt;    * Home: set the camera view at 30 lat, 45 lon.&lt;br&gt;      You can change the latitude and longitude angles&lt;br&gt;      for Home camera view.&lt;br&gt;    * Latitude/Loingitude: set the latitude and longitude&lt;br&gt;      angles. This setting is equivalent to selecting Use&lt;br&gt;      Latitude And Longitude Angles to allow Home camera&lt;br&gt;      view changes.&lt;br&gt;    * Default: do not use Camera Viewpoint.&lt;br&gt;&lt;br&gt;  - Use Latitude And Longitude Angles: enable the&lt;br&gt;    Latitude and Longitude dialogues to allow Home&lt;br&gt;    camera viewpoint angle changes. This dialog is only&lt;br&gt;    enabled when camera viewpoint Home is selected.&lt;br&gt;&lt;br&gt;    Camera angle value range is -360.0 to 360.0&lt;br&gt;&lt;br&gt;    Precision is one decimal place.&lt;br&gt;&lt;br&gt;    Selecting a Camera Viewpoint other that Default&lt;br&gt;    will disable the individual Latitude and Longitude&lt;br&gt;    camera angle dialogues.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置相机角度。&lt;br&gt;  - 纬度：以度为单位设置相机角度的 x 轴。&lt;br&gt;&lt;br&gt;  - 经度：以度为单位设置相机角度的 y 轴。&lt;br&gt;&lt;br&gt;  - 相机视点：预定义的相机角度纬度和&lt;br&gt;    经度设置，提供以下&lt;br&gt;    以度为单位的选项：&lt;br&gt;    * 前：将相机视图设为纬度 0、经度 0。&lt;br&gt;    * 后：将相机视图设为纬度 0、经度 180。&lt;br&gt;    * 顶：将相机视图设为纬度 90、经度 0。&lt;br&gt;    * 底：将相机视图设为纬度 -90、经度 0。&lt;br&gt;    * 左：将相机视图设为纬度 0、经度 90。&lt;br&gt;    * 右：将相机视图设为纬度 0、经度 -90。&lt;br&gt;    * 归位：将相机视图设为纬度 30、经度 45。&lt;br&gt;      你可以更改归位相机视图的&lt;br&gt;      纬度和经度角度。&lt;br&gt;    * 纬度/经度：设置纬度和经度&lt;br&gt;      角度。此设置等同于选择“使用&lt;br&gt;      纬度和经度角度”，以允许归位相机&lt;br&gt;      视图更改。&lt;br&gt;    * 默认：不使用相机视点。&lt;br&gt;&lt;br&gt;  - 使用纬度和经度角度：启用纬度&lt;br&gt;    和经度对话框，以允许更改归位&lt;br&gt;    相机视点角度。仅当选择了相机视点&lt;br&gt;    “归位”时此对话框才可用。&lt;br&gt;&lt;br&gt;    相机角度值范围为 -360.0 到 360.0&lt;br&gt;&lt;br&gt;    精度为一位小数。&lt;br&gt;&lt;br&gt;    选择“默认”以外的相机视点&lt;br&gt;    会禁用单独的纬度和经度&lt;br&gt;    相机角度对话框。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7462" />
         <source>  Configure the camera default distance factor:&lt;br&gt;  - Default Distance Factor: set the distance&lt;br&gt;    factor using a decimal number.&lt;br&gt;&lt;br&gt;    The default distance factor value is used to&lt;br&gt;    adjust the camera position nearer to or farther&lt;br&gt;    away from the position of the assembly or part.&lt;br&gt;    It is effectively a zoom capability intended to&lt;br&gt;    allow the editor to tune the image size as desired.&lt;br&gt;&lt;br&gt;    The primary use case is to maintain the same size&lt;br&gt;    image when changing your renderer to Native and  you&lt;br&gt;    wish to maintain the image sizing from the previous&lt;br&gt;    renderer.&lt;br&gt;&lt;br&gt;    This setting is ignored when the preferred renderer is&lt;br&gt;    not Native. The current renderer is %1.&lt;br&gt;&lt;br&gt;    Camera distance factor value range is 1.0 to 100.0&lt;br&gt;&lt;br&gt;    Precision is two decimal places.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置相机默认距离系数：&lt;br&gt;  - 默认距离系数：使用十进制数设置&lt;br&gt;    距离系数。&lt;br&gt;&lt;br&gt;    默认距离系数值用于调整相机&lt;br&gt;    位置，使其更靠近或更远离&lt;br&gt;    装配或零件的位置。&lt;br&gt;    它实际上是一种缩放能力，旨在&lt;br&gt;    让编辑者按需调整图像尺寸。&lt;br&gt;&lt;br&gt;    主要使用场景是在将渲染器切换为 Native 时&lt;br&gt;    保持图像尺寸不变，而你又&lt;br&gt;    希望沿用之前渲染器的&lt;br&gt;    图像尺寸。&lt;br&gt;&lt;br&gt;    当首选渲染器不是 Native 时，&lt;br&gt;    此设置会被忽略。当前渲染器为 %1。&lt;br&gt;&lt;br&gt;    相机距离系数值范围为 1.0 到 100.0&lt;br&gt;&lt;br&gt;    精度为两位小数。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7490" />
@@ -29519,22 +29519,22 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7518" />
         <source>  Configure the camera near Z plane:&lt;br&gt;  - Camera Near Plane: set the camera near plane&lt;br&gt;    using a decimal number.&lt;br&gt;&lt;br&gt;    The near Z plane dialog is only enabled for the&lt;br&gt;    Native preferred renderer. The current renderer&lt;br&gt;    is %1.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置相机近 Z 平面：&lt;br&gt;  - 相机近裁剪面：使用十进制数&lt;br&gt;    设置相机近裁剪面。&lt;br&gt;&lt;br&gt;    近 Z 平面对话框仅对 Native&lt;br&gt;    首选渲染器启用。当前渲染器&lt;br&gt;    为 %1。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7536" />
         <source>  Configure the camera far plane:&lt;br&gt;  - Camera Far Plane: set the camera far plane&lt;br&gt;    using a decimal number.&lt;br&gt;&lt;br&gt;    The far Z plane dialog is only enabled for the&lt;br&gt;    Native preferred renderer. The current renderer&lt;br&gt;    is %1.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置相机远 Z 平面：&lt;br&gt;  - 相机远裁剪面：使用十进制数&lt;br&gt;    设置相机远裁剪面。&lt;br&gt;&lt;br&gt;    远 Z 平面对话框仅对 Native&lt;br&gt;    首选渲染器启用。当前渲染器&lt;br&gt;    为 %1。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7554" />
         <source>  The following configuration setup are available&lt;br&gt;  for image:&lt;br&gt;  - Scale: set the image scale using a decimal&lt;br&gt;    number.&lt;br&gt;&lt;br&gt;    The mininimum allowed spin box value is -10000.0&lt;br&gt;    and the maximum is 10000.0.&lt;br&gt;    Spin box values are incremented by 1 step unit.&lt;br&gt;    Precision is two decimal places%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  图像可使用以下配置&lt;br&gt;  设置：&lt;br&gt;  - 缩放：使用十进制数&lt;br&gt;    设置图像缩放。&lt;br&gt;&lt;br&gt;    微调框允许的最小值为 -10000.0，&lt;br&gt;    最大值为 10000.0。&lt;br&gt;    微调框值以 1 个步进单位递增。&lt;br&gt;    精度为两位小数%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7573" />
         <source>  Configure the margins.&lt;br&gt;  - L/R(Left/Right): set the margin width.&lt;br&gt;&lt;br&gt;  - T/B(Top/Bottom): set the margin height.&lt;br&gt;&lt;br&gt;  Enter margin values using a decimal number&lt;br&gt;  in %1.&lt;br&gt;  Dot units are defined in Project Global Setup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置边距。&lt;br&gt;  - L/R（左/右）：设置边距宽度。&lt;br&gt;&lt;br&gt;  - T/B（上/下）：设置边距高度。&lt;br&gt;&lt;br&gt;  在 %1 中使用十进制数&lt;br&gt;  输入边距值。&lt;br&gt;  点单位在“项目全局设置”中定义。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7591" />
@@ -29549,32 +29549,32 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7617" />
         <source>  Configure the pointer border.&lt;br&gt;  - Type: set the pointer border line type.&lt;br&gt;  - Width: set the pointer border line width.&lt;br&gt;&lt;br&gt;  - Color: set the pointer border line color&lt;br&gt;    using the color picker.&lt;br&gt;  Enter Width using a decimal number in %1.&lt;br&gt;  Dot units are defined in Project Global Setup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置指针边框。&lt;br&gt;  - 类型：设置指针边框线条类型。&lt;br&gt;  - 宽度：设置指针边框线条宽度。&lt;br&gt;&lt;br&gt;  - 颜色：使用颜色选择器设置&lt;br&gt;    指针边框线条颜色。&lt;br&gt;  在 %1 中使用十进制数输入宽度。&lt;br&gt;  点单位在“项目全局设置”中定义。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7636" />
         <source>  Configure the pointer line.&lt;br&gt;  - Type: set the pointer line type.&lt;br&gt;  - Width: set the pointer line width.&lt;br&gt;  - Color: set the pointer line color&lt;br&gt;    using the color picker.&lt;br&gt;  - Tip Visibility: set checked to show the&lt;br&gt;    pointer tip.&lt;br&gt;&lt;br&gt;  Enter Width using a decimal number in %1.&lt;br&gt;  Dot units are defined in Project Global Setup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置指针线条。&lt;br&gt;  - 类型：设置指针线条类型。&lt;br&gt;  - 宽度：设置指针线条宽度。&lt;br&gt;  - 颜色：使用颜色选择器设置&lt;br&gt;    指针线条颜色。&lt;br&gt;  - 尖端可见性：勾选以显示&lt;br&gt;    指针尖端。&lt;br&gt;&lt;br&gt;  在 %1 中使用十进制数输入宽度。&lt;br&gt;  点单位在“项目全局设置”中定义。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7657" />
         <source>  Configure the pointer tip.&lt;br&gt;  - Tip Width: set the visible tip width.&lt;br&gt;  - Tip Height: set the visible tip height.&lt;br&gt;&lt;br&gt;  Enter Width and Height using a decimal number&lt;br&gt;  in %1.&lt;br&gt;  Dot units are defined in Project Global Setup.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置指针尖端。&lt;br&gt;  - 尖端宽度：设置可见尖端宽度。&lt;br&gt;  - 尖端高度：设置可见尖端高度。&lt;br&gt;&lt;br&gt;  在 %1 中使用十进制数&lt;br&gt;  输入宽度和高度。&lt;br&gt;  点单位在“项目全局设置”中定义。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7675" />
         <source>  Configure the document text properties.&lt;br&gt;  - Section: select the available location to place&lt;br&gt;    the text. Available locations may be cover page&lt;br&gt;    front or cover page back, content page header&lt;br&gt;    or content page footer. The selection&lt;br&gt;    drop-down list will display availabe location(s)&lt;br&gt;    for the selected text attribute.&lt;br&gt;&lt;br&gt;  - Placement: select where on the page to place&lt;br&gt;    the text string.&lt;br&gt;&lt;br&gt;  - Font: select the text font.&lt;br&gt;&lt;br&gt;  - Color: select the text font color.&lt;br&gt;&lt;br&gt;  - Margins: set the text margin area width/height.&lt;br&gt;    Enter margin values using a decimal number&lt;br&gt;    in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.&lt;br&gt;&lt;br&gt;  - Content: enter or update the text.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置文档文本属性。&lt;br&gt;  - 位置：选择放置文本的可用&lt;br&gt;    位置。可用位置可以是封面页&lt;br&gt;    正面或封面页背面、内容页页眉&lt;br&gt;    或内容页页脚。选择&lt;br&gt;    下拉列表会显示所选文本属性&lt;br&gt;    的可用位置。&lt;br&gt;&lt;br&gt;  - 放置：选择文本字符串在页面上的&lt;br&gt;    放置位置。&lt;br&gt;&lt;br&gt;  - 字体：选择文本字体。&lt;br&gt;&lt;br&gt;  - 颜色：选择文本字体颜色。&lt;br&gt;&lt;br&gt;  - 边距：设置文本边距区域的宽度/高度。&lt;br&gt;    在 %1 中使用十进制数&lt;br&gt;    输入边距值。&lt;br&gt;    点单位在“项目全局设置”中定义。&lt;br&gt;&lt;br&gt;  - 内容：输入或更新文本。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7703" />
         <source>  Configure the document image properties.&lt;br&gt;  - Section: select the available location to place&lt;br&gt;    the image attributethe. Available locations may&lt;br&gt;    be cover page ront or cover page back, content&lt;br&gt;    page header or content page footer. The selection&lt;br&gt;    drop-down list will display availabe location(s)&lt;br&gt;    for the selected image.&lt;br&gt;&lt;br&gt;  - Placement: select where on the page to place&lt;br&gt;    the image.&lt;br&gt;&lt;br&gt;  - Margins: set the width(Left/Right), height(Top/Bottom)&lt;br&gt;    image margins.&lt;br&gt;    Enter margin values using a decimal number&lt;br&gt;    in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.&lt;br&gt;&lt;br&gt;  - Browse: set or select the image path.&lt;br&gt;&lt;br&gt;  - Scale: check to enable and configure scaling the image.&lt;br&gt;&lt;br&gt;  - Image Fill: select aspect (resize on image aspect ratio),&lt;br&gt;    stretch or tile the image across the page background.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置文档图像属性。&lt;br&gt;  - 位置：选择放置图像属性的&lt;br&gt;    可用位置。可用位置可以是&lt;br&gt;    封面页正面或封面页背面、内容&lt;br&gt;    页页眉或内容页页脚。选择&lt;br&gt;    下拉列表会显示所选图像&lt;br&gt;    的可用位置。&lt;br&gt;&lt;br&gt;  - 放置：选择图像在页面上的&lt;br&gt;    放置位置。&lt;br&gt;&lt;br&gt;  - 边距：设置图像边距的宽度（左/右）、&lt;br&gt;    高度（上/下）。&lt;br&gt;    在 %1 中使用十进制数&lt;br&gt;    输入边距值。&lt;br&gt;    点单位在“项目全局设置”中定义。&lt;br&gt;&lt;br&gt;  - 浏览：设置或选择图像路径。&lt;br&gt;&lt;br&gt;  - 缩放：勾选以启用并配置图像缩放。&lt;br&gt;&lt;br&gt;  - 图像填充：选择等比（按图像宽高比调整）、&lt;br&gt;    拉伸或平铺，使图像铺满页面背景。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7733" />
         <source>  Configure the submodel level page background color.&lt;br&gt;&lt;br&gt;  These colors help differentiate the current submode&lt;br&gt;  level being edited.&lt;br&gt;&lt;br&gt;  There are four default submodel levels, each with&lt;br&gt;  its own default colour.&lt;br&gt;  - Change: select the desired color using the&lt;br&gt;    color picker.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置 Sub-model 层级页面背景颜色。&lt;br&gt;&lt;br&gt;  这些颜色有助于区分当前正在编辑的&lt;br&gt;  Sub-model 层级。&lt;br&gt;&lt;br&gt;  共有四个默认 Sub-model 层级，每个&lt;br&gt;  都有自己的默认颜色。&lt;br&gt;  - 更改：使用颜色选择器&lt;br&gt;    选择所需的颜色。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7751" />
@@ -29584,32 +29584,32 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7766" />
         <source>  Configure the unit pair.&lt;br&gt;  - Unit Value 0: set the first unit value.&lt;br&gt;&lt;br&gt;  - Unit Value 1: set the second unit value.&lt;br&gt;&lt;br&gt;    Enter margin values using a decimal number&lt;br&gt;    in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.&lt;br&gt;&lt;br&gt;  Select 'What's this' Help on this check box's&lt;br&gt;  parent group box to see additional details&lt;br&gt;  about the behaviour enabled by this control%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置单位对。&lt;br&gt;  - 单位值 0：设置第一个单位值。&lt;br&gt;&lt;br&gt;  - 单位值 1：设置第二个单位值。&lt;br&gt;&lt;br&gt;    在 %1 中使用十进制数&lt;br&gt;    输入边距值。&lt;br&gt;    点单位在“项目全局设置”中定义。&lt;br&gt;&lt;br&gt;  在此复选框的父组框上选择“这是什么”&lt;br&gt;  帮助可查看更多关于此控件&lt;br&gt;  所启用行为的详细信息%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7787" />
         <source>  Configure the number properties.&lt;br&gt;  - Font: select the number font.&lt;br&gt;&lt;br&gt;  - Color: select the number font color.&lt;br&gt;&lt;br&gt;  - Margins: set the number margin area width/height.&lt;br&gt;&lt;br&gt;    Enter margin values using a decimal number&lt;br&gt;    in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.&lt;br&gt;&lt;br&gt;  Select 'What's this' Help on this check box's&lt;br&gt;  parent group box to see additional details&lt;br&gt;  about the behaviour enabled by this control%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置编号属性。&lt;br&gt;  - 字体：选择编号字体。&lt;br&gt;&lt;br&gt;  - 颜色：选择编号字体颜色。&lt;br&gt;&lt;br&gt;  - 边距：设置编号边距区域的宽度/高度。&lt;br&gt;&lt;br&gt;    在 %1 中使用十进制数&lt;br&gt;    输入边距值。&lt;br&gt;    点单位在“项目全局设置”中定义。&lt;br&gt;&lt;br&gt;  在此复选框的父组框上选择“这是什么”&lt;br&gt;  帮助可查看更多关于此控件&lt;br&gt;  所启用行为的详细信息%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7809" />
         <source>  Select between the pair of option alternatives.&lt;br&gt;  The selected option is set to true while the&lt;br&gt;  unselected option is false.&lt;br&gt;&lt;br&gt;  Select 'What's this' Help on this check box's&lt;br&gt;  parent group box to see additional details&lt;br&gt;  about the behaviour enabled by this control%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  在一对备选选项之间选择。&lt;br&gt;  选中的选项设为真，而&lt;br&gt;  未选中的选项为假。&lt;br&gt;&lt;br&gt;  在此复选框的父组框上选择“这是什么”&lt;br&gt;  帮助可查看更多关于此控件&lt;br&gt;  所启用行为的详细信息%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7826" />
         <source>PageSizeGui SHOULD NOT BE USED&lt;br&gt;  - Use SizeAndOrientationGui.&lt;br&gt;&lt;br&gt;  Configure the page size settings.&lt;br&gt;  - Size: set the page size using standard sizes like&lt;br&gt;    A4, Letter etc... You can also specify the 'Custom'&lt;br&gt;    size options along with its corresponding height and&lt;br&gt;    width values.&lt;br&gt;&lt;br&gt;    The page size custom height and width unit values&lt;br&gt;    are determined by the resolution units specified&lt;br&gt;    in Project Global Setup.&lt;br&gt;    Dot unit options are dots per inch (DPI) or&lt;br&gt;    dots per centimetre (DPC).%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>PageSizeGui 不应使用&lt;br&gt;  - 请使用 SizeAndOrientationGui。&lt;br&gt;&lt;br&gt;  配置页面尺寸设置。&lt;br&gt;  - 尺寸：使用 A4、Letter 等标准尺寸&lt;br&gt;    设置页面尺寸……你也可以指定 'Custom'&lt;br&gt;    尺寸选项及其对应的高度和&lt;br&gt;    宽度值。&lt;br&gt;&lt;br&gt;    页面尺寸的自定义高度和宽度单位值&lt;br&gt;    由“项目全局设置”中指定的&lt;br&gt;    分辨率单位决定。&lt;br&gt;    点单位选项为每英寸点数（DPI）或&lt;br&gt;    每厘米点数（DPC）。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7849" />
         <source>PageOrientationGui SHOULD NOT BE USED.&lt;br&gt;  - Use SizeAndOrientationGui.&lt;br&gt;&lt;br&gt;  Configure the page orientation settings.&lt;br&gt;  - Portrait: set the page orientation to&lt;br&gt;    portrait.&lt;br&gt;&lt;br&gt;  - Landscape: set the page orientation to&lt;br&gt;    landscape.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>PageOrientationGui 不应使用。&lt;br&gt;  - 请使用 SizeAndOrientationGui。&lt;br&gt;&lt;br&gt;  配置页面方向设置。&lt;br&gt;  - 纵向：将页面方向设为&lt;br&gt;    纵向。&lt;br&gt;&lt;br&gt;  - 横向：将页面方向设为&lt;br&gt;    横向。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7867" />
         <source>  Configure the shape constrain properties.&lt;br&gt;  Select the the constrain type from the&lt;br&gt;  drop-down list and use the line edit dialog&lt;br&gt;  to enter the corresponding constraint type units.&lt;br&gt;  Dots per %1 units have been multiplied by&lt;br&gt;  resolution(%2).&lt;br&gt;&lt;br&gt;  Available constrain types are:&lt;br&gt;  - Area: Apply constraint using the available area.&lt;br&gt;    This property is automatically calculated.&lt;br&gt;&lt;br&gt;  - Square: Apply constraint using quadrilateral of&lt;br&gt;    equal-length sides. This property is automatically&lt;br&gt;    calculated.&lt;br&gt;&lt;br&gt;  - Width: Apply constraint on specified unit width.&lt;br&gt;&lt;br&gt;  - Height: Apply constraint on specified unit height.&lt;br&gt;&lt;br&gt;  - Columns: Apply constraint on specified number&lt;br&gt;    of comumns.%3&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置形状约束属性。&lt;br&gt;  从下拉列表中选择约束类型，&lt;br&gt;  并使用行编辑对话框&lt;br&gt;  输入相应的约束类型单位。&lt;br&gt;  每 %1 单位的点数已乘以&lt;br&gt;  分辨率(%2)。&lt;br&gt;&lt;br&gt;  可用的约束类型：&lt;br&gt;  - 面积：使用可用面积应用约束。&lt;br&gt;    此属性会自动计算。&lt;br&gt;&lt;br&gt;  - 正方形：使用等长边四边形&lt;br&gt;    应用约束。此属性会自动&lt;br&gt;    计算。&lt;br&gt;&lt;br&gt;  - 宽度：按指定的单位宽度应用约束。&lt;br&gt;&lt;br&gt;  - 高度：按指定的单位高度应用约束。&lt;br&gt;&lt;br&gt;  - 列数：按指定的列数&lt;br&gt;    应用约束。%3&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7884" />
@@ -29624,152 +29624,152 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="7896" />
         <source>  Configure a floating point number with double&lt;br&gt;  precision accuracy using a spinbox control.&lt;br&gt;  Available input properties are:&lt;br&gt;  - Range: the minimum and maximum integer values &lt;br&gt;    accepted as input.&lt;br&gt;&lt;br&gt;  - SingleStep: the step by which the integer value is&lt;br&gt;    increased and decreased.&lt;br&gt;&lt;br&gt;  - Decimal Places: the precision of the double spinbox&lt;br&gt;    in decimal format.&lt;br&gt;&lt;br&gt;  - Value: the current double precision floating point&lt;br&gt;    number accepted as input.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  使用微调框控件配置具有双精度&lt;br&gt;  精度的浮点数。&lt;br&gt;  可用的输入属性：&lt;br&gt;  - 范围：可接受为输入的最小和最大&lt;br&gt;    整数值。&lt;br&gt;&lt;br&gt;  - 单步：整数值增减的&lt;br&gt;    步长。&lt;br&gt;&lt;br&gt;  - 小数位数：双精度微调框以十进制&lt;br&gt;    格式表示的精度。&lt;br&gt;&lt;br&gt;  - 值：当前可接受为输入的双精度&lt;br&gt;    浮点数。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7918" />
         <source>  Configure an integer number using a spinbox control.&lt;br&gt;  Available input properties are:&lt;br&gt;  - Range: the minimum and maximum integer values &lt;br&gt;    accepted as input.&lt;br&gt;&lt;br&gt;  - SingleStep: the step by which the integer value is&lt;br&gt;    increased and decreased.&lt;br&gt;&lt;br&gt;  - Value: the current integer number accepted as input&lt;br&gt;&lt;br&gt;  Select 'What's this' Help on this check box's&lt;br&gt;  parent group box to see additional details&lt;br&gt;  about the behaviour enabled by this control.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  使用微调框控件配置整数。&lt;br&gt;  可用的输入属性：&lt;br&gt;  - 范围：可接受为输入的最小和最大&lt;br&gt;    整数值。&lt;br&gt;&lt;br&gt;  - 单步：整数值增减的&lt;br&gt;    步长。&lt;br&gt;&lt;br&gt;  - 值：当前可接受为输入的整数&lt;br&gt;&lt;br&gt;  在此复选框的父组框上选择“这是什么”&lt;br&gt;  帮助可查看更多关于此控件&lt;br&gt;  所启用行为的详细信息。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7939" />
         <source>  Configure a pair of floating point (decimal) numbers&lt;br&gt;  with double precision.&lt;br&gt;&lt;br&gt;  Three decimal places (e.g. 1.012) is a good example.&lt;br&gt;&lt;br&gt;  Select 'What's this' Help on this check box's&lt;br&gt;  parent group box to see additional details&lt;br&gt;  about the behaviour enabled by this control%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置一对具有双精度的浮点&lt;br&gt;  （十进制）数。&lt;br&gt;&lt;br&gt;  三位小数（例如 1.012）是一个不错的示例。&lt;br&gt;&lt;br&gt;  在此复选框的父组框上选择“这是什么”&lt;br&gt;  帮助可查看更多关于此控件&lt;br&gt;  所启用行为的详细信息%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7956" />
         <source>PliSort SHOULD NOT BE USED.&lt;br&gt;  - Use PliSortOrderGui.&lt;br&gt;&lt;br&gt;  - Sort Attributes: part size, colorcategory.&lt;br&gt;&lt;br&gt;  - Direction: direction are ascending - from small&lt;br&gt;    to large&lt;br&gt;&lt;br&gt;  Select 'What's this' Help on this check box's&lt;br&gt;  parent group box to see additional details&lt;br&gt;  about the behaviour enabled by this control.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>PliSort 不应使用。&lt;br&gt;  - 请使用 PliSortOrderGui。&lt;br&gt;&lt;br&gt;  - 排序属性：零件尺寸、颜色类别。&lt;br&gt;&lt;br&gt;  - 方向：方向为升序 - 从&lt;br&gt;    小到大&lt;br&gt;&lt;br&gt;  在此复选框的父组框上选择“这是什么”&lt;br&gt;  帮助可查看更多关于此控件&lt;br&gt;  所启用行为的详细信息。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7975" />
         <source>  Configure the sort order and direction properties.&lt;br&gt;  - Sort Attributes: part color, category&lt;br&gt;    size and no-sort are available in each&lt;br&gt;    of the three ordered drop-down controls.&lt;br&gt;&lt;br&gt;  - Sort Order: primary (first), secondary (second)&lt;br&gt;    and tertiary (third) precedence in which the&lt;br&gt;    attributes will be sorted.&lt;br&gt;&lt;br&gt;  - Direction: direction are ascending - from small&lt;br&gt;    to large and descending from large to small.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置排序顺序和方向属性。&lt;br&gt;  - 排序属性：零件颜色、类别、&lt;br&gt;    尺寸和不排序在三个排序&lt;br&gt;    下拉控件中均可选。&lt;br&gt;&lt;br&gt;  - 排序顺序：属性排序的主要（第一）、&lt;br&gt;    次要（第二）和第三&lt;br&gt;    优先级。&lt;br&gt;&lt;br&gt;  - 方向：方向为升序 - 从小到大，&lt;br&gt;    以及降序 - 从大到小。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="7995" />
         <source>  Configure the stud style and automate&lt;br&gt;  edge color settings.&lt;br&gt;&lt;br&gt;  Stud style decorate studs with one of&lt;br&gt;  seven (7) LEGO inscribed styles.&lt;br&gt;&lt;br&gt;  High contrast stud styles paint stud cylinder&lt;br&gt;  and part edge colors.&lt;br&gt;&lt;br&gt;  Available stud styles:&lt;br&gt;  ° 0 Plain&lt;br&gt;  ° 1 Thin Line Logo&lt;br&gt;  ° 2 Outline Logo&lt;br&gt;  ° 3 Sharp Top Logo&lt;br&gt;  ° 4 Rounded Top Logo&lt;br&gt;  ° 5 Flattened Logo&lt;br&gt;  ° 6 High Contrast&lt;br&gt;  ° 7 High Contrast With Logo&lt;br&gt;&lt;br&gt;  Light/Dark Value triggers the part edge color&lt;br&gt;  update for dark parts.&lt;br&gt;&lt;br&gt;  High Contrast styles enable part edge and&lt;br&gt;  stud cylinder color settings.&lt;br&gt;&lt;br&gt;  Automate edge color settings allow %1 to&lt;br&gt;  automatically adjust part edge colors.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置凸点样式和自动边缘&lt;br&gt;  颜色设置。&lt;br&gt;&lt;br&gt;  凸点样式用七（7）种&lt;br&gt;  LEGO 刻印样式之一来装饰凸点。&lt;br&gt;&lt;br&gt;  高对比度凸点样式会为凸点圆柱&lt;br&gt;  和零件边缘上色。&lt;br&gt;&lt;br&gt;  可用的凸点样式：&lt;br&gt;  ° 0 素面&lt;br&gt;  ° 1 细线标志&lt;br&gt;  ° 2 轮廓标志&lt;br&gt;  ° 3 尖顶标志&lt;br&gt;  ° 4 圆顶标志&lt;br&gt;  ° 5 扁平标志&lt;br&gt;  ° 6 高对比度&lt;br&gt;  ° 7 带标志的高对比度&lt;br&gt;&lt;br&gt;  明/暗值会触发深色零件的&lt;br&gt;  零件边缘颜色更新。&lt;br&gt;&lt;br&gt;  高对比度样式会启用零件边缘和&lt;br&gt;  凸点圆柱颜色设置。&lt;br&gt;&lt;br&gt;  自动边缘颜色设置允许 %1&lt;br&gt;  自动调整零件边缘颜色。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8028" />
         <source>  High Contrast styles exposes the Light/Dark Value&lt;br&gt;  edge color setting.&lt;br&gt;&lt;br&gt;  Light/Dark Value triggers the part edge color&lt;br&gt;  update for dark parts.&lt;br&gt;&lt;br&gt;  High Contrast styles also exposes the following&lt;br&gt;  part edge and stud cylinder color settings:&lt;br&gt;  - Stud Cylinder Color: the applied high contrast&lt;br&gt;    stud cylinder color&lt;br&gt;&lt;br&gt;  - Parts Edge Color: the default high contrast parts&lt;br&gt;    edge color.&lt;br&gt;&lt;br&gt;  - Black Parts Edge Color: the applied color for&lt;br&gt;    black parts.&lt;br&gt;&lt;br&gt;  - Dark Parts Edge Color: the applied edge color for&lt;br&gt;    dark parts.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  高对比度样式会暴露明/暗值&lt;br&gt;  边缘颜色设置。&lt;br&gt;&lt;br&gt;  明/暗值会触发深色零件的&lt;br&gt;  零件边缘颜色更新。&lt;br&gt;&lt;br&gt;  高对比度样式还会暴露以下&lt;br&gt;  零件边缘和凸点圆柱颜色设置：&lt;br&gt;  - 凸点圆柱颜色：所应用的高对比度&lt;br&gt;    凸点圆柱颜色&lt;br&gt;&lt;br&gt;  - 零件边缘颜色：默认的高对比度零件&lt;br&gt;    边缘颜色。&lt;br&gt;&lt;br&gt;  - 黑色零件边缘颜色：为黑色零件&lt;br&gt;    应用的颜色。&lt;br&gt;&lt;br&gt;  - 深色零件边缘颜色：为深色零件&lt;br&gt;    应用的边缘颜色。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8053" />
         <source>  Automate edge color settings allow %1 to&lt;br&gt;  automatically adjust part edge colors based&lt;br&gt;  on the following configured settings:&lt;br&gt;  - Contrast: the amount of contrast.&lt;br&gt;&lt;br&gt;  - Saturation: the amount of edge color tint&lt;br&gt;    or shade.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  自动边缘颜色设置允许 %1&lt;br&gt;  根据以下配置设置自动调整&lt;br&gt;  零件边缘颜色：&lt;br&gt;  - 对比度：对比度的量。&lt;br&gt;&lt;br&gt;  - 饱和度：边缘颜色色调&lt;br&gt;    或明暗的量。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8071" />
         <source>  Set the maximum edge line width smoothing granularity and range.&lt;br&gt;  The granularity setting is automatically specified by your&lt;br&gt;  platform's graphics system; however, there are cases where&lt;br&gt;  the specified value is too granular making it difficult to&lt;br&gt;  manually set your desired line width in the specified range.&lt;br&gt;  Conversely, the specified range may not be enough to allow&lt;br&gt;  you to specify your desired line width.&lt;br&gt;&lt;br&gt;  In these cases, use this setting to enable a range with the&lt;br&gt;  granularity that allows you to better set your line width.&lt;br&gt;&lt;br&gt;  The smoothing range calculation will use the maximum granularity&lt;br&gt;  value measured between this setting and the value specified&lt;br&gt;  by your graphics system.&lt;br&gt;&lt;br&gt;  The default smoothing granularity is 1.0000, and the minimum is 0.25.&lt;br&gt;  If the edge line range presented with the default smoothing granularity&lt;br&gt;  setting is not enough to allow you to specify your desired line width,&lt;br&gt;  a lower setting - e.g. 0.5000 - will yield a smaller granularity and&lt;br&gt;  consequently, increase the size of the edge line setting range.&lt;br&gt;  If you wish to use the system specified granularity,&lt;br&gt;  simply set this value below the minimum - e.g. 0.0.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  设置最大边缘线宽度平滑粒度和范围。&lt;br&gt;  粒度设置由你所在平台的图形系统&lt;br&gt;  自动指定；不过在有些情况下，&lt;br&gt;  指定的粒度过粗，导致难以&lt;br&gt;  在指定范围内手动设置所需的线宽。&lt;br&gt;  反之，指定的范围也可能不足以&lt;br&gt;  让你指定所需的线宽。&lt;br&gt;&lt;br&gt;  在这些情况下，可使用此设置启用一个范围，&lt;br&gt;  其粒度能让你更好地设置线宽。&lt;br&gt;&lt;br&gt;  平滑范围计算将使用此设置与图形系统指定值&lt;br&gt;  之间测得的最大&lt;br&gt;  粒度值。&lt;br&gt;&lt;br&gt;  默认平滑粒度为 1.0000，最小值为 0.25。&lt;br&gt;  如果使用默认平滑粒度设置所呈现的边缘线范围&lt;br&gt;  不足以让你指定所需的线宽，&lt;br&gt;  可设置更低的值 - 例如 0.5000 - 这会得到更小的粒度，&lt;br&gt;  从而增大边缘线设置范围的大小。&lt;br&gt;  如果你希望使用系统指定的粒度，&lt;br&gt;  只需将此值设为低于最小值 - 例如 0.0。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8101" />
         <source>  Part annotation options.&lt;br&gt;  - Display PartList (PLI) Annotation: select&lt;br&gt;    annotation source from Title, Free Form or&lt;br&gt;    Fixed annotations.&lt;br&gt;&lt;br&gt;  - Enable Annotation Type: enable or disable&lt;br&gt;    annotation for axles, beams, cables, connectors,&lt;br&gt;    hoses, panels or custom annotations.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  零件标注选项。&lt;br&gt;  - 显示零件清单（PLI）标注：从标题、自由形式或&lt;br&gt;    固定标注中选择&lt;br&gt;    标注来源。&lt;br&gt;&lt;br&gt;  - 启用标注类型：为轴、梁、线缆、连接器、&lt;br&gt;    软管、面板或自定义标注&lt;br&gt;    启用或禁用标注。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8119" />
         <source>  Part annotation styles.&lt;br&gt;  - Select Style to Edit: enable the corresponding&lt;br&gt;    background, border, text and size for editing.&lt;br&gt;    Choices include square, circle or rectangle.&lt;br&gt;    This setting defaults to None when the dialogue&lt;br&gt;    is initially opened.&lt;br&gt;&lt;br&gt;  - Background: edit the annotation background&lt;br&gt;&lt;br&gt;  - Border: edit the annotation border attributes&lt;br&gt;&lt;br&gt;  - Annotation Text Format: edit the annotation text&lt;br&gt;    attributes&lt;br&gt;&lt;br&gt;  - Size: edit the annotation size attributes.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  零件标注样式。&lt;br&gt;  - 选择要编辑的样式：启用相应的&lt;br&gt;    背景、边框、文本和尺寸以供编辑。&lt;br&gt;    可选方形、圆形或矩形。&lt;br&gt;    对话框首次打开时，&lt;br&gt;    此设置默认为无。&lt;br&gt;&lt;br&gt;  - 背景：编辑标注背景&lt;br&gt;&lt;br&gt;  - 边框：编辑标注边框属性&lt;br&gt;&lt;br&gt;  - 标注文本格式：编辑标注文本&lt;br&gt;    属性&lt;br&gt;&lt;br&gt;  - 尺寸：编辑标注尺寸属性。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8141" />
         <source>  Enable part annotation:&lt;br&gt;  - Display: show part annotations.&lt;br&gt;&lt;br&gt;  Select part annotation source:&lt;br&gt;  - Title: use the title annotation source file.&lt;br&gt;    Title annotations are derived from part&lt;br&gt;    descriptions taken the LDraw parts library.&lt;br&gt;&lt;br&gt;  - Free Form: use the free form annotation source&lt;br&gt;    file.&lt;br&gt;    The above options allows the editor to define&lt;br&gt;    custom part annotations and use the 'Extended'&lt;br&gt;    annotation type.&lt;br&gt;&lt;br&gt;  - Fixed: use the built-in annotations with fixed size&lt;br&gt;    properties. While the fixed size for square and&lt;br&gt;    circle styles cannot be modified from the LDraw&lt;br&gt;    file editor or main window, it is possible to change&lt;br&gt;    the fixed size properties in the 'Styles' section of&lt;br&gt;    this dialog.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  启用零件标注：&lt;br&gt;  - 显示：显示零件标注。&lt;br&gt;&lt;br&gt;  选择零件标注来源：&lt;br&gt;  - 标题：使用标题标注源文件。&lt;br&gt;    标题标注派生自 LDraw 零件库中的&lt;br&gt;    零件描述。&lt;br&gt;&lt;br&gt;  - 自由形式：使用自由形式标注源&lt;br&gt;    文件。&lt;br&gt;    以上选项允许编辑者定义&lt;br&gt;    自定义零件标注并使用“扩展”&lt;br&gt;    标注类型。&lt;br&gt;&lt;br&gt;  - 固定：使用具有固定尺寸属性的&lt;br&gt;    内置标注。虽然方形和&lt;br&gt;    圆形样式的固定尺寸无法从 LDraw&lt;br&gt;    文件编辑器或主窗口修改，但可以在&lt;br&gt;    此对话框的“样式”部分更改&lt;br&gt;    固定尺寸属性。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8169" />
         <source>  Enable the display of part annotations:&lt;br&gt;  Select the Bill Of Materials (BOM) annotation&lt;br&gt;  types to display in the instruction document.&lt;br&gt;&lt;br&gt;  Fixed annotation source types for BOM parts are:&lt;br&gt;  - Axles: annotation on circle background.&lt;br&gt;&lt;br&gt;  - Beams: annotation on square background.&lt;br&gt;&lt;br&gt;  - Cables: annotation on square background.&lt;br&gt;&lt;br&gt;  - Connections: annotation on square background.&lt;br&gt;&lt;br&gt;  - Hoses: annotation on square background.&lt;br&gt;&lt;br&gt;  - Panels: annotation on circle background.&lt;br&gt;&lt;br&gt;  - Element: LEGO element identifier on rectangular&lt;br&gt;    background.&lt;br&gt;&lt;br&gt;  User configurable annotation types for BOM parts are:&lt;br&gt;  - Extended: title and/or free form part annotations&lt;br&gt;    on rectangular background.&lt;br&gt;    Enable this when fixed annotation is unchecked or&lt;br&gt;    a part category is not a fixed type - e.g. Bricks.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  启用零件标注显示：&lt;br&gt;  选择要在说明书文档中显示的&lt;br&gt;  物料清单（BOM）标注类型。&lt;br&gt;&lt;br&gt;  BOM 零件的固定标注来源类型为：&lt;br&gt;  - 轴：圆形背景上的标注。&lt;br&gt;&lt;br&gt;  - 梁：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 线缆：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 连接器：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 软管：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 面板：圆形背景上的标注。&lt;br&gt;&lt;br&gt;  - 元素：矩形背景上的 LEGO&lt;br&gt;    元素标识符。&lt;br&gt;&lt;br&gt;  BOM 零件的用户可配置标注类型为：&lt;br&gt;  - 扩展：矩形背景上的标题和/或&lt;br&gt;    自由形式零件标注。&lt;br&gt;    当未勾选固定标注，或某个&lt;br&gt;    零件类别不是固定类型时（例如砖块）启用此项。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8197" />
         <source>  Enable the display of part annotations:&lt;br&gt;  Select the Part List Instance (PLI) annotation&lt;br&gt;  types to display in the instruction document.&lt;br&gt;&lt;br&gt;  Fixed source annotation types for PLI parts are:&lt;br&gt;  - Axles: annotation on circle background.&lt;br&gt;  - Beams: annotation on square background.&lt;br&gt;  - Cables: annotation on square background.&lt;br&gt;  - Connections: annotation on square background.&lt;br&gt;  - Hoses: annotation on square background.&lt;br&gt;  - Panels: annotation on circle background.&lt;br&gt;&lt;br&gt;  User configurable annotation types for PLI parts are:&lt;br&gt;  - Extended: title and/or free form part annotations&lt;br&gt;    on rectangular background.&lt;br&gt;    Enable this when fixed annotation is unchecked or&lt;br&gt;    a part category is not a fixed type - e.g. Bricks.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  启用零件标注显示：&lt;br&gt;  选择要在说明书文档中显示的&lt;br&gt;  零件清单实例（PLI）标注类型。&lt;br&gt;&lt;br&gt;  PLI 零件的固定来源标注类型为：&lt;br&gt;  - 轴：圆形背景上的标注。&lt;br&gt;  - 梁：方形背景上的标注。&lt;br&gt;  - 线缆：方形背景上的标注。&lt;br&gt;  - 连接器：方形背景上的标注。&lt;br&gt;  - 软管：方形背景上的标注。&lt;br&gt;  - 面板：圆形背景上的标注。&lt;br&gt;&lt;br&gt;  PLI 零件的用户可配置标注类型为：&lt;br&gt;  - 扩展：矩形背景上的标题和/或&lt;br&gt;    自由形式零件标注。&lt;br&gt;    当未勾选固定标注，或某个&lt;br&gt;    零件类别不是固定类型时（例如砖块）启用此项。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8223" />
         <source>  Enable and configure part element annotation.&lt;br&gt;  Bill of material part element identifiers can be sourced from one of two files:&lt;br&gt;  - Bricklink Codes: codes.txt is the tab-delimited Bricklink file downloaded from&lt;br&gt;    https://www.bricklink.com/catalogDownload.asp %1&lt;br&gt;    will automatically download a stored copy of this file if it is not found&lt;br&gt;    in the 'extras' user data folder.&lt;br&gt;&lt;br&gt;  - User Defined Elements: userelements.lst (formerly legoelements.lst)&lt;br&gt;    is a tab-delimited user-defined text file that must be placed in the %1&lt;br&gt;   'extras' user data folder and include part id, color id and the user&lt;br&gt;    defined element id (whatever id you want to display) delimited by tabs.&lt;br&gt;&lt;br&gt;  You can set %1 to use either LEGO Element or Bricklink ID - a combination&lt;br&gt;  of the Bricklink Item No and Color ID delimited with '-', for example 11145-87.&lt;br&gt;  - LDraw Key: allows you to specify what key format to use when storing and&lt;br&gt;    retrieving user-defined part elements.&lt;br&gt;    The default option is LDraw Part Type+Color. If you prefer to use the&lt;br&gt;    Bricklink Item No+Color, uncheck this setting.&lt;br&gt;&lt;br&gt;  The three options availale to display part element annotations are&lt;br&gt;  therefore:&lt;br&gt;  - Bricklink: use Bricklink part element identifier sourced from Bricklink codes.txt.&lt;br&gt;&lt;br&gt;  - LEGO: use LEGO part element identifiers sourced from Bricklink codes.txt.&lt;br&gt;&lt;br&gt;  - User Defined: use the part element identifier sourced from the&lt;br&gt;    userelements.lst file using either LDraw or Bricklink key formats.&lt;br&gt;&lt;br&gt;  As with the other %1 configuration files, you can edit the local instance&lt;br&gt;  of these files to update add or remove part elements.&lt;br&gt;  If a local file does not exist, it will be created when you select the&lt;br&gt;  respective Configuration, Edit Parameter Files menu item.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  启用并配置零件元素标注。&lt;br&gt;  物料清单的零件元素标识符可来自以下两个文件之一：&lt;br&gt;  - Bricklink 编码：codes.txt 是从&lt;br&gt;    https://www.bricklink.com/catalogDownload.asp 下载的制表符分隔的 Bricklink 文件。如果&lt;br&gt;    在 'extras' 用户数据文件夹中找不到该文件，%1&lt;br&gt;    会自动下载该文件的存档副本。&lt;br&gt;&lt;br&gt;  - 用户定义元素：userelements.lst（原 legoelements.lst）&lt;br&gt;    是制表符分隔的用户定义文本文件，必须放在 %1 的&lt;br&gt;   'extras' 用户数据文件夹中，并包含零件 id、颜色 id 和用户&lt;br&gt;    定义的元素 id（你想显示的任何 id），以制表符分隔。&lt;br&gt;&lt;br&gt;  你可以设置 %1 使用 LEGO 元素或 Bricklink ID —— 即&lt;br&gt;  Bricklink 项目编号与颜色 ID 用 '-' 组合，例如 11145-87。&lt;br&gt;  - LDraw 键：用于指定存储和检索&lt;br&gt;    用户定义零件元素时使用的键格式。&lt;br&gt;    默认选项为 LDraw 零件类型+颜色。如果你更希望使用&lt;br&gt;    Bricklink 项目编号+颜色，请取消勾选此设置。&lt;br&gt;&lt;br&gt;  因此，显示零件元素标注&lt;br&gt;  有以下三个选项：&lt;br&gt;  - Bricklink：使用来自 Bricklink codes.txt 的 Bricklink 零件元素标识符。&lt;br&gt;&lt;br&gt;  - LEGO：使用来自 Bricklink codes.txt 的 LEGO 零件元素标识符。&lt;br&gt;&lt;br&gt;  - 用户定义：使用来自&lt;br&gt;    userelements.lst 文件的零件元素标识符，可采用 LDraw 或 Bricklink 键格式。&lt;br&gt;&lt;br&gt;  与其他 %1 配置文件一样，你可以编辑&lt;br&gt;  这些文件的本地副本，以添加、更新或移除零件元素。&lt;br&gt;  如果本地文件不存在，当你选择相应的&lt;br&gt;  “配置 - 编辑参数文件”菜单项时会创建它。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8261" />
         <source>  Turn on or off the build modifications feature.&lt;br&gt;&lt;br&gt;  Build modifications allow you to modify your build&lt;br&gt;  instructions steps to show additional 'instruction aids'&lt;br&gt;  or to automate the positioning and camera angle of&lt;br&gt;  existing parts within a step. This feature is a substitute&lt;br&gt;  for the legacy MLCad BUFEXCHG framework.&lt;br&gt;&lt;br&gt;  You can add a modification command in any step with parts&lt;br&gt;  and remove (or re-apply) the modification in any other&lt;br&gt;  subsequent step - regardless of the subsequent step's&lt;br&gt;  submodel or if the step is in a called out submodel.&lt;br&gt;&lt;br&gt;  Build modification commands can include any number or&lt;br&gt;  configuration of existing or additional parts desired&lt;br&gt;  to demonstrate the editor's build instruction intent.&lt;br&gt;&lt;br&gt;  Check the box to enable this feature or uncheck to disable.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  开启或关闭构建修改功能。&lt;br&gt;&lt;br&gt;  构建修改允许你修改搭建&lt;br&gt;  说明书步骤，以显示额外的“说明辅助”，&lt;br&gt;  或自动调整步骤内现有零件的&lt;br&gt;  位置和相机角度。此功能可替代&lt;br&gt;  旧的 MLCad BUFEXCHG 框架。&lt;br&gt;&lt;br&gt;  你可以在任何含零件的步骤中添加修改命令，&lt;br&gt;  并在任何后续步骤中移除（或重新应用）&lt;br&gt;  该修改 - 无论后续步骤属于哪个&lt;br&gt;  Sub-model，也无论该步骤是否位于被调用的 Sub-model 中。&lt;br&gt;&lt;br&gt;  构建修改命令可以包含所需的任意数量或&lt;br&gt;  配置方式的现有零件或附加零件，&lt;br&gt;  以表达编辑者的说明书意图。&lt;br&gt;&lt;br&gt;  勾选此框以启用此功能，取消勾选则禁用。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8286" />
         <source>  Turn on or off continuous step numbers feature.&lt;br&gt;&lt;br&gt;  Continuous step numbers allow you to continuously&lt;br&gt;  number your instruction steps across submodels and&lt;br&gt;  unassembled callouts.&lt;br&gt;&lt;br&gt;  When not enabled, %1 will restart step numbers for&lt;br&gt;  submodels and unassembled callouts.&lt;br&gt; Numbering in&lt;br&gt;  the parent submodel is conontinued after the callout&lt;br&gt;  or submodel steps are completed.&lt;br&gt;&lt;br&gt;  Check the box to enable this feature or uncheck to&lt;br&gt;  disable.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  开启或关闭连续步骤编号功能。&lt;br&gt;&lt;br&gt;  连续步骤编号允许你跨 Sub-model 和&lt;br&gt;  未装配 Callout 连续&lt;br&gt;  编号说明书步骤。&lt;br&gt;&lt;br&gt;  未启用时，%1 会为&lt;br&gt;  Sub-model 和未装配 Callout 重新开始步骤编号。&lt;br&gt; 父 Sub-model 中的&lt;br&gt;  编号会在 Callout 或 Sub-model 步骤完成后&lt;br&gt;  继续。&lt;br&gt;&lt;br&gt;  勾选此框以启用此功能，取消勾选则&lt;br&gt;  禁用。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8307" />
         <source>  Turn on or off the consolidate submodel instance&lt;br&gt;  count feature.&lt;br&gt;&lt;br&gt;  Consolidate submodel instance count will calculate&lt;br&gt;  the number of instances at the first occurrence of&lt;br&gt;  the submodel.&lt;br&gt;&lt;br&gt;  Check the box to enable this feature or uncheck to&lt;br&gt;  disable.&lt;br&gt;&lt;br&gt;  Select where to consolidate the submodel instance&lt;br&gt;  count from the radio-button options.&lt;br&gt;&lt;br&gt;  You can consolidate the submodel instance count with&lt;br&gt;  the following options:&lt;br&gt;  - At Top: display count at last step page of first&lt;br&gt;    occurrence in the entire model file. This is the&lt;br&gt;    LPub instance count default behaviour. However the&lt;br&gt;    default %1 count behaviour is At Model.&lt;br&gt;&lt;br&gt;  - At Model: display count at last step page of first&lt;br&gt;    occurrence in the parent model. This is the default&lt;br&gt;    behaviour.&lt;br&gt;&lt;br&gt;  - At Step: display count at step page of first&lt;br&gt;    occurrence in the respective step.&lt;br&gt;&lt;br&gt;  - Count By Colour Code: Count unique instances for&lt;br&gt;    submodels that have the same name but unique colour&lt;br&gt;    code. This option is enabled (checked) by default.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  开启或关闭合并 Sub-model 实例&lt;br&gt;  数功能。&lt;br&gt;&lt;br&gt;  合并 Sub-model 实例数会在&lt;br&gt;  Sub-model 首次出现时&lt;br&gt;  计算实例数量。&lt;br&gt;&lt;br&gt;  勾选此框以启用此功能，取消勾选则&lt;br&gt;  禁用。&lt;br&gt;&lt;br&gt;  通过单选按钮选项选择在何处&lt;br&gt;  合并 Sub-model 实例数。&lt;br&gt;&lt;br&gt;  你可以使用以下选项合并 Sub-model&lt;br&gt;  实例数：&lt;br&gt;  - 顶部：在整个模型文件中首次出现的&lt;br&gt;    最后一步页面显示计数。这是&lt;br&gt;    LPub 实例数默认行为。但&lt;br&gt;    默认的 %1 计数行为为“按模型”。&lt;br&gt;&lt;br&gt;  - 按模型：在父模型中首次出现的&lt;br&gt;    最后一步页面显示计数。这是默认&lt;br&gt;    行为。&lt;br&gt;&lt;br&gt;  - 按步骤：在相应步骤中首次出现的&lt;br&gt;    步骤页面显示计数。&lt;br&gt;&lt;br&gt;  - 按颜色代码计数：对名称相同但颜色&lt;br&gt;    代码不同的 Sub-model 统计唯一实例数。&lt;br&gt;    此选项默认启用（勾选）。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8342" />
         <source>  Turn on or off the view top model in the visual viewer&lt;br&gt;  when the current page is a cover page feature.&lt;br&gt;&lt;br&gt;  You can set %1 to display the complete instruction&lt;br&gt;  document model in the visual editor when the main&lt;br&gt;  window is currently displaying a front or back cover&lt;br&gt;&lt;br&gt;  page.&lt;br&gt;&lt;br&gt;  Check the box to enable this feature or uncheck to&lt;br&gt;  disable.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  开启或关闭“当前页为封面页时在&lt;br&gt;  可视化查看器中查看顶部模型”功能。&lt;br&gt;&lt;br&gt;  你可以设置 %1，在主窗口&lt;br&gt;  当前显示前封面或后封面&lt;br&gt;&lt;br&gt;  页时，于可视化编辑器中显示完整的&lt;br&gt;  说明书文档模型。&lt;br&gt;&lt;br&gt;  勾选此框以启用此功能，取消勾选则&lt;br&gt;  禁用。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8361" />
         <source>  Turn on or off loading unofficial parts in the command&lt;br&gt;  editor.&lt;br&gt;&lt;br&gt;  You can choose to load and edit unofficial parts in the&lt;br&gt;  command editor - effectively treating the part like a&lt;br&gt;  submodel.&lt;br&gt;&lt;br&gt;  This feature is useful when you have inline unofficial&lt;br&gt;  parts in you model file and would like to view and or&lt;br&gt;  edit the part's content.&lt;br&gt;&lt;br&gt;  Check the box to enable this feature or uncheck to&lt;br&gt;  disable.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  开启或关闭在命令编辑器中&lt;br&gt;  加载非官方零件。&lt;br&gt;&lt;br&gt;  你可以选择在命令编辑器中加载并编辑&lt;br&gt;  非官方零件 - 实际上就是将该零件&lt;br&gt;  当作 Sub-model 处理。&lt;br&gt;&lt;br&gt;  当你的模型文件中包含内联非官方&lt;br&gt;  零件，且希望查看和/或&lt;br&gt;  编辑该零件内容时，此功能很有用。&lt;br&gt;&lt;br&gt;  勾选此框以启用此功能，取消勾选则&lt;br&gt;  禁用。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8382" />
         <source>  Select the default preferred step image renderer.&lt;br&gt;  You can use the drop-down control to select from&lt;br&gt;  the following %1 packaged renderer options:&lt;br&gt;  - Native: %1 'native' renderer and 3D Viewer,&lt;br&gt;    offering performant, 'true fade' image rendering.&lt;br&gt;&lt;br&gt;  - LDGLite: fast image rendering ideal for proofing.&lt;br&gt;&lt;br&gt;  - LDView: high quality image rendering plus POV&lt;br&gt;    scene file generation.&lt;br&gt;&lt;br&gt;  - POV-Ray: ray tracing, photo-realistic, feature rich&lt;br&gt;    image rendering.&lt;br&gt;&lt;br&gt;  Selecting the LDView renderer enables the following&lt;br&gt;  additional performance-oriented options:&lt;br&gt;  - Use LDView Single Call: submit all the ldraw files&lt;br&gt;    (parts, assembly, submodel preview) for the current&lt;br&gt;    page in a single LDView render request instead of&lt;br&gt;    individually at each step.&lt;br&gt;&lt;br&gt;  - Use LDView Snapshot List: this option extends and&lt;br&gt;    requires LDView Single Call whereby a list files&lt;br&gt;    for ldraw part or assembly files are created and&lt;br&gt;    submitted to LDView.&lt;br&gt;&lt;br&gt;    As only one submodel preview per page is generated,&lt;br&gt;    these options are ignored for submodel preview images.&lt;br&gt;    Additionally, when there is less than 2 image files&lt;br&gt;    for a page's parts list or step group, these options&lt;br&gt;    are ignored.&lt;br&gt;&lt;br&gt;  The POV-Ray renderer requires a POV input file which is&lt;br&gt;  generated by the following selected option:&lt;br&gt;  - Native: an %1 imbeded module which is built&lt;br&gt;    from LDView source and performs POV file generation&lt;br&gt;    among some other features.&lt;br&gt;&lt;br&gt;  - LDView: POV file generation is submitted to the %1&lt;br&gt;    packaged instance of LDView just as normal image files.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  选择默认的首选步骤图像渲染器。&lt;br&gt;  你可以使用下拉控件，从以下 %1&lt;br&gt;  打包的渲染器选项中选择：&lt;br&gt;  - Native：%1 的“原生”渲染器和 3D 查看器，&lt;br&gt;    提供高性能的“真淡出”图像渲染。&lt;br&gt;&lt;br&gt;  - LDGLite：快速图像渲染，非常适合校对。&lt;br&gt;&lt;br&gt;  - LDView：高质量图像渲染及 POV&lt;br&gt;    场景文件生成。&lt;br&gt;&lt;br&gt;  - POV-Ray：光线跟踪、照片级真实、功能丰富&lt;br&gt;    的图像渲染。&lt;br&gt;&lt;br&gt;  选择 LDView 渲染器会启用以下&lt;br&gt;  额外的性能导向选项：&lt;br&gt;  - 使用 LDView 单次调用：将当前页面的所有 LDraw 文件&lt;br&gt;    （零件、装配、Sub-model 预览）&lt;br&gt;    放在单个 LDView 渲染请求中提交，&lt;br&gt;    而不是在每个步骤单独提交。&lt;br&gt;&lt;br&gt;  - 使用 LDView 快照列表：此选项扩展并&lt;br&gt;    要求启用 LDView 单次调用，即创建&lt;br&gt;    LDraw 零件或装配文件的列表文件&lt;br&gt;    并提交给 LDView。&lt;br&gt;&lt;br&gt;    由于每页只生成一个 Sub-model 预览，&lt;br&gt;    这些选项对 Sub-model 预览图像无效。&lt;br&gt;    此外，当某页的零件清单或步骤组少于&lt;br&gt;    2 个图像文件时，这些选项&lt;br&gt;    也会被忽略。&lt;br&gt;&lt;br&gt;  POV-Ray 渲染器需要 POV 输入文件，&lt;br&gt;  该文件由以下选定选项生成：&lt;br&gt;  - Native：一个 %1 内置模块，由&lt;br&gt;    LDView 源码构建，除其他功能外&lt;br&gt;    还执行 POV 文件生成。&lt;br&gt;&lt;br&gt;  - LDView：POV 文件生成会像普通图像文件一样&lt;br&gt;    提交给 %1 打包的 LDView 实例。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8426" />
         <source>  Set the default instruction document dot resolution.&lt;br&gt;&lt;br&gt;  You can configure the document dot resolution with the&lt;br&gt;  following unit options:&lt;br&gt;  - Dots Per Inch: set the Units drop-down to this&lt;br&gt;    value if you would like to use inches.&lt;br&gt;&lt;br&gt;  - Dots Per Centimetre: set the Units drop-down to this&lt;br&gt;    value if you would like to use centimetres.&lt;br&gt;&lt;br&gt;  Use the dot resulution unit value dialog to set the&lt;br&gt;  number of units. The default for Dots Per Inch is 150&lt;br&gt;  which automatically changes to 381 when the units&lt;br&gt;  drop-down is switched to Dots Per Centimetre.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  设置默认的说明书文档点分辨率。&lt;br&gt;&lt;br&gt;  你可以使用以下单位选项配置&lt;br&gt;  文档点分辨率：&lt;br&gt;  - 每英寸点数：如果你想使用英寸，&lt;br&gt;    请将“单位”下拉框设为此值。&lt;br&gt;&lt;br&gt;  - 每厘米点数：如果你想使用厘米，&lt;br&gt;    请将“单位”下拉框设为此值。&lt;br&gt;&lt;br&gt;  使用点分辨率单位值对话框设置&lt;br&gt;  单位数量。每英寸点数默认为 150，&lt;br&gt;  当单位下拉框切换为每厘米点数时，&lt;br&gt;  该值会自动变为 381。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8448" />
         <source>  Enable the display of part annotation:&lt;br&gt;  Select the Current Step Instance (CSI)&lt;br&gt;  annotation types to display in the instruction&lt;br&gt;  document.&lt;br&gt;&lt;br&gt;  Fixed source annotation types for CSI parts are:&lt;br&gt;  - Axles: annotation on circle background.&lt;br&gt;&lt;br&gt;  - Beams: annotation on square background.&lt;br&gt;&lt;br&gt;  - Cables: annotation on square background.&lt;br&gt;&lt;br&gt;  - Connections: annotation on square background.&lt;br&gt;&lt;br&gt;  - Hoses: annotation on square background.&lt;br&gt;&lt;br&gt;  - Panels: annotation on circle background.&lt;br&gt;&lt;br&gt;  User configurable annotation types for CSI parts are:&lt;br&gt;  - Extended: title and/or free form part annotations&lt;br&gt;    on rectangular background.&lt;br&gt;    Enable this when fixed annotation is unchecked or&lt;br&gt;    a part category is not a fixed type - e.g. Bricks.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  启用零件标注显示：&lt;br&gt;  选择要在说明书&lt;br&gt;  文档中显示的当前步骤实例（CSI）&lt;br&gt;  标注类型。&lt;br&gt;&lt;br&gt;  CSI 零件的固定来源标注类型为：&lt;br&gt;  - 轴：圆形背景上的标注。&lt;br&gt;&lt;br&gt;  - 梁：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 线缆：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 连接器：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 软管：方形背景上的标注。&lt;br&gt;&lt;br&gt;  - 面板：圆形背景上的标注。&lt;br&gt;&lt;br&gt;  CSI 零件的用户可配置标注类型为：&lt;br&gt;  - 扩展：矩形背景上的标题和/或&lt;br&gt;    自由形式零件标注。&lt;br&gt;    当未勾选固定标注，或某个&lt;br&gt;    零件类别不是固定类型时（例如砖块）启用此项。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8475" />
         <source>  Turn on or off fade previous steps or step parts globally.&lt;br&gt;&lt;br&gt;  You can fade step parts locally using the !FADE command.&lt;br&gt;  You can configure fade previous steps or step parts with&lt;br&gt;  the following options:&lt;br&gt;  - Use LPub Fade Steps: this option will generate faded&lt;br&gt;    submodels and modify part lines color value before&lt;br&gt;    submitting them to the renderer. When not using the&lt;br&gt;    Native renderer, this option is obligatory.&lt;br&gt;    When unchecked, %1 will use the Native renderer fade&lt;br&gt;    behaviour. Parts and submodels are not manipulated, so&lt;br&gt;    when unchecked, step navigation is more performant.&lt;br&gt;&lt;br&gt;  - Setup LPub Fade Steps: Turn on or off the capability&lt;br&gt;    to define fade previous steps or step parts locally&lt;br&gt;    (versus globally). This is to say, you can apply fade&lt;br&gt;    previous steps from the step where the LPUB meta command&lt;br&gt;    is placed to enable this feature to the step where it&lt;br&gt;    is placed to disable it.&lt;br&gt;    For display model steps, this command is automatically&lt;br&gt;    disabled at the end of the step.&lt;br&gt;    This option requires Use LPub Fade Steps and is&lt;br&gt;    disabled if Enable Fade Steps is checked.&lt;br&gt;&lt;br&gt;  - Use Fade Color: all faded parts are assigned the color&lt;br&gt;    specified for fade color as described above.&lt;br&gt;    When not checked, faded parts will display their&lt;br&gt;    assigned part color faded to the specified opacity.&lt;br&gt;&lt;br&gt;  - Fade Color: set the fade color using the LDraw&lt;br&gt;    colors drop-down control.&lt;br&gt;    Fade color selection defaults to standard LDraw colors.&lt;br&gt;    However, you can manually enter any color using the&lt;br&gt;    (#|0x)([AA]RRGGBB) hex [A]RGB value syntax.&lt;br&gt;    Meta commands using LDraw colors will display the LDraw&lt;br&gt;    color safe name (spaces replaced with '_') versus a&lt;br&gt;    hex [A]RGB value as there are multiple LDraw colours&lt;br&gt;    that use the same hex [A]RGB value.&lt;br&gt;&lt;br&gt;  - Fade Percent: sets the fade color transparency&lt;br&gt;    between 0 and 100 percent where 0 is fully&lt;br&gt;    transparent and 100 is fully opaque.&lt;br&gt;    This value is translated to the fade color&lt;br&gt;    opacity and alpha channel - for example, 60% fade&lt;br&gt;    is 40% opacity, 102/255 alpha channel and 66 hex.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  全局开启或关闭淡出先前步骤或步骤零件。&lt;br&gt;&lt;br&gt;  你可以使用 !FADE 命令局部淡出步骤零件。&lt;br&gt;  你可以使用以下选项配置淡出先前步骤&lt;br&gt;  或步骤零件：&lt;br&gt;  - 使用 LPub 淡出步骤：此选项会在提交给渲染器之前&lt;br&gt;    生成淡出的 Sub-model，并修改零件行的&lt;br&gt;    颜色值。不使用 Native 渲染器时，&lt;br&gt;    此选项为必选项。&lt;br&gt;    取消勾选时，%1 会使用 Native 渲染器的淡出&lt;br&gt;    行为。不会对零件和 Sub-model 进行调整，因此&lt;br&gt;    取消勾选时步骤导航性能更好。&lt;br&gt;&lt;br&gt;  - 设置 LPub 淡出步骤：开启或关闭局部&lt;br&gt;    （相对于全局）定义淡出先前步骤或步骤零件的&lt;br&gt;    能力。也就是说，你可以从放置 LPUB 元命令&lt;br&gt;    以启用该功能的步骤开始应用淡出先前步骤，&lt;br&gt;    直到放置该命令以禁用它&lt;br&gt;    的步骤为止。&lt;br&gt;    对于显示模型步骤，该命令会在步骤结束时&lt;br&gt;    自动禁用。&lt;br&gt;    此选项需要使用 LPub 淡出步骤，且当勾选了&lt;br&gt;    启用淡出步骤时会被禁用。&lt;br&gt;&lt;br&gt;  - 使用淡出颜色：所有淡出零件都会使用上述&lt;br&gt;    指定的淡出颜色。&lt;br&gt;    未勾选时，淡出零件将按其指定零件颜色&lt;br&gt;    淡出到指定不透明度显示。&lt;br&gt;&lt;br&gt;  - 淡出颜色：使用 LDraw 颜色下拉控件&lt;br&gt;    设置淡出颜色。&lt;br&gt;    淡出颜色选择默认为标准 LDraw 颜色。&lt;br&gt;    不过，你也可以使用&lt;br&gt;    (#|0x)([AA]RRGGBB) 十六进制 [A]RGB 值语法手动输入任意颜色。&lt;br&gt;    使用 LDraw 颜色的元命令将显示 LDraw&lt;br&gt;    颜色安全名称（空格替换为 '_'），而非&lt;br&gt;    十六进制 [A]RGB 值，因为存在多个 LDraw 颜色&lt;br&gt;    使用相同的十六进制 [A]RGB 值。&lt;br&gt;&lt;br&gt;  - 淡出百分比：设置淡出颜色透明度，&lt;br&gt;    范围为 0 到 100 百分比，其中 0 为完全&lt;br&gt;    透明，100 为完全不透明。&lt;br&gt;    该值会换算为淡出颜色的&lt;br&gt;    不透明度和 alpha 通道 - 例如，60% 淡出&lt;br&gt;    即 40% 不透明度、102/255 alpha 通道、66 十六进制。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8527" />
         <source>  Turn on or off highlight current step or step parts&lt;br&gt;  globally.&lt;br&gt;&lt;br&gt;  You can highlight step parts locally using the&lt;br&gt;  !SILHOUETTE command.&lt;br&gt;  You can configure highlight current step or step parts&lt;br&gt;  with the following options:&lt;br&gt;  - Use LPub Highlight Step: this option will generate&lt;br&gt;    highlighted submodels and modify part lines color&lt;br&gt;    value before submitting them to the renderer. When&lt;br&gt;    not using the Native renderer, this option is&lt;br&gt;    obligatory. When unchecked, %1 will use the Native&lt;br&gt;    renderer highlight behaviour. Parts and submodels&lt;br&gt;    are not manipulated, so when unchecked, step&lt;br&gt;    navigation is more performant.&lt;br&gt;&lt;br&gt;  - Setup LPub Highlight Step: Turn on or off the&lt;br&gt;    capability to define highlight current step or step&lt;br&gt;    parts locally (versus globally). This is to say, you&lt;br&gt;    can apply highlight step from the step where the LPub&lt;br&gt;    meta command is placed to enable this feature to the&lt;br&gt;    step where it is placed to disable it.&lt;br&gt;    For display model steps, this command is automatically&lt;br&gt;    disabled at the end of the step.&lt;br&gt;    This option requires Use LPub Highlight Step and is&lt;br&gt;    disabled if Enable Highlight Step is checked.&lt;br&gt;&lt;br&gt;  - Highlight Color: set the highlight color using&lt;br&gt;    the color picker.&lt;br&gt;    Any color can be selected for the highlight color.&lt;br&gt;&lt;br&gt;  - Line Width (LDGLite renderer only): set the&lt;br&gt;    highlight line width.&lt;br&gt;    The mininimum allowed spin box value is 0&lt;br&gt;    and the maximum is 10.&lt;br&gt;    Spin box values are incremented by 1 step&lt;br&gt;    unit.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  全局开启或关闭高亮当前步骤或步骤&lt;br&gt;  零件的功能。&lt;br&gt;&lt;br&gt;  你可以使用&lt;br&gt;  !SILHOUETTE 命令局部高亮步骤零件。&lt;br&gt;  你可以使用以下选项配置高亮当前步骤&lt;br&gt;  或步骤零件：&lt;br&gt;  - 使用 LPub 高亮步骤：此选项会在提交给渲染器&lt;br&gt;    之前生成高亮的 Sub-model，并修改零件行的&lt;br&gt;    颜色值。不使用 Native 渲染器时，&lt;br&gt;    此选项为必选项。取消勾选时，%1 会使用&lt;br&gt;    Native 渲染器的高亮行为。不会对零件和&lt;br&gt;    Sub-model 进行调整，因此取消勾选时&lt;br&gt;    步骤导航性能&lt;br&gt;    更好。&lt;br&gt;&lt;br&gt;  - 设置 LPub 高亮步骤：开启或关闭局部&lt;br&gt;    （相对于全局）定义高亮当前步骤或步骤零件的&lt;br&gt;    能力。也就是说，你可以从放置 LPub 元命令&lt;br&gt;    以启用该功能的步骤开始应用高亮步骤，&lt;br&gt;    直到放置该命令以禁用它的&lt;br&gt;    步骤为止。&lt;br&gt;    对于显示模型步骤，该命令会在步骤结束时&lt;br&gt;    自动禁用。&lt;br&gt;    此选项需要使用 LPub 高亮步骤，且当勾选了&lt;br&gt;    启用高亮步骤时会被禁用。&lt;br&gt;&lt;br&gt;  - 高亮颜色：使用颜色选择器&lt;br&gt;    设置高亮颜色。&lt;br&gt;    高亮颜色可以选择任意颜色。&lt;br&gt;&lt;br&gt;  - 线宽（仅 LDGLite 渲染器）：设置&lt;br&gt;    高亮线宽。&lt;br&gt;    微调框允许的最小值为 0&lt;br&gt;    最大值为 10。&lt;br&gt;    微调框值以 1 个步进单位&lt;br&gt;    递增。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8572" />
         <source>  Turn on or off auto generating a final step displaying&lt;br&gt;  the final model without highlight or fade content.&lt;br&gt;&lt;br&gt;  The 6 auto-generated command lines that define this step&lt;br&gt;  are not persisted to your saved ldraw model file.&lt;br&gt;&lt;br&gt;  If you manually save the command 0 !LPUB INSERT MODEL&lt;br&gt;  to your model file, when you subsequently open the file,&lt;br&gt;  if neither fade previous steps nor highlight current step&lt;br&gt;  is enabled, %1 will remove this command, and any&lt;br&gt;  adjacent content containing the auto-generted commands&lt;br&gt;  from the loaded working document.&lt;br&gt;&lt;br&gt;  Saving your content will consequently remove the final&lt;br&gt;  model lines from your ldraw model file.&lt;br&gt;&lt;br&gt;  If you prefer to persist the final model step - i.e override&lt;br&gt;  this behaviour - you can remove the auto-generated&lt;br&gt;  comment lines and replace 0 !LPUB INSERT MODEL with:&lt;br&gt;&lt;br&gt;  0 !LPUB INSERT DISPLAY_MODEL&lt;br&gt;&lt;br&gt;  Check the box to enable this feature or uncheck to disable.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  开启或关闭自动生成最终步骤，用于显示&lt;br&gt;  没有高亮或淡出内容的最终模型。&lt;br&gt;&lt;br&gt;  定义此步骤的 6 行自动生成命令&lt;br&gt;  不会保存到你保存的 LDraw 模型文件中。&lt;br&gt;&lt;br&gt;  如果你手动将命令 0 !LPUB INSERT MODEL 保存到&lt;br&gt;  模型文件，则在你随后打开该文件时，&lt;br&gt;  如果既未启用淡出先前步骤，也未启用高亮当前步骤，&lt;br&gt;  %1 会从已加载的工作文档中移除该命令&lt;br&gt;  以及任何包含自动生成命令的&lt;br&gt;  相邻内容。&lt;br&gt;&lt;br&gt;  因此，保存内容会从你的 LDraw 模型文件中&lt;br&gt;  移除最终模型行。&lt;br&gt;&lt;br&gt;  如果你希望保留最终模型步骤 - 即覆盖&lt;br&gt;  此行为 - 可以移除自动生成的&lt;br&gt;  注释行，并将 0 !LPUB INSERT MODEL 替换为：&lt;br&gt;&lt;br&gt;  0 !LPUB INSERT DISPLAY_MODEL&lt;br&gt;&lt;br&gt;  勾选此框以启用此功能，取消勾选则禁用。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8601" />
         <source>  Configure the separator.&lt;br&gt;  - Width: set the separator width as a floating&lt;br&gt;    point number (decimal).&lt;br&gt;&lt;br&gt;  - Length: set the separator length value as required&lt;br&gt;    by the following length options:&lt;br&gt;    - Default: length is automatically calculated -&lt;br&gt;      length value entry is disabled.&lt;br&gt;&lt;br&gt;    - Page: length is fixed to the page height minus&lt;br&gt;      the page margins, header and footer - length&lt;br&gt;      value entry is disabled.&lt;br&gt;&lt;br&gt;    - Custom: specify your desired spearator length&lt;br&gt;      using a floating point (decimal) number.&lt;br&gt;&lt;br&gt;  - Color: select the separator line color using&lt;br&gt;    the Change button to launch the color picker.&lt;br&gt;&lt;br&gt;  - Margins: set the border margins width&lt;br&gt;    and height.&lt;br&gt;    Enter width, length and margin values using&lt;br&gt;    a decimal number in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.&lt;br&gt;    Precision is four decimal places.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置分隔条。&lt;br&gt;  - 宽度：以浮点&lt;br&gt;    数（十进制）设置分隔条宽度。&lt;br&gt;&lt;br&gt;  - 长度：按以下长度选项的要求&lt;br&gt;    设置分隔条长度值：&lt;br&gt;    - 默认：长度自动计算 -&lt;br&gt;      长度值输入被禁用。&lt;br&gt;&lt;br&gt;    - 页面：长度固定为页面高度减去&lt;br&gt;      页面边距、页眉和页脚 - 长度&lt;br&gt;      值输入被禁用。&lt;br&gt;&lt;br&gt;    - 自定义：使用浮点（十进制）数&lt;br&gt;      指定所需的分隔条长度。&lt;br&gt;&lt;br&gt;  - 颜色：通过“更改”按钮启动颜色&lt;br&gt;    选择器来选择分隔条线条颜色。&lt;br&gt;&lt;br&gt;  - 边距：设置边框边距的宽度&lt;br&gt;    和高度。&lt;br&gt;    在 %1 中使用十进制数输入&lt;br&gt;    宽度、长度和边距值。&lt;br&gt;    点单位在“项目全局设置”中定义。&lt;br&gt;    精度为四位小数。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8633" />
         <source>  Configure the step justification.&lt;br&gt;  - Set Step Justification: - set the step justification&lt;br&gt;    using the drop-down control to select from the&lt;br&gt;    following options:&lt;br&gt;    - Center: center the step horizontally and vertically.&lt;br&gt;    - Center Horizontal: center the step horizontally.&lt;br&gt;    - Center Vertical: center the step vertically.&lt;br&gt;    - Left: position the step at the left border.&lt;br&gt;      This is the default positioning.&lt;br&gt;&lt;br&gt;  - Spacing: set the spacing, using a floating point&lt;br&gt;    number (decimal), between items when the step&lt;br&gt;    is center justified.&lt;br&gt;    Enter spacing value using a decimal number&lt;br&gt;    in %1.&lt;br&gt;    Dot units are defined in Project Global Setup.&lt;br&gt;    Precision is four decimal places.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置步骤对齐方式。&lt;br&gt;  - 设置步骤对齐方式：- 使用下拉控件&lt;br&gt;    设置步骤对齐方式，可从以下&lt;br&gt;    选项中选择：&lt;br&gt;    - 居中：将步骤水平和垂直居中。&lt;br&gt;    - 水平居中：将步骤水平居中。&lt;br&gt;    - 垂直居中：将步骤垂直居中。&lt;br&gt;    - 左对齐：将步骤置于左边框。&lt;br&gt;      这是默认定位方式。&lt;br&gt;&lt;br&gt;  - 间距：设置步骤为居中对齐时&lt;br&gt;    各项之间的间距，使用浮点&lt;br&gt;    数（十进制）。&lt;br&gt;    在 %1 中使用十进制数&lt;br&gt;    输入间距值。&lt;br&gt;    点单位在“项目全局设置”中定义。&lt;br&gt;    精度为四位小数。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8661" />
         <source>  Configure the default step rotation.&lt;br&gt;  - Rotation: set the x-angle, y-angle and z-angle,&lt;br&gt;    which are the individual rotation angles for the&lt;br&gt;    different axes in degree (-360 to 360), using&lt;br&gt;    decimals.&lt;br&gt;    Spin box values are incremented by 1 step unit.&lt;br&gt;    Precision is automatically calculated based on the.&lt;br&gt;    input values.&lt;br&gt;&lt;br&gt;  - Transform: there are three transform options.&lt;br&gt;    - REL: relative rotation steps are based on the&lt;br&gt;      actual angles of the individual viewing areas.&lt;br&gt;      The model will rotated by the specified rotation&lt;br&gt;      angles relative to the current view angle.&lt;br&gt;&lt;br&gt;    - ABS: absolute rotation steps is similar to relative&lt;br&gt;      rotation steps, but it ignores the current view&lt;br&gt;      angles so that after executing this command the&lt;br&gt;      model will be rotated from a starting angle of 0.&lt;br&gt;&lt;br&gt;    - ADD: additive rotation step turns the model by&lt;br&gt;      the specified angles, taking the current view&lt;br&gt;      angle into account.&lt;br&gt;The command can be used to&lt;br&gt;      continuously rotate the model by a specific angle.&lt;br&gt;      For example if this command is executed four times&lt;br&gt;      on a front view, and the model is rotated&lt;br&gt;      90° clockwise on the y-axle then you will see the&lt;br&gt;      model from each of the four sides.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置默认步骤旋转。&lt;br&gt;  - 旋转：使用小数设置 x 角度、y 角度和 z 角度，&lt;br&gt;    它们是不同坐标轴各自的&lt;br&gt;    旋转角度，单位为度（-360 到 360）。&lt;br&gt;    微调框值以 1 个步进单位递增。&lt;br&gt;    精度会自动&lt;br&gt;    根据输入值&lt;br&gt;    计算。&lt;br&gt;&lt;br&gt;  - 变换：共有三个变换选项。&lt;br&gt;    - REL：相对旋转步骤基于&lt;br&gt;      各个视图区域的实际角度。&lt;br&gt;      模型将按指定旋转角度&lt;br&gt;      相对于当前视图角度旋转。&lt;br&gt;&lt;br&gt;    - ABS：绝对旋转步骤与相对&lt;br&gt;      旋转步骤类似，但它忽略当前视图&lt;br&gt;      角度，因此执行此命令后&lt;br&gt;      模型将从 0 起始角度开始旋转。&lt;br&gt;&lt;br&gt;    - ADD：累加旋转步骤会考虑当前视图&lt;br&gt;      角度，按指定角度&lt;br&gt;      旋转模型。&lt;br&gt;该命令可用于&lt;br&gt;      以特定角度连续旋转模型。&lt;br&gt;      例如，如果在前视图上执行此命令四次，&lt;br&gt;      且模型绕 y 轴顺时针&lt;br&gt;      旋转 90°，那么你将看到模型的&lt;br&gt;      四个侧面。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8697" />
         <source>  Configure the default submodel preview display&lt;br&gt;  settings.&lt;br&gt;  - Show submodel at first step: turn on or off&lt;br&gt;    displaying a complete submodel image at the&lt;br&gt;    first step of the submodel.&lt;br&gt;&lt;br&gt;  For each preview display option, you can select&lt;br&gt;  one or both of the following persist settings:&lt;br&gt;  - Set In Preferences: set the preview display option&lt;br&gt;    in Preferences so that this option will apply&lt;br&gt;    globally for all instruction documents.&lt;br&gt;&lt;br&gt;  - Add LPub Meta Command: add the corresponding&lt;br&gt;    LPUB meta command to instruction document.&lt;br&gt;&lt;br&gt;  Checking the show submodel at first step option&lt;br&gt;  will enable the following submodel preview options.&lt;br&gt;  - Show main model at first step: show the top model&lt;br&gt;    the first step. This option is not typically&lt;br&gt;    selected as the displayed model will be the same&lt;br&gt;    as that on the instruction cover page.&lt;br&gt;&lt;br&gt;  - Show submodel in callout: show the called out&lt;br&gt;    submodel in the first step of the callout. This&lt;br&gt;    option is only enabled for unassembled callouts.&lt;br&gt;&lt;br&gt;  - Show submodel instance count: add the instance&lt;br&gt;    count to the submodel preview display.&lt;br&gt;&lt;br&gt;  The submodel preview default placement can be set&lt;br&gt;  using the following setting:&lt;br&gt;  - Submodel Placement: change the default submodel&lt;br&gt;    placement using the placement dialog.%1&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置默认 Sub-model 预览显示&lt;br&gt;  设置。&lt;br&gt;  - 在第一步显示 Sub-model：开启或关闭&lt;br&gt;    在 Sub-model 的第一步显示&lt;br&gt;    完整的 Sub-model 图像。&lt;br&gt;&lt;br&gt;  对于每个预览显示选项，你可以选择&lt;br&gt;  以下一种或两种持久化设置：&lt;br&gt;  - 在偏好设置中设置：在偏好设置中设置&lt;br&gt;    预览显示选项，使该选项&lt;br&gt;    全局应用于所有说明书文档。&lt;br&gt;&lt;br&gt;  - 添加 LPub 元命令：将相应的&lt;br&gt;    LPUB 元命令添加到说明书文档。&lt;br&gt;&lt;br&gt;  勾选“在第一步显示 Sub-model”选项&lt;br&gt;  会启用以下 Sub-model 预览选项。&lt;br&gt;  - 在第一步显示主模型：在第一步&lt;br&gt;    显示顶部模型。通常不选择&lt;br&gt;    此选项，因为所显示的模型会与&lt;br&gt;    说明书封面页上的相同。&lt;br&gt;&lt;br&gt;  - 在 Callout 中显示 Sub-model：在 Callout 的&lt;br&gt;    第一步显示被调用的 Sub-model。此&lt;br&gt;    选项仅对未装配 Callout 启用。&lt;br&gt;&lt;br&gt;  - 显示 Sub-model 实例数：将实例&lt;br&gt;    数添加到 Sub-model 预览显示中。&lt;br&gt;&lt;br&gt;  可以使用以下设置配置 Sub-model 预览&lt;br&gt;  的默认位置：&lt;br&gt;  - Sub-model 放置：使用放置对话框&lt;br&gt;    更改默认 Sub-model 放置。%1&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8735" />
@@ -29779,18 +29779,18 @@ does not exist.
     <message>
         <location filename="../commonmenus.cpp" line="8751" />
         <source>  Configure your instruction document %1&lt;br&gt;  additional parameters and environment variables.&lt;br&gt;&lt;br&gt;  Both %1 parameters and environment variables&lt;br&gt;  must be space delimited and can be either single ' or&lt;br&gt;  double " qouted. So if you want to use a value that&lt;br&gt;  contains at least one space, this value must be quoted.&lt;br&gt;&lt;br&gt;  Environment variables must respect the system environment&lt;br&gt;  format which usually is key, value separated by an&lt;br&gt;  equal sign.%2%3&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置你的说明书文档 %1&lt;br&gt;  附加参数和环境变量。&lt;br&gt;&lt;br&gt;  %1 参数和环境变量&lt;br&gt;  都必须以空格分隔，且可以单引号 ' 或&lt;br&gt;  双引号 " 引注。因此，如果你要使用包含&lt;br&gt;  至少一个空格的值，该值必须加引号。&lt;br&gt;&lt;br&gt;  环境变量必须遵循系统环境&lt;br&gt;  格式，通常为键、值以等号&lt;br&gt;  分隔。%2%3&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8764" />
         <source>&lt;br&gt;&lt;br&gt;  The current configuration is using %1 as the POV file&lt;br&gt;  generator so dialogues for %1 additional parameters&lt;br&gt;  and environment variables are present.&lt;br&gt;  These configuration settings should only target the&lt;br&gt;  POV file generator parameters and environment dialogues.&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>&lt;br&gt;&lt;br&gt;  当前配置使用 %1 作为 POV 文件&lt;br&gt;  生成器，因此会显示 %1 附加参数&lt;br&gt;  和环境变量对话框。&lt;br&gt;  这些配置设置应只针对&lt;br&gt;  POV 文件生成器参数和环境对话框。&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="8782" />
         <location filename="../commonmenus.cpp" line="8803" />
         <source>  Configure your %1 photo-realistic image render&lt;br&gt;  additional parameters and environment variables.&lt;br&gt;&lt;br&gt;  Both %1 parameters and environment variables&lt;br&gt;  must be space delimited and can be either single ' or&lt;br&gt;  double " qouted. So if you want to use a value that&lt;br&gt;  contains at least one space, this value must be quoted.&lt;br&gt;&lt;br&gt;  Environment variables must respect the system environment&lt;br&gt;  format which usually is key, value separated by an&lt;br&gt;  equal sign.%2&lt;br&gt;</source>
-        <translation type="unfinished" />
+        <translation>  配置你的 %1 照片级真实图像渲染&lt;br&gt;  附加参数和环境变量。&lt;br&gt;&lt;br&gt;  %1 参数和环境变量&lt;br&gt;  都必须以空格分隔，且可以单引号 ' 或&lt;br&gt;  双引号 " 引注。因此，如果你要使用包含&lt;br&gt;  至少一个空格的值，该值必须加引号。&lt;br&gt;&lt;br&gt;  环境变量必须遵循系统环境&lt;br&gt;  格式，通常为键、值以等号&lt;br&gt;  分隔。%2&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../excludedparts.cpp" line="49" />
@@ -29861,7 +29861,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="1475" />
         <source>File '%1' is not a valid LDraw (LDR) or Multi-Part LDraw (MPD) System Document.</source>
-        <translation type="unfinished" />
+        <translation>文件 '%1' 不是有效的 LDraw (LDR) 或 Multi-Part LDraw (MPD) 系统文档。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="1495" />
@@ -29871,7 +29871,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="1519" />
         <source>Loaded LDraw %1 model file '%2'. Unique %3 %4. Model Total %5 %6. %7</source>
-        <translation type="unfinished" />
+        <translation>已加载 LDraw %1 模型文件 '%2'。唯一 %3 %4。模型总计 %5 %6。%7</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="1522" />
@@ -29915,7 +29915,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="1640" />
         <source>Invalid include file '%1' line %2.&lt;br&gt;Type 1 to 5 lines are ignored in include file.</source>
-        <translation type="unfinished" />
+        <translation>包含文件 '%1' 第 %2 行无效。&lt;br&gt;包含文件中的 Type 1 至 5 行会被忽略。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="1643" />
@@ -29925,7 +29925,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="1651" />
         <source>Invalid include file '%1' line %2.&lt;br&gt;Substitute meta commands are ignored in include file.</source>
-        <translation type="unfinished" />
+        <translation>包含文件 '%1' 第 %2 行无效。&lt;br&gt;包含文件中的替换元命令会被忽略。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="1654" />
@@ -30006,7 +30006,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="2017" />
         <source>MPD %1 '%2' header 'FILE %3' was added by %4 (file: %5, line: %6).</source>
-        <translation type="unfinished" />
+        <translation>MPD %1 '%2' 的头部 'FILE %3' 由 %4 添加（文件：%5，行：%6）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2075" />
@@ -30032,7 +30032,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="2093" />
         <source>%1|%2|MPD Include file '%2' was not found (subfile: %3, line: %4).</source>
-        <translation type="unfinished" />
+        <translation>%1|%2|未找到 MPD 包含文件 '%2'（子文件：%3，行：%4）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2106" />
@@ -30049,7 +30049,7 @@ does not exist.
         <location filename="../ldrawfiles.cpp" line="2164" />
         <location filename="../ldrawfiles.cpp" line="2293" />
         <source>MPD %1 '%2' is empty and was not loaded (file: %3, line: %4).</source>
-        <translation type="unfinished" />
+        <translation>MPD %1 '%2' 为空，未加载（文件：%3，行：%4）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2166" />
@@ -30064,7 +30064,7 @@ does not exist.
         <location filename="../ldrawfiles.cpp" line="2171" />
         <location filename="../ldrawfiles.cpp" line="2300" />
         <source>MPD %1 '%2' end STEP and was added by %3 (file: %4, line: %5).</source>
-        <translation type="unfinished" />
+        <translation>MPD %1 '%2' 结束 STEP 并由 %3 添加（文件：%4，行：%5）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2192" />
@@ -30081,12 +30081,12 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="2237" />
         <source>Malformed !DATA command. No file name specified (file: %1, line: %2).&lt;br&gt;Line: %3</source>
-        <translation type="unfinished" />
+        <translation>!DATA 命令格式错误。未指定文件名（文件：%1，行：%2）。&lt;br&gt;行：%3</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2239" />
         <source>%1|DATA%2|Malformed !DATA command. No file name specified (subfile: %3, line: %4).</source>
-        <translation type="unfinished" />
+        <translation>%1|DATA%2|!DATA 命令格式错误。未指定文件名（子文件：%3，行：%4）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2243" />
@@ -30158,7 +30158,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="2570" />
         <source>%1 file %2 identified as Multi-Part LDraw System (MPD) Document</source>
-        <translation type="unfinished" />
+        <translation>%1 文件 %2 被识别为 Multi-Part LDraw 系统（MPD）文档</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2585" />
@@ -30183,7 +30183,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="2751" />
         <source>%1|%2|LDR Include file '%2' was not found (subfile: %3, line: %4).</source>
-        <translation type="unfinished" />
+        <translation>%1|%2|未找到 LDR 包含文件 '%2'（子文件：%3，行：%4）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2771" />
@@ -30199,7 +30199,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="2879" />
         <source>LDR %1 '%2' is empty and was not loaded (file: %3, line: %4).</source>
-        <translation type="unfinished" />
+        <translation>LDR %1 '%2' 为空，未加载（文件：%3，行：%4）。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="2896" />
@@ -30340,7 +30340,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="3929" />
         <source>Recount LDraw parts for %1 model file '%2'. Unique %3 %4. Total %5 %6. %7</source>
-        <translation type="unfinished" />
+        <translation>重新统计 %1 模型文件 '%2' 的 LDraw 零件。唯一 %3 %4。总计 %5 %6。%7</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="4158" />
@@ -30380,7 +30380,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="5382" />
         <source>Could not find Step index for submodel %1 (%2) - lineNumber %3.</source>
-        <translation type="unfinished" />
+        <translation>找不到 Sub-model %1 (%2) 的步骤索引 - 行号 %3。</translation>
     </message>
     <message>
         <location filename="../ldrawfiles.cpp" line="5431" />
@@ -30395,7 +30395,7 @@ does not exist.
     <message>
         <location filename="../ldrawfiles.cpp" line="5443" />
         <source>Step at %1 (%2), line %3 is outside specified top %4 (%5), line %6 and bottom %7 (%8), line %9 range.</source>
-        <translation type="unfinished" />
+        <translation>位置 %1 (%2) 的步骤（行 %3）超出指定的顶部 %4 (%5)（行 %6）与底部 %7 (%8)（行 %9）范围。</translation>
     </message>
     <message>
         <location filename="../ldrawfilesload.cpp" line="381" />
@@ -30565,7 +30565,7 @@ does not exist.
     <message>
         <location filename="../ldrawfilesload.cpp" line="438" />
         <source>&lt;br&gt;&lt;br&gt;%1 %2 not found. The following locations were searched;&lt;br&gt;model file, LDraw search paths, %3 and %4 library archives.&lt;br&gt;If %5 custom %6, be sure %7 location is in the LDraw search directory list.&lt;br&gt;If %5 new unofficial %6, be sure the unofficial archive library is up to date.</source>
-        <translation type="unfinished" />
+        <translation>&lt;br&gt;&lt;br&gt;未找到 %1 %2。已搜索以下位置；&lt;br&gt;模型文件、LDraw 搜索路径、%3 和 %4 库归档。&lt;br&gt;如果 %5 自定义 %6，请确保 %7 位置在 LDraw 搜索目录列表中。&lt;br&gt;如果 %5 新的非官方 %6，请确保非官方归档库是最新的。</translation>
     </message>
     <message>
         <location filename="../ldrawfilesload.cpp" line="445" />
@@ -30575,7 +30575,7 @@ does not exist.
     <message>
         <location filename="../ldrawfilesload.cpp" line="446" />
         <source>&lt;br&gt;&lt;br&gt;Empty %1 found. These submodels were not added to the model repository</source>
-        <translation type="unfinished" />
+        <translation>&lt;br&gt;&lt;br&gt;发现空的 %1。这些 Sub-model 未添加到模型仓库中</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="356" />
@@ -30583,7 +30583,10 @@ does not exist.
 which does not sponsor, endorse, or authorize these
 instructions or the model they depict.
 </source>
-        <translation type="unfinished" />
+        <translation>LEGO® 是 LEGO Group 的注册商标，
+LEGO Group 未赞助、认可或授权本
+说明书或其展示的模型。
+</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="359" />
@@ -30595,7 +30598,9 @@ instructions or the model they depict.
         <source>Instructions configured and generated using %1 %2
 Download %1 at %3
 </source>
-        <translation type="unfinished" />
+        <translation>说明书使用 %1 %2 配置并生成
+在 %3 下载 %1
+</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="847" />
@@ -30616,7 +30621,9 @@ Download %1 at %3
         <source>Failed to set log level %1.
 Logging is off - level is OffLevel
 </source>
-        <translation type="unfinished" />
+        <translation>设置日志级别 %1 失败。
+日志已关闭 - 级别为 OffLevel
+</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="939" />
@@ -30705,7 +30712,7 @@ does not exist.</source>
     <message>
         <location filename="../lpub_preferences.cpp" line="1936" />
         <source>Launching %1 in GUI mode offers a dialogue to download, and extract archive libraries.</source>
-        <translation type="unfinished" />
+        <translation>以 GUI 模式启动 %1 会提供对话框，用于下载并解压归档库。</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="1944" />
@@ -30715,7 +30722,7 @@ does not exist.</source>
     <message>
         <location filename="../lpub_preferences.cpp" line="2037" />
         <source>%1 LDraw library was not found but the bundled archive parts were extracted.</source>
-        <translation type="unfinished" />
+        <translation>未找到 %1 LDraw 库，但已解压随附的归档零件。</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="2038" />
@@ -30723,7 +30730,10 @@ does not exist.</source>
 The following locations were searched for the LDraw library:
 %2.
 </source>
-        <translation type="unfinished" />
+        <translation>%1
+已搜索以下位置以查找 LDraw 库：
+%2。
+</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="2081" />
@@ -30736,7 +30746,10 @@ The following locations were searched for the LDraw library:
 The following locations were searched for the LDraw library:
 %2.
 </source>
-        <translation type="unfinished" />
+        <translation>
+已搜索以下位置以查找 LDraw 库：
+%2。
+</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="2112" />
@@ -30744,7 +30757,10 @@ The following locations were searched for the LDraw library:
 %2
 You can edit the library path in the Preferences dialogue.
 </source>
-        <translation type="unfinished" />
+        <translation>随附的 %1 LDraw 库归档已解压到：
+%2
+你可以在“偏好设置”对话框中编辑库路径。
+</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="2187" />
@@ -30756,7 +30772,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../lpub_preferences.cpp" line="2262" />
         <source>The alternate LDraw LDConfig file %1 does not exist. Setting ignored.</source>
-        <translation type="unfinished" />
+        <translation>替代的 LDraw LDConfig 文件 %1 不存在。已忽略该设置。</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="2302" />
@@ -31142,7 +31158,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../lpub_preferences.cpp" line="6865" />
         <source>Did not find [ExtraSearchDirs] section in %1. Section inserted.</source>
-        <translation type="unfinished" />
+        <translation>在 %1 中未找到 [ExtraSearchDirs] 节。已插入该节。</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="6886" />
@@ -31222,22 +31238,22 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../meta.cpp" line="2706" />
         <source>The specified latitude %1 or longitude %2 value is not within the mininum %3 or maximum %4 allowed "%5".</source>
-        <translation type="unfinished" />
+        <translation>指定的纬度 %1 或经度 %2 值不在允许的最小 %3 或最大 %4 范围内 "%5"。</translation>
     </message>
     <message>
         <location filename="../meta.cpp" line="2771" />
         <source>Expected FRONT|BACK|TOP|BOTTOM|LEFT|RIGHT|HOME|LAT_LON but got "%1" in "%2"</source>
-        <translation type="unfinished" />
+        <translation>应为 FRONT|BACK|TOP|BOTTOM|LEFT|RIGHT|HOME|LAT_LON，但在 "%2" 中得到 "%1"</translation>
     </message>
     <message>
         <location filename="../meta.cpp" line="2788" />
         <source>Expected &lt;decimal&gt; &lt;decimal&gt; (e.g. 23.0 45.0), but got "%1" %2</source>
-        <translation type="unfinished" />
+        <translation>应为 &lt;decimal&gt; &lt;decimal&gt;（例如 23.0 45.0），但得到 "%1" %2</translation>
     </message>
     <message>
         <location filename="../meta.cpp" line="2809" />
         <source>Expected LAT_LON &lt;decimal&gt; &lt;decimal&gt; or HOME  &lt;decimal&gt; &lt;decimal&gt; but got "%1" %2</source>
-        <translation type="unfinished" />
+        <translation>应为 LAT_LON &lt;decimal&gt; &lt;decimal&gt; 或 HOME  &lt;decimal&gt; &lt;decimal&gt;，但得到 "%1" %2</translation>
     </message>
     <message>
         <location filename="../meta.cpp" line="2811" />
@@ -31252,7 +31268,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../meta.cpp" line="3841" />
         <source>Step with INSERT %1 meta command cannot contain %2. Invalid type at line %3</source>
-        <translation type="unfinished" />
+        <translation>带有 INSERT %1 元命令的步骤不能包含 %2。第 %3 行处的类型无效</translation>
     </message>
     <message>
         <location filename="../meta.cpp" line="4836" />
@@ -31318,7 +31334,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../meta.cpp" line="5003" />
         <source>Invalid substitute meta command.&lt;br&gt;No valid parts between %1 and PLI END.&lt;br&gt;Got %2.</source>
-        <translation type="unfinished" />
+        <translation>替换元命令无效。&lt;br&gt;%1 与 PLI END 之间没有有效零件。&lt;br&gt;得到 %2。</translation>
     </message>
     <message>
         <location filename="../meta.cpp" line="5974" />
@@ -31340,7 +31356,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../meta.cpp" line="7673" />
         <source>CAMERA_DISTANCE_NATIVE meta command is no longer supported for %1 type. Only application at GLOBAL scope is permitted. Reclassify or remove this command and use MODEL_SCALE to implicate camera distance. This command will be ignored. %2</source>
-        <translation type="unfinished" />
+        <translation>CAMERA_DISTANCE_NATIVE 元命令不再支持 %1 类型。仅允许在 GLOBAL 范围应用。请重新分类或移除此命令，并使用 MODEL_SCALE 来体现相机距离。此命令将被忽略。%2</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="8883" />
@@ -31435,7 +31451,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../metagui.cpp" line="8894" />
         <source>Specify the target 'Look At' position and/or apply ROTSTEP angles</source>
-        <translation type="unfinished" />
+        <translation>指定目标 'Look At' 位置和/或应用 ROTSTEP 角度</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="8895" />
@@ -31465,12 +31481,12 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../metaitem.cpp" line="3092" />
         <source>Inserting a display model to a multi-step page is not allowed.</source>
-        <translation type="unfinished" />
+        <translation>不允许将显示模型插入到多步骤页面。</translation>
     </message>
     <message>
         <location filename="../metaitem.cpp" line="3097" />
         <source>Inserting a display model to a called out page is not allowed.</source>
-        <translation type="unfinished" />
+        <translation>不允许将显示模型插入到被调用的页面。</translation>
     </message>
     <message>
         <location filename="../metaitem.cpp" line="3389" />
@@ -31510,12 +31526,12 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../metaitem.cpp" line="3496" />
         <source>0 // These lines are not saved and should not be modified, but they can be replaced.</source>
-        <translation type="unfinished" />
+        <translation>0 // 这些行不会被保存，也不应修改，但它们可以被替换。</translation>
     </message>
     <message>
         <location filename="../metaitem.cpp" line="3497" />
         <source>0 // Remove comment lines and replace MODEL with DISPLAY_MODEL to override this behaviour.</source>
-        <translation type="unfinished" />
+        <translation>0 // 移除注释行并将 MODEL 替换为 DISPLAY_MODEL 以覆盖此行为。</translation>
     </message>
     <message>
         <location filename="../metaitem.cpp" line="3540" />
@@ -31727,7 +31743,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../pli.cpp" line="1566" />
         <source>Malformed Camera Angle values from nameKey [%1], using 'latitude 30', 'longitude -45'.</source>
-        <translation type="unfinished" />
+        <translation>来自 nameKey [%1] 的相机角度值格式错误，将使用 'latitude 30'、'longitude -45'。</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="1576" />
@@ -31792,7 +31808,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../pli.cpp" line="2644" />
         <source>Create PLI ViewerStep Key: '%1' [PartName: %2, PartColour: %3, StepNumber: %4], Type: [%5], StepsLineNumber: [%6]</source>
-        <translation type="unfinished" />
+        <translation>创建 PLI ViewerStep 键：'%1' [零件名称: %2, 零件颜色: %3, 步骤编号: %4]，类型: [%5]，步骤行号: [%6]</translation>
     </message>
     <message>
         <location filename="../pli.cpp" line="2737" />
@@ -31963,12 +31979,12 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../plisubstituteparts.cpp" line="43" />
         <source>Failed to open %1.&lt;br&gt;Regenerate by renaming the existing file and select&lt;br&gt;Substitute Parts List from&lt;br&gt;Configuration,&lt;br&gt;Edit Parameter Files menu.&lt;br&gt;%2</source>
-        <translation type="unfinished" />
+        <translation>打开 %1 失败。&lt;br&gt;请重命名现有文件以重新生成，然后从&lt;br&gt;“配置 -&lt;br&gt;编辑参数文件”菜单中&lt;br&gt;选择“替换零件清单”。&lt;br&gt;%2</translation>
     </message>
     <message>
         <location filename="../pointeritem.cpp" line="328" />
         <source>Pointer segments are on the same line. Move an existing segment before creating a new one.</source>
-        <translation type="unfinished" />
+        <translation>指针段位于同一行。请先移动现有段，再创建新段。</translation>
     </message>
     <message>
         <location filename="../pointeritem.cpp" line="335" />
@@ -31978,7 +31994,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../pointeritem.cpp" line="380" />
         <source>Pointer segment %1 - drag grabber to move; right click to modify</source>
-        <translation type="unfinished" />
+        <translation>指针段 %1 - 拖动控制柄移动；右键点击修改</translation>
     </message>
     <message>
         <location filename="../pointeritem.cpp" line="707" />
@@ -32046,7 +32062,7 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../render.cpp" line="144" />
         <location filename="../render.cpp" line="162" />
         <source>Couldn't get length of short path name length, lastError is %1, trying long path name</source>
-        <translation type="unfinished" />
+        <translation>无法获取短路径名长度，lastError 为 %1，正在尝试长路径名</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="376" />
@@ -32071,7 +32087,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="601" />
         <source>Attributes compare: [%1], attributesKey [%2], compareKey [%3]</source>
-        <translation type="unfinished" />
+        <translation>属性比较：[%1]，attributesKey [%2]，compareKey [%3]</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="608" />
@@ -32081,7 +32097,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="621" />
         <source>Failed to create LDView (Single Call) PLI Snapshots list file!</source>
-        <translation type="unfinished" />
+        <translation>创建 LDView（单次调用）PLI 快照列表文件失败！</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="632" />
@@ -32187,7 +32203,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="1170" />
         <source>POV PLI render input file was not found at the specified path [%1]</source>
-        <translation type="unfinished" />
+        <translation>在指定路径 [%1] 未找到 POV PLI 渲染输入文件</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="1363" />
@@ -32222,7 +32238,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="1419" />
         <source>POV-Ray additional PLI POV file generation environment variables: %1</source>
-        <translation type="unfinished" />
+        <translation>POV-Ray 附加 PLI POV 文件生成环境变量：%1</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="1490" />
@@ -32318,7 +32334,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="1979" />
         <source>CSI render input file was not found at the specified path [%1]</source>
-        <translation type="unfinished" />
+        <translation>在指定路径 [%1] 未找到 CSI 渲染输入文件</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="2098" />
@@ -32335,7 +32351,7 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../render.cpp" line="2257" />
         <location filename="../render.cpp" line="2699" />
         <source>Failed to create LDView (Single Call) PLI CommandLines list file!</source>
-        <translation type="unfinished" />
+        <translation>创建 LDView（单次调用）PLI 命令行列表文件失败！</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="2267" />
@@ -32365,7 +32381,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="2409" />
         <source>PLI render input file was not found at the specified path [%1]</source>
-        <translation type="unfinished" />
+        <translation>在指定路径 [%1] 未找到 PLI 渲染输入文件</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="2709" />
@@ -32472,7 +32488,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="4244" />
         <source>Could not write to Native %1 %2 file:&lt;br&gt;[%3].&lt;br&gt;Reason: %4.</source>
-        <translation type="unfinished" />
+        <translation>无法写入 Native %1 %2 文件：&lt;br&gt;[%3]。&lt;br&gt;原因：%4。</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4251" />
@@ -32487,7 +32503,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="4269" />
         <source>Begin Native %1 image render returned code %2 - Unable to bind render framebuffer.</source>
-        <translation type="unfinished" />
+        <translation>开始 Native %1 图像渲染返回代码 %2 - 无法绑定渲染帧缓冲。</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4283" />
@@ -32509,17 +32525,17 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../render.cpp" line="4477" />
         <location filename="../render.cpp" line="4542" />
         <source>High contrast stud and edge color settings are ignored when automate edge color is enabled.</source>
-        <translation type="unfinished" />
+        <translation>启用自动边缘颜色时，高对比度凸点与边缘颜色设置会被忽略。</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4438" />
         <source>Could not open Loader for ViewerStepKey: '%1', FileName: '%2', [Use File]</source>
-        <translation type="unfinished" />
+        <translation>无法为 ViewerStepKey 打开加载器：'%1'，文件名：'%2'，[使用文件]</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4459" />
         <source>The specified step key: '%1' does not match the current step key: '%2'</source>
-        <translation type="unfinished" />
+        <translation>指定的步骤键：'%1' 与当前步骤键：'%2' 不匹配</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4482" />
@@ -32529,7 +32545,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="4492" />
         <source>Could not open Loader for ViewerStepKey: '%1', FileName: '%2', [Use Key]</source>
-        <translation type="unfinished" />
+        <translation>无法为 ViewerStepKey 打开加载器：'%1'，文件名：'%2'，[使用键]</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4514" />
@@ -32549,7 +32565,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../render.cpp" line="4549" />
         <source>Could not open Loader for ViewerStepKey: '%1', Export: %2, FileName: '%3', [Use File]</source>
-        <translation type="unfinished" />
+        <translation>无法为 ViewerStepKey 打开加载器：'%1'，导出: %2，文件名：'%3'，[使用文件]</translation>
     </message>
     <message>
         <location filename="../render.cpp" line="4564" />
@@ -32665,7 +32681,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../step.cpp" line="360" />
         <source>Your complete model file path %1 the maximum number of characters [%2] supported by %3.&lt;br&gt;&lt;br&gt;%4 LDraw file path and/or model names to avoid undefined renderer behaviour or switch to the %5 renderer.</source>
-        <translation type="unfinished" />
+        <translation>你的完整模型文件路径 %1 超出 %3 支持的最大字符数 [%2]。&lt;br&gt;&lt;br&gt;请 %4 LDraw 文件路径和/或模型名称，以避免未定义的渲染器行为，或切换到 %5 渲染器。</translation>
     </message>
     <message>
         <location filename="../step.cpp" line="371" />
@@ -32697,7 +32713,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../step.cpp" line="1084" />
         <source>Meta command not supported in STEP for display submodel '%1'.&lt;br&gt;Line [%2]</source>
-        <translation type="unfinished" />
+        <translation>显示 Sub-model '%1' 的 STEP 中不支持该元命令。&lt;br&gt;行 [%2]</translation>
     </message>
     <message>
         <location filename="../step.cpp" line="1374" />
@@ -32707,7 +32723,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../stickerparts.cpp" line="44" />
         <source>Failed to open %1.&lt;br&gt;Regenerate by renaming the existing file and select&lt;br&gt;Part Count Sticker Parts List from&lt;br&gt;Configuration,&lt;br&gt;Edit Parameter Files menu.&lt;br&gt;%2</source>
-        <translation type="unfinished" />
+        <translation>打开 %1 失败。&lt;br&gt;请重命名现有文件以重新生成，然后从&lt;br&gt;“配置 -&lt;br&gt;编辑参数文件”菜单中&lt;br&gt;选择“零件计数贴纸零件清单”。&lt;br&gt;%2</translation>
     </message>
     <message>
         <location filename="../submodelitem.cpp" line="214" />
@@ -32762,7 +32778,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../submodelitem.cpp" line="537" />
         <source>%1 Submodel render call took %2 to render %3 for %4 %5 %6 on page %7.</source>
-        <translation type="unfinished" />
+        <translation>%1 Sub-model 渲染调用耗时 %2 渲染 %3，用于第 %7 页的 %4 %5 %6。</translation>
     </message>
     <message>
         <location filename="../submodelitem.cpp" line="586" />

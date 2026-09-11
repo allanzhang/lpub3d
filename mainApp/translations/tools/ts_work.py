@@ -361,7 +361,10 @@ def cmd_apply(args):
 # --------------------------------------------------------------------------
 
 RE_PLACEHOLDER = re.compile(r"%[0-9]+|%n|%L\d|%[A-Z]")
-RE_AMP = re.compile(r"&(?![a-zA-Z]+;|#)")
+# A Qt mnemonic is '&' immediately followed by a letter or digit. '&&' renders a
+# literal ampersand, and an ampersand with spaces around it ("Network & Internet")
+# is just punctuation - neither is a mnemonic, so neither must be preserved.
+RE_AMP = re.compile(r"(?<!&)&(?=[A-Za-z0-9])")
 RE_TAG = re.compile(r"</?([a-zA-Z][a-zA-Z0-9]*)[^>]*>")
 
 KEEP_EN = [
@@ -390,7 +393,9 @@ def cmd_validate(args):
         if sorted(RE_PLACEHOLDER.findall(src)) != sorted(RE_PLACEHOLDER.findall(tgt)):
             problems["placeholder"].append((e["c"], src[:70], tgt[:70]))
 
-        if RE_AMP.search(src) and not RE_AMP.search(tgt):
+        # compare mnemonic counts, not mere presence: a translation may legitimately
+        # add or drop an ampersand that is not a mnemonic
+        if sorted(RE_AMP.findall(src)) != sorted(RE_AMP.findall(tgt)):
             problems["amp"].append((e["c"], src[:70], tgt[:70]))
 
         if sorted(RE_TAG.findall(src)) != sorted(RE_TAG.findall(tgt)):
