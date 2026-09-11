@@ -131,14 +131,6 @@ quazip/32bit_debug/*
 quazip/32bit_release/*
 quazip/*.vcxproj.*
 
-waitingspinner/release/*
-waitingspinner/debug/*
-waitingspinner/64bit_debug/*
-waitingspinner/64bit_release/*
-waitingspinner/32bit_debug/*
-waitingspinner/32bit_release/*
-waitingspinner/*.vcxproj.*
-
 builds/macx/dmgbuilds/*
 builds/windows/release/*
 builds/windows/debug/*
@@ -157,7 +149,6 @@ mainApp/Makefile
 mainApp/Makefile.mainapp
 ldrawini/Makefile
 ldrawini/Makefile.ldrawini
-waitingspinner/Makefile.waitingspinner
 Makefile
 
 .vs
@@ -179,6 +170,10 @@ mainApp/extras/*.zip
 # Tools
 tools/*
 
+# Python bytecode from the translation tooling
+__pycache__/
+*.pyc
+
 # Patches
 patches/*
 
@@ -187,3 +182,13 @@ patches/*
 
 # Agent local state (memory, session cache) - not part of the project
 .workbuddy/
+
+# Local release artefacts (built .app bundles, .dmg, distribution .zip) and the
+# working material for the splash screen. Both are produced from the tree and
+# must not be committed.
+release/
+splash-work/
+
+# Agent/process documentation (design notes, work logs). Kept on disk for
+# reference but deliberately not part of the project history.
+docs/plans/
