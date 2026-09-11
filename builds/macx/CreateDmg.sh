@@ -416,6 +416,35 @@ echo -n "$((CMD_CNT+=1))- bundle ${APP_BUNDLE} with Qt framework and plugins..."
 (macdeployqt ${APP_BUNDLE} -verbose=1 -executable=${APP_BUNDLE}/Contents/MacOS/${APP_EXE} -always-overwrite) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
+echo -n "$((CMD_CNT+=1))- check ${APP_BUNDLE} is self-contained..."
+# A single macdeployqt pass has been observed to leave the bundle non-hermetic:
+# plugin frameworks (QtPdf/QtSvg/QtVirtualKeyboard...) were not deployed, and the
+# foreign -rpath /opt/homebrew/lib survived in the main executable. dyld then
+# resolved those frameworks from the build machine's Homebrew, loading a SECOND
+# copy of QtCore/QtGui/QtNetwork/QtDBus; the duplicate Objective-C classes
+# crashed the app (EXC_BAD_ACCESS, "excessive recursion" in AppKit menu
+# tracking). Give macdeployqt a second pass, then refuse to package a bundle that
+# is still not self-contained - this step previously only printed "failed." and
+# carried on, which is how the broken build shipped.
+if command -v python3 >/dev/null 2>&1; then
+  (python3 verify_bundle.py ${APP_BUNDLE}) >$l.out 2>&1 && rm $l.out
+  if [ -f $l.out ]; then
+    echo
+    echo "   - bundle not self-contained; re-running macdeployqt..."
+    (macdeployqt ${APP_BUNDLE} -verbose=1 -executable=${APP_BUNDLE}/Contents/MacOS/${APP_EXE} -always-overwrite) >>$l.out 2>&1
+    (python3 verify_bundle.py ${APP_BUNDLE}) >>$l.out 2>&1 && rm $l.out
+  fi
+  if [ -f $l.out ]; then
+    echo "failed."
+    tail -80 $l.out
+    echo "   - REFUSING to package: this bundle would load a second Qt from the build machine."
+    exit 1
+  fi
+  echo "ok."
+else
+  echo "skipped (python3 not found - cannot verify the bundle is self-contained)."
+fi
+
 echo -n "$((CMD_CNT+=1))- add Qt framework Chinese translations to ${APP_BUNDLE}..."
 # macdeployqt copies the Qt libraries but not Qt's own .qm files, so the framework
 # standard dialogs (file chooser, font chooser, message boxes) would stay English

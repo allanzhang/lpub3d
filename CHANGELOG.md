@@ -7,6 +7,7 @@
 - 全新 myLPub3D macOS App 图标（圆角底板 + 投影，16～1024 全尺寸图标集）
 
 ### 修复
+- **打开菜单后闪退（EXC_BAD_ACCESS / SIGSEGV，AppKit 菜单跟踪递归爆栈）**：打包后的应用同时加载了两份 Qt —— 应用包内一份、构建机 Homebrew 一份，重复的 Objective-C 类使 AppKit 在菜单事件循环中无限递归。根因是 `macdeployqt` 单次执行未部署插件依赖（`libqpdf`→QtPdf、`libqsvgicon`→QtSvg、虚拟键盘插件），且主程序仍保留 `-rpath /opt/homebrew/lib`，dyld 因此回退到 Homebrew Qt 并把整个 QtCore/QtGui/QtNetwork/QtDBus 再拉一份。现已重新部署并清除全部外部 rpath，新增 `builds/macx/verify_bundle.py` 作为发布门禁（自包含检查不通过即拒绝打包）
 - macOS 构建未应用 App 图标：非 `CONFIG+=dmg` 构建下 `ICON` 为空，导致 Finder/Dock 显示通用图标；现已在 macx 构建中显式指定图标
 - 汉化回归：`excludedParts.lst` 的正则标记行被译成全角冒号，导致自定义正则回读失败并静默回退内置默认值。已改为按源文跨 context 排除，`apply` 现在会强制清除违反排除规则的残留译文，并新增对应护栏
 - 发布脚本 `builds/macx/CreateDmg.sh` 仍按 `LPub3D.app` 打包（改名为 myLPub3D 后不可用）；现统一为 `APP_NAME`/`APP_BUNDLE`/`APP_EXE` 变量，并补入 `qt_zh_CN.qm` / `qtbase_zh_CN.qm`（`macdeployqt` 不携带框架翻译，缺失时发布版标准对话框仍为英文）
