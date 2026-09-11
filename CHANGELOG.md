@@ -1,12 +1,18 @@
 # Changelog
 
-## [v2.5.1] - 2026-09-09
+## [v2.5.1] - 2026-09-11
 
 ### 新增
+- **界面完整汉化（简体中文）**：应用自身界面与 Qt 框架标准对话框全部中文。7,379 条可译条目 100% 完成，覆盖主菜单、工具栏、状态栏、对话框、右键菜单以及全部工具提示 / WhatsThis 帮助正文；语言跟随系统，可用环境变量 `LPUB3D_LANGUAGE=zh_CN` 强制覆盖
 - 全新 myLPub3D macOS App 图标（圆角底板 + 投影，16～1024 全尺寸图标集）
 
 ### 修复
 - macOS 构建未应用 App 图标：非 `CONFIG+=dmg` 构建下 `ICON` 为空，导致 Finder/Dock 显示通用图标；现已在 macx 构建中显式指定图标
+- 汉化回归：`excludedParts.lst` 的正则标记行被译成全角冒号，导致自定义正则回读失败并静默回退内置默认值。已改为按源文跨 context 排除，`apply` 现在会强制清除违反排除规则的残留译文，并新增对应护栏
+- 发布脚本 `builds/macx/CreateDmg.sh` 仍按 `LPub3D.app` 打包（改名为 myLPub3D 后不可用）；现统一为 `APP_NAME`/`APP_BUNDLE`/`APP_EXE` 变量，并补入 `qt_zh_CN.qm` / `qtbase_zh_CN.qm`（`macdeployqt` 不携带框架翻译，缺失时发布版标准对话框仍为英文）
+
+### 变更
+- 移除等待动画依赖（`waitingspinner` 库及其全部调用点），该功能下线
 
 ### 下载
 - 本地构建，未发布到 GitHub

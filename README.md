@@ -4,8 +4,9 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
-## v2.5.1 (2026-09-09)
+## v2.5.1 (2026-09-11)
 
+- **Simplified Chinese UI**: full localization of the application interface and Qt's standard dialogs — menus, toolbars, status bar, dialogs, context menus and all tooltip / WhatsThis help text (7,379 of 7,379 translatable entries). The language follows the system locale and can be forced with `LPUB3D_LANGUAGE=zh_CN`.
 - **App icon**: new myLPub3D macOS application icon, shipped as a full 16–1024 px icon set.
 
 ## v2.5.0 (2026-09-07)

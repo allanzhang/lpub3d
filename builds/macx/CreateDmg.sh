@@ -75,6 +75,15 @@ echo "Start $ME execution at $CWD..."
 
 # Change these when you change the LPub3D root directory (e.g. if using a different root folder when testing)
 LPUB3D="${LPUB3D:-lpub3d}"
+
+# Built application identity. TARGET in mainApp/mainApp.pro is myLPub3D, so the
+# bundle is myLPub3D.app and the executable inside it is myLPub3D. Keep these in
+# one place: the packaging steps below previously hard-coded "LPub3D.app", which
+# silently failed once the product was renamed.
+APP_NAME="${APP_NAME:-myLPub3D}"
+APP_BUNDLE="${APP_BUNDLE:-${APP_NAME}.app}"
+APP_EXE="${APP_EXE:-${APP_NAME}}"
+
 LP3D_ARCH="${LP3D_ARCH:-$(uname -m)}"
 LP3D_CPU_CORES="${LP3D_CPU_CORES:-$(nproc)}"
 LP3D_GITHUB_URL="https://github.com/trevorsandy"
@@ -265,12 +274,12 @@ qmake CONFIG+=x86_64 CONFIG+=release CONFIG+=sdk_no_version_check CONFIG+=build_
 /usr/bin/make -j${LP3D_CPU_CORES} || exit 1
 
 # Check if build is OK or stop and return error.
-if [ ! -f "mainApp/$release/LPub3D.app/Contents/MacOS/LPub3D" ]; then
-  echo "-ERROR - build executable at $(realpath mainApp/$release/LPub3D.app/Contents/MacOS/LPub3D) not found."
+if [ ! -f "mainApp/$release/${APP_BUNDLE}/Contents/MacOS/${APP_EXE}" ]; then
+  echo "-ERROR - build executable at $(realpath mainApp/$release/${APP_BUNDLE}/Contents/MacOS/${APP_EXE}) not found."
   exit 1
 else
-  # run otool -L on LPub3D.app
-  LPUB3D_OTOOL="$(realpath mainApp/$release/LPub3D.app/Contents/MacOS/LPub3D)"
+  # run otool -L on ${APP_BUNDLE}
+  LPUB3D_OTOOL="$(realpath mainApp/$release/${APP_BUNDLE}/Contents/MacOS/${APP_EXE})"
   echo && echo -n "$((CMD_CNT+=1))- otool -L check ${LPUB3D_OTOOL}..."
   (otool -L ${LPUB3D_OTOOL} 2>/dev/null) >$l.out 2>&1 && rm $l.out
   [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
@@ -395,28 +404,40 @@ The Homebrew plist keys are:
 Cheers,
 EOF
 
-echo -n "$((CMD_CNT+=1))- copy README to LPub3D.app/Contents/Resources/README_macOS.txt..."
-(cp -f README ../../mainApp/$release/LPub3D.app/Contents/Resources/README_macOS.txt) >$l.out 2>&1 && rm $l.out
+echo -n "$((CMD_CNT+=1))- copy README to ${APP_BUNDLE}/Contents/Resources/README_macOS.txt..."
+(cp -f README ../../mainApp/$release/${APP_BUNDLE}/Contents/Resources/README_macOS.txt) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
 echo -n "$((CMD_CNT+=1))- copy ${LPUB3D} bundle components to $(realpath .)..."
-(cp -rf ../../mainApp/$release/LPub3D.app .) >$l.out 2>&1 && rm $l.out
+(cp -rf ../../mainApp/$release/${APP_BUNDLE} .) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
-echo -n "$((CMD_CNT+=1))- bundle LPub3D.app with Qt framework and plugins..."
-(macdeployqt LPub3D.app -verbose=1 -executable=LPub3D.app/Contents/MacOS/LPub3D -always-overwrite) >$l.out 2>&1 && rm $l.out
+echo -n "$((CMD_CNT+=1))- bundle ${APP_BUNDLE} with Qt framework and plugins..."
+(macdeployqt ${APP_BUNDLE} -verbose=1 -executable=${APP_BUNDLE}/Contents/MacOS/${APP_EXE} -always-overwrite) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
-echo -n "$((CMD_CNT+=1))- replace LPub3D.app bundle signature..."
-(/usr/bin/codesign --force --deep --sign - LPub3D.app) >$l.out 2>&1 && rm $l.out
+echo -n "$((CMD_CNT+=1))- add Qt framework Chinese translations to ${APP_BUNDLE}..."
+# macdeployqt copies the Qt libraries but not Qt's own .qm files, so the framework
+# standard dialogs (file chooser, font chooser, message boxes) would stay English
+# in the shipped bundle no matter how complete the application translation is.
+# Ask qmake where the translations live rather than guessing a Homebrew prefix.
+QT_TRANSLATIONS_DIR="$(qmake -query QT_INSTALL_TRANSLATIONS 2>/dev/null)"
+(mkdir -p ${APP_BUNDLE}/Contents/Resources/translations && \
+ cp -f "${QT_TRANSLATIONS_DIR}/qt_zh_CN.qm" \
+       "${QT_TRANSLATIONS_DIR}/qtbase_zh_CN.qm" \
+       ${APP_BUNDLE}/Contents/Resources/translations/) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
-echo -n "$((CMD_CNT+=1))- verify LPub3D.app bundle signature..."
-(/usr/bin/codesign --verify --deep --verbose LPub3D.app) >$l.out 2>&1 && rm $l.out
+echo -n "$((CMD_CNT+=1))- replace ${APP_BUNDLE} bundle signature..."
+(/usr/bin/codesign --force --deep --sign - ${APP_BUNDLE}) >$l.out 2>&1 && rm $l.out
+[ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
+
+echo -n "$((CMD_CNT+=1))- verify ${APP_BUNDLE} bundle signature..."
+(/usr/bin/codesign --verify --deep --verbose ${APP_BUNDLE}) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
 # build checks
-LPUB3D_EXE=LPub3D.app/Contents/MacOS/LPub3D
+LPUB3D_EXE=${APP_BUNDLE}/Contents/MacOS/${APP_EXE}
 if [ -n "$LP3D_SKIP_BUILD_CHECK" ]; then
   echo "$((CMD_CNT+=1))- skipping ${LPUB3D_EXE} build check."
 else
@@ -444,8 +465,8 @@ then
 fi
 mkdir DMGSRC
 
-echo -n "$((CMD_CNT+=1))- move LPub3D.app to $(realpath DMGSRC/)..."
-(mv -f LPub3D.app DMGSRC/LPub3D.app) >$l.out 2>&1 && rm $l.out
+echo -n "$((CMD_CNT+=1))- move ${APP_BUNDLE} to $(realpath DMGSRC/)..."
+(mv -f ${APP_BUNDLE} DMGSRC/${APP_BUNDLE}) >$l.out 2>&1 && rm $l.out
 [ -f $l.out ] && echo "failed." && tail -80 $l.out || echo "ok."
 
 echo "$((CMD_CNT+=1))- setup dmg output directory $(realpath ../../../DMGS/)"
@@ -476,19 +497,19 @@ echo "$((CMD_CNT+=1))- set create-dmg build scrpt permissions"
 chmod +x ../utilities/dmg-utils/create-dmg
 
 echo "$((CMD_CNT+=1))- generate make dmg script"
-LP3D_DMG="LPub3D-${LP3D_APP_VERSION_LONG}-${LP3D_ARCH}-macos.dmg"
+LP3D_DMG="${APP_NAME}-${LP3D_APP_VERSION_LONG}-${LP3D_ARCH}-macos.dmg"
 cat <<EOF >makedmg
 #!/bin/bash
 ../utilities/dmg-utils/create-dmg \\
---volname "LPub3D-Installer" \\
+--volname "${APP_NAME}-Installer" \\
 --volicon "setup.icns" \\
 --background "lpub3dbkg.png" \\
 --icon-size 90 \\
 --text-size 10 \\
 --window-pos 200 120 \\
 --window-size 640 480 \\
---icon LPub3D.app 192 344 \\
---hide-extension LPub3D.app \\
+--icon ${APP_BUNDLE} 192 344 \\
+--hide-extension ${APP_BUNDLE} \\
 --add-file Readme README 512 128 \\
 --app-drop-link 448 344 \\
 --eula .COPYING \\
@@ -496,12 +517,12 @@ cat <<EOF >makedmg
 DMGSRC/
 EOF
 
-echo "$((CMD_CNT+=1))- create LPub3D dmg package in $(realpath $DMGDIR/)"
-[[ -f LPub3D-Installer.dmg ]] && rm LPub3D-Installer.dmg
-if [ -d DMGSRC/LPub3D.app ]; then
+echo "$((CMD_CNT+=1))- create ${APP_NAME} dmg package in $(realpath $DMGDIR/)"
+[[ -f ${APP_NAME}-Installer.dmg ]] && rm LPub3D-Installer.dmg
+if [ -d DMGSRC/${APP_BUNDLE} ]; then
    chmod +x makedmg && ./makedmg
 else
-  echo "   - Could not find LPub3D.app at $(realpath DMGSRC/)"
+  echo "   - Could not find ${APP_BUNDLE} at $(realpath DMGSRC/)"
   echo "   - $ME Failed."
   exit 1
 fi
