@@ -432,7 +432,12 @@ if command -v python3 >/dev/null 2>&1; then
     echo
     echo "   - bundle not self-contained; re-running macdeployqt..."
     (macdeployqt ${APP_BUNDLE} -verbose=1 -executable=${APP_BUNDLE}/Contents/MacOS/${APP_EXE} -always-overwrite) >>$l.out 2>&1
-    (python3 verify_bundle.py ${APP_BUNDLE}) >>$l.out 2>&1 && rm $l.out
+    rm -f $l.out
+    # macdeployqt clears the main executable's foreign rpath but leaves the ones
+    # baked into third-party dylibs it copies (libjasper/libdbus/libjpeg), and
+    # re-running it does not help. Strip whatever remains. This mutates the
+    # bundle, so it has to happen before the codesign step below.
+    (python3 verify_bundle.py --fix ${APP_BUNDLE}) >$l.out 2>&1 && rm $l.out
   fi
   if [ -f $l.out ]; then
     echo "failed."

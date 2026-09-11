@@ -26,7 +26,7 @@ pass: run this check, and if it fails re-run macdeployqt before shipping.
 
 Usage
 -----
-    python3 verify_bundle.py /path/to/myLPub3D.app
+    python3 verify_bundle.py [--fix] /path/to/myLPub3D.app
 
 Exit status is 0 when the bundle is hermetic, 1 otherwise (details on stdout).
 """
@@ -116,18 +116,49 @@ def check(app: str):
     return count, bad_deps, bad_rpaths
 
 
+def strip_foreign_rpaths(app: str, bad_rpaths):
+    """Delete foreign LC_RPATH entries. Returns the number removed.
+
+    macdeployqt clears the main executable's foreign rpath but leaves the ones
+    baked into third-party dylibs it copied (libjasper/libdbus/libjpeg here), and
+    re-running macdeployqt does not help. They are only latent - nothing in a
+    correct bundle resolves through them - but on a machine that has Homebrew Qt
+    any future unresolved @rpath would silently pull in a second Qt, which is the
+    crash this gate exists to prevent. Removing them makes that impossible.
+
+    This mutates the bundle, so it must run BEFORE codesign.
+    """
+    removed = 0
+    for rel, rpath in bad_rpaths:
+        path = os.path.join(app, rel)
+        res = subprocess.run(["install_name_tool", "-delete_rpath", rpath, path],
+                             capture_output=True, text=True)
+        if res.returncode == 0:
+            removed += 1
+        else:
+            print(f"   could not remove {rpath} from {rel}: {res.stderr.strip()}")
+    return removed
+
+
 def main(argv):
-    if len(argv) != 2:
-        print(__doc__.strip().splitlines()[0])
-        print("usage: verify_bundle.py /path/to/App.app")
+    args = [a for a in argv[1:] if not a.startswith("-")]
+    fix = "--fix" in argv
+    if len(args) != 1:
+        print("usage: verify_bundle.py [--fix] /path/to/App.app")
         return 2
-    app = argv[1]
+    app = args[0]
     if not os.path.isdir(os.path.join(app, "Contents")):
         print(f"not an .app bundle: {app}")
         return 1
 
     count, bad_deps, bad_rpaths = check(app)
     print(f"scanned {count} Mach-O files in {app}")
+
+    if fix and bad_rpaths:
+        print(f"removing {len(bad_rpaths)} foreign LC_RPATH entr(y|ies)...")
+        removed = strip_foreign_rpaths(app, bad_rpaths)
+        print(f"removed {removed}")
+        count, bad_deps, bad_rpaths = check(app)
 
     if not bad_deps and not bad_rpaths:
         print("OK - bundle is self-contained (no unresolved or foreign references)")
@@ -141,7 +172,10 @@ def main(argv):
         print(f"\nFOREIGN LC_RPATH entries ({len(bad_rpaths)}):")
         for rel, rp in bad_rpaths[:20]:
             print(f"   {rel}\n       -> {rp}")
-    print("\nRun macdeployqt again (with -always-overwrite), then re-check.")
+    if bad_deps:
+        print("\nRun macdeployqt again (with -always-overwrite), then re-check.")
+    else:
+        print("\nRe-run with --fix to strip the foreign rpaths, then re-check.")
     print("A bundle in this state loads a SECOND Qt from the build machine and")
     print("crashes with duplicate Objective-C classes on machines that have Homebrew Qt.")
     return 1
