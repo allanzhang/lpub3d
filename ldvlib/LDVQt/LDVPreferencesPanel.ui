@@ -183,7 +183,7 @@
                <number>4</number>
               </property>
               <item row="1" column="1">
-               <widget class="QToolButton" name="defaultColorButton">
+               <widget class="QPushButton" name="defaultColorButton">
                 <property name="minimumSize">
                  <size>
                   <width>40</width>
@@ -193,7 +193,7 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QToolButton" name="backgroundColorButton">
+               <widget class="QPushButton" name="backgroundColorButton">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -3557,14 +3557,14 @@
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QToolButton" name="highContrastButton">
+           <widget class="QPushButton" name="highContrastButton">
             <property name="text">
              <string>...</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QToolButton" name="automateEdgeColorButton">
+           <widget class="QPushButton" name="automateEdgeColorButton">
             <property name="text">
              <string>...</string>
             </property>

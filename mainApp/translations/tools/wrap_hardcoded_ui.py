@@ -58,6 +58,9 @@ CALL_RE = re.compile(OPENER + r'(?P<lit>"(?:[^"\\]|\\.)*")')
 # literals that are deliberately not translatable prose
 EXCLUDE_LITERALS = {"1234", "<b>Z:</b>"}
 EXCLUDE_RE = re.compile(r"^<span\s+style=")          # HTML style wrappers
+# a bare markup fragment ("<h3>", "</b>", "<br>") concatenated around real
+# prose - wrapping it would add noise entries, not translatable text
+EXCLUDE_TAG_RE = re.compile(r"^</?[a-zA-Z][^>]*>$")
 # a literal that is only an identifier / path / format token
 ALLOW_RE = re.compile(
     r"^$"
@@ -74,14 +77,20 @@ BROKEN_RE = re.compile(r'tr\s*\((?:[^()"]|"(?:[^"\\]|\\.)*")*\)\s*"', re.S)
 
 def wrap_file(path, apply):
     # Byte-level round trip - see trap 1 in the module docstring.
-    src = open(path, "rb").read().decode("utf-8")
+    try:
+        src = open(path, "rb").read().decode("utf-8")
+    except UnicodeDecodeError:
+        # Non-UTF-8 third-party sources (e.g. LDView's tinyxml xmltest.cpp,
+        # which is ISO-8859-1 on purpose) carry no user-visible UI strings.
+        return []
     out, changed = [], 0
     for m in CALL_RE.finditer(src):
         lit = m.group("lit")
         body = lit[1:-1]
         if re.search(r"tr\s*\(\s*$", src[max(0, m.start("open") - 40):m.start("open")]):
             continue
-        if body in EXCLUDE_LITERALS or EXCLUDE_RE.match(body) or ALLOW_RE.match(body):
+        if body in EXCLUDE_LITERALS or EXCLUDE_RE.match(body) \
+           or EXCLUDE_TAG_RE.match(body) or ALLOW_RE.match(body):
             continue
         ln = src.count("\n", 0, m.start()) + 1
         out.append((ln, body))
@@ -94,7 +103,8 @@ def wrap_file(path, apply):
             body = lit[1:-1]
             if re.search(r"tr\s*\(\s*$", src[max(0, m.start("open") - 40):m.start("open")]):
                 continue
-            if body in EXCLUDE_LITERALS or EXCLUDE_RE.match(body) or ALLOW_RE.match(body):
+            if body in EXCLUDE_LITERALS or EXCLUDE_RE.match(body) \
+               or EXCLUDE_TAG_RE.match(body) or ALLOW_RE.match(body):
                 continue
             src = (src[:m.end("open")] + "tr(" + lit + ")"
                    + src[m.end("lit"):])
@@ -111,7 +121,10 @@ def scan_broken(roots):
                 if not f.endswith((".cpp", ".h")):
                     continue
                 p = os.path.join(dp, f)
-                src = open(p, "rb").read().decode("utf-8")
+                try:
+                    src = open(p, "rb").read().decode("utf-8")
+                except UnicodeDecodeError:
+                    continue  # non-UTF-8 third-party source, see wrap_file()
                 for m in BROKEN_RE.finditer(src):
                     ln = src.count("\n", 0, m.start()) + 1
                     print(f"  拼接断链 {p}:{ln}: {src[m.start():m.end() + 24]!r}")

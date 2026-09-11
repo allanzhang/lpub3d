@@ -32,22 +32,22 @@ protected:
 	QLabel* PartEdgeContrast;
 	QLabel* PartColorValueLDIndex;
 
-	QToolButton* ResetPartEdgeContrastButton;
-	QToolButton* ResetPartColorValueLDIndexButton;
+	QPushButton* ResetPartEdgeContrastButton;
+	QPushButton* ResetPartColorValueLDIndexButton;
 
 	QCheckBox* StudCylinderColorEnabledBox;
 	QCheckBox* PartEdgeColorEnabledBox;
 	QCheckBox* BlackEdgeColorEnabledBox;
 	QCheckBox* DarkEdgeColorEnabledBox;
 
-	QToolButton* StudCylinderColorButton;
-	QToolButton* PartEdgeColorButton;
-	QToolButton* BlackEdgeColorButton;
-	QToolButton* DarkEdgeColorButton;
+	QPushButton* StudCylinderColorButton;
+	QPushButton* PartEdgeColorButton;
+	QPushButton* BlackEdgeColorButton;
+	QPushButton* DarkEdgeColorButton;
 
-	QToolButton* ResetStudCylinderColorButton;
-	QToolButton* ResetPartEdgeColorButton;
-	QToolButton* ResetBlackEdgeColorButton;
-	QToolButton* ResetDarkEdgeColorButton;
+	QPushButton* ResetStudCylinderColorButton;
+	QPushButton* ResetPartEdgeColorButton;
+	QPushButton* ResetBlackEdgeColorButton;
+	QPushButton* ResetDarkEdgeColorButton;
 };
 

@@ -84,7 +84,7 @@ ReserveBackgroundItem::ReserveBackgroundItem(
   setPen(Qt::NoPen);
   setBrush(Qt::NoBrush);
   setParentItem(parent);
-  setToolTip(QString("Reserve Rectangle [%1 x %2 px]")
+  setToolTip(QObject::tr("Reserve Rectangle [%1 x %2 px]")
              .arg(boundingRect().width())
              .arg(boundingRect().height()));
 

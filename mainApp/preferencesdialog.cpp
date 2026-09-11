@@ -16,6 +16,7 @@
 ****************************************************************************/
 
 #include <QDesktopServices>
+#include <QPushButton>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
@@ -323,9 +324,9 @@ PreferencesDialog::PreferencesDialog(QWidget* _parent) :
   ui.updateChangeLogBtn->setEnabled(enabled);
 
   // lcLib
-  connect(ui.FadeStepsColor,                &QToolButton::clicked,
+  connect(ui.FadeStepsColor,                &QPushButton::clicked,
           this,                             &PreferencesDialog::ColorButtonClicked);
-  connect(ui.HighlightNewPartsColor,        &QToolButton::clicked,
+  connect(ui.HighlightNewPartsColor,        &QPushButton::clicked,
           this,                             &PreferencesDialog::ColorButtonClicked);
   connect(ui.HighContrastButton,            SIGNAL(          clicked()),
           this,                               SLOT(AutomateEdgeColor()));
@@ -978,11 +979,11 @@ void PreferencesDialog::sceneColorButtonClicked()
     QPixmap pix(12, 12);
 
     pix.fill(newColor);
-    ((QToolButton*)button)->setIcon(pix);
-    QStringList toolTipList = ((QToolButton*)button)->toolTip().split(" ");
+    ((QPushButton*)button)->setIcon(pix);
+    QStringList toolTipList = ((QPushButton*)button)->toolTip().split(" ");
     if (toolTipList.size())
         toolTipList.replace(toolTipList.size() - 1, QString("(%1)").arg(newColor.name().toUpper()));
-    ((QToolButton*)button)->setToolTip(toolTipList.join(" "));
+    ((QPushButton*)button)->setToolTip(toolTipList.join(" "));
 }
 
 void PreferencesDialog::on_ldrawLibPathEdit_editingFinished()
@@ -1566,7 +1567,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     QCheckBox* parseErrorChkBox = new QCheckBox(tr("Show model line parse errors"), messageDialog);
     parseErrorChkBox->setChecked(Preferences::lineParseErrors);
     parseErrorLayout->addWidget(parseErrorChkBox,0,0,1,2);
-    parseErrorTBtn = new QToolButton(messageDialog);
+    parseErrorTBtn = new QPushButton(messageDialog);
     parseErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(parseErrorTBtn,1,0);
     parseErrorLbl = new QLabel("", messageDialog);
@@ -1580,7 +1581,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     QCheckBox * insertErrorChkBox = new QCheckBox(tr("Show model insert errors"), messageDialog);
     insertErrorChkBox ->setChecked(Preferences::showInsertErrors);
     parseErrorLayout->addWidget(insertErrorChkBox,3,0,1,2);
-    insertErrorTBtn = new QToolButton(messageDialog);
+    insertErrorTBtn = new QPushButton(messageDialog);
     insertErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(insertErrorTBtn,4,0);
     insertErrorLbl = new QLabel("", messageDialog);
@@ -1594,7 +1595,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     QCheckBox * includeFileErrorChkBox = new QCheckBox(tr("Show include file errors"), messageDialog);
     includeFileErrorChkBox->setChecked(Preferences::showIncludeFileErrors);
     parseErrorLayout->addWidget(includeFileErrorChkBox,6,0,1,2);
-    includeErrorTBtn = new QToolButton(messageDialog);
+    includeErrorTBtn = new QPushButton(messageDialog);
     includeErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(includeErrorTBtn,7,0);
     includeErrorLbl = new QLabel("", messageDialog);
@@ -1609,7 +1610,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     buildModErrorChkBox->setToolTip(tr("Show build modification errors encountered during model file parse operations."));
     buildModErrorChkBox->setChecked(Preferences::showBuildModErrors);
     parseErrorLayout->addWidget(buildModErrorChkBox,9,0,1,2);
-    buildModErrorTBtn = new QToolButton(messageDialog);
+    buildModErrorTBtn = new QPushButton(messageDialog);
     buildModErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(buildModErrorTBtn,10,0);
     buildModErrorLbl = new QLabel("", messageDialog);
@@ -1624,7 +1625,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     buildModEditErrorChkBox->setToolTip(tr("Show errors encountered during build modification editing."));
     buildModEditErrorChkBox->setChecked(Preferences::showBuildModEditErrors);
     parseErrorLayout->addWidget(buildModEditErrorChkBox,12,0,1,2);
-    buildModEditErrorTBtn = new QToolButton(messageDialog);
+    buildModEditErrorTBtn = new QPushButton(messageDialog);
     buildModEditErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(buildModEditErrorTBtn,13,0);
     buildModEditErrorLbl = new QLabel("", messageDialog);
@@ -1638,7 +1639,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     QCheckBox * annotationErrorChkBox = new QCheckBox(tr("Show annotation errors"), messageDialog);
     annotationErrorChkBox->setChecked(Preferences::showAnnotationErrors);
     parseErrorLayout->addWidget(annotationErrorChkBox,15,0,1,2);
-    annotationErrorTBtn = new QToolButton(messageDialog);
+    annotationErrorTBtn = new QPushButton(messageDialog);
     annotationErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(annotationErrorTBtn,16,0);
     annotationErrorLbl = new QLabel("", messageDialog);
@@ -1652,7 +1653,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     QCheckBox * configurationErrorChkBox = new QCheckBox(tr("Show configuration errors"), messageDialog);
     configurationErrorChkBox->setChecked(Preferences::showAnnotationErrors);
     parseErrorLayout->addWidget(configurationErrorChkBox,18,0,1,2);
-    configurationErrorTBtn = new QToolButton(messageDialog);
+    configurationErrorTBtn = new QPushButton(messageDialog);
     configurationErrorTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(configurationErrorTBtn,19,0);
     configurationErrorLbl = new QLabel("", messageDialog);
@@ -1663,7 +1664,7 @@ void PreferencesDialog::on_optionsButton_clicked(bool checked)
     parseErrorLayout->addWidget(separator,20,0,1,2);
 
     // options - clear all detail messages
-    clearDetailErrorsTBtn = new QToolButton(messageDialog);
+    clearDetailErrorsTBtn = new QPushButton(messageDialog);
     clearDetailErrorsTBtn->setIcon(QIcon(":/resources/clearmessage.png"));
     parseErrorLayout->addWidget(clearDetailErrorsTBtn,21,0);
     clearDetailErrorsLbl = new QLabel("", messageDialog);
@@ -1850,7 +1851,7 @@ void PreferencesDialog::messageManagement()
     if (sender() == parseErrorTBtn) {
         cleared = clearErrors(Preferences::ParseErrors);
         parseErrorLbl->setStyleSheet(style);
-        parseErrorLbl->setText(QString("Cleared %1 model line parse errors").arg(cleared));
+        parseErrorLbl->setText(tr("Cleared %1 model line parse errors").arg(cleared));
     } else if (sender() == insertErrorTBtn) {
         cleared = clearErrors(Preferences::InsertErrors);
         insertErrorLbl->setStyleSheet(style);
@@ -2649,7 +2650,7 @@ QMap<int, QString> ThemeColorsDialog::getEditedThemeColors()
             gridLayout->addWidget(label,i,0);
 
             // color button
-            QToolButton *colorButton = new QToolButton(container);
+            QPushButton *colorButton = new QPushButton(container);
             QPixmap pix(12, 12);
             QColor color = getColor(i, mThemeColors[i]);
             QString colorName;
@@ -2669,7 +2670,7 @@ QMap<int, QString> ThemeColorsDialog::getEditedThemeColors()
             colorButtonList << colorButton;
 
             // reset button
-            QToolButton *resetButton = new QToolButton(container);
+            QPushButton *resetButton = new QPushButton(container);
             resetButton->setText(tr("..."));
             resetButton->setProperty("index", i);
             QString toolTipText = tr("Reset to %1").arg(colorName);
@@ -2996,7 +2997,7 @@ void ThemeColorsDialog::setThemeColor()
 
     QPixmap pix(12, 12);
     pix.fill(newColor);
-    ((QToolButton*)button)->setIcon(pix);
+    ((QPushButton*)button)->setIcon(pix);
 
     QImage image(16, 16, QImage::Format_RGB888);
     image.fill(oldColor);

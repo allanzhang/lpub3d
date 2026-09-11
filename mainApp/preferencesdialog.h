@@ -323,21 +323,21 @@ private:
     BlenderPreferences *blenderAddonPreferences;
 
     QDialog     *messageDialog;
-    QToolButton *parseErrorTBtn;
+    QPushButton *parseErrorTBtn;
     QLabel      *parseErrorLbl;
-    QToolButton *insertErrorTBtn;
+    QPushButton *insertErrorTBtn;
     QLabel      *insertErrorLbl;
-    QToolButton *buildModErrorTBtn;
+    QPushButton *buildModErrorTBtn;
     QLabel      *buildModErrorLbl;
-    QToolButton *buildModEditErrorTBtn;
+    QPushButton *buildModEditErrorTBtn;
     QLabel      *buildModEditErrorLbl;
-    QToolButton *includeErrorTBtn;
+    QPushButton *includeErrorTBtn;
     QLabel      *includeErrorLbl;
-    QToolButton *annotationErrorTBtn;
+    QPushButton *annotationErrorTBtn;
     QLabel      *annotationErrorLbl;
-    QToolButton *configurationErrorTBtn;
+    QPushButton *configurationErrorTBtn;
     QLabel      *configurationErrorLbl;
-    QToolButton *clearDetailErrorsTBtn;
+    QPushButton *clearDetailErrorsTBtn;
     QLabel      *clearDetailErrorsLbl;
     QDialogButtonBox *messageButtonBox;
 
@@ -408,8 +408,8 @@ protected:
 private:
     QDialog    *dialog;
     QTabWidget *tabs;
-    QList<QToolButton *> colorButtonList;
-    QList<QToolButton *> resetButtonList;
+    QList<QPushButton *> colorButtonList;
+    QList<QPushButton *> resetButtonList;
     QString mThemeColors[THEME_NUM_COLORS];
 };
 

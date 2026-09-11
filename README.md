@@ -4,6 +4,13 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
+## v2.6.1 (2026-09-11)
+
+- **Vector-redrawn splash**: background and text are now separate — the resource is a pure background image and all branding (title, subtitle, rule, version, copyright) is drawn at runtime as vector text, crisp at any DPI; version and year are read from build macros; the subtitle is translatable.
+- **Dialog layout guard**: an application-level `DialogSizeGuard` event filter grows any dialog whose designed initial size is smaller than its content minimum (no more clipped labels / overlapping rows); layout-less dialogs with a clean vertical child stack are adopted into a box layout at show time.
+- **One button style in every dialog**: ~100 in-dialog QToolButtons converted to QPushButton (67 .ui nodes + ~33 code sites, colour swatches included), ending the mixed bezel/borderless looks under the macOS native style.
+- **Localization fixes**: BOM/PLI sort keys translated with display/token separation (file format untouched) plus an upstream initial-selection index bug fix; "Open With Programs Setup" Browse buttons translated and column widths fixed; `Program %1` default names translatable with migration of stored English defaults.
+
 ## v2.6.0 (2026-09-11)
 
 - **Simplified Chinese UI**: full localization of the application interface and Qt's standard dialogs — menus, toolbars, status bar, dialogs, context menus and all tooltip / WhatsThis help text (7,379 of 7,379 translatable entries). The language follows the system locale and can be forced with `LPUB3D_LANGUAGE=zh_CN`.
@@ -28,6 +35,7 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Download
 
+- [myLPub3D-v2.6.1-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.1/myLPub3D-v2.6.1-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.6.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.0/myLPub3D-v2.6.0-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.5.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.5.0/myLPub3D-v2.5.0-macOS.zip) (macOS, Apple Silicon)
 

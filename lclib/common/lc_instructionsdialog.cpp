@@ -1,4 +1,5 @@
 #include "lc_global.h"
+#include <QPushButton>
 #include "lc_instructionsdialog.h"
 #include "lc_pagesetupdialog.h"
 #include "project.h"
@@ -185,7 +186,7 @@ lcInstructionsPageListWidget::lcInstructionsPageListWidget(QWidget* Parent, lcIn
 	ButtonsLayout->setContentsMargins(0, 0, 0, 0);
 	Layout->addLayout(ButtonsLayout);
 
-	QToolButton* PageSetupButton = new QToolButton();
+	QPushButton* PageSetupButton = new QPushButton();
 	PageSetupButton->setText(tr("Page Setup"));
 	ButtonsLayout->addWidget(PageSetupButton);
 
@@ -320,7 +321,7 @@ void lcInstructionsPropertiesWidget::AddBoolProperty(lcInstructionsPropertyType 
 	bool Enabled = mInstructions->GetBoolProperty(Type, mModel, mStep);
 	CheckBox->setChecked(Enabled);
 
-	connect(CheckBox, &QToolButton::toggled, [this, Type](bool Checked)
+	connect(CheckBox, &QPushButton::toggled, [this, Type](bool Checked)
 	{
 		mInstructions->SetDefaultBool(Type, Checked);
 	});
@@ -333,7 +334,7 @@ void lcInstructionsPropertiesWidget::AddColorProperty(lcInstructionsPropertyType
 
 	mPropertiesLayout->addWidget(new QLabel(Label), Row, 0);
 
-	QToolButton* ColorButton = new QToolButton();
+	QPushButton* ColorButton = new QPushButton();
 	mPropertiesLayout->addWidget(ColorButton, Row, 1);
 
 	auto UpdateButton = [this, Type, ColorButton]()
@@ -346,7 +347,7 @@ void lcInstructionsPropertiesWidget::AddColorProperty(lcInstructionsPropertyType
 	
 	UpdateButton();
 
-	connect(ColorButton, &QToolButton::clicked, [this, Type, UpdateButton]()
+	connect(ColorButton, &QPushButton::clicked, [this, Type, UpdateButton]()
 	{
 		QString Title;
 
@@ -400,7 +401,7 @@ void lcInstructionsPropertiesWidget::AddFontProperty(lcInstructionsPropertyType 
 
 	mPropertiesLayout->addWidget(new QLabel(Label), Row, 0);
 
-	QToolButton* FontButton = new QToolButton();
+	QPushButton* FontButton = new QPushButton();
 	mPropertiesLayout->addWidget(FontButton, Row, 1);
 
 	auto UpdateButton = [this, Type, FontButton]()
@@ -412,7 +413,7 @@ void lcInstructionsPropertiesWidget::AddFontProperty(lcInstructionsPropertyType 
 
 	UpdateButton();
 
-	connect(FontButton, &QToolButton::clicked, [this, Type, UpdateButton]()
+	connect(FontButton, &QPushButton::clicked, [this, Type, UpdateButton]()
 	{
 		QString Title;
 

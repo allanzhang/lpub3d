@@ -21,7 +21,7 @@
 #include "ui_LDVExportOptionPanel.h"
 #include <QColorDialog>
 #include <QSpinBox>
-#include <QToolButton>
+#include <QPushButton>
 #include <QCheckBox>
 #include <QLabel>
 #include <QComboBox>
@@ -135,7 +135,7 @@ protected:
 	QDoubleSpinBox    *m_PovLightOptTargetXDSpin;
 	QDoubleSpinBox    *m_PovLightOptTargetYDSpin;
 	QDoubleSpinBox    *m_PovLightOptTargetZDSpin;
-	QToolButton       *m_PovLightOptColorBtn;
+	QPushButton       *m_PovLightOptColorBtn;
 	QDoubleSpinBox    *m_PovLightOptFadeDistanceDSpin;
 	QDoubleSpinBox    *m_PovLightOptFadePowerDSpin;
 	QDoubleSpinBox    *m_PovLightOptIntensityDSpin;

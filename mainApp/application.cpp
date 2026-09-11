@@ -18,6 +18,8 @@
 #include <QSslSocket>
 #include <QLocale>
 #include <QTranslator>
+#include <QDate>
+#include <QFile>
 
 #include <locale.h>
 #include "application.h"
@@ -321,11 +323,68 @@
 // Initializes the Application instance as null
 Application* Application::m_instance = nullptr;
 
+namespace {
+// Several dialogs (Designer .ui and hand-built alike) carry a designed initial
+// size that is smaller than the minimum their content actually needs - more so
+// once labels are translated - and the layout then squeezes rows into each
+// other (clipped labels, overlapping controls). Whenever a dialog would open
+// or relayout compressed, pin its layout minimum so it grows instead.
+class DialogSizeGuard : public QObject
+{
+public:
+  explicit DialogSizeGuard(QObject *parent) : QObject(parent) {}
+protected:
+  bool eventFilter(QObject *watched, QEvent *event) override
+  {
+    if (event->type() == QEvent::Show || event->type() == QEvent::LayoutRequest) {
+      if (QDialog *dialog = qobject_cast<QDialog *>(watched)) {
+        QLayout *layout = dialog->layout();
+        if (!layout) {
+          // Designer dialogs whose root widget carries no layout keep their
+          // children at absolute design geometry forever; when those children
+          // form a clean vertical stack (content above a button box, typically)
+          // adopt them into a box layout so the dialog becomes sizeable.
+          QList<QWidget *> kids = dialog->findChildren<QWidget *>(Qt::FindDirectChildrenOnly);
+          kids.removeAll(nullptr);
+          for (QWidget *kid : QList<QWidget *>(kids))
+            if (kid->isWindow())
+              kids.removeAll(kid);
+          std::stable_sort(kids.begin(), kids.end(),
+                           [](const QWidget *a, const QWidget *b) { return a->y() < b->y(); });
+          bool vertical = !kids.isEmpty();
+          for (int i = 1; vertical && i < kids.size(); ++i)
+            vertical = kids.at(i)->y() >= kids.at(i - 1)->y() + kids.at(i - 1)->height() - 4;
+          if (vertical) {
+            auto *box = new QVBoxLayout(dialog);
+            box->setContentsMargins(9, 9, 9, 9);
+            box->setSpacing(9);
+            for (QWidget *kid : qAsConst(kids))
+              box->addWidget(kid);
+            layout = box;
+          }
+        }
+        if (layout) {
+          const QSize needed = layout->totalMinimumSize();
+          const QSize current = dialog->size();
+          if (current.width() < needed.width() || current.height() < needed.height()) {
+            layout->setSizeConstraint(QLayout::SetMinimumSize);
+            dialog->resize(current.expandedTo(needed));
+          }
+        }
+      }
+    }
+    return QObject::eventFilter(watched, event);
+  }
+};
+} // namespace
+
 Application::Application(int &argc, char **argv)
   : m_application(argc, argv)
 {
   Preferences::setDistribution();
   m_instance = this;
+  // Keep dialogs from opening smaller than their layout minimum (squeezed rows)
+  m_application.installEventFilter(new DialogSizeGuard(&m_application));
 }
 
 Application::~Application()
@@ -638,6 +697,21 @@ void Application::setTheme(bool appStarted /*true*/)
   lcSetProfileInt(LC_PROFILE_COLOR_THEME, static_cast<int>(visualEditorColorTheme));
 }
 
+namespace {
+// Family used for all splash branding text; mirrors the per-platform
+// families chosen for the splash status message in Application::initialize().
+QString splashFontFamily()
+{
+#if defined(Q_OS_LINUX)
+  return QStringLiteral("Geneva");
+#elif defined(Q_OS_MACOS)
+  return QStringLiteral("Helvetica Neue");
+#else
+  return QStringLiteral("Segoe UI");
+#endif
+}
+} // namespace
+
 SplashScreen::SplashScreen(const QPixmap &pixmap)
   : QSplashScreen(pixmap)
 {
@@ -653,6 +727,85 @@ void SplashScreen::showStatusMessage(const QString &message, const QColor &color
 void SplashScreen::drawContents(QPainter *painter)
 {
   QSplashScreen::drawContents(painter);
+
+  // Branding is vector-drawn text, never baked into the background pixmap:
+  // it stays crisp at any device pixel ratio, the version can never go
+  // stale, and the subtitle is translatable.
+  const QRect bounds = rect();
+  const qreal w = bounds.width();
+  const qreal h = bounds.height();
+  painter->save();
+  painter->setRenderHint(QPainter::Antialiasing, true);
+  painter->setRenderHint(QPainter::TextAntialiasing, true);
+  painter->setBrush(Qt::NoBrush);
+
+  // Product name
+  QFont titleFont(splashFontFamily(), 10, QFont::Black);
+  titleFont.setPixelSize(qRound(h * 0.140));
+  painter->setFont(titleFont);
+  const QRectF titleRect(0, h * 0.133, w, h * 0.150);
+  const QString productName = QLatin1String(VER_PRODUCTNAME_STR);
+  painter->setPen(QColor(0, 0, 0, 200));
+  painter->drawText(titleRect.translated(w * 0.004, h * 0.006),
+                    Qt::AlignCenter, productName);
+  painter->setPen(QColor(SPLASH_FONT_COLOUR));
+  painter->drawText(titleRect, Qt::AlignCenter, productName);
+
+  // Subtitle - letter-spaced like the reference mockup; long translations
+  // relax the spacing (then the size) so the line always fits the splash.
+  QFont subFont(splashFontFamily(), 10, QFont::Normal);
+  subFont.setPixelSize(qRound(h * 0.028));
+  subFont.setLetterSpacing(QFont::PercentageSpacing, 240);
+  const QString subtitle = tr("LDRAW Building Instructions");
+  const qreal subMaxW = w * 0.86;
+  {
+    QFont tightFont(subFont);
+    tightFont.setLetterSpacing(QFont::PercentageSpacing, 100);
+    const qreal spacedW = QFontMetricsF(subFont).horizontalAdvance(subtitle);
+    const qreal tightW  = QFontMetricsF(tightFont).horizontalAdvance(subtitle);
+    if (spacedW > subMaxW) {
+      if (tightW > subMaxW) {
+        subFont.setPixelSize(qRound(subFont.pixelSize() * subMaxW / tightW));
+        subFont.setLetterSpacing(QFont::PercentageSpacing, 100);
+      } else {
+        subFont.setLetterSpacing(QFont::PercentageSpacing,
+            100 + 140 * (subMaxW - tightW) / (spacedW - tightW));
+      }
+    }
+  }
+  painter->setFont(subFont);
+  painter->setPen(QColor(SPLASH_FONT_COLOUR));
+  const QRectF subRect(0, h * 0.301, w, h * 0.040);
+  painter->drawText(subRect, Qt::AlignCenter, subtitle);
+
+  // Separator rule
+  QPen rulePen(QColor(SPLASH_FONT_COLOUR));
+  rulePen.setWidthF(qMax<qreal>(1.0, h * 0.0027));
+  painter->setPen(rulePen);
+  const qreal ruleW = w * 0.097;
+  painter->drawLine(QLineF((w - ruleW) / 2.0, h * 0.352,
+                           (w + ruleW) / 2.0, h * 0.352));
+
+  // Version
+  QFont versionFont(splashFontFamily(), 10, QFont::DemiBold);
+  versionFont.setPixelSize(qRound(h * 0.0215));
+  painter->setFont(versionFont);
+  painter->setPen(QColor(SPLASH_FONT_COLOUR));
+  const QRectF versionRect(0, h * 0.761, w, h * 0.040);
+  painter->drawText(versionRect, Qt::AlignCenter,
+                    tr("Version %1").arg(QLatin1String(VER_PRODUCTVERSION_STR)));
+
+  // Copyright
+  QFont copyrightFont(splashFontFamily(), 10, QFont::Normal);
+  copyrightFont.setPixelSize(qRound(h * 0.016));
+  painter->setFont(copyrightFont);
+  painter->setPen(QColor(255, 255, 255, 190));
+  const QRectF copyrightRect(0, h * 0.931, w, h * 0.030);
+  painter->drawText(copyrightRect, Qt::AlignCenter,
+                    tr("© %1 DoubleEagle · Based on LPub3D © 2015-2025 Trevor Sandy")
+                      .arg(QDate::currentDate().year()));
+
+  painter->restore();
 
   if (m_statusMessage.isEmpty())
       return;
@@ -671,7 +824,6 @@ void SplashScreen::drawContents(QPainter *painter)
       }
   }
 
-  const QRect bounds = rect();
   const int margin = qRound(bounds.width() * 0.06);
   const QRect textRect(margin,
                        qRound(bounds.height() * 0.799),
@@ -1196,19 +1348,14 @@ QString distribution = tr("Installed");
     // https://wiki.qt.io/Custom_splashscreen_with_text
     if (modeGUI())
     {
-        QPixmap pixmap(":/resources/LPub512Splash.png");
+        QPixmap pixmap(":/resources/splash_bg.jpg");
         pixmap.setDevicePixelRatio(2.0);
         splash = new SplashScreen(pixmap);
 
-        QFont splashFont;
-#ifdef Q_OS_LINUX
-        splashFont.setFamily("Geneva");
-        splashFont.setPointSize(11);
-#elif defined(Q_OS_MACOS)
-        splashFont.setFamily("Helvetica Neue");
+        QFont splashFont(splashFontFamily());
+#ifdef Q_OS_MACOS
         splashFont.setPointSize(10);
 #else
-        splashFont.setFamily("Segoe UI");
         splashFont.setPointSize(11);
 #endif
         splashFont.setWeight(QFont::DemiBold);

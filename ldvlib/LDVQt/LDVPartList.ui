@@ -181,7 +181,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="snapshotButton">
+           <widget class="QPushButton" name="snapshotButton">
             <property name="toolTip">
              <string>Select snapshot image</string>
             </property>

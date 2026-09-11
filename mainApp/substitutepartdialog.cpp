@@ -474,7 +474,7 @@ void SubstitutePartDialog::typeChanged(Which attribute)
         if (newType != currentType) {
             ui->substituteEdit->setText(newType);
         } else {
-            ui->messageLbl->setText(QString("Part type %1 is the same as current type.").arg(currentType));
+            ui->messageLbl->setText(tr("Part type %1 is the same as current type.").arg(currentType));
             if (Preferences::darkTheme) {
                 const QString themeColor = Preferences::themeColors[THEME_DARK_DECORATE_LPUB3D_QUOTED_TEXT];
                 ui->messageLbl->setStyleSheet("QLabel { color : " + themeColor + "; }");
@@ -491,7 +491,7 @@ void SubstitutePartDialog::typeChanged(Which attribute)
             mModified = true;
         } else {
             if (!type.isEmpty()) {
-                ui->messageLbl->setText(QString("Part type %1 was not found.").arg(type));
+                ui->messageLbl->setText(tr("Part type %1 was not found.").arg(type));
                 ui->messageLbl->setStyleSheet("QLabel { color : red; }");
             }
         }
@@ -503,7 +503,7 @@ void SubstitutePartDialog::typeChanged(Which attribute)
         if (newType != currentType) {
             ui->ldrawEdit->setText(newType);
         } else {
-            ui->messageLbl->setText(QString("Part type %1 is the same as substitute type.").arg(currentType));
+            ui->messageLbl->setText(tr("Part type %1 is the same as substitute type.").arg(currentType));
             if (Preferences::darkTheme) {
                 const QString themeColor = Preferences::themeColors[THEME_DARK_DECORATE_LPUB3D_QUOTED_TEXT];
                 ui->messageLbl->setStyleSheet("QLabel { color : " + themeColor + "; }");
@@ -520,7 +520,7 @@ void SubstitutePartDialog::typeChanged(Which attribute)
             mModified = true;
         } else {
             if (!type.isEmpty()) {
-                ui->messageLbl->setText(QString("Part type %1 was not found.").arg(type));
+                ui->messageLbl->setText(tr("Part type %1 was not found.").arg(type));
                 ui->messageLbl->setStyleSheet("QLabel { color : red; }");
             }
         }

@@ -2700,6 +2700,36 @@
         <source>Image Files (*.png *.jpg *.jpeg *.bmp)</source>
         <translation>图像文件 (*.png *.jpg *.jpeg *.bmp)</translation>
     </message>
+    <message>
+        <location filename="../metagui.cpp" line="3504" />
+        <location filename="../metagui.cpp" line="3639" />
+        <source>None (transparent)</source>
+        <translation>无（透明）</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3505" />
+        <location filename="../metagui.cpp" line="3645" />
+        <source>Solid Color</source>
+        <translation>纯色</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3506" />
+        <location filename="../metagui.cpp" line="3647" />
+        <source>Gradient</source>
+        <translation>渐变</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3508" />
+        <location filename="../metagui.cpp" line="3641" />
+        <source>Picture</source>
+        <translation>图片</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="3509" />
+        <location filename="../metagui.cpp" line="3512" />
+        <source>Submodel Level Color</source>
+        <translation>子模型层级颜色</translation>
+    </message>
 </context>
 <context>
     <name>BlenderPreferences</name>
@@ -3750,6 +3780,51 @@
         <source>Set Home viewpoint angles to use specified latitude and longitude.</source>
         <translation>将主视点角度设为指定的纬度与经度。</translation>
     </message>
+    <message>
+        <location filename="../metagui.cpp" line="5296" />
+        <source>Front</source>
+        <translation>前面</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5297" />
+        <source>Back</source>
+        <translation>后面</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5298" />
+        <source>Top</source>
+        <translation>顶部</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5299" />
+        <source>Bottom</source>
+        <translation>底部</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5300" />
+        <source>Left</source>
+        <translation>左侧</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5301" />
+        <source>Right</source>
+        <translation>右侧</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5302" />
+        <source>Home</source>
+        <translation>主视点</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5303" />
+        <source>Latitude/Longitude</source>
+        <translation>纬度/经度</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5304" />
+        <source>Default</source>
+        <translation>默认</translation>
+    </message>
 </context>
 <context>
     <name>CameraDDFGui</name>
@@ -4627,6 +4702,31 @@ You may want to update the part content and custom color parts list.</source>
         <location filename="../metagui.cpp" line="1074" />
         <source>Auto</source>
         <translation>自动</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="982" />
+        <source>Area</source>
+        <translation>面积</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="983" />
+        <source>Square</source>
+        <translation>方形</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="984" />
+        <source>Width</source>
+        <translation>宽度</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="985" />
+        <source>Height</source>
+        <translation>高度</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="986" />
+        <source>Columns</source>
+        <translation>列数</translation>
     </message>
 </context>
 <context>
@@ -16231,6 +16331,12 @@ into effect until the next time a model is loaded.</source>
         <source>Select Light Color</source>
         <translation>选择光源颜色</translation>
     </message>
+    <message>
+        <location filename="../../ldvlib/LDVQt/LDViewExportOption.cpp" line="211" />
+        <location filename="../../ldvlib/LDVQt/LDViewExportOption.cpp" line="625" />
+        <source>Reset Group</source>
+        <translation>重置分组</translation>
+    </message>
 </context>
 <context>
     <name>LDrawColorDialog</name>
@@ -19595,7 +19701,15 @@ Are you sure you want to continue ? </source>
         <source>Locate %1</source>
         <translation>定位 %1</translation>
     </message>
-</context>
+<message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="8566" />
+        <location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="8662" />
+        <source>Browse...</source>
+        <translation>浏览...</translation>
+    <translation>浏览...</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="8613" />
+        <location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="8626" />
+        <source>Program %1</source>
+        <translation>程序 %1</translation>
+    <translation>程序 %1</translation></message></context>
 <context>
     <name>OptionDialog</name>
     <message>
@@ -20899,7 +21013,19 @@ Archived %3 %4</source>
         <source>Sort By</source>
         <translation>排序依据</translation>
     </message>
-</context>
+<message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6150" />
+        <source>Part Category</source>
+        <translation>零件类别</translation>
+    <translation>零件类别</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6149" />
+        <source>Part Color</source>
+        <translation>零件颜色</translation>
+    <translation>零件颜色</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6152" />
+        <source>Part Element</source>
+        <translation>零件元素</translation>
+    <translation>零件元素</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6148" />
+        <source>Part Size</source>
+        <translation>零件尺寸</translation>
+    <translation>零件尺寸</translation></message></context>
 <context>
     <name>PliSortOrderGui</name>
     <message>
@@ -20950,7 +21076,22 @@ Archived %3 %4</source>
         <source>Tertiary</source>
         <translation>第三</translation>
     </message>
-</context>
+<message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6290" />
+        <source>No Sort</source>
+        <translation>不排序</translation>
+    <translation>不排序</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6287" />
+        <source>Part Category</source>
+        <translation>零件类别</translation>
+    <translation>零件类别</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6286" />
+        <source>Part Color</source>
+        <translation>零件颜色</translation>
+    <translation>零件颜色</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6289" />
+        <source>Part Element</source>
+        <translation>零件元素</translation>
+    <translation>零件元素</translation></message><message><location filename="../Users/allan/Documents/Work/IO Enhancement/myLPub3D/mainApp/metagui.cpp" line="6288" />
+        <source>Part Size</source>
+        <translation>零件尺寸</translation>
+    <translation>零件尺寸</translation></message></context>
 <context>
     <name>PointerAttribGui</name>
     <message>
@@ -23554,6 +23695,11 @@ Are you sure you want to continue? </source>
         <location filename="../preferencesdialog.cpp" line="3746" />
         <source>The action %1 for this keyboard shortcut %2 was not found.</source>
         <translation>未找到键盘快捷键 %2 对应的操作 %1。</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="1853" />
+        <source>Cleared %1 model line parse errors</source>
+        <translation>已清除 %1 模型行解析错误</translation>
     </message>
 </context>
 <context>
@@ -32837,6 +32983,21 @@ You can edit the library path in the Preferences dialogue.
         <source>dots per inch (DPI) unit</source>
         <translation>每英寸点数 (DPI) 单位</translation>
     </message>
+    <message>
+        <location filename="../range.cpp" line="632" />
+        <source>Step Rectangle [%1 x %2 px] - right-click to modify</source>
+        <translation>步骤矩形 [%1 x %2 px] - 右键修改</translation>
+    </message>
+    <message>
+        <location filename="../calloutpointeritem.cpp" line="153" />
+        <source>Pointer segment %1 - drag to move; right click to modify</source>
+        <translation>指针段 %1 - 拖动移动；右键修改</translation>
+    </message>
+    <message>
+        <location filename="../reserve.cpp" line="87" />
+        <source>Reserve Rectangle [%1 x %2 px]</source>
+        <translation>预留矩形 [%1 x %2 px]</translation>
+    </message>
 </context>
 <context>
     <name>QuaGzipFile</name>
@@ -33462,6 +33623,17 @@ You can edit the library path in the Preferences dialogue.
         <source>Reset</source>
         <translation>重置</translation>
     </message>
+    <message>
+        <location filename="../metagui.cpp" line="5000" />
+        <source>Dots Per Inch</source>
+        <translation>每英寸点数</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="5001" />
+        <location filename="../metagui.cpp" line="5052" />
+        <source>Dots Per Centimetre</source>
+        <translation>每厘米点数</translation>
+    </message>
 </context>
 <context>
     <name>RotStepDialog</name>
@@ -33604,6 +33776,21 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../metagui.cpp" line="4798" />
         <source>Margins</source>
         <translation>边距</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4752" />
+        <source>Default</source>
+        <translation>默认</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4753" />
+        <source>Page</source>
+        <translation>页面</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="4754" />
+        <source>Custom</source>
+        <translation>自定义</translation>
     </message>
 </context>
 <context>
@@ -34986,6 +35173,66 @@ You can edit the library path in the Preferences dialogue.
         <source>Stud style</source>
         <translation>凸点样式</translation>
     </message>
+    <message>
+        <location filename="../metagui.cpp" line="1277" />
+        <source>0 Plain</source>
+        <translation>0 普通</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1278" />
+        <source>1 Thin Line Logo</source>
+        <translation>1 细线标志</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1279" />
+        <source>2 Outline Logo</source>
+        <translation>2 轮廓标志</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1280" />
+        <source>3 Sharp Top Logo</source>
+        <translation>3 顶部锐利标志</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1281" />
+        <source>4 Rounded Top Logo</source>
+        <translation>4 顶部圆润标志</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1282" />
+        <source>5 Flattened Logo</source>
+        <translation>5 扁平标志</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1283" />
+        <source>6 High Contrast</source>
+        <translation>6 高对比度</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1284" />
+        <source>7 High Contrast with Logo</source>
+        <translation>7 高对比度带标志</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1345" />
+        <source>Automate Edge Colors Conflict</source>
+        <translation>自动边色冲突</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1346" />
+        <source>High contrast stud style settings are ignored when automate edge colors is enabled.&lt;br&gt;Do you want to continue ?</source>
+        <translation>启用自动边色时，高对比度凸点样式设置将被忽略。&lt;br&gt;是否继续？</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1364" />
+        <source>High Contrast Conflict</source>
+        <translation>高对比度冲突</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="1365" />
+        <source>High contrast stud style settings are ignored when automate edge colors is enabled.&lt;br&gt;Would you like to disable automate edge colors ?</source>
+        <translation>启用自动边色时，高对比度凸点样式设置将被忽略。&lt;br&gt;是否禁用自动边色？</translation>
+    </message>
 </context>
 <context>
     <name>SubModelBackgroundItem</name>
@@ -35208,6 +35455,22 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../substitutepartdialog.cpp" line="386" />
         <source>Less...</source>
         <translation>更少...</translation>
+    </message>
+    <message>
+        <location filename="../substitutepartdialog.cpp" line="477" />
+        <source>Part type %1 is the same as current type.</source>
+        <translation>零件类型 %1 与当前类型相同。</translation>
+    </message>
+    <message>
+        <location filename="../substitutepartdialog.cpp" line="494" />
+        <location filename="../substitutepartdialog.cpp" line="523" />
+        <source>Part type %1 was not found.</source>
+        <translation>未找到零件类型 %1。</translation>
+    </message>
+    <message>
+        <location filename="../substitutepartdialog.cpp" line="506" />
+        <source>Part type %1 is the same as substitute type.</source>
+        <translation>零件类型 %1 与替换类型相同。</translation>
     </message>
 </context>
 <context>
@@ -35487,6 +35750,21 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../texteditdialog.cpp" line="432" />
         <source>There is unsaved content in the current document.&lt;br&gt;Do you want to save your changes?</source>
         <translation>当前文档中有未保存的内容。&lt;br&gt;是否保存你的更改？</translation>
+    </message>
+    <message>
+        <location filename="../texteditdialog.cpp" line="204" />
+        <source>Edit %1 Text</source>
+        <translation>编辑%1</translation>
+    </message>
+    <message>
+        <location filename="../texteditdialog.cpp" line="204" />
+        <source>Rich</source>
+        <translation>富文本</translation>
+    </message>
+    <message>
+        <location filename="../texteditdialog.cpp" line="204" />
+        <source>Plain</source>
+        <translation>纯文本</translation>
     </message>
 </context>
 <context>
@@ -41550,6 +41828,24 @@ BlendFuncSeparate：%4
         <location filename="../../lclib/common/lc_viewwidget.cpp" line="79" />
         <source>%1 Preview</source>
         <translation>%1 预览</translation>
+    </message>
+</context>
+<context>
+    <name>SplashScreen</name>
+    <message>
+        <location filename="../application.cpp" line="704" />
+        <source>LDRAW Building Instructions</source>
+        <translation>LDRAW 拼搭说明书</translation>
+    </message>
+    <message>
+        <location filename="../application.cpp" line="721" />
+        <source>Version %1</source>
+        <translation>版本 %1</translation>
+    </message>
+    <message>
+        <location filename="../application.cpp" line="730" />
+        <source>© %1 DoubleEagle · Based on LPub3D © 2015-2025 Trevor Sandy</source>
+        <translation>© %1 DoubleEagle · 基于 LPub3D © 2015-2025 Trevor Sandy</translation>
     </message>
 </context>
 </TS>

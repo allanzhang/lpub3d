@@ -354,7 +354,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="extendedSearchOptionsBtn">
+             <widget class="QPushButton" name="extendedSearchOptionsBtn">
               <property name="toolTip">
                <string>Select paths to include in the extended search paths list</string>
               </property>
@@ -1168,7 +1168,7 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_20">
               <item row="6" column="2">
-               <widget class="QToolButton" name="resetFarPlane">
+               <widget class="QPushButton" name="resetFarPlane">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1178,7 +1178,7 @@
                </widget>
               </item>
               <item row="5" column="2">
-               <widget class="QToolButton" name="resetNearPlane">
+               <widget class="QPushButton" name="resetNearPlane">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1222,7 +1222,7 @@
                </widget>
               </item>
               <item row="4" column="2">
-               <widget class="QToolButton" name="resetFoV">
+               <widget class="QPushButton" name="resetFoV">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1259,7 +1259,7 @@
                </widget>
               </item>
               <item row="4" column="5">
-               <widget class="QToolButton" name="resetDefaultDistanceFactor">
+               <widget class="QPushButton" name="resetDefaultDistanceFactor">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1303,7 +1303,7 @@
                </widget>
               </item>
               <item row="5" column="5">
-               <widget class="QToolButton" name="resetDefaultPosition">
+               <widget class="QPushButton" name="resetDefaultPosition">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1365,7 +1365,7 @@
             <widget class="QWidget" name="renderingWidget" native="true">
              <layout class="QGridLayout" name="gridLayout_19">
               <item row="3" column="7">
-               <widget class="QToolButton" name="ResetHighlightNewPartsButton">
+               <widget class="QPushButton" name="ResetHighlightNewPartsButton">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1375,7 +1375,7 @@
                </widget>
               </item>
               <item row="4" column="7">
-               <widget class="QToolButton" name="AutomateEdgeColorButton">
+               <widget class="QPushButton" name="AutomateEdgeColorButton">
                 <property name="toolTip">
                  <string>Automate edge color settings</string>
                 </property>
@@ -1422,7 +1422,7 @@
                </widget>
               </item>
               <item row="3" column="6">
-               <widget class="QToolButton" name="HighlightNewPartsColor">
+               <widget class="QPushButton" name="HighlightNewPartsColor">
                 <property name="text">
                  <string/>
                 </property>
@@ -1439,7 +1439,7 @@
                </widget>
               </item>
               <item row="2" column="7">
-               <widget class="QToolButton" name="ResetFadeStepsButton">
+               <widget class="QPushButton" name="ResetFadeStepsButton">
                 <property name="toolTip">
                  <string>Reset</string>
                 </property>
@@ -1459,7 +1459,7 @@
                </widget>
               </item>
               <item row="2" column="6">
-               <widget class="QToolButton" name="FadeStepsColor">
+               <widget class="QPushButton" name="FadeStepsColor">
                 <property name="text">
                  <string/>
                 </property>
@@ -1535,7 +1535,7 @@
                </widget>
               </item>
               <item row="1" column="4">
-               <widget class="QToolButton" name="LineWidthMaxGranularityButton">
+               <widget class="QPushButton" name="LineWidthMaxGranularityButton">
                 <property name="toolTip">
                  <string>Edge line smoothing granularity setting</string>
                 </property>
@@ -1589,7 +1589,7 @@
                </widget>
               </item>
               <item row="4" column="4">
-               <widget class="QToolButton" name="HighContrastButton">
+               <widget class="QPushButton" name="HighContrastButton">
                 <property name="toolTip">
                  <string>High contrast stud and edge color settings</string>
                 </property>
@@ -2825,7 +2825,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="sceneBackgroundColorButton">
+              <widget class="QPushButton" name="sceneBackgroundColorButton">
                <property name="toolTip">
                 <string>Set scene background color</string>
                </property>
@@ -2848,7 +2848,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="sceneRulerTickColorButton">
+              <widget class="QPushButton" name="sceneRulerTickColorButton">
                <property name="toolTip">
                 <string>Set ruler tick mark color</string>
                </property>
@@ -2871,7 +2871,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="sceneGuideColorButton">
+              <widget class="QPushButton" name="sceneGuideColorButton">
                <property name="toolTip">
                 <string>Set scene guides line color</string>
                </property>
@@ -2891,7 +2891,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="sceneGridColorButton">
+              <widget class="QPushButton" name="sceneGridColorButton">
                <property name="toolTip">
                 <string>Set scene grid lines color</string>
                </property>
@@ -2914,7 +2914,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QToolButton" name="sceneRulerTrackingColorButton">
+              <widget class="QPushButton" name="sceneRulerTrackingColorButton">
                <property name="toolTip">
                 <string>Set ruler tracking indicator color</string>
                </property>

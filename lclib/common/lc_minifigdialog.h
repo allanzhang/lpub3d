@@ -1,6 +1,7 @@
 #pragma once
 
 #include "minifig.h"
+#include <QPushButton>
 
 class lcColorPicker;
 class lcDoubleSpinBox;
@@ -37,7 +38,7 @@ protected:
 	Ui::lcMinifigDialog* ui;
 
 	lcView* mView;
-	std::array<QToolButton*, LC_MFW_NUMITEMS> mPieceButtons;
+	std::array<QPushButton*, LC_MFW_NUMITEMS> mPieceButtons;
 	std::array<lcColorPicker*, LC_MFW_NUMITEMS> mColorPickers;
 	std::array<lcDoubleSpinBox*, LC_MFW_NUMITEMS> mSpinBoxes;
 

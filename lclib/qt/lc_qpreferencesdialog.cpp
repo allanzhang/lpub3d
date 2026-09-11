@@ -81,38 +81,38 @@ lcQPreferencesDialog::lcQPreferencesDialog(QWidget* Parent)
 ***/
 /*** LPub3D Mod end ***/
 
-	connect(ui->BackgroundSolidColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->BackgroundGradient1ColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->BackgroundGradient2ColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ActiveViewColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->InactiveViewColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->AxesColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->TextColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->MarqueeBorderColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->MarqueeFillColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->OverlayColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->FadeStepsColor, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->HighlightNewPartsColor, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->gridStudColor, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->gridLineColor, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ViewSphereColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ViewSphereTextColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ViewSphereHighlightColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ObjectSelectedColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ObjectFocusedColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->CameraColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->LightColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ControlPointColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
-	connect(ui->ControlPointFocusedColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->BackgroundSolidColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->BackgroundGradient1ColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->BackgroundGradient2ColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ActiveViewColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->InactiveViewColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->AxesColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->TextColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->MarqueeBorderColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->MarqueeFillColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->OverlayColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->FadeStepsColor, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->HighlightNewPartsColor, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->gridStudColor, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->gridLineColor, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ViewSphereColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ViewSphereTextColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ViewSphereHighlightColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ObjectSelectedColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ObjectFocusedColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->CameraColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->LightColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ControlPointColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->ControlPointFocusedColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
 /*** LPub3D Mod - Build mod object selected colour ***/
-	connect(ui->BMObjectSelectedColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
+	connect(ui->BMObjectSelectedColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::ColorButtonClicked);
 /*** LPub3D Mod end ***/
 	connect(ui->categoriesTree, &QTreeWidget::itemSelectionChanged, this, &lcQPreferencesDialog::updateParts);
 	ui->shortcutEdit->installEventFilter(this);
 	connect(ui->commandList, &QTreeWidget::currentItemChanged, this, &lcQPreferencesDialog::commandChanged);
 	connect(ui->mouseTree, &QTreeWidget::currentItemChanged, this, &lcQPreferencesDialog::MouseTreeItemChanged);
-	connect(ui->HighContrastButton, &QToolButton::clicked, this, &lcQPreferencesDialog::AutomateEdgeColor);
-	connect(ui->AutomateEdgeColorButton, &QToolButton::clicked, this, &lcQPreferencesDialog::AutomateEdgeColor);
+	connect(ui->HighContrastButton, &QPushButton::clicked, this, &lcQPreferencesDialog::AutomateEdgeColor);
+	connect(ui->AutomateEdgeColorButton, &QPushButton::clicked, this, &lcQPreferencesDialog::AutomateEdgeColor);
 /*** LPub3D Mod - Reset fade/highlight default colours ***/
 	connect(ui->ResetFadeStepsButton, SIGNAL(clicked()), this, SLOT(ResetFadeHighlightColor()));
 	connect(ui->ResetHighlightNewPartsButton, SIGNAL(clicked()), this, SLOT(ResetFadeHighlightColor()));
@@ -324,7 +324,7 @@ void lcQPreferencesDialog::setOptions(lcPreferencesDialogOptions* Options)
 		ui->ShadingMode->removeItem(static_cast<int>(lcShadingMode::DefaultLights));
 	ui->ShadingMode->setCurrentIndex(static_cast<int>(mOptions->Preferences.mShadingMode));
 
-	auto SetButtonPixmap = [](quint32 Color, QToolButton* Button)
+	auto SetButtonPixmap = [](quint32 Color, QPushButton* Button)
 	{
 		QPixmap Pixmap(12, 12);
 
@@ -842,7 +842,7 @@ void lcQPreferencesDialog::ColorButtonClicked()
 
 	newColor.setAlpha(255);
 	pix.fill(newColor);
-	((QToolButton*)Button)->setIcon(pix);
+	((QPushButton*)Button)->setIcon(pix);
 }
 
 /*** LPub3D Mod - Reset fade/highlight default colours ***/
@@ -1825,7 +1825,7 @@ void lcQPreferencesDialog::on_ResetColorsButton_clicked()
 	if (QMessageBox::question(this, "Visual Editor", question, QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes)
 		return;
 
-	auto SetButtonPixmap = [](quint32 Color, QToolButton* Button)
+	auto SetButtonPixmap = [](quint32 Color, QPushButton* Button)
 	{
 		QPixmap Pixmap(12, 12);
 

@@ -208,7 +208,7 @@ void LDViewExportOption::populateExportSettings(void)
 					QHBoxLayout *hbox;
 					QPushButton *rg;
 					hbox = new QHBoxLayout();
-					rg = new QPushButton("Reset Group");
+					rg = new QPushButton(tr("Reset Group"));
 					sp = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 					hbox->addItem(sp);
 					hbox->addWidget(rg);
@@ -418,7 +418,7 @@ void LDViewExportOption::populateExportSettings(void)
 					// row 5
 					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 					grid->addItem(sp,5,0);
-					m_PovLightOptColorBtn = new QToolButton(this);
+					m_PovLightOptColorBtn = new QPushButton(this);
 					m_PovLightOptColorBtn->setToolTip(TCObject::ls("PovLightColorTT"));
 					grid->addWidget(m_PovLightOptColorBtn,5,1);
 
@@ -562,7 +562,7 @@ void LDViewExportOption::populateExportSettings(void)
 
 					setLights();
 
-					connect( m_PovLightOptColorBtn, &QToolButton::clicked, this, &LDViewExportOption::colorButtonClicked);
+					connect( m_PovLightOptColorBtn, &QPushButton::clicked, this, &LDViewExportOption::colorButtonClicked);
 					connect( m_PovLightCombo, SIGNAL( currentIndexChanged(int) ), this, SLOT( selectLight(int)));
 					connect( m_PovLightOptIntensityDSpin, SIGNAL( valueChanged(double) ), this, SLOT( setLights(double) ) );
 					connect( m_PovLightOptLatitudeDSpin, SIGNAL( valueChanged(double) ), this, SLOT( setLights(double) ) );
@@ -622,7 +622,7 @@ void LDViewExportOption::populateExportSettings(void)
 		QHBoxLayout *hbox;
 		QPushButton *rg;
 		hbox = new QHBoxLayout();
-		rg = new QPushButton("Reset Group");
+		rg = new QPushButton(tr("Reset Group"));
 		rg->setObjectName("Reset Group");
 		hbox->addItem(sp);
 		hbox->addWidget(rg);
@@ -847,7 +847,7 @@ void LDViewExportOption::selectLight(int lightIndex)
 	if (!m_PovLightMap.contains(lightIndex))
 		return;
 
-	auto setButtonPixmap = [&](float *color, QToolButton* button)
+	auto setButtonPixmap = [&](float *color, QPushButton* button)
 	{
 		QPixmap pixmap(12, 12);
 		QColor btnColor = QColor(color[0] * 255, color[1] * 255, color[2] * 255);
@@ -1081,8 +1081,8 @@ void LDViewExportOption::colorButtonClicked()
 	QPixmap pix(12, 12);
 	newColor.setAlpha(255);
 	pix.fill(newColor);
-	((QToolButton*)button)->setIcon(pix);
-	((QToolButton*)button)->setToolTip(tr("Name: %7 R(%1,%2) G(%3,%4) B(%5,%6)")
+	((QPushButton*)button)->setIcon(pix);
+	((QPushButton*)button)->setToolTip(tr("Name: %7 R(%1,%2) G(%3,%4) B(%5,%6)")
 											 .arg(newColor.red()).arg(color[0],0,'f',3)
 											 .arg(newColor.green()).arg(color[1],0,'f',3)
 											 .arg(newColor.blue()).arg(color[2],0,'f',3)

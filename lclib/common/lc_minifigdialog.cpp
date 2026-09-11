@@ -1,4 +1,5 @@
 #include "lc_global.h"
+#include <QPushButton>
 #include "lc_minifigdialog.h"
 #include "ui_lc_minifigdialog.h"
 #include "lc_viewwidget.h"
@@ -41,13 +42,12 @@ lcMinifigDialog::lcMinifigDialog(QWidget* Parent)
 	{
 		bool Left = IsLeft[ItemIndex];
 
-		lcElidableToolButton* PieceButton = new lcElidableToolButton(this);
+		QPushButton* PieceButton = new QPushButton(this);
 		mPieceButtons[ItemIndex] = PieceButton;
 		PieceButton->setSizePolicy(PieceButtonSizePolicy);
-		PieceButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-		PieceButton->setIcon(Pixmap);
+				PieceButton->setIcon(Pixmap);
 
-		connect(PieceButton, &QToolButton::clicked, this, &lcMinifigDialog::PieceButtonClicked);
+		connect(PieceButton, &QPushButton::clicked, this, &lcMinifigDialog::PieceButtonClicked);
 
 		lcColorPicker* ColorPicker = new lcColorPicker(this);
 		mColorPickers[ItemIndex] = ColorPicker;
@@ -120,7 +120,7 @@ lcMinifigDialog::lcMinifigDialog(QWidget* Parent)
 	{
 		const std::vector<lcMinifigPieceInfo>& PieceList = mMinifigWizard->mSettings[ItemIndex];
 		int PieceIndex = mMinifigWizard->GetSelectionIndex(ItemIndex);
-		QToolButton* PieceButton = mPieceButtons[ItemIndex];
+		QPushButton* PieceButton = mPieceButtons[ItemIndex];
 
 		PieceButton->setText(PieceList[PieceIndex].Description);
 
@@ -349,12 +349,12 @@ void lcMinifigDialog::SetCurrentTemplateModified()
 
 void lcMinifigDialog::PieceButtonClicked()
 {
-	QToolButton* PieceButton = qobject_cast<QToolButton*>(sender());
+	QPushButton* PieceButton = qobject_cast<QPushButton*>(sender());
 
 	if (!PieceButton)
 		return;
 
-	std::array<QToolButton*, LC_MFW_NUMITEMS>::iterator Search = std::find(mPieceButtons.begin(), mPieceButtons.end(), PieceButton);
+	std::array<QPushButton*, LC_MFW_NUMITEMS>::iterator Search = std::find(mPieceButtons.begin(), mPieceButtons.end(), PieceButton);
 
 	if (Search == mPieceButtons.end())
 		return;

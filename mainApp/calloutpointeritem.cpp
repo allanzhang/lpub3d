@@ -150,7 +150,7 @@ CalloutPointerItem::CalloutPointerItem(
       shaft = new BorderedLineItem(linef,pad,this);
       shaft->setPen(shaftPen);
       shaft->setFlag(QGraphicsItem::ItemIsSelectable,false);
-      shaft->setToolTip(QString("Pointer segment %1 - drag to move; right click to modify").arg(i+1));
+      shaft->setToolTip(QObject::tr("Pointer segment %1 - drag to move; right click to modify").arg(i+1));
       shaftSegments.append(shaft);
       addToGroup(shaft);
   }

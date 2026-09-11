@@ -46,6 +46,7 @@ public:
 /// lower part of the splash image (progress bar plus caption).
 class SplashScreen : public QSplashScreen
 {
+    Q_OBJECT
 public:
     explicit SplashScreen(const QPixmap &pixmap);
 

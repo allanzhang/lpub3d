@@ -395,8 +395,8 @@ private:
   AutoEdgeColorMeta     *autoEdgeMeta;
   QCheckBox             *checkbox;
   QComboBox             *combo;
-  QToolButton           *studStyleButton;
-  QToolButton           *autoEdgeButton;
+  QPushButton           *studStyleButton;
+  QPushButton           *autoEdgeButton;
 
   bool    contrastModified;
   bool    saturationModified;
@@ -2333,9 +2333,9 @@ private:
     LBL_RESOLUTION,          // 6  QLineEdit
     LBL_SCALE,               // 7  QLineEdit
     LBL_QUALITY,             // 8  QComboBox
-    LBL_TARGET_AND_ROTATE,   // 9  QToolButton
-    LBL_LDV_EXPORT_SETTINGS, // 10 QToolButton
-    LBL_LDV_LDRAW_SETTINGS,  // 11 QToolButton
+    LBL_TARGET_AND_ROTATE,   // 9  QPushButton
+    LBL_LDV_EXPORT_SETTINGS, // 10 QPushButton
+    LBL_LDV_LDRAW_SETTINGS,  // 11 QPushButton
 
     NUM_SETTINGS
   };
@@ -2362,7 +2362,7 @@ private:
   QList<QCheckBox *> checkBoxList;
   QList<QLineEdit *> lineEditList;
   QList<QAction *> resetEditActList;
-  QList<QToolButton *> toolButtonList;
+  QList<QPushButton *> toolButtonList;
 
   QStringList mCsiKeyList, editedCsiKeyList;
 

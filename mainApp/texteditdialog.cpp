@@ -201,7 +201,7 @@ TextEditDialog::~TextEditDialog()
 void TextEditDialog::on_actionRichText_triggered()
 {
     richText = ui->actionRichText->isChecked();
-    setWindowTitle(QString("Edit %1 Text").arg(richText ? "Rich" : "Plain"));
+    setWindowTitle(tr("Edit %1 Text").arg(richText ? tr("Rich") : tr("Plain")));
     fontChanged(ui->textEdit->font());
 }
 

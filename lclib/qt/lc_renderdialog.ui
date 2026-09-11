@@ -32,7 +32,7 @@
         <widget class="QLineEdit" name="OutputEdit"/>
        </item>
        <item>
-        <widget class="QToolButton" name="OutputBrowseButton">
+        <widget class="QPushButton" name="OutputBrowseButton">
          <property name="text">
           <string>...</string>
          </property>

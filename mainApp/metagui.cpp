@@ -979,11 +979,11 @@ ConstrainGui::ConstrainGui(
   }
 
   combo = new QComboBox(this);
-  combo->addItem("Area");
-  combo->addItem("Square");
-  combo->addItem("Width");
-  combo->addItem("Height");
-  combo->addItem("Columns");
+  combo->addItem(tr("Area"));
+  combo->addItem(tr("Square"));
+  combo->addItem(tr("Width"));
+  combo->addItem(tr("Height"));
+  combo->addItem(tr("Columns"));
   combo->setCurrentIndex(int(constraint.type));
   connect(combo,SIGNAL(currentTextChanged(const QString&)),
           this,   SLOT(         typeChange(const QString&)));
@@ -1009,14 +1009,14 @@ void ConstrainGui::typeChange(const QString &type)
 {
   ConstrainData _data = meta->valueUnit();
   QString string = "";
-  if (type == "Area") {
+  if (type == tr("Area")) {
     _data.type = ConstrainData::PliConstrainArea;
-  } else if (type == "Square") {
+  } else if (type == tr("Square")) {
     _data.type = ConstrainData::PliConstrainSquare;
-  } else if (type == "Width") {
+  } else if (type == tr("Width")) {
     _data.type = ConstrainData::PliConstrainWidth;
     string = QString::number(_data.constraint.width,'f',2);
-  } else if (type == "Height") {
+  } else if (type == tr("Height")) {
     _data.type = ConstrainData::PliConstrainHeight;
     string = QString::number(_data.constraint.height,'f',2);
   } else {
@@ -1267,24 +1267,24 @@ StudStyleGui::StudStyleGui(
   checkbox->setText(tr("Automate edge colors"));
   checkbox->setChecked(autoEdgeMeta->enable.value());
 
-  autoEdgeButton = new QToolButton(parent);
+  autoEdgeButton = new QPushButton(parent);
   autoEdgeButton->setEnabled(checkbox->isChecked());
   autoEdgeButton->setText(tr("Settings..."));
 
   QLabel *label = new QLabel(tr("Stud style"), parent);
 
   combo = new QComboBox(parent);
-  combo->addItem("0 Plain");
-  combo->addItem("1 Thin Line Logo");
-  combo->addItem("2 Outline Logo");
-  combo->addItem("3 Sharp Top Logo");
-  combo->addItem("4 Rounded Top Logo");
-  combo->addItem("5 Flattened Logo");
-  combo->addItem("6 High Contrast");
-  combo->addItem("7 High Contrast with Logo");
+  combo->addItem(tr("0 Plain"));
+  combo->addItem(tr("1 Thin Line Logo"));
+  combo->addItem(tr("2 Outline Logo"));
+  combo->addItem(tr("3 Sharp Top Logo"));
+  combo->addItem(tr("4 Rounded Top Logo"));
+  combo->addItem(tr("5 Flattened Logo"));
+  combo->addItem(tr("6 High Contrast"));
+  combo->addItem(tr("7 High Contrast with Logo"));
   combo->setCurrentIndex(int(studStyleMeta->value()));
 
-  studStyleButton = new QToolButton(parent);
+  studStyleButton = new QPushButton(parent);
   studStyleButton->setEnabled(combo->currentIndex() > 5);
   studStyleButton->setText(tr("Settings..."));
 
@@ -1342,9 +1342,9 @@ void StudStyleGui::checkBoxChanged(bool value)
   if ((autoEdgeModified = value != autoEdgeMeta->enable.value())) {
     if (value && combo->currentIndex() > 5) {
       if (QMessageBox::question(nullptr,
-        QString("Automate Edge Colors Conflict"),
-        QString("High contrast stud style settings are ignored when automate edge colors is enabled.<br>"
-                "Do you want to continue ?"),
+        tr("Automate Edge Colors Conflict"),
+        tr("High contrast stud style settings are ignored when automate edge colors is enabled.<br>"
+           "Do you want to continue ?"),
         QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Ok) {
         autoEdgeMeta->enable.setValue(value);
         modified = true;
@@ -1361,9 +1361,9 @@ void StudStyleGui::comboChanged(int value)
 {
   if ((studStyleModified = value != studStyleMeta->value())) {
     if (value > 5 && checkbox->isChecked() && QMessageBox::question(nullptr,
-      QString("High Contrast Conflict"),
-      QString("High contrast stud style settings are ignored when automate edge colors is enabled.<br>"
-              "Would you like to disable automate edge colors ?"),
+      tr("High Contrast Conflict"),
+      tr("High contrast stud style settings are ignored when automate edge colors is enabled.<br>"
+         "Would you like to disable automate edge colors ?"),
       QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Ok) {
       bool disable = false;
       checkbox->setChecked(disable);
@@ -3501,15 +3501,15 @@ BackgroundGui::BackgroundGui(
   }
 
   combo = new QComboBox(parent);
-  combo->addItem("None (transparent)");         // 0
-  combo->addItem("Solid Color");                // 1
-  combo->addItem("Gradient");                   // 2
+  combo->addItem(tr("None (transparent)"));      // 0
+  combo->addItem(tr("Solid Color"));             // 1
+  combo->addItem(tr("Gradient"));                // 2
   if (pictureSettings) {
-     combo->addItem("Picture");                 // 3
-     combo->addItem("Submodel Level Color");    // 4
+     combo->addItem(tr("Picture"));              // 3
+     combo->addItem(tr("Submodel Level Color")); // 4
      combo->setCurrentIndex(int(background.type));
   } else {
-     combo->addItem("Submodel Level Color");    //3
+     combo->addItem(tr("Submodel Level Color")); //3
      combo->setCurrentIndex(background.type == 4 ? 3 : int(background.type));
   }
   connect(combo,SIGNAL(currentTextChanged(const QString&)),
@@ -3636,15 +3636,15 @@ void BackgroundGui::typeChange(const QString &type)
 {
   BackgroundData background = meta->value();
 
-  if (type == "None (transparent)") {
+  if (type == tr("None (transparent)")) {
       background.type = BackgroundData::BgTransparent;
-    } else if (type == "Picture") {
+    } else if (type == tr("Picture")) {
       pictureEdit->setText(picture);
       background.string = picture;
       background.type = BackgroundData::BgImage;
-    } else if (type == "Solid Color") {
+    } else if (type == tr("Solid Color")) {
       background.type = BackgroundData::BgColor;
-    } else if (type == "Gradient") {
+    } else if (type == tr("Gradient")) {
       background.type = BackgroundData::BgGradient;
     } else {
       background.type = BackgroundData::BgSubmodelColor;
@@ -4749,9 +4749,9 @@ SepGui::SepGui(
   grid->addWidget(label,1,0);
 
   typeCombo = new QComboBox(parent);
-  typeCombo->addItem("Default");
-  typeCombo->addItem("Page");
-  typeCombo->addItem("Custom");
+  typeCombo->addItem(tr("Default"));
+  typeCombo->addItem(tr("Page"));
+  typeCombo->addItem(tr("Custom"));
   typeCombo->setCurrentIndex(int(data.type));
   connect(typeCombo,SIGNAL(currentIndexChanged(int)),
           this,       SLOT(         typeChange(int)));
@@ -4997,8 +4997,8 @@ ResolutionGui::ResolutionGui(
 
   QComboBox *combo;
   combo = new QComboBox(parent);
-  combo->addItem("Dots Per Inch");
-  combo->addItem("Dots Per Centimetre");
+  combo->addItem(tr("Dots Per Inch"));
+  combo->addItem(tr("Dots Per Centimetre"));
   combo->setCurrentIndex(int(dataT));
   connect(combo,SIGNAL(currentTextChanged(const QString&)),
           this,   SLOT(        unitsChange(const QString&)));
@@ -5049,7 +5049,7 @@ void ResolutionGui::unitsChange(const QString &units)
 {
   ResolutionType type;
 
-  if (units == "Dots Per Centimetre")
+  if (units == tr("Dots Per Centimetre"))
     type = DPCM;
   else
     type = DPI;
@@ -5293,15 +5293,15 @@ CameraAnglesGui::CameraAnglesGui(
   grid->addWidget(cameraViewLabel,1,0);
 
   cameraViewCombo = new QComboBox(parent);
-  cameraViewCombo->addItem("Front");
-  cameraViewCombo->addItem("Back");
-  cameraViewCombo->addItem("Top");
-  cameraViewCombo->addItem("Bottom");
-  cameraViewCombo->addItem("Left");
-  cameraViewCombo->addItem("Right");
-  cameraViewCombo->addItem("Home");
-  cameraViewCombo->addItem("Latitude/Longitude");
-  cameraViewCombo->addItem("Default");
+  cameraViewCombo->addItem(tr("Front"));
+  cameraViewCombo->addItem(tr("Back"));
+  cameraViewCombo->addItem(tr("Top"));
+  cameraViewCombo->addItem(tr("Bottom"));
+  cameraViewCombo->addItem(tr("Left"));
+  cameraViewCombo->addItem(tr("Right"));
+  cameraViewCombo->addItem(tr("Home"));
+  cameraViewCombo->addItem(tr("Latitude/Longitude"));
+  cameraViewCombo->addItem(tr("Default"));
   cameraViewCombo->setCurrentIndex(int(data.cameraView));
   connect(cameraViewCombo,SIGNAL(currentIndexChanged(int)),
           this,             SLOT(   cameraViewChange(int)));
@@ -6141,23 +6141,21 @@ PliSortGui::PliSortGui(
   label = new QLabel(tr("Sort By"),parent);
   grid->addWidget(label,0,0);
 
-  int currentIndex;
   sortOption  = meta->sortOption.value();
-  sortOption == SortOptionName[PartSize]     ? currentIndex = PartSize :
-  sortOption == SortOptionName[PartColour]   ? currentIndex = PartColour :
-  sortOption == SortOptionName[PartCategory] ? currentIndex = PartCategory :
-                                         bom ? currentIndex = PartElement :
-                                               currentIndex = PartSize;
 
   combo = new QComboBox(parent);
-  combo->addItem(SortOptionName[PartSize]);
-  combo->addItem(SortOptionName[PartColour]);
-  combo->addItem(SortOptionName[PartCategory]);
+  // display text is translated; the LPub token travels as item data
+  combo->addItem(tr("Part Size"),     SortOptionName[PartSize]);
+  combo->addItem(tr("Part Color"),    SortOptionName[PartColour]);
+  combo->addItem(tr("Part Category"), SortOptionName[PartCategory]);
   if (bom)
-      combo->addItem(SortOptionName[PartElement]);
-  combo->setCurrentIndex(currentIndex);
-  connect(combo,SIGNAL(currentTextChanged(const QString&)),
-          this,   SLOT(       optionChange(const QString&)));
+      combo->addItem(tr("Part Element"), SortOptionName[PartElement]);
+  const int currentIndex = combo->findData(sortOption);
+  combo->setCurrentIndex(currentIndex >= 0 ? currentIndex : 0);
+  connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+          this, [this](int index) {
+      optionChange(combo->itemData(index).toString());
+  });
   grid->addWidget(combo,0,1);
 
   modified = false;
@@ -6282,11 +6280,20 @@ PliSortOrderGui::PliSortOrderGui(
   tertiaryCombo  = new QComboBox(parent);
 
   const QList<QComboBox *> cbl = {primaryCombo, secondaryCombo, tertiaryCombo};
+  // display text is translated; the LPub token travels as item data and the
+  // item order (hence the index based orderChange slot) stays untouched
+  auto displayName = [this](const QString &so) {
+      if (so == SortOptionName[PartColour])   return tr("Part Color");
+      if (so == SortOptionName[PartCategory]) return tr("Part Category");
+      if (so == SortOptionName[PartSize])     return tr("Part Size");
+      if (so == SortOptionName[PartElement])  return tr("Part Element");
+      return tr("No Sort");
+  };
   for (const auto cb : cbl) {
       for (const auto &so : SortOptionName) {
           if (so == SortOptionName[PartElement] && !bom)
               continue;
-          cb->addItem(so);
+          cb->addItem(displayName(so), so);
       }
   }
 
@@ -8534,6 +8541,7 @@ void OpenWithProgramDialogGui::setProgramEntry(int i) {
 
     QLineEdit *programNameEdit = new QLineEdit(programName, dialog);
     programNameEdit->setClearButtonEnabled(true);
+    programNameEdit->setMinimumWidth(140);
     programNameEdit->setToolTip(tr("Edit program name"));
     if (i < programNameEditList.size()) {
         programsLayout->removeWidget(programNameEditList.at(i));
@@ -8545,6 +8553,7 @@ void OpenWithProgramDialogGui::setProgramEntry(int i) {
 
     QLineEdit *programPathEdit = new QLineEdit(programPath, dialog);
     programPathEdit->setClearButtonEnabled(true);
+    programPathEdit->setMinimumWidth(220);
     programPathEdit->setToolTip(tr("Edit program path - program arguments are supported, use quotes with spaced names"));
     if (i < programPathEditList.size()) {
         programsLayout->removeWidget(programPathEditList.at(i));
@@ -8554,7 +8563,7 @@ void OpenWithProgramDialogGui::setProgramEntry(int i) {
     }
     programsLayout->addWidget(programPathEdit,i,2);
 
-    QPushButton *programBrowseButton = new QPushButton(QString("Browse..."), dialog);
+    QPushButton *programBrowseButton = new QPushButton(tr("Browse..."), dialog);
     programBrowseButton->setProperty("programIndex",i);
     if (i < programBrowseButtonList.size()) {
         programsLayout->removeWidget(programBrowseButtonList.at(i));
@@ -8583,6 +8592,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     QLabel *maxProgramsLabel = new QLabel(tr("Program Slots:"), dialog);
 
     QSpinBox * maxProgramsSpinBox = new QSpinBox(dialog);
+    maxProgramsSpinBox->setMinimumWidth(60);
     maxProgramsSpinBox->setToolTip(tr("Adjust the number of program slots availabe in the dialogue"));
     maxProgramsSpinBox->setRange(1,100);
     maxProgramsSpinBox->setSingleStep(1);
@@ -8600,13 +8610,20 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     // open with programs
     if ( ! Settings.contains(QString("%1/%2").arg(SETTINGS,openWithProgramListKey))) {
         for (int i = 0; i < maxPrograms; i++)
-            programEntries.append(QString("Program %1|").arg(i + 1));
+            programEntries.append(tr("Program %1").arg(i + 1) + QLatin1Char('|'));
         Settings.setValue(QString("%1/%2").arg(SETTINGS,openWithProgramListKey), programEntries);
     } else {
         programEntries = Settings.value(QString("%1/%2").arg(SETTINGS,openWithProgramListKey)).toStringList();
         if (programEntries.size() > maxPrograms) {
             maxPrograms = programEntries.size();
             maxProgramsSpinBox->setValue(maxPrograms);
+        }
+        // migrate untranslated default names stored by earlier versions
+        for (int i = 0; i < programEntries.size(); ++i) {
+            const QString name = programEntries.at(i).split('|').first();
+            const QString path = programEntries.at(i).split('|').last();
+            if (name == QStringLiteral("Program %1").arg(i + 1))
+                programEntries.replace(i, tr("Program %1").arg(i + 1) + QLatin1Char('|') + path);
         }
     }
 
@@ -8616,6 +8633,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     QGroupBox *programBox = new QGroupBox(tr("Open With Programs"),dialog);
     mainLayout->addWidget(programBox);
     programsLayout = new QGridLayout(programBox);
+    programsLayout->setColumnMinimumWidth(0,20);
     programsLayout->setColumnStretch(1,10);
     programsLayout->setColumnStretch(2,30);
     programBox->setLayout(programsLayout);
@@ -8624,6 +8642,8 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     QGroupBox *systemEditorBox = new QGroupBox(tr("System Editor"), dialog);
     mainLayout->addWidget(systemEditorBox);
     systemEditorLayout = new QGridLayout(systemEditorBox);
+    systemEditorLayout->setColumnMinimumWidth(0,20);
+    systemEditorLayout->setColumnStretch(1,10);
     systemEditorBox->setLayout(systemEditorLayout);
 
     validateProgramEntries();
@@ -8646,7 +8666,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     systemEditorEdit->setToolTip(tr("Select text editor and arguments or leave blank to use the operating system designated editor"));
 #endif
     systemEditorLayout->addWidget(systemEditorEdit,0,1);
-    systemEditorButton = new QPushButton(QString("Browse..."), dialog);
+    systemEditorButton = new QPushButton(tr("Browse..."), dialog);
     systemEditorLayout->addWidget(systemEditorButton,0,2);
     connect(systemEditorButton, SIGNAL(clicked(bool)), this, SLOT(browseSystemEditor(bool)));
 
@@ -8657,7 +8677,7 @@ void OpenWithProgramDialogGui::setOpenWithProgram()
     connect(buttonBox, SIGNAL(accepted()), dialog, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), dialog, SLOT(reject()));
 
-    dialog->setMinimumWidth(500);
+    dialog->setMinimumWidth(640);
 
     if (dialog->exec() == QDialog::Accepted) {
         bool updateProgramEntries = false;
@@ -8891,9 +8911,9 @@ POVRayRenderDialogGui::PovraySettings POVRayRenderDialogGui::povraySettings[] = 
 
 /* 8  LBL_QUALITY              8   QComboBox   */ {QObject::tr("Quality                  "), QObject::tr("Select the POV-Ray render level of quality")},
 
-/* 9  LBL_TARGET_AND_ROTATE    9/0 QToolButton */ {QObject::tr("LookAt Target and Rotstep"), QObject::tr("Specify the target 'Look At' position and/or apply ROTSTEP angles")},
-/* 10 LBL_LDV_EXPORT_SETTINGS 10/1 QToolButton */ {QObject::tr("Export Settings          "), QObject::tr("Specify LDView POV-Ray export settings")},
-/* 11 LBL_LDV_LDRAW_SETTINGS  11/2 QToolButton */ {QObject::tr("LDraw Preferences        "), QObject::tr("Specify LDView LDraw preferences")}
+/* 9  LBL_TARGET_AND_ROTATE    9/0 QPushButton */ {QObject::tr("LookAt Target and Rotstep"), QObject::tr("Specify the target 'Look At' position and/or apply ROTSTEP angles")},
+/* 10 LBL_LDV_EXPORT_SETTINGS 10/1 QPushButton */ {QObject::tr("Export Settings          "), QObject::tr("Specify LDView POV-Ray export settings")},
+/* 11 LBL_LDV_LDRAW_SETTINGS  11/2 QPushButton */ {QObject::tr("LDraw Preferences        "), QObject::tr("Specify LDView LDraw preferences")}
 };
 
 void POVRayRenderDialogGui::getRenderSettings(
@@ -8972,7 +8992,7 @@ void POVRayRenderDialogGui::getRenderSettings(
             qualityCombo->setToolTip(povraySettings[i].tooltip);
             settingsSubform->addRow(label,qualityCombo);
         } else {
-            QToolButton *toolButton = new QToolButton(dialog);
+            QPushButton *toolButton = new QPushButton(dialog);
             toolButton->setText(tr("..."));
             if (i == LBL_TARGET_AND_ROTATE)
                 connect(toolButton,SIGNAL(clicked()),

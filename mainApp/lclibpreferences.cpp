@@ -24,8 +24,8 @@
 
 void PreferencesDialog::lcQPreferencesInit()
 {
-//    connect(ui.FadeStepsColor, &QToolButton::clicked, this, &PreferencesDialog::ColorButtonClicked);
-//    connect(ui.HighlightNewPartsColor, &QToolButton::clicked, this, &PreferencesDialog::ColorButtonClicked);
+//    connect(ui.FadeStepsColor, &QPushButton::clicked, this, &PreferencesDialog::ColorButtonClicked);
+//    connect(ui.HighlightNewPartsColor, &QPushButton::clicked, this, &PreferencesDialog::ColorButtonClicked);
 //    connect(ui.HighContrastButton, SIGNAL(clicked()), this, SLOT(AutomateEdgeColor()));
 //    connect(ui.AutomateEdgeColorButton, SIGNAL(clicked()), this, SLOT(AutomateEdgeColor()));
 //    connect(ui.ResetFadeStepsButton, SIGNAL(clicked()), this, SLOT(ResetFadeHighlightColor()));
@@ -81,7 +81,7 @@ void PreferencesDialog::lcQPreferencesInit()
 
     LPub::ViewpointsComboSaveIndex = mOptions->Preferences.mNativeViewpoint;
 
-    auto SetButtonPixmap = [](quint32 Color, QToolButton* Button)
+    auto SetButtonPixmap = [](quint32 Color, QPushButton* Button)
     {
         QPixmap Pixmap(12, 12);
 
@@ -343,7 +343,7 @@ void PreferencesDialog::ColorButtonClicked()
 
     newColor.setAlpha(255);
     pix.fill(newColor);
-    ((QToolButton*)Button)->setIcon(pix);
+    ((QPushButton*)Button)->setIcon(pix);
 }
 
 // reset buttons

@@ -7,7 +7,7 @@
         <file alias="1024px-Povray_logo_sphere.png">resources/1024px-Povray_logo_sphere.png</file>
         <file alias="3ds32.png">resources/3ds32.png</file>
         <file alias="LPub32.png">resources/LPub32.png</file>
-        <file alias="LPub512Splash.png">resources/LPub512Splash.png</file>
+        <file alias="splash_bg.jpg">resources/splash_bg.jpg</file>
         <file alias="LPub64.ico">resources/LPub64.ico</file>
         <file alias="LPub64.png">resources/LPub64.png</file>
         <file alias="accept.png">resources/accept.png</file>
