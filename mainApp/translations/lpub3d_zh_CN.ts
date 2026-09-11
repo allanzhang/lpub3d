@@ -4172,7 +4172,7 @@ You may want to update the part content and custom color parts list.</source>
     <message>
         <location filename="../threadworkers.cpp" line="1951" />
         <source># and paste to a new line with starting phrase other than 'The Regular Expression...'</source>
-        <translation type="unfinished"># 并粘贴到新行，起始短语不要使用 'The Regular Expression...'</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../threadworkers.cpp" line="1953" />
@@ -19426,27 +19426,27 @@ Are you sure you want to continue ? </source>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1939" />
         <source>Select</source>
-        <translation type="unfinished">选择</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1940" />
         <source>Move</source>
-        <translation type="unfinished">移动</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1941" />
         <source>Rotate</source>
-        <translation type="unfinished">旋转</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1942" />
         <source>Delete</source>
-        <translation type="unfinished">删除</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1943" />
         <source>Paint</source>
-        <translation type="unfinished">上色</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1944" />
@@ -19456,7 +19456,7 @@ Are you sure you want to continue ? </source>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1945" />
         <source>Zoom</source>
-        <translation type="unfinished">缩放</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1946" />
@@ -19466,12 +19466,12 @@ Are you sure you want to continue ? </source>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1947" />
         <source>Orbit</source>
-        <translation type="unfinished">环绕</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1948" />
         <source>Roll</source>
-        <translation type="unfinished">翻滚</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../../lclib/common/lc_commands.cpp" line="1949" />
@@ -24066,12 +24066,12 @@ File format is not recognized.</source>
     <message>
         <location filename="../excludedparts.cpp" line="316" />
         <source># and paste to a new line with starting phrase other than 'The Regular Expression...'</source>
-        <translation># 并粘贴到新行，起始短语不要使用 'The Regular Expression...'</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../excludedparts.cpp" line="318" />
         <source># The Regular Expression used to load this file is: ^(\b.*[^\s]\b)(?:\s)\s+(.*)$</source>
-        <translation># 用于加载此文件的正则表达式为：^(\b.*[^\s]\b)(?:\s)\s+(.*)$</translation>
+        <translation type="unfinished" />
     </message>
     <message>
         <location filename="../excludedparts.cpp" line="321" />

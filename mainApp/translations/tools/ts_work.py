@@ -32,7 +32,7 @@ TS_PATH = os.path.join(TRANS_DIR, "lpub3d_zh_CN.ts")
 STORE = os.path.join(HERE, "translations.json")
 # source trees scanned by reachable_contexts(); paths are relative to the repo root
 SOURCE_TREES = ["mainApp", "lclib", "ldvlib", "qsimpleupdater", "quazip",
-                "waitingspinner", "ldrawini"]
+                "ldrawini"]
 
 # --------------------------------------------------------------------------
 # entry classification
@@ -46,6 +46,29 @@ RE_HTML_DOC = re.compile(r"DOCTYPE|<style\b|<head\b|<body\b", re.I)
 # action up again by the same literal string. Translating them would rename the
 # action but not the lookup, so the menu entries would silently disappear.
 RE_OBJECT_NAME = re.compile(r"^[A-Za-z][A-Za-z0-9]*%?\d*Act\.\d+$")
+
+# Markers in generated parameter files that the application parses back.
+#
+# excludedparts.cpp:318 writes this marker into excludedParts.lst, and :65 reads
+# it back with
+#     ^#[\w\s]+\:[\s](\^.*)$
+# which requires an ASCII ':' (and, under Qt's default QRegularExpression
+# options, ASCII \w). A translated marker uses the full-width '：'
+# ('# 用于加载此文件的正则表达式为：...') and therefore never matches: the user's
+# custom regular expression is silently discarded and the hard-coded default is
+# used instead, disabling the documented "edit the regular expression in the
+# file" feature.
+#
+# The exclusion is keyed on the SOURCE TEXT, not on (context, source). The same
+# phrase is written through QMessageBox::tr() in excludedparts.cpp and through
+# ColourPartListWorker::tr() in threadworkers.cpp:1953, so a uid-based exclusion
+# silently leaves the other copy translatable - which is exactly how one live
+# translation shipped. The marker is also read back by ldrawcolourparts.cpp:41,
+# plisubstituteparts.cpp:58, stickerparts.cpp:59 and annotations.cpp:1319+.
+RE_PARSER_CONTRACT = re.compile(
+    r"^#\s*(?:The Regular Expression used to load this file is:"
+    r"|and paste to a new line with starting phrase)"
+)
 
 # ---------------------------------------------------------------------------
 # Contexts whose strings are IDENTIFIERS, not display text.
@@ -78,20 +101,8 @@ EXCLUDE_CONTEXTS = {
 }
 
 
-# Individual entries that must never be translated, keyed by uid.
-#
-# The generated LDraw static colour parts file is written back out with these
-# strings (threadworkers.cpp:1953), and LDrawFile::_fileRegExp reads the regular
-# expression back by matching the literal English marker. Translating the marker
-# would silently disable the documented "edit the regular expression in the file"
-# feature by forcing the built-in fallback, and translating the expression itself
-# would corrupt it outright.
-EXCLUDE_IDS = {
-    # '# The Regular Expression used to load this file is: ^(\b.*[^\s]\b)(?:\s)\s+(u|o)\s+(.*)$'
-    "b99a8dcb1d0a": "parser marker + regular expression",
-    # '# and paste to a new line with starting phrase other than 'The Regular Expression...''
-    "50c16195deef": "references the parser marker phrase",
-}
+# Individual uids that must never be translated are covered by
+# RE_PARSER_CONTRACT above, which is deliberately context-independent.
 
 
 def uid(context: str, source: str) -> str:
@@ -107,13 +118,13 @@ def skip_reason(source: str, context: str = "", entry_id: str = "") -> str | Non
         return "html-document"
     if RE_OBJECT_NAME.match(s):
         return "qt-objectname"
+    if RE_PARSER_CONTRACT.match(s):
+        return "parser-contract"
     # contains no translatable letters at all -> pure format/punctuation token
     if not re.search(r"[A-Za-z\u00c0-\u024f]", s):
         return "no-letters"
     if context in EXCLUDE_CONTEXTS:
         return "identifier-context"
-    if entry_id in EXCLUDE_IDS:
-        return "parser-contract"
     return None
 
 
@@ -153,6 +164,38 @@ def save_store(store: dict) -> None:
     with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(store, fh, ensure_ascii=False, indent=0, sort_keys=True)
     os.replace(tmp, STORE)
+
+
+def translation_text(entry) -> str:
+    """The text currently carried by an entry's <translation>, numerus included."""
+    tr = entry["tr"]
+    if tr is None:
+        return ""
+    if (tr.text or "").strip():
+        return tr.text.strip()
+    for child in tr:
+        if child.tag == "numerusform" and (child.text or "").strip():
+            return child.text.strip()
+    return ""
+
+
+def clear_translation(entry) -> bool:
+    """Blank a translation that an exclusion rule forbids.
+
+    Returns True when something was actually removed, so callers can report how
+    many stale entries were cleaned up. Qt treats an entry with no translation
+    text as untranslated and falls back to the source string, which is the
+    correct behaviour for every excluded category.
+    """
+    tr = entry["tr"]
+    if tr is None:
+        return False
+    had_text = bool(translation_text(entry))
+    for child in list(tr):
+        tr.remove(child)
+    tr.text = None
+    tr.set("type", "unfinished")
+    return had_text
 
 
 # --------------------------------------------------------------------------
@@ -318,12 +361,20 @@ def cmd_status(args):
 def cmd_apply(args):
     store = load_store()
     root, entries = load_entries(args.ts)
-    applied = unmatched = 0
+    applied = cleared = unmatched = 0
     for e in entries:
+        if skip_reason(e["s"], e["c"], e["id"]):
+            # Enforce the exclusion rather than merely ignoring it. apply() is
+            # otherwise additive-only, so a translation written before an
+            # exclusion existed (a context added to EXCLUDE_CONTEXTS, or a new
+            # contract rule) would stay in the .ts and ship in the .qm, while
+            # every guardrail stayed green because excluded entries are skipped.
+            if clear_translation(e):
+                cleared += 1
+            continue
+
         rec = store.get(e["id"])
         if not rec or not rec.get("t"):
-            continue
-        if skip_reason(e["s"], e["c"], e["id"]):
             continue
         tr = e["tr"]
         if tr is None:
@@ -356,7 +407,8 @@ def cmd_apply(args):
         fh.write(header)
         fh.write(xml)
         fh.write("\n")
-    print(f"applied {applied} translations to {args.ts} ({total} messages total, {unmatched} unmatched)")
+    print(f"applied {applied} translations to {args.ts} ({total} messages total, "
+          f"{cleared} excluded entries cleared, {unmatched} unmatched)")
 
 
 # --------------------------------------------------------------------------
@@ -440,7 +492,8 @@ def cmd_validate(args):
     root, entries = load_entries(args.ts)
 
     problems = {"placeholder": [], "amp": [], "tag": [], "empty": [],
-                "html": [], "markup_leak": [], "same": [], "dead_context": []}
+                "html": [], "markup_leak": [], "same": [], "dead_context": [],
+                "excluded": []}
     checked = 0
     for e in entries:
         rec = store.get(e["id"])
@@ -483,6 +536,18 @@ def cmd_validate(args):
         if not (store.get(e["id"]) or {}).get("t"):
             continue
         dead.setdefault(e["c"], []).append(e["s"])
+    # Exclusions must be ENFORCED, not merely honoured when picking work. An
+    # exclusion can be introduced after the fact (a new contract rule, or a
+    # context added to EXCLUDE_CONTEXTS), and the .ts then keeps the translation
+    # that was already written - lrelease compiles it and it ships. No check
+    # above ever looks at excluded entries, so this class was invisible. Read
+    # the .ts, not the store: the stale text lives only in the .ts.
+    for e in entries:
+        if not translation_text(e):
+            continue
+        if skip_reason(e["s"], e["c"], e["id"]):
+            problems["excluded"].append((e["c"], e["s"][:70], translation_text(e)[:70]))
+
     for c, srcs in sorted(dead.items()):
         problems["dead_context"].append((c, f"{len(srcs)} entries, e.g. {srcs[0][:44]}", ""))
 
@@ -497,6 +562,7 @@ def cmd_validate(args):
             "markup_leak": "markup leak",
             "same": "identical to source (review)",
             "dead_context": "unreachable context (runtime never queries it)",
+            "excluded": "excluded entry carrying a translation (must be blank)",
         }[kind]
         print(f"{label:38s}: {len(items)}")
         for c, s, t in items[:6]:
