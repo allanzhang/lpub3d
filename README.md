@@ -4,9 +4,16 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
-## v2.5.1 (2026-09-11)
+## v2.6.0 (2026-09-11)
 
 - **Simplified Chinese UI**: full localization of the application interface and Qt's standard dialogs — menus, toolbars, status bar, dialogs, context menus and all tooltip / WhatsThis help text (7,379 of 7,379 translatable entries). The language follows the system locale and can be forced with `LPUB3D_LANGUAGE=zh_CN`.
+- **Chinese splash screen**: the startup splash subtitle now reads 「LDRAW 拼搭说明书」.
+- **Crash fix — no more second Qt**: the packaged app used to load a duplicate copy of Qt from the build machine's Homebrew (macdeployqt had left plugin frameworks undeployed and kept a foreign `-rpath /opt/homebrew/lib`), and the duplicate Objective-C classes crashed it when a menu was opened. The bundle is now self-contained, and every release is gated on `builds/macx/verify_bundle.py`.
+- **Removed**: the waiting-spinner dependency and its call sites.
+- **App icon**: new myLPub3D macOS application icon, shipped as a full 16–1024 px icon set.
+
+## v2.5.1 (2026-09-09)
+
 - **App icon**: new myLPub3D macOS application icon, shipped as a full 16–1024 px icon set.
 
 ## v2.5.0 (2026-09-07)
@@ -21,9 +28,8 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Download
 
+- [myLPub3D-v2.6.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.0/myLPub3D-v2.6.0-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.5.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.5.0/myLPub3D-v2.5.0-macOS.zip) (macOS, Apple Silicon)
-
-> v2.5.1 is a local build and has not been published yet.
 
 ## Upstream
 
