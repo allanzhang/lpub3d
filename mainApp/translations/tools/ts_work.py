@@ -30,6 +30,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TRANS_DIR = os.path.dirname(HERE)
 TS_PATH = os.path.join(TRANS_DIR, "lpub3d_zh_CN.ts")
 STORE = os.path.join(HERE, "translations.json")
+# source trees scanned by reachable_contexts(); paths are relative to the repo root
+SOURCE_TREES = ["mainApp", "lclib", "ldvlib", "qsimpleupdater", "quazip",
+                "waitingspinner", "ldrawini"]
 
 # --------------------------------------------------------------------------
 # entry classification
@@ -374,12 +377,70 @@ KEEP_EN = [
 ]
 
 
+def reachable_contexts(roots):
+    """Contexts a runtime lookup can actually produce.
+
+    Qt resolves tr() to the class that DECLARES Q_OBJECT (or Q_DECLARE_TR_FUNCTIONS),
+    which is not always the class lupdate names in the .ts. When the two differ the
+    entry is written into the .qm under a context nobody ever queries, and the
+    translation silently never appears - while every guardrail still passes, because
+    the translation itself is perfectly well formed.
+
+    A context is reachable when some call site can produce it:
+      * QObject                - a literal QObject::tr(...)
+      * translate("X") / QT_TRANSLATE_NOOP("X") / Q_DECLARE_TR_FUNCTIONS(X)
+      * <class> in a .ui file  - uic emits translate("<class>", ...) into ui_*.h
+      * the name of a class that declares Q_OBJECT
+      * the name of a base class in an inheritance chain, which the Q_OBJECT case
+        above already covers
+    """
+    reach = {"QObject"}
+    for root in roots:
+        for dp, _d, fs in os.walk(root):
+            for f in fs:
+                if not f.endswith((".cpp", ".h", ".ui")):
+                    continue
+                p = os.path.join(dp, f)
+                try:
+                    s = open(p, "rb").read().decode("utf-8", "replace")
+                except OSError:
+                    continue
+                for m in re.finditer(r'(?:translate|QT_TRANSLATE_NOOP|Q_DECLARE_TR_FUNCTIONS)'
+                                     r'\s*\(\s*(?:"([^"]+)"|([A-Za-z_]\w*))\s*[,)]', s):
+                    reach.add(m.group(1) or m.group(2))
+                # explicit qualified calls, e.g. QMessageBox::tr("...") - the runtime
+                # context is the qualified class name itself
+                for m in re.finditer(r'\b([A-Za-z_]\w*)::tr\s*\(', s):
+                    reach.add(m.group(1))
+                for m in re.finditer(r'<class>([^<]+)</class>', s):
+                    reach.add(m.group(1))
+                # match class/struct declarations only at line start, allowing for
+                # export macros (QUAZIP_EXPORT, QSU_DECL, ...). The lookahead pins
+                # the capture to the name directly preceding ":" or "{" so the macro
+                # name is never captured instead of the class name; without the
+                # line anchor a comment like "this class is ..." swallows the real
+                # declaration that follows.
+                for m in re.finditer(r'^[ \t]*(?:class|struct)\s+'
+                                     r'(?:[A-Za-z_]\w*[ \t]+)*?([A-Za-z_]\w*)'
+                                     r'(?=[ \t]*[{:])', s, re.M):
+                    brace = s.find("{", m.end())
+                    if brace == -1:
+                        continue
+                    body = s[brace + 1: brace + 1 + 6000]
+                    end = body.find("};")
+                    if end != -1:
+                        body = body[:end]
+                    if re.search(r'\bQ_OBJECT\b', body):
+                        reach.add(m.group(1))
+    return reach
+
+
 def cmd_validate(args):
     store = load_store()
     root, entries = load_entries(args.ts)
 
     problems = {"placeholder": [], "amp": [], "tag": [], "empty": [],
-                "html": [], "markup_leak": [], "same": []}
+                "html": [], "markup_leak": [], "same": [], "dead_context": []}
     checked = 0
     for e in entries:
         rec = store.get(e["id"])
@@ -410,6 +471,21 @@ def cmd_validate(args):
         if src.strip() == tgt.strip() and re.search(r"[A-Za-z]{4,}", src):
             problems["same"].append((e["c"], src[:70], tgt[:70]))
 
+    # Unreachable contexts: every translation sitting under a context that no runtime
+    # lookup can produce is dead weight, and nothing else in this report would notice.
+    # TRANS_DIR is <repo>/mainApp/translations, so the repo root is two levels up
+    repo = os.path.dirname(os.path.dirname(TRANS_DIR))
+    reach = reachable_contexts([os.path.join(repo, b) for b in SOURCE_TREES])
+    dead = {}
+    for e in entries:
+        if e["c"] in reach:
+            continue
+        if not (store.get(e["id"]) or {}).get("t"):
+            continue
+        dead.setdefault(e["c"], []).append(e["s"])
+    for c, srcs in sorted(dead.items()):
+        problems["dead_context"].append((c, f"{len(srcs)} entries, e.g. {srcs[0][:44]}", ""))
+
     print(f"validated {checked} translated entries\n")
     for kind, items in problems.items():
         label = {
@@ -420,6 +496,7 @@ def cmd_validate(args):
             "html": "translated HTML/CSS document (forbidden)",
             "markup_leak": "markup leak",
             "same": "identical to source (review)",
+            "dead_context": "unreachable context (runtime never queries it)",
         }[kind]
         print(f"{label:38s}: {len(items)}")
         for c, s, t in items[:6]:

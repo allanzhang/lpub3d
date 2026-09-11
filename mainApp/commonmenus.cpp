@@ -49,7 +49,7 @@ QAction* CommonMenus::addNextStepMenu(
 {
   QAction *action;
 
-  QString formatted = QObject::QObject::tr("Add Next Step");
+  QString formatted = QObject::tr("Add Next Step");
   action = menu.addAction(formatted);
   action->setParent(menu.parent());
   action->setObjectName("addNextStepAction.1");
@@ -72,7 +72,7 @@ QAction* CommonMenus::addNextStepsMenu(
 {
   QAction *action;
 
-  QString formatted = QObject::QObject::tr("Add Next Steps...");
+  QString formatted = QObject::tr("Add Next Steps...");
   action = menu.addAction(formatted);
   action->setParent(menu.parent());
   action->setObjectName("addNextStepsAction.1");
@@ -95,7 +95,7 @@ QAction* CommonMenus::addPrevStepMenu(
 {
   QAction *action;
 
-  QString formatted = QObject::QObject::tr("Add Previous Step");
+  QString formatted = QObject::tr("Add Previous Step");
   action = menu.addAction(formatted);
   action->setParent(menu.parent());
   action->setObjectName("addPrevStepAction.1");
@@ -118,7 +118,7 @@ QAction* CommonMenus::removeStepMenu(
 {
   QAction *action;
 
-  QString formatted = QObject::QObject::tr("Remove this Step");
+  QString formatted = QObject::tr("Remove this Step");
   action = menu.addAction(formatted);
   action->setParent(menu.parent());
   action->setObjectName("removeStepAction.1");
@@ -141,7 +141,7 @@ QAction* CommonMenus::addMenu(
 {
   QAction *action;
 
-  QString formatted = QObject::QObject::tr("Add %1") .arg(name);
+  QString formatted = QObject::tr("Add %1") .arg(name);
   action = menu.addAction(formatted);
   action->setParent(menu.parent());
   action->setObjectName("addAction.1");

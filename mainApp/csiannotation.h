@@ -31,6 +31,7 @@
 #include "csiitem.h"
 #include "ranges.h"
 #include "resize.h"
+#include <QCoreApplication>
 
 class Step;
 class QGraphicsView;
@@ -156,6 +157,11 @@ protected:
   Qt::Alignment	       alignment;
   bool isHovered;
   bool mouseIsDown;
+  // tr() must resolve to THIS class, not to the Q_OBJECT base it inherits
+  // (QGraphicsTextItem / QObject). Without this declaration the context used at
+  // runtime is the base class name, which no longer matches the context lupdate
+  // assigns (the enclosing class), and every translation for this class is dead.
+Q_DECLARE_TR_FUNCTIONS(CsiAnnotationItem);
 };
 
 /*

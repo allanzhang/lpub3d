@@ -39,6 +39,7 @@
 #include "declarations.h"
 #include "resize.h"
 #include "render.h"
+#include <QCoreApplication>
 
 /****************************************************************************
  * Submodel Part
@@ -345,6 +346,11 @@ protected:
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   bool isHovered;
   bool mouseIsDown;
+  // tr() must resolve to THIS class, not to the Q_OBJECT base it inherits
+  // (QGraphicsTextItem / QObject). Without this declaration the context used at
+  // runtime is the base class name, which no longer matches the context lupdate
+  // assigns (the enclosing class), and every translation for this class is dead.
+Q_DECLARE_TR_FUNCTIONS(SMInstanceTextItem);
 };
 
 /****************************************************************************

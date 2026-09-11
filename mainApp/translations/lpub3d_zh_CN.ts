@@ -2419,7 +2419,7 @@
     <message>
         <location filename="../application.cpp" line="1133" />
         <source>, Build: %1 %2</source>
-        <translation>，构建: %1 %2</translation>
+        <translation>，构建：%1 %2</translation>
     </message>
     <message>
         <location filename="../application.cpp" line="1135" />
@@ -2429,7 +2429,7 @@
     <message>
         <location filename="../application.cpp" line="1135" />
         <source>, Detected: %1</source>
-        <translation>，检测到: %1</translation>
+        <translation>，检测到：%1</translation>
     </message>
     <message>
         <location filename="../application.cpp" line="1138" />
@@ -2522,12 +2522,12 @@
     <message>
         <location filename="../application.cpp" line="1459" />
         <source>%1 Run: Exception %2 has been thrown.</source>
-        <translation>%1 运行: 抛出了异常 %2。</translation>
+        <translation>%1 运行：抛出了异常 %2。</translation>
     </message>
     <message>
         <location filename="../application.cpp" line="1463" />
         <source>%1 Run: An unhandled exception has been thrown.</source>
-        <translation>%1 运行: 抛出了未处理的异常。</translation>
+        <translation>%1 运行：抛出了未处理的异常。</translation>
     </message>
 </context>
 <context>
@@ -2868,12 +2868,12 @@
     <message>
         <location filename="../blenderpreferences.cpp" line="1055" />
         <source>%1 Script: %2</source>
-        <translation>%1 脚本: %2</translation>
+        <translation>%1 脚本：%2</translation>
     </message>
     <message>
         <location filename="../blenderpreferences.cpp" line="1076" />
         <source>%1 Command: %2</source>
-        <translation>%1 命令: %2</translation>
+        <translation>%1 命令：%2</translation>
     </message>
     <message>
         <location filename="../blenderpreferences.cpp" line="1083" />
@@ -2988,7 +2988,7 @@
     <message>
         <location filename="../blenderpreferences.cpp" line="1337" />
         <source>Blender Addon Install Arguments: %1 %2</source>
-        <translation>Blender 插件安装参数: %1 %2</translation>
+        <translation>Blender 插件安装参数：%1 %2</translation>
     </message>
     <message>
         <location filename="../blenderpreferences.cpp" line="1362" />
@@ -3168,7 +3168,7 @@
     <message>
         <location filename="../blenderpreferences.cpp" line="1744" />
         <source>Error: Addon install failed</source>
-        <translation>错误: 插件安装失败</translation>
+        <translation>错误：插件安装失败</translation>
     </message>
     <message>
         <location filename="../blenderpreferences.cpp" line="1746" />
@@ -6597,264 +6597,264 @@ of the callout, clicking the menu button, and using that
         <translation>LDraw 文件 (*.mpd *.ldr *.dat);;所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2473" />
-        <location filename="../editwindow.cpp" line="2580" />
+        <location filename="../editwindow.cpp" line="2476" />
+        <location filename="../editwindow.cpp" line="2583" />
         <source>Current Submodel: %1</source>
         <translation>当前 Sub-model：%1</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2494" />
+        <location filename="../editwindow.cpp" line="2497" />
         <source>Match Case</source>
         <translation>区分大小写</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2500" />
+        <location filename="../editwindow.cpp" line="2503" />
         <source>Fixed String</source>
         <translation>固定字符串</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2505" />
+        <location filename="../editwindow.cpp" line="2508" />
         <source>Regular Expression</source>
         <translation>正则表达式</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2509" />
+        <location filename="../editwindow.cpp" line="2512" />
         <source>Wildcard</source>
         <translation>通配符</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2522" />
+        <location filename="../editwindow.cpp" line="2525" />
         <source>Filter Options...</source>
         <translation>筛选选项...</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2547" />
+        <location filename="../editwindow.cpp" line="2550" />
         <source>Reset</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2550" />
-        <location filename="../editwindow.cpp" line="2582" />
+        <location filename="../editwindow.cpp" line="2553" />
+        <location filename="../editwindow.cpp" line="2585" />
         <source />
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2791" />
+        <location filename="../editwindow.cpp" line="2794" />
         <source>%1 File %2: %3, %4 lines - %5</source>
         <translation>%1 文件 %2：%3，%4 行 - %5</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2827" />
+        <location filename="../editwindow.cpp" line="2830" />
         <source>Save %1</source>
         <translation>保存 %1</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2900" />
+        <location filename="../editwindow.cpp" line="2903" />
         <source>Loading...</source>
         <translation>正在加载...</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3056" />
+        <location filename="../editwindow.cpp" line="3059" />
         <source>Editor Font</source>
         <translation>编辑器字体</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3060" />
+        <location filename="../editwindow.cpp" line="3063" />
         <source>Family:</source>
         <translation>字体族：</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3065" />
+        <location filename="../editwindow.cpp" line="3068" />
         <source>Size:</source>
         <translation>字号：</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3073" />
+        <location filename="../editwindow.cpp" line="3076" />
         <source>Editor Text Decoration</source>
         <translation>编辑器文本修饰</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3077" />
+        <location filename="../editwindow.cpp" line="3080" />
         <source>Text Decoration:</source>
         <translation>文本修饰：</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3079" />
+        <location filename="../editwindow.cpp" line="3082" />
         <source>Simple</source>
         <translation>简单</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3080" />
+        <location filename="../editwindow.cpp" line="3083" />
         <source>Standard</source>
         <translation>标准</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3082" />
+        <location filename="../editwindow.cpp" line="3085" />
         <source>Set text decoration. Fancy decoration will slow-down loading very large models</source>
         <translation>设置文本修饰。复杂修饰会拖慢超大模型的加载</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3086" />
+        <location filename="../editwindow.cpp" line="3089" />
         <source>Buffered Paging</source>
         <translation>缓冲分页</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3089" />
+        <location filename="../editwindow.cpp" line="3092" />
         <source>Set buffered paging. Improve the loading times for very large models</source>
         <translation>设置缓冲分页。可改善超大模型的加载速度</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3093" />
+        <location filename="../editwindow.cpp" line="3096" />
         <source>Lines Per Buffered Page:</source>
         <translation>每缓冲页行数：</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3097" />
+        <location filename="../editwindow.cpp" line="3100" />
         <source>Set lines per page between %1 and %2 to optimize scrolling.</source>
         <translation>将每页行数设为 %1 到 %2 之间以优化滚动。</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3101" />
+        <location filename="../editwindow.cpp" line="3104" />
         <source>Cycle Pages Dialog</source>
         <translation>循环页面对话框</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3107" />
+        <location filename="../editwindow.cpp" line="3110" />
         <source>Cycle pages is always on when Build Modifications is enabled.</source>
         <translation>启用构建修改时，循环页面始终开启。</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3108" />
+        <location filename="../editwindow.cpp" line="3111" />
         <source>Check to display the Cycle Pages dialog on page Update.</source>
         <translation>勾选以在页面更新时显示循环页面对话框。</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3109" />
+        <location filename="../editwindow.cpp" line="3112" />
         <source>Show Cycle Pages Dialog On Update </source>
         <translation>页面更新时显示循环页面对话框 </translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3121" />
+        <location filename="../editwindow.cpp" line="3124" />
         <source>Keep cycle pages as the default action ?</source>
         <translation>是否将循环页面保留为默认操作？</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3122" />
+        <location filename="../editwindow.cpp" line="3125" />
         <source>Set cycle pages as the default action ?</source>
         <translation>是否将循环页面设为默认操作？</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3125" />
+        <location filename="../editwindow.cpp" line="3128" />
         <source>Cycle Pages</source>
         <translation>循环页面</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3135" />
+        <location filename="../editwindow.cpp" line="3138" />
         <source>Selected Items</source>
         <translation>选定项</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3139" />
+        <location filename="../editwindow.cpp" line="3142" />
         <source>Highlight Selected Lines</source>
         <translation>高亮所选行</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3140" />
+        <location filename="../editwindow.cpp" line="3143" />
         <source>Highlight selected line(s) when clicked in Editor</source>
         <translation>在编辑器中点击时高亮所选行</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3144" />
+        <location filename="../editwindow.cpp" line="3147" />
         <source>Load Selection Step in Visual Editor</source>
         <translation>在视觉编辑器中加载所选 Step</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3145" />
+        <location filename="../editwindow.cpp" line="3148" />
         <source>Load the first step (on multi-line select) of selected lines in the Visual Editor</source>
         <translation>在视觉编辑器中加载所选行的第一个步骤（多行选择时）</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3150" />
+        <location filename="../editwindow.cpp" line="3153" />
         <source>Floating Preview On Double Click</source>
         <translation>双击时浮动预览</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3151" />
+        <location filename="../editwindow.cpp" line="3154" />
         <source>Launch floating preview window on valid part double click</source>
         <translation>双击有效零件时启动浮动预览窗口</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3171" />
+        <location filename="../editwindow.cpp" line="3174" />
         <source>LDraw editor text font changed to %1</source>
         <translation>LDraw 编辑器文本字体已更改为 %1</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3177" />
+        <location filename="../editwindow.cpp" line="3180" />
         <source>LDraw editor text font size changed to %1</source>
         <translation>LDraw 编辑器文本字号已更改为 %1</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3193" />
+        <location filename="../editwindow.cpp" line="3196" />
         <source>LDraw editor text decoration changed to %1</source>
         <translation>LDraw 编辑器文本修饰已更改为 %1</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3203" />
+        <location filename="../editwindow.cpp" line="3206" />
         <source>Buffered lines par page changed from %1 to %2</source>
         <translation>每页缓冲行数已从 %1 更改为 %2</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3209" />
+        <location filename="../editwindow.cpp" line="3212" />
         <source>Show Cycle Pages On Update dialog changed is %1</source>
         <translation>页面更新时显示循环页面对话框已更改为 %1</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3216" />
+        <location filename="../editwindow.cpp" line="3219" />
         <source>Highlight selected lines changed from %1 to %2</source>
         <translation>高亮所选行已从 %1 更改为 %2</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3222" />
+        <location filename="../editwindow.cpp" line="3225" />
         <source>Load selection step in Visual Editor changed from %1 to %2</source>
         <translation>在视觉编辑器中加载所选 Step 已从 %1 更改为 %2</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3229" />
+        <location filename="../editwindow.cpp" line="3232" />
         <source>Launch floating preview part double click changed from %1 to %2</source>
         <translation>双击零件启动浮动预览已从 %1 更改为 %2</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3237" />
+        <location filename="../editwindow.cpp" line="3240" />
         <source>%1 editor %2 change</source>
         <translation>%1 编辑器 %2 更改</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3253" />
+        <location filename="../editwindow.cpp" line="3256" />
         <source>Loading buffered page %1 lines...</source>
         <translation>正在加载缓冲页 %1 行...</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3295" />
+        <location filename="../editwindow.cpp" line="3298" />
         <source>Load content block %1, lines %2 - %3</source>
         <translation>加载内容块 %1，行 %2 - %3</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3312" />
+        <location filename="../editwindow.cpp" line="3315" />
         <source>Load paged content %1 lines - start...</source>
         <translation>加载分页内容 %1 行 - 开始...</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3324" />
+        <location filename="../editwindow.cpp" line="3327" />
         <source>Load page line count %1 - %2</source>
         <translation>加载页面行数 %1 - %2</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3338" />
+        <location filename="../editwindow.cpp" line="3341" />
         <source>Load page set %1 plain text lines - %2</source>
         <translation>加载页面集 %1 纯文本行 - %2</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="3354" />
+        <location filename="../editwindow.cpp" line="3357" />
         <source>Load page of %1 lines from %2 to %3, content lines %4, final page: %5 - %6</source>
         <translation>加载 %1 行的页面，从 %2 到 %3，内容行 %4，最终页：%5 - %6</translation>
     </message>
@@ -7050,12 +7050,12 @@ of the callout, clicking the menu button, and using that
     <message>
         <location filename="../findreplace.cpp" line="119" />
         <source>Find: </source>
-        <translation>查找: </translation>
+        <translation>查找：</translation>
     </message>
     <message>
         <location filename="../findreplace.cpp" line="123" />
         <source>Replace: </source>
-        <translation>替换: </translation>
+        <translation>替换：</translation>
     </message>
 </context>
 <context>
@@ -9111,22 +9111,22 @@ of the callout, clicking the menu button, and using that
 <context>
     <name>Gui</name>
     <message>
-        <location filename="../formatpage.cpp" line="536" />
+        <location filename="../formatpage.cpp" line="543" />
         <source>Unable to locate image %1. Be sure image file is located relative to the model file or use an absolute path.</source>
         <translation>无法定位图像 %1。请确认图像文件位于模型文件的相对路径下，或使用绝对路径。</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="675" />
+        <location filename="../formatpage.cpp" line="682" />
         <source>Processing Bill Of Material...</source>
         <translation>正在处理物料清单...</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="1903" />
+        <location filename="../formatpage.cpp" line="1910" />
         <source>03 Overlap scene item %1 (%2) ZValue %3</source>
         <translation>03 重叠场景项 %1 (%2) ZValue %3</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="1907" />
+        <location filename="../formatpage.cpp" line="1914" />
         <source>Overlap scene item %1 (%2) ZValue %3 is not in the %1 User Scene Object list</source>
         <translation>重叠场景项 %1 (%2) ZValue %3 不在 %1 的用户场景对象列表中</translation>
     </message>
@@ -12693,7 +12693,7 @@ Restart continuous processing ?</source>
     <message>
         <location filename="../openclose.cpp" line="419" />
         <location filename="../openclose.cpp" line="449" />
-        <location filename="../openclose.cpp" line="1215" />
+        <location filename="../openclose.cpp" line="1221" />
         <source>&amp;%1 %2</source>
         <translation type="unfinished" />
     </message>
@@ -12750,247 +12750,247 @@ Restart continuous processing ?</source>
     </message>
     <message>
         <location filename="../openclose.cpp" line="786" />
-        <location filename="../openclose.cpp" line="821" />
+        <location filename="../openclose.cpp" line="824" />
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
     <message>
         <location filename="../openclose.cpp" line="786" />
-        <location filename="../openclose.cpp" line="821" />
+        <location filename="../openclose.cpp" line="824" />
         <location filename="../visualeditor.cpp" line="5532" />
         <location filename="../visualeditor.cpp" line="5559" />
         <source>LDraw Files (*.mpd *.ldr *.dat);;All Files (*.*)</source>
         <translation>LDraw 文件 (*.mpd *.ldr *.dat);;所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="862" />
+        <location filename="../openclose.cpp" line="868" />
         <source>%1 Document</source>
         <translation>%1 文档</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="864" />
+        <location filename="../openclose.cpp" line="870" />
         <source>Document changes detected&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</source>
         <translation>检测到文档更改&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="865" />
+        <location filename="../openclose.cpp" line="871" />
         <source>The document has been modified.&lt;br&gt;Do you want to save your changes?</source>
         <translation>文档已被修改。&lt;br&gt;是否保存你的更改？</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="873" />
+        <location filename="../openclose.cpp" line="879" />
         <source>Do not show save changes on %1 message again.</source>
         <translation>不再显示 %1 的保存更改提示。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="902" />
+        <location filename="../openclose.cpp" line="908" />
         <source>Open document has been saved!</source>
         <translation>打开的文档已保存！</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="916" />
+        <location filename="../openclose.cpp" line="922" />
         <source>File %1 saved (%2 lines)</source>
         <translation>文件 %1 已保存（%2 行）</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="975" />
+        <location filename="../openclose.cpp" line="981" />
         <source>File closed - %1.</source>
         <translation>文件已关闭 - %1。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="996" />
+        <location filename="../openclose.cpp" line="1002" />
         <source>Edit current model file</source>
         <translation>编辑当前模型文件</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="997" />
+        <location filename="../openclose.cpp" line="1003" />
         <source>Edit LDraw file with detached LDraw Editor</source>
         <translation>用独立的 LDraw 编辑器编辑 LDraw 文件</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1001" />
+        <location filename="../openclose.cpp" line="1007" />
         <source>Model unloaded. File closed - %1.</source>
         <translation>模型已卸载。文件已关闭 - %1。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1043" />
+        <location filename="../openclose.cpp" line="1049" />
         <source>Loading file '%1'...</source>
         <translation>正在加载文件 '%1'...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1048" />
-        <location filename="../openclose.cpp" line="1049" />
-        <location filename="../openclose.cpp" line="1050" />
+        <location filename="../openclose.cpp" line="1054" />
+        <location filename="../openclose.cpp" line="1055" />
+        <location filename="../openclose.cpp" line="1056" />
         <source>Loading...</source>
         <translation>正在加载...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1055" />
+        <location filename="../openclose.cpp" line="1061" />
         <source>Load LDraw file '%1' aborted.</source>
         <translation>加载 LDraw 文件 '%1' 已中止。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1056" />
+        <location filename="../openclose.cpp" line="1062" />
         <source>Load LDraw file '%1' failed.</source>
         <translation>加载 LDraw 文件 '%1' 失败。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1068" />
+        <location filename="../openclose.cpp" line="1074" />
         <source>Edit %1</source>
         <translation>编辑 %1</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1069" />
+        <location filename="../openclose.cpp" line="1075" />
         <source>Edit LDraw file %1 with detached LDraw Editor</source>
         <translation>用独立的 LDraw 编辑器编辑 LDraw 文件 %1</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1077" />
+        <location filename="../openclose.cpp" line="1083" />
         <source>Update LDraw Unofficial Archive Library</source>
         <translation>更新 LDraw 非官方归档库</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1080" />
+        <location filename="../openclose.cpp" line="1086" />
         <source>Helper and LSynth</source>
         <translation>Helper 与 LSynth</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1082" />
+        <location filename="../openclose.cpp" line="1088" />
         <source>Helper</source>
         <translation>Helper</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1083" />
+        <location filename="../openclose.cpp" line="1089" />
         <source>LSynth</source>
         <translation>LSynth</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1084" />
+        <location filename="../openclose.cpp" line="1090" />
         <source>%1 parts in loaded model are not in archive library.</source>
         <translation>已加载模型中有 %1 个零件不在归档库中。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1085" />
+        <location filename="../openclose.cpp" line="1091" />
         <source>Would you like to archive your LDraw unofficial parts now?</source>
         <translation>是否现在归档你的 LDraw 非官方零件？</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1092" />
+        <location filename="../openclose.cpp" line="1098" />
         <source>LDraw &lt;b&gt;%1&lt;/b&gt; parts were detected in the loaded model file &lt;i&gt;%2&lt;/i&gt;.&lt;br&gt;&lt;br&gt;Parts not in the archive library will not be rendered by the %3 Visual Editor or Native renderer.&lt;br&gt;&lt;br&gt;%3 will archive parts from your search directory paths.&lt;br&gt;%4</source>
         <translation>在已加载的模型文件 &lt;i&gt;%2&lt;/i&gt; 中检测到 LDraw &lt;b&gt;%1&lt;/b&gt; 零件。&lt;br&gt;&lt;br&gt;不在归档库中的零件不会被 %3 视觉编辑器或 Native 渲染器渲染。&lt;br&gt;&lt;br&gt;%3 将从你的搜索目录路径归档零件。&lt;br&gt;%4</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1111" />
+        <location filename="../openclose.cpp" line="1117" />
         <source>Loading user interface items...</source>
         <translation>正在加载用户界面项...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1120" />
+        <location filename="../openclose.cpp" line="1126" />
         <source>Open %1 with %2</source>
         <translation>用 %2 打开 %1</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1133" />
+        <location filename="../openclose.cpp" line="1139" />
         <source>Open file '%1' completed.</source>
         <translation>打开文件 '%1' 已完成。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1144" />
+        <location filename="../openclose.cpp" line="1150" />
         <source>Setup and load fade and highlight color parts...</source>
         <translation>设置并加载淡出与高亮颜色零件...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1146" />
+        <location filename="../openclose.cpp" line="1152" />
         <source>Setup and load fade color parts...</source>
         <translation>设置并加载淡出颜色零件...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1147" />
+        <location filename="../openclose.cpp" line="1153" />
         <source>Setup and load highlight color parts...</source>
         <translation>设置并加载高亮颜色零件...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1177" />
+        <location filename="../openclose.cpp" line="1183" />
         <source>LPub Fade Steps is ENABLED.</source>
         <translation>LPub 淡出步骤已启用。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1179" />
+        <location filename="../openclose.cpp" line="1185" />
         <source>LPub Highlight Step is ENABLED.</source>
         <translation>LPub 高亮 Step 已启用。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1250" />
+        <location filename="../openclose.cpp" line="1256" />
         <source>%1[*] - %2</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1288" />
+        <location filename="../openclose.cpp" line="1294" />
         <source>%1 File Change</source>
         <translation>%1 文件更改</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1290" />
+        <location filename="../openclose.cpp" line="1296" />
         <source>External change detected</source>
         <translation>检测到外部更改</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1291" />
+        <location filename="../openclose.cpp" line="1297" />
         <source>Current file contents were changed by an external source&lt;br&gt;"%1".&lt;br&gt;Reload ?</source>
         <translation>当前文件内容已被外部来源&lt;br&gt;"%1" 更改。&lt;br&gt;是否重新加载？</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1314" />
+        <location filename="../openclose.cpp" line="1320" />
         <source>Writing generated color parts to tmp folder...</source>
         <translation>正在将生成的颜色零件写入 tmp 文件夹...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1322" />
+        <location filename="../openclose.cpp" line="1328" />
         <source>Writing generated part %1 to temp directory: %2...</source>
         <translation>正在将生成的零件 %1 写入临时目录：%2...</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1327" />
+        <location filename="../openclose.cpp" line="1333" />
         <source>No generated parts written.</source>
         <translation>未写入任何生成的零件。</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1384" />
+        <location filename="../openclose.cpp" line="1390" />
         <source>%1%2%3%4</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1386" />
+        <location filename="../openclose.cpp" line="1392" />
         <source>Elapsed time: </source>
         <translation>耗时： </translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1390" />
+        <location filename="../openclose.cpp" line="1396" />
         <source>hours</source>
         <translation>小时</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1390" />
+        <location filename="../openclose.cpp" line="1396" />
         <source>hour</source>
         <translation>小时</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1395" />
+        <location filename="../openclose.cpp" line="1401" />
         <source>minutes</source>
         <translation>分钟</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1395" />
+        <location filename="../openclose.cpp" line="1401" />
         <source>minute</source>
         <translation>分钟</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1400" />
+        <location filename="../openclose.cpp" line="1406" />
         <source>seconds</source>
         <translation>秒</translation>
     </message>
     <message>
-        <location filename="../openclose.cpp" line="1400" />
+        <location filename="../openclose.cpp" line="1406" />
         <source>second</source>
         <translation>秒</translation>
     </message>
@@ -23671,7 +23671,7 @@ Are you sure you want to continue? </source>
     <message>
         <location filename="../../lclib/common/project.cpp" line="334" />
         <source>Duplicate Submodel</source>
-        <translation>重复的 Sub-model</translation>
+        <translation>复制 Sub-model</translation>
     </message>
     <message>
         <location filename="../../lclib/common/project.cpp" line="334" />
@@ -24002,7 +24002,14 @@ File format is not recognized.</source>
         <translation>&lt;br&gt;是否保存零件 [%1]、颜色 %2 (%3) 的更新...</translation>
     </message>
     <message>
-        <location filename="../editwindow.cpp" line="2677" />
+        <location filename="../editwindow.cpp" line="2036" />
+        <location filename="../openclose.cpp" line="811" />
+        <location filename="../openclose.cpp" line="842" />
+        <source>Unsupported LDraw file extension %1 specified.  File not saved.</source>
+        <translation>指定了不支持的 LDraw 文件扩展名 %1。文件未保存。</translation>
+    </message>
+    <message>
+        <location filename="../editwindow.cpp" line="2680" />
         <source>Visual Editor (from Command Editor) visible: %1</source>
         <translation>视觉编辑器（来自命令编辑器）可见：%1</translation>
     </message>
@@ -25287,16 +25294,6 @@ does not exist.
         <location filename="../rotate.cpp" line="773" />
         <source>Base file %1 does not contain any parts, the Overlay:Base file pair will be destroyed.</source>
         <translation>基础文件 %1 不包含任何零件，Overlay:Base 文件对将被销毁。</translation>
-    </message>
-</context>
-<context>
-    <name>QMessageBox::QMessageBox</name>
-    <message>
-        <location filename="../editwindow.cpp" line="2033" />
-        <location filename="../openclose.cpp" line="808" />
-        <location filename="../openclose.cpp" line="836" />
-        <source>Unsupported LDraw file extension %1 specified.  File not saved.</source>
-        <translation>指定了不支持的 LDraw 文件扩展名 %1。文件未保存。</translation>
     </message>
 </context>
 <context>
@@ -26943,6 +26940,11 @@ does not exist.
         <translation>无法解析颜色代码 [%1]</translation>
     </message>
     <message>
+        <location filename="../commonmenus.cpp" line="52" />
+        <source>Add Next Step</source>
+        <translation>添加下一个 Step</translation>
+    </message>
+    <message>
         <location filename="../commonmenus.cpp" line="59" />
         <source>Add the first step of the next page to this page</source>
         <translation>将下一页的第一个步骤添加到此页面</translation>
@@ -26951,6 +26953,11 @@ does not exist.
         <location filename="../commonmenus.cpp" line="62" />
         <source>Add Next Step:&lt;br&gt;  You can add the first step of the next page to this page.&lt;br&gt;</source>
         <translation>添加下一个 Step：&lt;br&gt;  你可以将下一页的第一个步骤添加到此页面。&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="../commonmenus.cpp" line="75" />
+        <source>Add Next Steps...</source>
+        <translation>添加后续步骤...</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="82" />
@@ -26963,6 +26970,11 @@ does not exist.
         <translation>添加后续步骤：&lt;br&gt;  你可以将指定数量的后续步骤添加到此页面。&lt;br&gt;</translation>
     </message>
     <message>
+        <location filename="../commonmenus.cpp" line="98" />
+        <source>Add Previous Step</source>
+        <translation>添加上一个 Step</translation>
+    </message>
+    <message>
         <location filename="../commonmenus.cpp" line="105" />
         <source>Add the last step of the previous page to this page</source>
         <translation>将上一页的最后一个步骤添加到此页面</translation>
@@ -26973,6 +26985,11 @@ does not exist.
         <translation>添加上一个 Step：&lt;br&gt;  你可以将上一页的最后一个步骤添加到此页面。&lt;br&gt;</translation>
     </message>
     <message>
+        <location filename="../commonmenus.cpp" line="121" />
+        <source>Remove this Step</source>
+        <translation>移除此 Step</translation>
+    </message>
+    <message>
         <location filename="../commonmenus.cpp" line="128" />
         <source>Move this step from this page to the next page</source>
         <translation>将此步骤从当前页移到下一页</translation>
@@ -26981,6 +26998,11 @@ does not exist.
         <location filename="../commonmenus.cpp" line="131" />
         <source>Remove this Step:&lt;br&gt;  You can move this step from this page to the next page.&lt;br&gt;</source>
         <translation>移除此 Step：&lt;br&gt;  你可以将此步骤从当前页移到下一页。&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="../commonmenus.cpp" line="144" />
+        <source>Add %1</source>
+        <translation>添加 %1</translation>
     </message>
     <message>
         <location filename="../commonmenus.cpp" line="151" />
@@ -30535,12 +30557,12 @@ does not exist.
     <message>
         <location filename="../ldrawfilesload.cpp" line="435" />
         <source>were</source>
-        <translation>被</translation>
+        <translation>未</translation>
     </message>
     <message>
         <location filename="../ldrawfilesload.cpp" line="435" />
         <source>was</source>
-        <translation>被</translation>
+        <translation>未</translation>
     </message>
     <message>
         <location filename="../ldrawfilesload.cpp" line="436" />
@@ -30565,7 +30587,7 @@ does not exist.
     <message>
         <location filename="../ldrawfilesload.cpp" line="438" />
         <source>&lt;br&gt;&lt;br&gt;%1 %2 not found. The following locations were searched;&lt;br&gt;model file, LDraw search paths, %3 and %4 library archives.&lt;br&gt;If %5 custom %6, be sure %7 location is in the LDraw search directory list.&lt;br&gt;If %5 new unofficial %6, be sure the unofficial archive library is up to date.</source>
-        <translation>&lt;br&gt;&lt;br&gt;未找到 %1 %2。已搜索以下位置；&lt;br&gt;模型文件、LDraw 搜索路径、%3 和 %4 库归档。&lt;br&gt;如果 %5 自定义 %6，请确保 %7 位置在 LDraw 搜索目录列表中。&lt;br&gt;如果 %5 新的非官方 %6，请确保非官方归档库是最新的。</translation>
+        <translation>&lt;br&gt;&lt;br&gt;%1 %2找到。已搜索以下位置；&lt;br&gt;模型文件、LDraw 搜索路径、%3 和 %4 库归档。&lt;br&gt;如果 %5 自定义 %6，请确保 %7 位置在 LDraw 搜索目录列表中。&lt;br&gt;如果 %5 新的非官方 %6，请确保非官方归档库是最新的。</translation>
     </message>
     <message>
         <location filename="../ldrawfilesload.cpp" line="445" />
@@ -30792,7 +30814,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../lpub_preferences.cpp" line="2364" />
         <source>Durat's Stl library: %1</source>
-        <translation>Durat 的 Stl 库: %1</translation>
+        <translation>Durat 的 Stl 库：%1</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="2367" />
@@ -30920,7 +30942,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../lpub_preferences.cpp" line="3031" />
         <source>POVRay include path: %1</source>
-        <translation>POVRay 包含路径: %1</translation>
+        <translation>POVRay 包含路径：%1</translation>
     </message>
     <message>
         <location filename="../lpub_preferences.cpp" line="3036" />
@@ -32814,34 +32836,6 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../visualeditor.cpp" line="5722" />
         <source>dots per inch (DPI) unit</source>
         <translation>每英寸点数 (DPI) 单位</translation>
-    </message>
-</context>
-<context>
-    <name>QObject::QObject</name>
-    <message>
-        <location filename="../commonmenus.cpp" line="52" />
-        <source>Add Next Step</source>
-        <translation>添加下一个 Step</translation>
-    </message>
-    <message>
-        <location filename="../commonmenus.cpp" line="75" />
-        <source>Add Next Steps...</source>
-        <translation>添加后续步骤...</translation>
-    </message>
-    <message>
-        <location filename="../commonmenus.cpp" line="98" />
-        <source>Add Previous Step</source>
-        <translation>添加上一个 Step</translation>
-    </message>
-    <message>
-        <location filename="../commonmenus.cpp" line="121" />
-        <source>Remove this Step</source>
-        <translation>移除此 Step</translation>
-    </message>
-    <message>
-        <location filename="../commonmenus.cpp" line="144" />
-        <source>Add %1</source>
-        <translation>添加 %1</translation>
     </message>
 </context>
 <context>
@@ -35069,28 +35063,28 @@ You can edit the library path in the Preferences dialogue.
 <context>
     <name>SubmodelInstanceCount</name>
     <message>
-        <location filename="../formatpage.cpp" line="113" />
+        <location filename="../formatpage.cpp" line="115" />
         <source>Times used - right-click to modify</source>
         <translation>使用次数 - 右键修改</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="141" />
+        <location filename="../formatpage.cpp" line="148" />
         <source>Submodel Instance Count</source>
         <translation>Sub-model 实例计数</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="190" />
+        <location filename="../formatpage.cpp" line="197" />
         <source>%1 Margins</source>
         <translation>%1 边距</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="199" />
+        <location filename="../formatpage.cpp" line="206" />
         <source>Move %1</source>
         <translation>移动 %1</translation>
     </message>
     <message>
-        <location filename="../formatpage.cpp" line="207" />
-        <location filename="../formatpage.cpp" line="207" />
+        <location filename="../formatpage.cpp" line="214" />
+        <location filename="../formatpage.cpp" line="214" />
         <source>Submodel Instances</source>
         <translation>Sub-model 实例</translation>
     </message>
@@ -35498,7 +35492,7 @@ You can edit the library path in the Preferences dialogue.
 <context>
     <name>TextEditor</name>
     <message>
-        <location filename="../editwindow.cpp" line="3416" />
+        <location filename="../editwindow.cpp" line="3419" />
         <source>Snippet Completer</source>
         <translation>片段补全</translation>
     </message>
@@ -36826,7 +36820,7 @@ BlendFuncSeparate：%4
     <message>
         <location filename="../../lclib/common/lc_blenderpreferences.cpp" line="1722" />
         <source>Error: Install failed.</source>
-        <translation>错误: 安装失败。</translation>
+        <translation>错误：安装失败。</translation>
     </message>
     <message>
         <location filename="../../lclib/common/lc_blenderpreferences.cpp" line="1725" />

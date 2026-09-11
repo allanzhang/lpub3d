@@ -19,7 +19,8 @@
 #include <QGraphicsPixmapItem>
 #include "where.h"
 #include "placement.h"
-#include "metaitem.h"
+#include "metaitem.h"
+#include <QCoreApplication>
 
 class Where;
 class Page;
@@ -77,6 +78,11 @@ protected:
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *event);
 
+  // tr() must resolve to THIS class, not to the Q_OBJECT base it inherits
+  // (QGraphicsTextItem / QObject). Without this declaration the context used at
+  // runtime is the base class name, which no longer matches the context lupdate
+  // assigns (the enclosing class), and every translation for this class is dead.
+Q_DECLARE_TR_FUNCTIONS(PageAttributeTextItem);
 };
 
 #endif // PAGEATTRIBUTETextITEM_H

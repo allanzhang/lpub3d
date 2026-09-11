@@ -804,9 +804,12 @@ void Gui::saveAs()
         Preferences::ldrawFilesLoadMsgs = loadMsgType;
     Gui::displayPage();
   } else {
-    QMessageBox::warning(nullptr,QMessageBox::tr(VER_PRODUCTNAME_STR),
-                              QMessageBox::tr("Unsupported LDraw file extension %1 specified.  File not saved.")
-                                .arg(extension));
+    // Note: keep the message out of the QMessageBox::warning(...) argument list.
+    // A Class::tr() literal nested inside another call of the same class makes
+    // lupdate qualify the context as "QMessageBox::QMessageBox", which no runtime
+    // lookup ever asks for - the translation then silently never applies.
+    const QString unsupportedExtMsg = QMessageBox::tr("Unsupported LDraw file extension %1 specified.  File not saved.").arg(extension);
+    QMessageBox::warning(nullptr, QMessageBox::tr(VER_PRODUCTNAME_STR), unsupportedExtMsg);
 
   }
   gui->enableWatcher();
@@ -832,9 +835,12 @@ void Gui::saveCopy()
       extension.isEmpty()) {
     gui->saveFile(fileName);
   } else {
-    QMessageBox::warning(nullptr,QMessageBox::tr(VER_PRODUCTNAME_STR),
-                              QMessageBox::tr("Unsupported LDraw file extension %1 specified.  File not saved.")
-                                .arg(extension));
+    // Note: keep the message out of the QMessageBox::warning(...) argument list.
+    // A Class::tr() literal nested inside another call of the same class makes
+    // lupdate qualify the context as "QMessageBox::QMessageBox", which no runtime
+    // lookup ever asks for - the translation then silently never applies.
+    const QString unsupportedExtMsg = QMessageBox::tr("Unsupported LDraw file extension %1 specified.  File not saved.").arg(extension);
+    QMessageBox::warning(nullptr, QMessageBox::tr(VER_PRODUCTNAME_STR), unsupportedExtMsg);
   }
 }
 
