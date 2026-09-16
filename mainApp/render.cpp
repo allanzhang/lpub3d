@@ -35,6 +35,8 @@
 #include <QTextStream>
 #include <QImageReader>
 #include <QtConcurrent>
+#include <algorithm>
+#include <cmath>
 
 #include "lpub.h"
 #include "render.h"
@@ -3684,11 +3686,24 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     QColor  BorderColor;
                     qreal   BorderWidth;
                     QRectF  IconRect;   // icon text box centred on P
+                    QRectF  LeaderTarget; // badge: part screen box (image coords); empty => no leader
                 };
                 QVector<AnnotDraw> Draws;
 
                 qreal NeedLeft = 0, NeedTop = 0, NeedRight = 0, NeedBottom = 0;
                 int   BadgeOrdinal = 0;
+
+                // Badge layout is deferred: all badges of a page are stacked in a
+                // right-hand column OUTSIDE the assembly image, in ordinal order,
+                // each with a leader line to its part's screen box (so dense parts
+                // can never cover each other's badges).
+                struct BadgeSeed
+                {
+                    QString Text;
+                    QRectF  Target;   // part screen box in image coords
+                    qreal   D;        // badge diameter
+                };
+                QVector<BadgeSeed> BadgeSeeds;
 
                 const QList<CsiAnnotation*>& Annotations = lpub->currentStep->csiAnnotations;
                 if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
@@ -3700,17 +3715,57 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                 bool PliLoaded = false;
 
                 // Shared part matcher + projector: world bbox of the annotated part
-                // (matched by type base name across all pieces, preferring the last
-                // file line) and its projected full-image screen box.
+                // INSTANCE.  The annotation stores the original-file part line (the
+                // last line of that type); we count how many instances of the type
+                // appear in that model up to that line (ordinal N), then pick the
+                // N-th matching piece of the render model in file order.  This makes
+                // arrows/badges aim at the right copy when a type repeats.  Falls
+                // back to the union of all matching pieces when N cannot be
+                // resolved.  Projected full-image screen box follows.
                 auto ProjectPart = [&](const CsiAnnotationIconData& Data,
+                                       const Where& PartLine,
                                        lcVector3& BMin, lcVector3& BMax,
                                        lcVector3& SMin, lcVector3& SMax,
                                        QString* OutDescription = nullptr) -> bool
                 {
                     BMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
                     BMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-                    int BestLine = -1;
-                    bool Found = false;
+
+                    // 1-based ordinal of the target instance inside its own model
+                    // file: count type-1 part lines with the same base name from
+                    // the top of the file down to the annotation's part line.
+                    int WantOrdinal = 1;
+                    const QString PartModel = PartLine.modelName.toLower();
+                    if (!PartModel.isEmpty() && PartModel != QStringLiteral("undefined"))
+                    {
+                        int Seen = 0;
+                        for (int L = 0; L <= PartLine.lineNumber; ++L)
+                        {
+                            const QString Raw = lpub->ldrawFile.readLine(PartModel, L);
+                            if (Raw.isEmpty())
+                                continue;
+                            const QString T = Raw.trimmed();
+                            if (T.isEmpty() || T.at(0) != QLatin1Char('1'))
+                                continue;
+                            const QStringList F = T.split(QRegularExpression(QStringLiteral("\\s+")), Qt::SkipEmptyParts);
+                            if (F.size() < 15)
+                                continue;
+                            QString Base = F.at(14);
+                            const int Slash = Base.lastIndexOf('/');
+                            if (Slash >= 0)
+                                Base = Base.mid(Slash + 1);
+                            const int Dot = Base.lastIndexOf('.');
+                            if (Dot > 0)
+                                Base = Base.left(Dot);
+                            if (Base.compare(Data.typeBaseName, Qt::CaseInsensitive) == 0)
+                                ++Seen;
+                        }
+                        if (Seen > 0)
+                            WantOrdinal = Seen;
+                    }
+
+                    QVector<lcPiece*> Candidates;
+                    lcPiece* Anchor = nullptr;   // instance used when geometry cannot be resolved
                     for (const std::unique_ptr<lcPiece>& Piece : ActiveModel->GetPieces())
                     {
                         PieceInfo* Info = Piece->mPieceInfo;
@@ -3725,18 +3780,103 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                             PieceName = PieceName.left(Dot);
                         if (PieceName.compare(Data.typeBaseName, Qt::CaseInsensitive) != 0)
                             continue;
-                        if (Piece->GetFileLine() < BestLine)
-                            continue;
-                        lcVector3 PMin(FLT_MAX, FLT_MAX, FLT_MAX), PMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
-                        Piece->CompareBoundingBox(PMin, PMax);
-                        BMin = lcMin(BMin, PMin);
-                        BMax = lcMax(BMax, PMax);
-                        BestLine = Piece->GetFileLine();
-                        Found = true;
+                        Candidates.append(Piece.get());
                         if (OutDescription)
                             *OutDescription = QString::fromLatin1(Info->m_strDescription);
                     }
-                    if (!Found)
+
+                    if (!Candidates.isEmpty() && WantOrdinal <= Candidates.size())
+                    {
+                        // Nth instance in file order (the render model keeps the
+                        // same top-level part order as the source file).
+                        std::sort(Candidates.begin(), Candidates.end(),
+                                  [](const lcPiece* A, const lcPiece* B) -> bool
+                                  { return A->GetFileLine() < B->GetFileLine(); });
+                        lcPiece* Target = Candidates.at(WantOrdinal - 1);
+                        Anchor = Target;
+                        // A sub-model reference carries no geometry of its own: its
+                        // mMesh exists but its bounding box is empty, so
+                        // lcPiece::CompareBoundingBox() walks the wrong branch and
+                        // leaves Min/Max at FLT_MAX (which later becomes NaN and
+                        // silently killed the leader line / arrow).  PieceInfo
+                        // knows it is a model and recurses the referenced geometry.
+                        if (Target->mPieceInfo && Target->mPieceInfo->IsModel() && Target->mPieceInfo->GetModel())
+                        {
+                            // Sub-model reference: union the geometry of every piece of the
+                            // referenced model.  lcModel::SubModelCompareBoundingBox() would
+                            // filter on IsVisibleInSubModel() (mStepHide == LC_STEP_MAX), which
+                            // excludes most pieces of a stepped sub-model and left the bounds
+                            // empty -> FLT_MAX -> NaN target, and the leader line / arrow
+                            // silently disappeared.
+                            for (const std::unique_ptr<lcPiece>& Sub : Target->mPieceInfo->GetModel()->GetPieces())
+                                Sub->SubModelCompareBoundingBox(Target->mModelWorld, BMin, BMax);
+                            if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            {
+                                lcModel* SM = Target->mPieceInfo->GetModel();
+                                fprintf(stderr, "PROJSUB model=%p name=%s pieces=%d\n",
+                                        (void*)SM, qPrintable(SM->GetModelName()), (int)SM->GetPieces().size());
+                                int Shown = 0;
+                                for (const std::unique_ptr<lcPiece>& Sub : SM->GetPieces())
+                                {
+                                    lcVector3 TMin(FLT_MAX, FLT_MAX, FLT_MAX), TMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                                    Sub->SubModelCompareBoundingBox(Target->mModelWorld, TMin, TMax);
+                                    fprintf(stderr, "   SUB name=%s isModel=%d bbox=(%.1f,%.1f,%.1f)-(%.1f,%.1f,%.1f)\n",
+                                            Sub->mPieceInfo ? Sub->mPieceInfo->mFileName : "(null)",
+                                            (Sub->mPieceInfo && Sub->mPieceInfo->IsModel()) ? 1 : 0,
+                                            TMin[0], TMin[1], TMin[2], TMax[0], TMax[1], TMax[2]);
+                                    if (++Shown >= 5) break;
+                                }
+                            }
+                        }
+                        else
+                            Target->CompareBoundingBox(BMin, BMax);
+                        if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "PROJBBOX target=%s via=%s bmin=(%.1f,%.1f,%.1f) bmax=(%.1f,%.1f,%.1f)\n",
+                                    qPrintable(Data.typeBaseName),
+                                    (Target->mPieceInfo && Target->mPieceInfo->IsModel()) ? "pieceinfo-model" : "piece",
+                                    BMin[0], BMin[1], BMin[2], BMax[0], BMax[1], BMax[2]);
+                    }
+                    else
+                    {
+                        // Fallback: union of every matching instance.
+                        if (!Candidates.isEmpty())
+                            Anchor = Candidates.first();
+                        for (lcPiece* Piece : Candidates)
+                        {
+                            lcVector3 PMin(FLT_MAX, FLT_MAX, FLT_MAX), PMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                            if (Piece->mPieceInfo && Piece->mPieceInfo->IsModel() && Piece->mPieceInfo->GetModel())
+                            {
+                                for (const std::unique_ptr<lcPiece>& Sub : Piece->mPieceInfo->GetModel()->GetPieces())
+                                    Sub->SubModelCompareBoundingBox(Piece->mModelWorld, PMin, PMax);
+                            }
+                            else
+                                Piece->CompareBoundingBox(PMin, PMax);
+                            BMin = lcMin(BMin, PMin);
+                            BMax = lcMax(BMax, PMax);
+                        }
+                    }
+
+                    if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                    {
+                        fprintf(stderr, "PROJDBG target=%s wantOrdinal=%d candidates=%d pieces=%d isModel=%d\n",
+                                qPrintable(Data.typeBaseName), WantOrdinal,
+                                (int)Candidates.size(), (int)ActiveModel->GetPieces().size(),
+                                (!Candidates.isEmpty() && Candidates.first()->mPieceInfo)
+                                    ? (Candidates.first()->mPieceInfo->IsModel() ? 1 : 0) : -1);
+                        if (Candidates.isEmpty())
+                        {
+                            int Shown = 0;
+                            for (const std::unique_ptr<lcPiece>& P : ActiveModel->GetPieces())
+                            {
+                                const char* NM = (P->mPieceInfo && P->mPieceInfo->mFileName[0])
+                                                 ? P->mPieceInfo->mFileName : "(null)";
+                                fprintf(stderr, "    piece name=%s line=%d\n", NM, P->GetFileLine());
+                                if (++Shown >= 80) { fprintf(stderr, "    ...(truncated)\n"); break; }
+                            }
+                        }
+                    }
+
+                    if (Candidates.isEmpty())
                         return false;
 
                     SMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
@@ -3751,10 +3891,21 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                         SMin = lcMin(SMin, S);
                         SMax = lcMax(SMax, S);
                     }
-                    if (SMin[0] > SMax[0] || SMin[1] > SMax[1])
+                    const bool BoxFinite = std::isfinite(SMin[0]) && std::isfinite(SMin[1]) &&
+                                           std::isfinite(SMax[0]) && std::isfinite(SMax[1]);
+                    if (!BoxFinite || SMin[0] > SMax[0] || SMin[1] > SMax[1])
                     {
-                        SMin = lcVector3(0.0f, 0.0f, 0.0f);
-                        SMax = lcVector3(0.0f, 0.0f, 0.0f);
+                        // The target geometry does not exist in the render scene (observed
+                        // with a sub-model reference whose runtime lcModel holds no pieces).
+                        // There is no honest screen box to aim at, so report it loudly and
+                        // hand back a non-finite box: the badge itself is still laid out and
+                        // padded into view, while the leader line / arrow are skipped
+                        // instead of being drawn to a made-up position.
+                        fprintf(stderr, "PROJWARN 目标几何不可解析，已跳过引线/箭头：type=%s model=%s line=%d\n",
+                                qPrintable(Data.typeBaseName), qPrintable(PartLine.modelName),
+                                (int)PartLine.lineNumber);
+                        SMin = lcVector3(NAN, NAN, NAN);
+                        SMax = lcVector3(NAN, NAN, NAN);
                     }
                     return true;
                 };
@@ -3885,7 +4036,7 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 
                     lcVector3 BMin, BMax, SMin, SMax;
                     QString PartDescription;
-                    if (!ProjectPart(Data, BMin, BMax, SMin, SMax, &PartDescription))
+                    if (!ProjectPart(Data, Ca->partLine, BMin, BMax, SMin, SMax, &PartDescription))
                         continue;
 
                     if (Ca->kind == CsiAnnotationBadge)
@@ -3895,30 +4046,21 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                         QRectF BadgeTextRect = BadgeFm.boundingRect(BadgeText);
                         const qreal BadgeD = qMax(BadgeTextRect.width() + 2.0 * PadX,
                                                   BadgeTextRect.height() + 2.0 * PadY);
-                        const qreal Offset = BadgeD / 2.0 + BadgeGap;
-                        float AnchorX, AnchorY;
-                        PlacementAnchor(Data, SMin, SMax, Offset, Offset, AnchorX, AnchorY);
-                        const QPointF P(AnchorX - Image.Bounds.left(), AnchorY - Image.Bounds.top());
-
-                        AnnotDraw Dr;
-                        Dr.kind = AnnotDraw::Badge;
-                        Dr.P = P;
-                        Dr.D = BadgeD;
-                        Dr.Text = BadgeText;
-                        Dr.Bounds = QRectF(P.x() - BadgeD/2.0 - 2.0, P.y() - BadgeD/2.0 - 2.0,
-                                           BadgeD + 4.0, BadgeD + 4.0);
+                        BadgeSeed Seed;
+                        Seed.Text = BadgeText;
+                        Seed.D = BadgeD;
+                        Seed.Target = QRectF(SMin[0] - Image.Bounds.left(),
+                                             SMin[1] - Image.Bounds.top(),
+                                             SMax[0] - SMin[0],
+                                             SMax[1] - SMin[1]);
+                        BadgeSeeds.append(Seed);
 
                         if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
-                            fprintf(stderr, "BADGEDBG type=%s ordinal=%d place=[%s] prep=%s bbox=(%.2f,%.2f,%.2f)-(%.2f,%.2f,%.2f) sb=(%.1f,%.1f)-(%.1f,%.1f) anchor=(%.1f,%.1f) P=(%d,%d)\n",
+                            fprintf(stderr, "BADGEDBG type=%s ordinal=%d place=[%s] wb=(%.2f,%.2f,%.2f)-(%.2f,%.2f,%.2f) sb=(%.1f,%.1f)-(%.1f,%.1f)\n",
                                     qPrintable(Data.typeBaseName), BadgeOrdinal,
                                     qPrintable(Data.placements.join(",")),
-                                    ((Data.placements.size() == 2 && Data.placements.at(1).toInt() == Outside) ||
-                                     (Data.placements.size() >= 3 && Data.placements.at(2).toInt() == Outside)) ? "OUTSIDE" : "INSIDE",
                                     BMin[0], BMin[1], BMin[2], BMax[0], BMax[1], BMax[2],
-                                    SMin[0], SMin[1], SMax[0], SMax[1],
-                                    AnchorX, AnchorY, int(P.x()), int(P.y()));
-
-                        Draws.append(Dr);
+                                    SMin[0], SMin[1], SMax[0], SMax[1]);
                     }
                     else if (Ca->kind == CsiAnnotationArrow)
                     {
@@ -4139,14 +4281,64 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     }
                 }
 
+                // ---- Badge layout: right-hand column OUTSIDE the image ----
+                {
+                    const qreal ColumnX = FinalImage.width() + BadgeGap;
+                    qreal ColumnY = BadgeGap;
+                    for (const BadgeSeed& Seed : BadgeSeeds)
+                    {
+                        const QPointF P(ColumnX, ColumnY);
+                        const QPointF TargetCentre(Seed.Target.center().x(), Seed.Target.center().y());
+                        QPointF LeaderTip = TargetCentre;
+                        if (Seed.Target.isValid())
+                        {
+                            QPointF Hit;
+                            if (SegmentRectHit(P, TargetCentre, Seed.Target, Hit))
+                                LeaderTip = Hit;
+                        }
+                        AnnotDraw Dr;
+                        Dr.kind = AnnotDraw::Badge;
+                        Dr.P = P;
+                        Dr.D = Seed.D;
+                        Dr.Text = Seed.Text;
+                        Dr.LeaderTarget = Seed.Target;
+                        Dr.Bounds = QRectF(P.x() - Seed.D/2.0 - 2.0, P.y() - Seed.D/2.0 - 2.0,
+                                           Seed.D + 4.0, Seed.D + 4.0);
+                        const QRectF LineBox = QRectF(qMin(P.x(), LeaderTip.x()), qMin(P.y(), LeaderTip.y()),
+                                                      qAbs(LeaderTip.x() - P.x()), qAbs(LeaderTip.y() - P.y()))
+                                                  .normalized();
+                        if (!LineBox.isEmpty())
+                            Dr.Bounds = Dr.Bounds.united(LineBox.adjusted(-2.0, -2.0, 2.0, 2.0));
+                        Draws.append(Dr);
+                        if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "BADGEROW ordinal=%s D=%.1f P=(%.1f,%.1f) target=(%.0f,%.0f,%.0f,%.0f) tip=(%.1f,%.1f)\n",
+                                    qPrintable(Seed.Text), Seed.D, P.x(), P.y(),
+                                    Seed.Target.left(), Seed.Target.top(), Seed.Target.right(), Seed.Target.bottom(),
+                                    LeaderTip.x(), LeaderTip.y());
+                        ColumnY += Seed.D + BadgeGap;
+                    }
+                }
+
                 // ---- Pass 2: expand the canvas symmetrically so every draw fits ----
                 for (const AnnotDraw& Dr : Draws)
                 {
                     const qreal M = 4.0;   // bleed
-                    if (Dr.Bounds.left() - M < 0)          NeedLeft   = qMax(NeedLeft,   M - Dr.Bounds.left());
-                    if (Dr.Bounds.top() - M < 0)           NeedTop    = qMax(NeedTop,    M - Dr.Bounds.top());
-                    if (Dr.Bounds.right() + M > FinalImage.width())  NeedRight  = qMax(NeedRight,  Dr.Bounds.right() + M - FinalImage.width());
-                    if (Dr.Bounds.bottom() + M > FinalImage.height()) NeedBottom = qMax(NeedBottom, Dr.Bounds.bottom() + M - FinalImage.height());
+                    // A failed part projection leaves NaN in Dr.Bounds.  Every NaN
+                    // comparison below is false, which would silently skip the padding
+                    // a badge needs and draw it OUTSIDE the canvas (clipped away).
+                    // Fall back to the badge's own finite rectangle in that case.
+                    QRectF B = Dr.Bounds;
+                    if (!std::isfinite(B.left()) || !std::isfinite(B.top()) ||
+                        !std::isfinite(B.right()) || !std::isfinite(B.bottom()))
+                        B = QRectF(Dr.P.x() - Dr.D / 2.0 - 2.0, Dr.P.y() - Dr.D / 2.0 - 2.0,
+                                   Dr.D + 4.0, Dr.D + 4.0);
+                    if (!std::isfinite(B.left()) || !std::isfinite(B.top()) ||
+                        !std::isfinite(B.right()) || !std::isfinite(B.bottom()))
+                        continue;           // nothing usable to size the canvas from
+                    if (B.left() - M < 0)          NeedLeft   = qMax(NeedLeft,   M - B.left());
+                    if (B.top() - M < 0)           NeedTop    = qMax(NeedTop,    M - B.top());
+                    if (B.right() + M > FinalImage.width())  NeedRight  = qMax(NeedRight,  B.right() + M - FinalImage.width());
+                    if (B.bottom() + M > FinalImage.height()) NeedBottom = qMax(NeedBottom, B.bottom() + M - FinalImage.height());
                 }
                 const int PadH = int(qCeil(qMax(NeedLeft, NeedRight)));
                 const int PadV = int(qCeil(qMax(NeedTop, NeedBottom)));
@@ -4162,6 +4354,7 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     {
                         Dr.P += QPointF(PadH, PadV);
                         Dr.Tip += QPointF(PadH, PadV);
+                        Dr.LeaderTarget.translate(PadH, PadV);
                         Dr.Bounds.translate(PadH, PadV);
                     }
                     if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
@@ -4176,6 +4369,27 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                 {
                     if (Dr.kind == AnnotDraw::Badge)
                     {
+                        // leader line from the badge rim to the part boundary
+                        if (Dr.LeaderTarget.isValid() &&
+                            std::isfinite(Dr.LeaderTarget.center().x()) &&
+                            std::isfinite(Dr.LeaderTarget.center().y()))
+                        {
+                            const QPointF BadgeCentre(Dr.P.x(), Dr.P.y());
+                            const QPointF TargetCentre(Dr.LeaderTarget.center().x(), Dr.LeaderTarget.center().y());
+                            QPointF LeaderTip;
+                            if (!SegmentRectHit(BadgeCentre, TargetCentre, Dr.LeaderTarget, LeaderTip))
+                                LeaderTip = TargetCentre;
+                            const QLineF Leader(BadgeCentre, LeaderTip);
+                            if (Leader.length() > Dr.D / 2.0)
+                            {
+                                const QPointF Start = BadgeCentre + (LeaderTip - BadgeCentre) * (Dr.D / 2.0 / Leader.length());
+                                QPen LeaderPen(QColor(0, 0, 0));
+                                LeaderPen.setWidthF(1.5 * Dpi / 96.0);
+                                LeaderPen.setCapStyle(Qt::RoundCap);
+                                AnnotPainter.setPen(LeaderPen);
+                                AnnotPainter.drawLine(Start, LeaderTip);
+                            }
+                        }
                         AnnotPainter.setFont(BadgeFont);
                         const QRectF BadgeRect(Dr.P.x() - Dr.D / 2.0, Dr.P.y() - Dr.D / 2.0, Dr.D, Dr.D);
                         QPen BorderPen(QColor(0, 0, 0));
@@ -4188,6 +4402,12 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     }
                     else if (Dr.kind == AnnotDraw::Arrow)
                     {
+                        // A failed part projection leaves NaN geometry; drawing that is
+                        // undefined, so skip the arrow instead.
+                        if (!std::isfinite(Dr.P.x())   || !std::isfinite(Dr.P.y()) ||
+                            !std::isfinite(Dr.Tip.x()) || !std::isfinite(Dr.Tip.y()) ||
+                            !std::isfinite(Dr.Dir.x()) || !std::isfinite(Dr.Dir.y()))
+                            continue;
                         const QPointF HeadBase = Dr.Tip - Dr.Dir * HeadLen;
                         const QPointF Perp(-Dr.Dir.y(), Dr.Dir.x());
                         QPainterPath Path;
