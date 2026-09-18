@@ -314,6 +314,11 @@ class Pli : public Placement {
       _parts = parts;
     }
 
+    QStringList getSortedKeys() const
+    {
+      return sortedKeys;
+    }
+
     void getLeftEdge(QImage &, QList<int> &);
     void getRightEdge(QImage &, QList<int> &);
 };

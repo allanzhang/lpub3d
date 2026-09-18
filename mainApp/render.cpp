@@ -37,6 +37,7 @@
 #include <QtConcurrent>
 #include <algorithm>
 #include <cmath>
+#include <limits>
 
 #include "lpub.h"
 #include "render.h"
@@ -3202,7 +3203,7 @@ int Native::renderPli(
       break;
   case BOM:
       if (!nameKey.isEmpty()) {
-        Options = lpub->page.pli.viewerOptsList[nameKey]; 
+        Options = lpub->page.pli.viewerOptsList[nameKey];
         viewerStepKey = QString("%1;%2;0").arg(attributes.at(nType), attributes.at(nColorCode));
       }
       break;
@@ -3572,6 +3573,70 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 
             CalculateImageBounds(Image);
 
+            // Project each referenced submodel's true world bounding box into the
+            // cropped CSI image.  Callout pointer tips use this instead of a
+            // hard-coded normalized x/y point, so they automatically land on the
+            // main model's submodel outline (same idea as badge leader targets).
+            if (lpub->currentStep)
+            {
+                lpub->currentStep->csiSubmodelBounds.clear();
+                QHash<QString, int> SubmodelOrdinal;
+                for (const std::unique_ptr<lcPiece>& Piece : ActiveModel->GetPieces())
+                {
+                    PieceInfo* Info = Piece->mPieceInfo;
+                    if (!Info || !Info->IsModel() || !Info->GetModel())
+                        continue;
+
+                    QString SubmodelName = QString::fromLatin1(Info->mFileName);
+                    const int Slash = SubmodelName.lastIndexOf('/');
+                    if (Slash >= 0)
+                        SubmodelName = SubmodelName.mid(Slash + 1);
+                    const int Dot = SubmodelName.lastIndexOf('.');
+                    if (Dot > 0)
+                        SubmodelName = SubmodelName.left(Dot);
+                    const int SubmodelColor = int(Piece->GetColorCode());
+                    const QString GroupKey = SubmodelName.toLower() + QLatin1Char('#') + QString::number(SubmodelColor);
+                    const int Ordinal = ++SubmodelOrdinal[GroupKey];
+                    const QString BoundsKey = GroupKey + QLatin1Char('#') + QString::number(Ordinal);
+
+                    lcVector3 BMin(FLT_MAX, FLT_MAX, FLT_MAX);
+                    lcVector3 BMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                    for (const std::unique_ptr<lcPiece>& Sub : Info->GetModel()->GetPieces())
+                        Sub->SubModelCompareBoundingBox(Piece->mModelWorld, BMin, BMax);
+
+                    if (BMin[0] > BMax[0] || BMin[1] > BMax[1] || BMin[2] > BMax[2])
+                        continue;
+
+                    lcVector3 SMin(FLT_MAX, FLT_MAX, FLT_MAX);
+                    lcVector3 SMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                    for (int Corner = 0; Corner < 8; ++Corner)
+                    {
+                        lcVector3 P;
+                        P[0] = (Corner & 1) ? BMax[0] : BMin[0];
+                        P[1] = (Corner & 2) ? BMax[1] : BMin[1];
+                        P[2] = (Corner & 4) ? BMax[2] : BMin[2];
+                        const lcVector3 S = ImageView->ProjectPointFullImage(P);
+                        SMin = lcMin(SMin, S);
+                        SMax = lcMax(SMax, S);
+                    }
+
+                    if (!std::isfinite(SMin[0]) || !std::isfinite(SMin[1]) ||
+                        !std::isfinite(SMax[0]) || !std::isfinite(SMax[1]) ||
+                        SMin[0] > SMax[0] || SMin[1] > SMax[1])
+                        continue;
+
+                    const QRectF Box(SMin[0] - Image.Bounds.left(),
+                                     SMin[1] - Image.Bounds.top(),
+                                     SMax[0] - SMin[0],
+                                     SMax[1] - SMin[1]);
+                    lpub->currentStep->csiSubmodelBounds.insert(BoundsKey, Box);
+                    if (qEnvironmentVariableIsSet("LPUB_CALLOUT_POINTER_DEBUG"))
+                        fprintf(stderr, "CALLOUT_BOUND step=%d key=%s box=(%.1f,%.1f %.1fx%.1f)\n",
+                                lpub->currentStep->stepNumber.number, qPrintable(BoundsKey),
+                                Box.x(), Box.y(), Box.width(), Box.height());
+                }
+            }
+
             if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
                 fprintf(stderr, "BADGEDBG_PRE imgtype=%d badgeEnv=%d step=%p\n",
                         (int)O->ImageType, qEnvironmentVariableIsSet("LPUB_STEP_BADGE") ? 1 : 0, (void*)lpub->currentStep);
@@ -3650,18 +3715,61 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
             {
                 const float Dpi = O->Resolution > 0 ? float(O->Resolution) : 96.0f;
 
-                // badge metrics (mirror the Qt badge: bold >=20pt text, padX 8 padY 4)
-                const int FontPx = qMax(24, qRound(20.0f * Dpi / 72.0f));
+                // badge metrics (mirror the Qt badge: normal >=14pt text, padX 4 padY 2)
+                const int FontPx = qMax(16, qRound(14.0f * Dpi / 72.0f));
                 QFont BadgeFont;
                 BadgeFont.setFamily(QStringLiteral("Arial"));
-                BadgeFont.setBold(true);
+                BadgeFont.setBold(false);
                 BadgeFont.setPixelSize(FontPx);
-                const qreal PadX = qMax(6.0, 8.0 * Dpi / 96.0);
-                const qreal PadY = qMax(3.0, 4.0 * Dpi / 96.0);
-                const qreal BadgeGap = qMax(2.0, 3.0 * Dpi / 96.0);
+                const qreal PadX = qMax(3.0, 4.0 * Dpi / 96.0);
+                const qreal PadY = qMax(1.5, 2.0 * Dpi / 96.0);
+                qreal BadgePartGap = qMax(10.0, 16.0 * Dpi / 96.0);
+                const QByteArray BadgeRailGapEnv = qgetenv("LPUB_BADGE_RAIL_GAP");
+                if (!BadgeRailGapEnv.isEmpty())
+                {
+                    bool GapOk = false;
+                    const qreal ConfiguredGap = QString::fromLatin1(BadgeRailGapEnv).toDouble(&GapOk);
+                    if (GapOk && ConfiguredGap >= 0.0)
+                        BadgePartGap = ConfiguredGap * Dpi / 150.0;
+                }
+                const qreal BadgeStackGap = qMax(4.0, 8.0 * Dpi / 96.0);
                 const qreal ArrowGap = qMax(4.0, 6.0 * Dpi / 96.0);
+                const qreal ArrowHoverGap = qMax(4.0, 16.0 * Dpi / 150.0);
                 const qreal IconGap  = qMax(4.0, 6.0 * Dpi / 96.0);
-                const qreal MinShaft = 0.8 * Dpi;      // mirror CsiAnnotationArrowItem
+                const QByteArray BadgeLineColorEnv = qgetenv("LPUB_BADGE_LINE_COLOR");
+                const QByteArray BadgePointColorEnv = qgetenv("LPUB_BADGE_POINT_COLOR");
+                const QByteArray BadgeHaloColorEnv = qgetenv("LPUB_BADGE_LINE_HALO_COLOR");
+                const bool BadgeSolidLine = qEnvironmentVariableIsSet("LPUB_BADGE_SOLID_LINE");
+                QColor BadgeLineColor(255, 255, 255);
+                QColor BadgePointColor(QStringLiteral("#D4EDFC"));
+                QColor BadgeHaloColor;
+                if (!BadgeLineColorEnv.isEmpty())
+                {
+                    const QColor Candidate(QString::fromLatin1(BadgeLineColorEnv));
+                    if (Candidate.isValid())
+                        BadgeLineColor = Candidate;
+                }
+                if (!BadgePointColorEnv.isEmpty())
+                {
+                    const QColor Candidate(QString::fromLatin1(BadgePointColorEnv));
+                    if (Candidate.isValid())
+                        BadgePointColor = Candidate;
+                }
+                if (!BadgeHaloColorEnv.isEmpty())
+                {
+                    const QColor Candidate(QString::fromLatin1(BadgeHaloColorEnv));
+                    if (Candidate.isValid())
+                        BadgeHaloColor = Candidate;
+                }
+                qreal BadgePointDiameter = 14.0 * Dpi / 150.0;
+                const QByteArray BadgePointDiameterEnv = qgetenv("LPUB_BADGE_POINT_DIAMETER");
+                if (!BadgePointDiameterEnv.isEmpty())
+                {
+                    bool DiameterOk = false;
+                    const qreal ConfiguredDiameter = QString::fromLatin1(BadgePointDiameterEnv).toDouble(&DiameterOk);
+                    if (DiameterOk && ConfiguredDiameter > 0.0)
+                        BadgePointDiameter = ConfiguredDiameter * Dpi / 150.0;
+                }
                 const qreal HeadLen   = 10.0 * Dpi / 96.0;
                 const qreal HeadHalfW = 6.0  * Dpi / 96.0;
 
@@ -3693,6 +3801,29 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                 qreal NeedLeft = 0, NeedTop = 0, NeedRight = 0, NeedBottom = 0;
                 int   BadgeOrdinal = 0;
 
+                QHash<QString, int> PliOrderByPart;
+                if (lpub->currentStep)
+                {
+                    const QStringList SortedPliKeys = lpub->currentStep->pli.getSortedKeys();
+                    for (int PliIndex = 0; PliIndex < SortedPliKeys.size(); ++PliIndex)
+                    {
+                        PliPart *PliPartItem = lpub->currentStep->pli.getPart(SortedPliKeys.at(PliIndex));
+                        if (!PliPartItem)
+                            continue;
+                        const QString PliBaseName = QFileInfo(PliPartItem->type).completeBaseName().toLower();
+                        PliOrderByPart.insert(PliBaseName + QLatin1Char('_') + PliPartItem->color,
+                                              PliIndex + 1);
+                    }
+                }
+
+                if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                {
+                    fprintf(stderr, "PLIORDER mapped=%d\n", int(PliOrderByPart.size()));
+                    for (auto It = PliOrderByPart.constBegin(); It != PliOrderByPart.constEnd(); ++It)
+                        fprintf(stderr, "  PLIORDER key=%s order=%d\n",
+                                qPrintable(It.key()), It.value());
+                }
+
                 // Badge layout is deferred: all badges of a page are stacked in a
                 // right-hand column OUTSIDE the assembly image, in ordinal order,
                 // each with a leader line to its part's screen box (so dense parts
@@ -3701,7 +3832,9 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                 {
                     QString Text;
                     QRectF  Target;   // part screen box in image coords
+                    QPointF TargetCentre; // projected world bbox centre
                     qreal   D;        // badge diameter
+                    int     Order;    // PLI display order
                 };
                 QVector<BadgeSeed> BadgeSeeds;
 
@@ -3732,10 +3865,119 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     BMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
 
                     // 1-based ordinal of the target instance inside its own model
-                    // file: count type-1 part lines with the same base name from
-                    // the top of the file down to the annotation's part line.
+                    // file: count type-1 part lines with the same base name and
+                    // colour from the top of the file down to the annotation's
+                    // part line.  Matching only by base name can aim a badge at a
+                    // same-type part in another colour.
                     int WantOrdinal = 1;
+                    const int RequestedColor = Data.typeColor;
                     const QString PartModel = PartLine.modelName.toLower();
+                    auto NormalizeAnnotationBase = [](QString Name) -> QString
+                    {
+                        const int Slash = Name.lastIndexOf('/');
+                        if (Slash >= 0)
+                            Name = Name.mid(Slash + 1);
+                        const int Dot = Name.lastIndexOf('.');
+                        if (Dot > 0)
+                            Name = Name.left(Dot);
+                        Name.replace(QLatin1Char(' '), QLatin1Char('_'));
+                        return Name.toLower();
+                    };
+                    const QString AnnotationBase = NormalizeAnnotationBase(Data.typeBaseName);
+
+                    // Synthetic target for an Arrow placed inside a Callout/submodel
+                    // page.  Match the existing page-8 Callout result: frame the
+                    // pieces introduced by this step, not the whole model history.
+                    if (AnnotationBase == QStringLiteral("__submodel_outline__"))
+                    {
+                        int OutlineStepStart = 0;
+                        const QString OutlineModel = PartLine.modelName;
+                        for (int L = PartLine.lineNumber; L >= 0; --L)
+                        {
+                            const QString Raw = lpub->ldrawFile.readLine(OutlineModel, L).trimmed();
+                            if (Raw == QStringLiteral("0 STEP"))
+                            {
+                                OutlineStepStart = L + 1;
+                                break;
+                            }
+                        }
+                        QSet<int> OutlineLines;
+                        for (int L = OutlineStepStart; L <= PartLine.lineNumber; ++L)
+                        {
+                            const QString Raw = lpub->ldrawFile.readLine(OutlineModel, L).trimmed();
+                            if (Raw.startsWith(QLatin1Char('1')) && Raw.size() > 1 && Raw.at(1).isSpace())
+                                OutlineLines.insert(L);
+                        }
+                        BMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+                        BMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                        int OutlinePieces = 0;
+                        for (const std::unique_ptr<lcPiece>& Piece : ActiveModel->GetPieces())
+                        {
+                            if (!OutlineLines.isEmpty() && !OutlineLines.contains(Piece->GetFileLine()))
+                                continue;
+                            if (OutlineLines.isEmpty() && Piece->GetStepShow() != ActiveModel->GetLastStep())
+                                continue;
+
+                            lcVector3 PMin(FLT_MAX, FLT_MAX, FLT_MAX);
+                            lcVector3 PMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                            if (Piece->mPieceInfo && Piece->mPieceInfo->IsModel() && Piece->mPieceInfo->GetModel())
+                            {
+                                for (const std::unique_ptr<lcPiece>& Sub : Piece->mPieceInfo->GetModel()->GetPieces())
+                                    Sub->SubModelCompareBoundingBox(Piece->mModelWorld, PMin, PMax);
+                            }
+                            else
+                                Piece->CompareBoundingBox(PMin, PMax);
+
+                            bool PieceBoxValid = PMin[0] <= PMax[0] && PMin[1] <= PMax[1] && PMin[2] <= PMax[2] &&
+                                                 std::isfinite(PMin[0]) && std::isfinite(PMin[1]) && std::isfinite(PMin[2]) &&
+                                                 std::isfinite(PMax[0]) && std::isfinite(PMax[1]) && std::isfinite(PMax[2]);
+                            if (!PieceBoxValid)
+                            {
+                                lcVector3 Points[8];
+                                lcGetBoxCorners(lcVector3(-12.0f, -12.0f, -12.0f),
+                                                lcVector3( 12.0f,  12.0f,  12.0f), Points);
+                                PMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+                                PMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                                for (int i = 0; i < 8; ++i)
+                                {
+                                    const lcVector3 Point = lcMul31(Points[i], Piece->mModelWorld);
+                                    PMin = lcMin(Point, PMin);
+                                    PMax = lcMax(Point, PMax);
+                                }
+                                PieceBoxValid = PMin[0] <= PMax[0] && PMin[1] <= PMax[1] && PMin[2] <= PMax[2];
+                            }
+                            if (!PieceBoxValid)
+                                continue;
+
+                            BMin = lcMin(BMin, PMin);
+                            BMax = lcMax(BMax, PMax);
+                            ++OutlinePieces;
+                        }
+                        if (OutlinePieces == 0)
+                        {
+                            const lcBoundingBox Outline = ActiveModel->GetAllPiecesBoundingBox();
+                            BMin = Outline.Min;
+                            BMax = Outline.Max;
+                        }
+                        if (BMin[0] > BMax[0] || BMin[1] > BMax[1] || BMin[2] > BMax[2])
+                            return false;
+                        SMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+                        SMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                        for (int Corner = 0; Corner < 8; ++Corner)
+                        {
+                            lcVector3 Point;
+                            Point[0] = (Corner & 1) ? BMax[0] : BMin[0];
+                            Point[1] = (Corner & 2) ? BMax[1] : BMin[1];
+                            Point[2] = (Corner & 4) ? BMax[2] : BMin[2];
+                            const lcVector3 Screen = ImageView->ProjectPointFullImage(Point);
+                            SMin = lcMin(SMin, Screen);
+                            SMax = lcMax(SMax, Screen);
+                        }
+                        return std::isfinite(SMin[0]) && std::isfinite(SMin[1]) &&
+                               std::isfinite(SMax[0]) && std::isfinite(SMax[1]) &&
+                               SMin[0] <= SMax[0] && SMin[1] <= SMax[1];
+                    }
+
                     if (!PartModel.isEmpty() && PartModel != QStringLiteral("undefined"))
                     {
                         int Seen = 0;
@@ -3750,14 +3992,15 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                             const QStringList F = T.split(QRegularExpression(QStringLiteral("\\s+")), Qt::SkipEmptyParts);
                             if (F.size() < 15)
                                 continue;
-                            QString Base = F.at(14);
-                            const int Slash = Base.lastIndexOf('/');
-                            if (Slash >= 0)
-                                Base = Base.mid(Slash + 1);
-                            const int Dot = Base.lastIndexOf('.');
-                            if (Dot > 0)
-                                Base = Base.left(Dot);
-                            if (Base.compare(Data.typeBaseName, Qt::CaseInsensitive) == 0)
+                            if (RequestedColor >= 0)
+                            {
+                                bool ColorOk = false;
+                                const int SourceColor = F.at(1).toInt(&ColorOk);
+                                if (!ColorOk || SourceColor != RequestedColor)
+                                    continue;
+                            }
+                            const QString Base = F.mid(14).join(QLatin1Char(' '));
+                            if (NormalizeAnnotationBase(Base) == AnnotationBase)
                                 ++Seen;
                         }
                         if (Seen > 0)
@@ -3771,14 +4014,10 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                         PieceInfo* Info = Piece->mPieceInfo;
                         if (!Info)
                             continue;
-                        QString PieceName = QString::fromLatin1(Info->mFileName);
-                        int Slash = PieceName.lastIndexOf('/');
-                        if (Slash >= 0)
-                            PieceName = PieceName.mid(Slash + 1);
-                        int Dot = PieceName.lastIndexOf('.');
-                        if (Dot > 0)
-                            PieceName = PieceName.left(Dot);
-                        if (PieceName.compare(Data.typeBaseName, Qt::CaseInsensitive) != 0)
+                        const QString PieceName = QString::fromLatin1(Info->mFileName);
+                        if (NormalizeAnnotationBase(PieceName) != AnnotationBase)
+                            continue;
+                        if (RequestedColor >= 0 && int(Piece->GetColorCode()) != RequestedColor)
                             continue;
                         Candidates.append(Piece.get());
                         if (OutDescription)
@@ -3830,7 +4069,32 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                         }
                         else
                             Target->CompareBoundingBox(BMin, BMax);
+                        // Last-resort outer-bbox fallback for custom/composite pieces whose
+                    // mesh geometry is unavailable.  Use the piece's final world
+                    // transform and a conservative local box; normal parts/models keep
+                    // their exact projected bounds above.
+                    if (Anchor && (BMin[0] > BMax[0] || BMin[1] > BMax[1] || BMin[2] > BMax[2] ||
+                                   !std::isfinite(BMin[0]) || !std::isfinite(BMin[1]) || !std::isfinite(BMin[2]) ||
+                                   !std::isfinite(BMax[0]) || !std::isfinite(BMax[1]) || !std::isfinite(BMax[2])))
+                    {
+                        lcVector3 Points[8];
+                        lcGetBoxCorners(lcVector3(-12.0f, -12.0f, -12.0f),
+                                        lcVector3( 12.0f,  12.0f,  12.0f), Points);
+                        BMin = lcVector3(FLT_MAX, FLT_MAX, FLT_MAX);
+                        BMax = lcVector3(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+                        for (int i = 0; i < 8; ++i)
+                        {
+                            const lcVector3 Point = lcMul31(Points[i], Anchor->mModelWorld);
+                            BMin = lcMin(Point, BMin);
+                            BMax = lcMax(Point, BMax);
+                        }
                         if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
+                            fprintf(stderr, "PROJFALLBACK target=%s bbox=(%.1f,%.1f,%.1f)-(%.1f,%.1f,%.1f)\n",
+                                    qPrintable(Data.typeBaseName), BMin[0], BMin[1], BMin[2],
+                                    BMax[0], BMax[1], BMax[2]);
+                    }
+
+                    if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
                             fprintf(stderr, "PROJBBOX target=%s via=%s bmin=(%.1f,%.1f,%.1f) bmax=(%.1f,%.1f,%.1f)\n",
                                     qPrintable(Data.typeBaseName),
                                     (Target->mPieceInfo && Target->mPieceInfo->IsModel()) ? "pieceinfo-model" : "piece",
@@ -4018,6 +4282,34 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     return true;
                 };
 
+                // The page-15 reference keeps a visible hover gap between the
+                // arrow head and the rendered part outline.  Find that outline
+                // from the final image pixels, then move the tip back by the
+                // same gap instead of stopping on the projected bbox edge.
+                auto FirstOpaquePointOnRay = [&](const QPointF& A, const QPointF& B, QPointF& Out) -> bool
+                {
+                    const QLineF Ray(A, B);
+                    const qreal Length = Ray.length();
+                    if (Length < 1.0 || FinalImage.width() <= 0 || FinalImage.height() <= 0)
+                        return false;
+
+                    const QPointF RayDir(Ray.dx() / Length, Ray.dy() / Length);
+                    for (qreal Distance = 0.0; Distance <= Length; Distance += 1.0)
+                    {
+                        const QPointF Point = A + RayDir * Distance;
+                        const int X = qRound(Point.x());
+                        const int Y = qRound(Point.y());
+                        if (X < 0 || X >= FinalImage.width() || Y < 0 || Y >= FinalImage.height())
+                            continue;
+                        if (qAlpha(FinalImage.pixel(X, Y)) != 0)
+                        {
+                            Out = Point;
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
                 // ---- Pass 1: compute anchors, geometry and required canvas margins ----
                 for (int AnnIdx = 0; AnnIdx < Annotations.size(); ++AnnIdx)
                 {
@@ -4041,7 +4333,10 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 
                     if (Ca->kind == CsiAnnotationBadge)
                     {
-                        const QString BadgeText = QString::number(BadgeOrdinal);
+                        const QString PliKey = Data.typeBaseName.toLower() + QLatin1Char('_')
+                                             + QString::number(Data.typeColor);
+                        const int BadgeOrder = PliOrderByPart.value(PliKey, BadgeOrdinal);
+                        const QString BadgeText = QString::number(BadgeOrder);
                         QFontMetricsF BadgeFm(BadgeFont);
                         QRectF BadgeTextRect = BadgeFm.boundingRect(BadgeText);
                         const qreal BadgeD = qMax(BadgeTextRect.width() + 2.0 * PadX,
@@ -4049,15 +4344,22 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                         BadgeSeed Seed;
                         Seed.Text = BadgeText;
                         Seed.D = BadgeD;
+                        Seed.Order = BadgeOrder;
                         Seed.Target = QRectF(SMin[0] - Image.Bounds.left(),
                                              SMin[1] - Image.Bounds.top(),
                                              SMax[0] - SMin[0],
                                              SMax[1] - SMin[1]);
+                        const lcVector3 WorldCentre = (BMin + BMax) * 0.5f;
+                        const lcVector3 ScreenCentre = ImageView->ProjectPointFullImage(WorldCentre);
+                        Seed.TargetCentre = QPointF(ScreenCentre[0] - Image.Bounds.left(),
+                                                    ScreenCentre[1] - Image.Bounds.top());
+                        if (!std::isfinite(Seed.TargetCentre.x()) || !std::isfinite(Seed.TargetCentre.y()))
+                            Seed.TargetCentre = Seed.Target.center();
                         BadgeSeeds.append(Seed);
-
                         if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
-                            fprintf(stderr, "BADGEDBG type=%s ordinal=%d place=[%s] wb=(%.2f,%.2f,%.2f)-(%.2f,%.2f,%.2f) sb=(%.1f,%.1f)-(%.1f,%.1f)\n",
-                                    qPrintable(Data.typeBaseName), BadgeOrdinal,
+                            fprintf(stderr, "BADGEDBG type=%s color=%d key=%s pli=%d fallback=%d order=%d place=[%s] wb=(%.2f,%.2f,%.2f)-(%.2f,%.2f,%.2f) sb=(%.1f,%.1f)-(%.1f,%.1f)\n",
+                                    qPrintable(Data.typeBaseName), Data.typeColor, qPrintable(PliKey),
+                                    PliOrderByPart.value(PliKey, -1), BadgeOrdinal, BadgeOrder,
                                     qPrintable(Data.placements.join(",")),
                                     BMin[0], BMin[1], BMin[2], BMax[0], BMax[1], BMax[2],
                                     SMin[0], SMin[1], SMax[0], SMax[1]);
@@ -4096,8 +4398,38 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                                 continue;   // still degenerate (e.g. CENTER anchor)
                         }
                         const QPointF Dir(Shaft.dx() / ShaftLen, Shaft.dy() / ShaftLen);
-                        if (ShaftLen < MinShaft)
-                            Tail = Tail - Dir * (MinShaft - ShaftLen);
+                        const qreal FixedArrowShaft = 100.0 * Dpi / 150.0;
+                        const QPointF RawTip = Tip;
+                        // Check the whole arrow-head width, not only its centreline:
+                        // another visible part can sit beside the head and make the
+                        // arrow look attached even when the centreline has a gap.
+                        const QPointF Perp(-Dir.y(), Dir.x());
+                        QPointF VisibleEdge;
+                        qreal ClosestEdge = 1e30;
+                        bool HaveVisibleEdge = false;
+                        const int HoverSamples = 7;
+                        for (int Sample = 0; Sample < HoverSamples; ++Sample)
+                        {
+                            const qreal Offset = -HeadHalfW
+                                               + (2.0 * HeadHalfW * Sample) / (HoverSamples - 1);
+                            const QPointF SearchOffset = Perp * Offset;
+                            QPointF SampleEdge;
+                            if (!FirstOpaquePointOnRay(Tip - Dir * FixedArrowShaft + SearchOffset,
+                                                       Centre + SearchOffset,
+                                                       SampleEdge))
+                                continue;
+                            const qreal Distance = QLineF(Tip, SampleEdge).length();
+                            if (Distance < ClosestEdge)
+                            {
+                                ClosestEdge = Distance;
+                                VisibleEdge = SampleEdge;
+                                HaveVisibleEdge = true;
+                            }
+                        }
+                        if (HaveVisibleEdge)
+                            Tip = VisibleEdge - Dir * ArrowHoverGap;
+                        Tail = Tip - Dir * FixedArrowShaft;
+                        ShaftLen = FixedArrowShaft;
 
                         AnnotDraw Dr;
                         Dr.kind = AnnotDraw::Arrow;
@@ -4110,13 +4442,14 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                         Dr.Bounds = Dr.Bounds.adjusted(-HeadLen, -HeadLen, HeadLen, HeadLen);
 
                         if (qEnvironmentVariableIsSet("LPUB_STEP_BADGE_DEBUG"))
-                            fprintf(stderr, "ARROWDBG type=%s place=[%s] prep=%s sb=(%.1f,%.1f)-(%.1f,%.1f) tail=(%.1f,%.1f) tip=(%.1f,%.1f) len=%.1f\n",
+                            fprintf(stderr, "ARROWDBG type=%s place=[%s] prep=%s sb=(%.1f,%.1f)-(%.1f,%.1f) tail=(%.1f,%.1f) tip=(%.1f,%.1f) rawtip=(%.1f,%.1f) hover=%.1f len=%.1f\n",
                                     qPrintable(Data.typeBaseName),
                                     qPrintable(Data.placements.join(",")),
                                     ((Data.placements.size() == 2 && Data.placements.at(1).toInt() == Outside) ||
                                      (Data.placements.size() >= 3 && Data.placements.at(2).toInt() == Outside)) ? "OUTSIDE" : "INSIDE",
                                     SMin[0], SMin[1], SMax[0], SMax[1],
-                                    Tail.x(), Tail.y(), Tip.x(), Tip.y(), ShaftLen);
+                                    Tail.x(), Tail.y(), Tip.x(), Tip.y(), RawTip.x(), RawTip.y(),
+                                    ArrowHoverGap, ShaftLen);
 
                         Draws.append(Dr);
                     }
@@ -4283,29 +4616,102 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
 
                 // ---- Badge layout: right-hand column OUTSIDE the image ----
                 {
-                    const qreal ColumnX = FinalImage.width() + BadgeGap;
-                    qreal ColumnY = BadgeGap;
-                    for (const BadgeSeed& Seed : BadgeSeeds)
+                    // Anchor the badge column to the right-most projected part
+                    // pixels, not the projected bounding box or image edge. This
+                    // keeps BadgePartGap visually consistent even when the part's
+                    // box contains transparent space.
+                    auto VisibleTargetBounds = [&](const QRectF& Target) -> QRectF
                     {
-                        const QPointF P(ColumnX, ColumnY);
-                        const QPointF TargetCentre(Seed.Target.center().x(), Seed.Target.center().y());
-                        QPointF LeaderTip = TargetCentre;
+                        if (!Target.isValid())
+                            return Target;
+                        const int Left   = qMax(0, qFloor(Target.left()));
+                        const int Top    = qMax(0, qFloor(Target.top()));
+                        const int Right  = qMin(FinalImage.width() - 1, qCeil(Target.right()));
+                        const int Bottom = qMin(FinalImage.height() - 1, qCeil(Target.bottom()));
+                        int MinX = FinalImage.width();
+                        int MinY = FinalImage.height();
+                        int MaxX = -1;
+                        int MaxY = -1;
+                        for (int Y = Top; Y <= Bottom; ++Y)
+                        {
+                            for (int X = Left; X <= Right; ++X)
+                            {
+                                if (qAlpha(FinalImage.pixel(X, Y)) == 0)
+                                    continue;
+                                MinX = qMin(MinX, X);
+                                MinY = qMin(MinY, Y);
+                                MaxX = qMax(MaxX, X);
+                                MaxY = qMax(MaxY, Y);
+                            }
+                        }
+                        if (MaxX < MinX || MaxY < MinY)
+                            return Target;
+                        return QRectF(MinX, MinY, MaxX - MinX + 1, MaxY - MinY + 1);
+                    };
+
+                    QRectF TargetUnion;
+                    bool HaveTarget = false;
+                    for (const BadgeSeed& Seed : BadgeSeeds)
                         if (Seed.Target.isValid())
                         {
-                            QPointF Hit;
-                            if (SegmentRectHit(P, TargetCentre, Seed.Target, Hit))
-                                LeaderTip = Hit;
+                            const QRectF Visible = VisibleTargetBounds(Seed.Target);
+                            if (!HaveTarget)
+                                TargetUnion = Visible;
+                            else
+                                TargetUnion = TargetUnion.united(Visible);
+                            HaveTarget = true;
                         }
+
+                    auto RightmostVisibleContentX = [&]() -> qreal
+                    {
+                        for (int X = FinalImage.width() - 1; X >= 0; --X)
+                        {
+                            for (int Y = 0; Y < FinalImage.height(); ++Y)
+                            {
+                                if (qAlpha(FinalImage.pixel(X, Y)) != 0)
+                                    return X + 0.5;
+                            }
+                        }
+                        return -1.0;
+                    };
+
+                    std::sort(BadgeSeeds.begin(), BadgeSeeds.end(),
+                              [](const BadgeSeed &A, const BadgeSeed &B) -> bool
+                              {
+                                  if (A.Order != B.Order)
+                                      return A.Order < B.Order;
+                                  return A.Text < B.Text;
+                              });
+
+                    qreal ColumnHeight = 0.0;
+                    for (const BadgeSeed& Seed : BadgeSeeds)
+                        ColumnHeight += Seed.D;
+                    if (BadgeSeeds.size() > 1)
+                        ColumnHeight += BadgeStackGap * (BadgeSeeds.size() - 1);
+
+                    const qreal MaxTargetRight = HaveTarget ? TargetUnion.right()
+                                                            : FinalImage.width();
+                    const qreal ContentRight = RightmostVisibleContentX();
+                    const qreal TargetCentreY = HaveTarget ? TargetUnion.center().y()
+                                                           : FinalImage.height() / 2.0;
+                    const qreal ColumnRightEdge = qMax(MaxTargetRight,
+                                                       qMax(ContentRight, 0.0)) + BadgePartGap;
+                    qreal ColumnY = TargetCentreY - ColumnHeight / 2.0;
+                    for (const BadgeSeed& Seed : BadgeSeeds)
+                    {
+                        const QPointF P(ColumnRightEdge + Seed.D/2.0,
+                                        ColumnY + Seed.D/2.0);
+                        const QPointF TargetCentre = Seed.TargetCentre;
                         AnnotDraw Dr;
                         Dr.kind = AnnotDraw::Badge;
                         Dr.P = P;
                         Dr.D = Seed.D;
                         Dr.Text = Seed.Text;
-                        Dr.LeaderTarget = Seed.Target;
+                        Dr.LeaderTarget = QRectF(TargetCentre.x() - 0.5, TargetCentre.y() - 0.5, 1.0, 1.0);
                         Dr.Bounds = QRectF(P.x() - Seed.D/2.0 - 2.0, P.y() - Seed.D/2.0 - 2.0,
                                            Seed.D + 4.0, Seed.D + 4.0);
-                        const QRectF LineBox = QRectF(qMin(P.x(), LeaderTip.x()), qMin(P.y(), LeaderTip.y()),
-                                                      qAbs(LeaderTip.x() - P.x()), qAbs(LeaderTip.y() - P.y()))
+                        const QRectF LineBox = QRectF(qMin(P.x(), TargetCentre.x()), qMin(P.y(), TargetCentre.y()),
+                                                      qAbs(TargetCentre.x() - P.x()), qAbs(TargetCentre.y() - P.y()))
                                                   .normalized();
                         if (!LineBox.isEmpty())
                             Dr.Bounds = Dr.Bounds.united(LineBox.adjusted(-2.0, -2.0, 2.0, 2.0));
@@ -4314,8 +4720,8 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                             fprintf(stderr, "BADGEROW ordinal=%s D=%.1f P=(%.1f,%.1f) target=(%.0f,%.0f,%.0f,%.0f) tip=(%.1f,%.1f)\n",
                                     qPrintable(Seed.Text), Seed.D, P.x(), P.y(),
                                     Seed.Target.left(), Seed.Target.top(), Seed.Target.right(), Seed.Target.bottom(),
-                                    LeaderTip.x(), LeaderTip.y());
-                        ColumnY += Seed.D + BadgeGap;
+                                    TargetCentre.x(), TargetCentre.y());
+                        ColumnY += Seed.D + BadgeStackGap;
                     }
                 }
 
@@ -4362,32 +4768,100 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                 }
 
                 // ---- Pass 3: draw the annotations onto the (possibly expanded) image ----
-                QPainter AnnotPainter(&FinalImage);
+                const bool ClipBadgeToModel = qEnvironmentVariableIsSet("LPUB_BADGE_CLIP_TO_MODEL");
+                const bool StopBadgeAtModelEdge = qEnvironmentVariableIsSet("LPUB_BADGE_STOP_AT_MODEL_EDGE");
+                QImage AnnotLayer;
+                QImage *AnnotTarget = &FinalImage;
+                if (ClipBadgeToModel)
+                {
+                    AnnotLayer = QImage(FinalImage.size(), QImage::Format_ARGB32_Premultiplied);
+                    AnnotLayer.fill(Qt::transparent);
+                    AnnotTarget = &AnnotLayer;
+                }
+                QPainter AnnotPainter(AnnotTarget);
                 AnnotPainter.setRenderHint(QPainter::Antialiasing, true);
                 AnnotPainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
                 for (const AnnotDraw& Dr : Draws)
                 {
                     if (Dr.kind == AnnotDraw::Badge)
                     {
-                        // leader line from the badge rim to the part boundary
+                        // Always draw the leader through to the projected part
+                        // centre.  The badge is painted afterwards and masks
+                        // only the part of the line that runs inside its body.
                         if (Dr.LeaderTarget.isValid() &&
                             std::isfinite(Dr.LeaderTarget.center().x()) &&
                             std::isfinite(Dr.LeaderTarget.center().y()))
                         {
                             const QPointF BadgeCentre(Dr.P.x(), Dr.P.y());
                             const QPointF TargetCentre(Dr.LeaderTarget.center().x(), Dr.LeaderTarget.center().y());
-                            QPointF LeaderTip;
-                            if (!SegmentRectHit(BadgeCentre, TargetCentre, Dr.LeaderTarget, LeaderTip))
-                                LeaderTip = TargetCentre;
-                            const QLineF Leader(BadgeCentre, LeaderTip);
-                            if (Leader.length() > Dr.D / 2.0)
+                            QPointF LeaderEnd = TargetCentre;
+                            if (StopBadgeAtModelEdge)
                             {
-                                const QPointF Start = BadgeCentre + (LeaderTip - BadgeCentre) * (Dr.D / 2.0 / Leader.length());
-                                QPen LeaderPen(QColor(0, 0, 0));
-                                LeaderPen.setWidthF(1.5 * Dpi / 96.0);
-                                LeaderPen.setCapStyle(Qt::RoundCap);
-                                AnnotPainter.setPen(LeaderPen);
-                                AnnotPainter.drawLine(Start, LeaderTip);
+                                const QLineF Ray(BadgeCentre, TargetCentre);
+                                const qreal RayLength = Ray.length();
+                                if (RayLength > 1.0)
+                                {
+                                    const QPointF Unit((TargetCentre.x() - BadgeCentre.x()) / RayLength,
+                                                       (TargetCentre.y() - BadgeCentre.y()) / RayLength);
+                                    const qreal Backoff = BadgePointDiameter / 2.0 + 2.0 * Dpi / 150.0;
+                                    bool Hit = false;
+                                    for (qreal Distance = 0.0; Distance <= RayLength; Distance += 0.5)
+                                    {
+                                        const QPointF Sample = BadgeCentre + Unit * Distance;
+                                        const int X = qRound(Sample.x());
+                                        const int Y = qRound(Sample.y());
+                                        if (X < 0 || X >= FinalImage.width() || Y < 0 || Y >= FinalImage.height())
+                                            continue;
+                                        if (qAlpha(FinalImage.pixel(X, Y)) != 0)
+                                        {
+                                            LeaderEnd = Sample - Unit * Backoff;
+                                            Hit = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!Hit)
+                                        LeaderEnd = TargetCentre;
+                                }
+                            }
+                            if (!BadgeSolidLine && BadgeHaloColor.isValid())
+                            {
+                                QPen HaloPen(BadgeHaloColor);
+                                HaloPen.setWidthF(4.5 * Dpi / 150.0);
+                                HaloPen.setCapStyle(Qt::RoundCap);
+                                AnnotPainter.setPen(HaloPen);
+                                AnnotPainter.drawLine(BadgeCentre, LeaderEnd);
+                            }
+                            QPen LeaderPen(BadgeLineColor);
+                            LeaderPen.setWidthF(BadgeSolidLine
+                                                ? 3.0 * Dpi / 150.0
+                                                : (BadgeHaloColor.isValid()
+                                                   ? 1.5 * Dpi / 150.0
+                                                   : 1.5 * Dpi / 96.0));
+                            LeaderPen.setCapStyle(Qt::RoundCap);
+                            AnnotPainter.setPen(LeaderPen);
+                            AnnotPainter.drawLine(BadgeCentre, LeaderEnd);
+                            if (BadgePointColor.isValid())
+                            {
+                                if (BadgeHaloColor.isValid())
+                                {
+                                    const qreal Scale = Dpi / 150.0;
+                                    AnnotPainter.setPen(Qt::NoPen);
+                                    AnnotPainter.setBrush(BadgeHaloColor);
+                                    AnnotPainter.drawEllipse(LeaderEnd, 9.0 * Scale, 9.0 * Scale);
+                                    AnnotPainter.setBrush(QColor(255, 255, 255));
+                                    AnnotPainter.drawEllipse(LeaderEnd, 7.0 * Scale, 7.0 * Scale);
+                                    AnnotPainter.setBrush(BadgePointColor);
+                                    AnnotPainter.drawEllipse(LeaderEnd, 5.0 * Scale, 5.0 * Scale);
+                                }
+                                else
+                                {
+                                    AnnotPainter.setPen(Qt::NoPen);
+                                    AnnotPainter.setBrush(BadgePointColor);
+                                    AnnotPainter.drawEllipse(LeaderEnd,
+                                                             BadgePointDiameter / 2.0,
+                                                             BadgePointDiameter / 2.0);
+                                }
                             }
                         }
                         AnnotPainter.setFont(BadgeFont);
@@ -4450,8 +4924,55 @@ bool Render::RenderNativeView(const NativeOptions *O, bool RenderImage/*false*/)
                     }
                 }
                 AnnotPainter.end();
+                if (ClipBadgeToModel)
+                {
+                    QPainter CompositePainter(&AnnotLayer);
+                    CompositePainter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+                    CompositePainter.drawImage(0, 0, FinalImage);
+                    CompositePainter.end();
+                    FinalImage = AnnotLayer;
+                }
             }
             /*** A-Path CSI annotations end ***/
+
+            const QByteArray CalloutContentShiftEnv = qgetenv("LPUB_CALLOUT_CONTENT_SHIFT_X");
+            if (lpub->currentStep && lpub->currentStep->callout() && !CalloutContentShiftEnv.isEmpty())
+            {
+                bool ShiftOk = false;
+                const qreal ShiftPx = QString::fromLatin1(CalloutContentShiftEnv).toDouble(&ShiftOk);
+                if (ShiftOk && ShiftPx > 0.0)
+                {
+                    const float ShiftDpi = O->Resolution > 0 ? float(O->Resolution) : 96.0f;
+                    const int Shift = qRound(ShiftPx * ShiftDpi / 150.0);
+                    if (Shift > 0 && Shift < FinalImage.width())
+                    {
+                        QImage ShiftedImage(FinalImage.size(), FinalImage.format());
+                        ShiftedImage.fill(Qt::transparent);
+                        QPainter ShiftPainter(&ShiftedImage);
+                        ShiftPainter.drawImage(-Shift, 0, FinalImage);
+                        ShiftPainter.end();
+                        FinalImage = ShiftedImage;
+                    }
+                }
+            }
+
+            const QByteArray CalloutRightPaddingEnv = qgetenv("LPUB_CALLOUT_RIGHT_PADDING");
+            if (lpub->currentStep && lpub->currentStep->calledOut && !CalloutRightPaddingEnv.isEmpty())
+            {
+                bool PaddingOk = false;
+                const qreal PaddingPx = QString::fromLatin1(CalloutRightPaddingEnv).toDouble(&PaddingOk);
+                if (PaddingOk && PaddingPx > 0.0)
+                {
+                    const float PaddingDpi = O->Resolution > 0 ? float(O->Resolution) : 96.0f;
+                    const int PaddingRight = qRound(PaddingPx * PaddingDpi / 150.0);
+                    QImage Expanded(FinalImage.width() + PaddingRight, FinalImage.height(), FinalImage.format());
+                    Expanded.fill(Qt::transparent);
+                    QPainter PaddingPainter(&Expanded);
+                    PaddingPainter.drawImage(0, 0, FinalImage);
+                    PaddingPainter.end();
+                    FinalImage = Expanded;
+                }
+            }
 
 
             QImageWriter Writer(O->OutputFileName);

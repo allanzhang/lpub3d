@@ -2703,22 +2703,12 @@ int Gui::drawPage(
                             if (buildModActionMeta.action())
                                 step->buildModActionMeta = buildModActionMeta;
 
-                            configuredCsiParts = step->configureModelStep(opts.csiParts, topOfStep);
-
-                            returnValue = static_cast<TraverseRc>(step->createCsi(opts.isMirrored ? addLine : QLatin1String("1 color 0 0 0 1 0 0 0 1 0 0 0 1 foo.ldr"),
-                                                                                  configuredCsiParts,
-                                                                                  opts.lineTypeIndexes,
-                                                                                  &step->csiPixmap,
-                                                                                  steps->meta));
-                            if (returnValue == HitAbortProcess || Gui::abortProcess()) {
-                                return returnValue;
-                            }
-
-                            step->lightList = lightList;
-
                             PlacementType relativeType = SingleStepType;
 
-                            // Pli per Step
+                            // Build and sort the step PLI before rendering the CSI.
+                            // STEP_BADGE numbering and vertical order are driven by
+                            // the same sorted PLI keys, so they can never diverge
+                            // from the PLI reading order.
                             if (!opts.displayModel && pliPerStep) {
                                 if (multiStep) {
                                     relativeType = StepGroupType;
@@ -2736,6 +2726,19 @@ int Gui::drawPage(
 
                                 step->pli.sizePli(&steps->meta,relativeType,pliPerStep);
                             } // Pli per Step
+
+                            configuredCsiParts = step->configureModelStep(opts.csiParts, topOfStep);
+
+                            returnValue = static_cast<TraverseRc>(step->createCsi(opts.isMirrored ? addLine : QLatin1String("1 color 0 0 0 1 0 0 0 1 0 0 0 1 foo.ldr"),
+                                                                                  configuredCsiParts,
+                                                                                  opts.lineTypeIndexes,
+                                                                                  &step->csiPixmap,
+                                                                                  steps->meta));
+                            if (returnValue == HitAbortProcess || Gui::abortProcess()) {
+                                return returnValue;
+                            }
+
+                            step->lightList = lightList;
 
                             // Place SubModel at Step 1
                             if (!opts.displayModel && step->placeSubModel) {

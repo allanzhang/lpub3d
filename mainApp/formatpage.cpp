@@ -1373,12 +1373,6 @@ bool Gui::getSceneObject(QGraphicsItem *selectedItem, Where &itemTop, int &stepN
             if (arrowItem) {
                 itemTop = arrowItem->topOf;
                 stepNumber = arrowItem->stepNumber;
-            } else {
-                CsiAnnotationBadgeItem *badgeItem = dynamic_cast<CsiAnnotationBadgeItem *>(selectedItem);
-                if (badgeItem) {
-                    itemTop = badgeItem->topOf;
-                    stepNumber = badgeItem->stepNumber;
-                }
             }
         }
     }

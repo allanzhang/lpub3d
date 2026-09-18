@@ -4,6 +4,13 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
+## v2.7.0 (2026-09-18)
+
+- **Callout pointers**: pointer tips now project the referenced submodel instance into the rendered CSI and stop on its real visible outline instead of using a fixed normalized point.
+- **Assembly annotations**: ARROW / STEP_BADGE now target the current step's newly added instances, keep one arrow per installation direction, and clear the full arrow-head from nearby geometry with a visible hover gap.
+- **Badge presentation**: badge leaders and endpoint dots support the approved `#2F6F9F` solid-line style with white centers, configurable through renderer environment variables.
+- **Renderer stability**: the native CSI annotation path is used consistently so exported pages and the GUI show the same baked annotation geometry.
+
 ## v2.6.1 (2026-09-11)
 
 - **Vector-redrawn splash**: background and text are now separate — the resource is a pure background image and all branding (title, subtitle, rule, version, copyright) is drawn at runtime as vector text, crisp at any DPI; version and year are read from build macros; the subtitle is translatable.
@@ -35,6 +42,7 @@ See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Download
 
+- [myLPub3D-v2.7.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.7.0/myLPub3D-v2.7.0-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.6.1-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.1/myLPub3D-v2.6.1-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.6.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.0/myLPub3D-v2.6.0-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.5.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.5.0/myLPub3D-v2.5.0-macOS.zip) (macOS, Apple Silicon)

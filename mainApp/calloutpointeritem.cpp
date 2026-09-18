@@ -28,12 +28,14 @@
  ***************************************************************************/
 
 #include "callout.h"
+#include "lpub.h"
 #include "calloutpointeritem.h"
 #include "calloutbackgrounditem.h"
 #include "step.h"
 #include "range.h"
 #include <QCoreApplication>
-#include <QCoreApplication>
+#include <QFileInfo>
+#include <QRegularExpression>
 
 //---------------------------------------------------------------------------
 
@@ -114,6 +116,112 @@ CalloutPointerItem::CalloutPointerItem(
       }
   } else {
       points[Tip] = QPointF(pointerData.x1, pointerData.y1);
+  }
+
+  // Native renderer stores the true projected submodel bounds on the parent
+  // Step, keyed by the source line in callout->meta.submodelStack.  Aim the
+  // pointer at the outline intersection along the Callout -> submodel ray,
+  // just like badge leaders aim at a part's projected bbox.
+  if (pointerData.segments == OneSegment && ! callout->meta.submodelStack.isEmpty())
+  {
+      const SubmodelStack &TargetStack = callout->meta.submodelStack.last();
+      QString ReferenceLine;
+      int ReferenceLineNumber = -1;
+      QStringList ReferenceTokens;
+      const QRegularExpression Whitespace(QStringLiteral("\\s+"));
+      for (int Line = TargetStack.lineNumber; Line <= TargetStack.lineNumber + 4; ++Line)
+      {
+          const QString Candidate = lpub->ldrawFile.readLine(TargetStack.modelName, Line).trimmed();
+          if (! Candidate.startsWith(QLatin1Char('1')))
+              continue;
+          const QStringList Tokens = Candidate.split(Whitespace, Qt::SkipEmptyParts);
+          if (Tokens.size() >= 15)
+          {
+              ReferenceLine = Candidate;
+              ReferenceLineNumber = Line;
+              ReferenceTokens = Tokens;
+              break;
+          }
+      }
+
+      QString TargetKey;
+      if (ReferenceLineNumber >= 0)
+      {
+          auto NormalizeSubmodelName = [](QString Name) -> QString
+          {
+              const int Slash = Name.lastIndexOf('/');
+              if (Slash >= 0)
+                  Name = Name.mid(Slash + 1);
+              const int Dot = Name.lastIndexOf('.');
+              if (Dot > 0)
+                  Name = Name.left(Dot);
+              return Name.toLower();
+          };
+          const QString TargetName = NormalizeSubmodelName(ReferenceTokens.mid(14).join(QLatin1Char(' ')));
+          const QString TargetColor = ReferenceTokens.at(1);
+          int Ordinal = 0;
+          for (int Line = 0; Line <= ReferenceLineNumber; ++Line)
+          {
+              const QString Candidate = lpub->ldrawFile.readLine(TargetStack.modelName, Line).trimmed();
+              if (! Candidate.startsWith(QLatin1Char('1')))
+                  continue;
+              const QStringList Tokens = Candidate.split(Whitespace, Qt::SkipEmptyParts);
+              if (Tokens.size() < 15)
+                  continue;
+              if (NormalizeSubmodelName(Tokens.mid(14).join(QLatin1Char(' '))).compare(TargetName, Qt::CaseInsensitive) == 0 &&
+                  Tokens.at(1) == TargetColor)
+                  ++Ordinal;
+          }
+          TargetKey = TargetName + QLatin1Char('#') + TargetColor + QLatin1Char('#') + QString::number(Ordinal);
+      }
+
+      const QRectF TargetBox = callout->parentStep->csiSubmodelBounds.value(TargetKey);
+      if (qEnvironmentVariableIsSet("LPUB_CALLOUT_POINTER_DEBUG"))
+          fprintf(stderr, "CALLOUT_PTR_LOOKUP key=%s map=%d has=%d valid=%d box=(%.1f,%.1f %.1fx%.1f)\n",
+                  qPrintable(TargetKey), (int)callout->parentStep->csiSubmodelBounds.size(),
+                  callout->parentStep->csiSubmodelBounds.contains(TargetKey), TargetBox.isValid(),
+                  TargetBox.x(), TargetBox.y(), TargetBox.width(), TargetBox.height());
+      if (TargetBox.isValid())
+      {
+          const QPointF ImageTip(pointerData.x1 * callout->parentStep->csiItem->size[XX],
+                                 pointerData.y1 * callout->parentStep->csiItem->size[YY]);
+          const QPointF Transform = points[Tip] - ImageTip;
+          const QRectF LocalBox = TargetBox.translated(Transform).normalized();
+          const QPointF TargetCentre = LocalBox.center();
+          const QPointF CalloutCentre(callout->size[XX] / 2.0, callout->size[YY] / 2.0);
+          const QLineF Ray(TargetCentre, CalloutCentre);
+          const QLineF Edges[4] = {
+              QLineF(LocalBox.topLeft(),    LocalBox.topRight()),
+              QLineF(LocalBox.topRight(),   LocalBox.bottomRight()),
+              QLineF(LocalBox.bottomRight(),LocalBox.bottomLeft()),
+              QLineF(LocalBox.bottomLeft(), LocalBox.topLeft())
+          };
+          qreal BestDistance = std::numeric_limits<qreal>::max();
+          QPointF Intersection;
+          bool FoundIntersection = false;
+          for (const QLineF &Edge : Edges)
+          {
+              QPointF Candidate;
+              if (Ray.intersects(Edge, &Candidate) == QLineF::BoundedIntersection)
+              {
+                  const qreal Distance = QLineF(TargetCentre, Candidate).length();
+                  if (Distance < BestDistance)
+                  {
+                      BestDistance = Distance;
+                      Intersection = Candidate;
+                      FoundIntersection = true;
+                  }
+              }
+          }
+          if (FoundIntersection)
+          {
+              points[Tip] = Intersection;
+              if (qEnvironmentVariableIsSet("LPUB_CALLOUT_POINTER_DEBUG"))
+                  fprintf(stderr, "CALLOUT_PTR key=%s box=(%.1f,%.1f %.1fx%.1f) tip=(%.1f,%.1f)\n",
+                          qPrintable(TargetKey), LocalBox.x(), LocalBox.y(), LocalBox.width(), LocalBox.height(),
+                          Intersection.x(), Intersection.y());
+          }
+      }
   }
 
   points[MidBase] = QPointF(pointerData.x3,pointerData.y3);

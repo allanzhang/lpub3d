@@ -1,4 +1,4 @@
- 
+
 /****************************************************************************
 **
 ** Copyright (C) 2007-2009 Kevin Clague. All rights reserved.
@@ -31,6 +31,7 @@
 #define stepH
 
 #include <QGraphicsRectItem>
+#include <QRectF>
 #include <QString>
 #include <QStringList>
 #include <QHash>
@@ -96,6 +97,7 @@ class Step : public AbstractRangeElement
     QString               ldrName;
     QString               pngName;
     QString               csiKey;
+    QHash<QString, QRectF> csiSubmodelBounds; // projected submodel-reference bboxes in CSI image coords, keyed by filename+colour+ordinal
     QString               viewerStepKey;
     NativeOptions        *viewerOptions;
     PlacementHeader       plPageHeader;

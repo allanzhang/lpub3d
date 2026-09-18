@@ -187,33 +187,4 @@ public:
   void setArrowPath();
 };
 
-/*
- * Renders the ASSEM ANNOTATION STEP_BADGE sub-command: a circular step
- * number badge centred on the annotated part's bounding-box centre. The
- * badge is anchored purely by the part geometry (partOffset 0 0); no leader
- * line is drawn.
- */
-class CsiAnnotationBadgeItem : public QGraphicsTextItem, public Placement
-{
-public:
-  PlacementCsiPart *placementCsiPart;
-  Where             topOf,bottomOf;
-  Where             partLine, metaLine;
-  CsiAnnotationIconData icon;
-  int               stepNumber;
-  QRectF            badgeRect;
-
-  CsiAnnotationBadgeItem(QGraphicsItem *_parent = nullptr);
-  void addGraphicsItems(
-     CsiAnnotation *_ca,
-     Step          *_step,
-     PliPart       *_part,
-     CsiItem       *_csiItem);
-
-  QRectF boundingRect() const override;
-
-protected:
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *o, QWidget *w);
-};
-
 #endif // CSIANNOTATION_H
