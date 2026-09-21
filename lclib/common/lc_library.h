@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QHash>
+
 #include "lc_context.h"
 #include "lc_math.h"
 #include "lc_meshloader.h"
@@ -166,6 +168,8 @@ public:
 	void WaitForLoadQueue();
 
 	lcTexture* FindTexture(const char* TextureName, Project* CurrentProject, bool SearchProjectFolder);
+	void AddTextureSearchDir(const QString& Directory);
+	void ClearTextureSearchDirs();
 	bool LoadTexture(lcTexture* Texture);
 	void ReleaseTexture(lcTexture* Texture);
 
@@ -218,6 +222,7 @@ public:
 	int mNumOfficialPieces;
 
 	std::vector<lcTexture*> mTextures;
+	std::vector<QString> mTextureSearchDirs;
 
 	QDir mLibraryDir;
 

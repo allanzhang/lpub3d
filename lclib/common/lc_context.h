@@ -50,10 +50,12 @@ enum class lcMaterialType
 	UnlitColorConditional,
 	UnlitTextureModulate,
 	UnlitTextureDecal,
+	UnlitTextureDecalAlpha,
 	UnlitVertexColor,
 	UnlitViewSphere,
 	FakeLitColor,
 	FakeLitTextureDecal,
+	FakeLitTextureDecalAlpha,
 	Count
 };
 
@@ -287,4 +289,3 @@ protected:
 
 	Q_DECLARE_TR_FUNCTIONS(lcContext);
 };
-

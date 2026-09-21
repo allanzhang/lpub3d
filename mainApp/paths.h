@@ -34,7 +34,10 @@ public:
     static QString partsDir;
     static QString bomDir;
     static QString submodelDir;
-    static QString logsDir;
+    /*** LPub3D Mod - ASCII scratch for POV-Ray ***/
+  static QString rendererScratchDir();
+  /*** LPub3D Mod end ***/
+  static QString logsDir;
     static QString htmlStepsDir;
     static QString extrasDir;
     static QString libraryDir;

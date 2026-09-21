@@ -192,3 +192,5 @@ splash-work/
 # Agent/process documentation (design notes, work logs). Kept on disk for
 # reference but deliberately not part of the project history.
 docs/plans/
+# Added by code-review-graph
+.code-review-graph/

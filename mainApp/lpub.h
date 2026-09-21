@@ -1466,6 +1466,7 @@ public slots:
 
   static int exportMode() { return m_exportMode; }
   static QString saveDirectoryName () { return m_saveDirectoryName; }
+  QString getStudioIoCacheDir() const { return studioIoCacheDir; }
 
   static bool ContinuousPage() { return m_contPageProcessing; }
   static void setContinuousPage(bool b) { m_contPageProcessing = b; m_abort = m_contPageProcessing && !b ? true : m_abort; }
@@ -1737,6 +1738,8 @@ private:
   static QList<PliPartGroupMeta> bomPartGroups;  // list of BOM part groups used for multi-page BOMs
 
   QString                exportedFile;           // the print preview produced pdf file
+  QString                studioIoCacheDir;       // temporary cache for the current Studio project
+  QStringList            studioIoSearchDirs;     // project-local search directories for the current Studio project
   QString                buildModClearStepKey;   // the step key indicating the step to start build mod clear actions
   QString                buildModificationKey;   // populated at buildMod change and cleared at buildMod create
   QStringList            programEntries;         // list of 'open with' programs populated on startup
@@ -1859,6 +1862,7 @@ private slots:
     void finishedCountingPages();
     void pagesCounted();
     void open();
+    void openIo();
     void openWith();
     void save();
     void saveAs();
@@ -2032,7 +2036,10 @@ private slots:
      *****************************************************************/
 
     void setCurrentFile(const QString &fileName);
-    bool openFile(const QString &fileName);
+    bool openFile(const QString &fileName,
+                  const QString &logicalFileName = QString(),
+                  const QStringList &projectSearchDirs = QStringList(),
+                  const QString &projectCacheDir = QString());
     bool maybeSave(bool prompt = true, int sender = SaveOnNone);
     bool saveFile(const QString &fileName);
     void closeFileOperations();

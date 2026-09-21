@@ -274,6 +274,7 @@ void lcMesh::ExportPOVRay(lcFile& File, const char* MeshName, const char** Color
 	char Line[1024];
 
 	int NumSections = 0;
+	bool HasTexturedSection = false;
 
 	for (int SectionIdx = 0; SectionIdx < mLods[LC_MESH_LOD_HIGH].NumSections; SectionIdx++)
 	{
@@ -281,9 +282,13 @@ void lcMesh::ExportPOVRay(lcFile& File, const char* MeshName, const char** Color
 
 		if (Section->PrimitiveType == LC_MESH_TRIANGLES || Section->PrimitiveType == LC_MESH_TEXTURED_TRIANGLES)
 			NumSections++;
+		if (Section->PrimitiveType == LC_MESH_TEXTURED_TRIANGLES)
+			HasTexturedSection = true;
 	}
 
-	if (NumSections > 1)
+	const bool Wrapped = NumSections > 1 || HasTexturedSection;
+
+	if (Wrapped)
 		sprintf(Line, "#declare lc_%s = union {\n", MeshName);
 	else
 		sprintf(Line, "#declare lc_%s = mesh {\n", MeshName);
@@ -298,7 +303,7 @@ void lcMesh::ExportPOVRay(lcFile& File, const char* MeshName, const char** Color
 			const lcVertex* Verts = GetVertexData();
 			const IndexType* Indices = (IndexType*)mIndexData + Section->IndexOffset / sizeof(IndexType);
 		
-			if (NumSections > 1)
+			if (Wrapped)
 				File.WriteLine(" mesh {\n");
 
 			for (int Idx = 0; Idx < Section->NumIndices; Idx += 3)
@@ -320,33 +325,78 @@ void lcMesh::ExportPOVRay(lcFile& File, const char* MeshName, const char** Color
 			const lcVertexTextured* Verts = GetTexturedVertexData();
 			const IndexType* Indices = (IndexType*)mIndexData + Section->IndexOffset / sizeof(IndexType);
 
-			if (NumSections > 1)
-				File.WriteLine(" mesh {\n");
+			File.WriteLine(" mesh2 {\n");
+			sprintf(Line, "  vertex_vectors {\n    %d", Section->NumIndices);
+			File.WriteLine(Line);
 
 			for (int Idx = 0; Idx < Section->NumIndices; Idx += 3)
 			{
-				const lcVector3 v1 = Verts[Indices[Idx]].Position / 25.0f;
-				const lcVector3 v2 = Verts[Indices[Idx + 1]].Position / 25.0f;
-				const lcVector3 v3 = Verts[Indices[Idx + 2]].Position / 25.0f;
-				const lcVector3 n1 = lcUnpackNormal(Verts[Indices[Idx]].Normal);
-				const lcVector3 n2 = lcUnpackNormal(Verts[Indices[Idx + 1]].Normal);
-				const lcVector3 n3 = lcUnpackNormal(Verts[Indices[Idx + 2]].Normal);
+				for (int Corner = 0; Corner < 3; Corner++)
+				{
+					const lcVector3 Position = Verts[Indices[Idx + Corner]].Position / 25.0f;
+					sprintf(Line, "    <%g, %g, %g>", -Position.y, -Position.x, Position.z);
+					File.WriteLine(Line);
+				}
+			}
 
-				sprintf(Line, "  smooth_triangle { <%g, %g, %g>, <%g, %g, %g>, <%g, %g, %g>, <%g, %g, %g>, <%g, %g, %g>, <%g, %g, %g> }\n",
-						-v1.y, -v1.x, v1.z, -n1.y, -n1.x, n1.z, -v2.y, -v2.x, v2.z, -n2.y, -n2.x, n2.z, -v3.y, -v3.x, v3.z, -n3.y, -n3.x, n3.z);
+			File.WriteLine("  }");
+			sprintf(Line, "  normal_vectors {\n    %d", Section->NumIndices);
+			File.WriteLine(Line);
+
+			for (int Idx = 0; Idx < Section->NumIndices; Idx += 3)
+			{
+				for (int Corner = 0; Corner < 3; Corner++)
+				{
+					const lcVector3 Normal = lcUnpackNormal(Verts[Indices[Idx + Corner]].Normal);
+					sprintf(Line, "    <%g, %g, %g>", -Normal.y, -Normal.x, Normal.z);
+					File.WriteLine(Line);
+				}
+			}
+
+			File.WriteLine("  }");
+			sprintf(Line, "  uv_vectors {\n    %d", Section->NumIndices);
+			File.WriteLine(Line);
+
+			for (int Idx = 0; Idx < Section->NumIndices; Idx++)
+			{
+				const lcVector2 TexCoord = Verts[Indices[Idx]].TexCoord;
+				sprintf(Line, "    <%g, %g>", TexCoord.x, TexCoord.y);
+				File.WriteLine(Line);
+			}
+
+			File.WriteLine("  }");
+			sprintf(Line, "  face_indices {\n    %d", Section->NumIndices / 3);
+			File.WriteLine(Line);
+
+			for (int Idx = 0; Idx < Section->NumIndices; Idx += 3)
+			{
+				sprintf(Line, "    <%d, %d, %d>", Idx, Idx + 1, Idx + 2);
+				File.WriteLine(Line);
+			}
+
+			File.WriteLine("  }");
+
+			if (Section->Texture)
+			{
+				QString TexturePath = Section->Texture->mFileName;
+				TexturePath.replace(QLatin1Char('\\'), QLatin1Char('/'));
+				const QByteArray TexturePathBytes = TexturePath.toUtf8();
+				sprintf(Line,
+					"  texture {\n    uv_mapping\n    pigment {\n      image_map { png \"%s\" once map_type 0 interpolate 2 }\n    }\n    finish { ambient 0.2 diffuse 0.8 }\n  }",
+					TexturePathBytes.constData());
 				File.WriteLine(Line);
 			}
 		}
 		else
 			continue;
 
-		if (Section->ColorIndex != gDefaultColor)
+		if (Section->PrimitiveType == LC_MESH_TRIANGLES && Section->ColorIndex != gDefaultColor)
 		{
 			sprintf(Line, "  material { texture { %s normal { bumps 0.1 scale 2 } } }", ColorTable[Section->ColorIndex]);
 			File.WriteLine(Line);
 		}
 
-		if (NumSections > 1)
+		if (Wrapped)
 			File.WriteLine(" }\n");
 	}
 

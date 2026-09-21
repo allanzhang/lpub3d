@@ -6,6 +6,9 @@
 #include "lc_application.h"
 #include "lc_texture.h"
 
+#include <cstdio>
+#include <map>
+
 static void lcCheckTexCoordsWrap(const lcVector4& Plane2, const lcVector3 (&Positions)[3], lcVector2 (&TexCoords)[3])
 {
 	lcVector2& TexCoords1 = TexCoords[0];
@@ -552,6 +555,149 @@ lcMeshLoaderMaterial* lcLibraryMeshData::GetMaterial(quint32 ColorCode)
 	return Material;
 }
 
+void lcLibraryMeshData::ApplyStudioTextureMapToNewSections(const StudioMeshProcessor::Texture& Texture, const std::array<size_t, LC_NUM_MESHDATA_TYPES>& SectionStarts, const lcMatrix44& ParentMatrix)
+{
+	struct SectionInfo
+	{
+		int DataType;
+		size_t SectionIndex;
+		std::vector<int> FlatTriangles;
+	};
+
+	StudioMeshProcessor::Input Input;
+	for (int Row = 0; Row < 4; Row++)
+	{
+		for (int Column = 0; Column < 4; Column++)
+			Input.parentMatrix.Values[Row * 4 + Column] = ParentMatrix.r[Column][Row];
+	}
+	Input.texture = Texture;
+
+	std::map<std::pair<int, quint32>, int> VertexMap;
+	std::vector<SectionInfo> SectionInfos;
+
+	for (int DataType = 0; DataType < LC_NUM_MESHDATA_TYPES; DataType++)
+	{
+		const std::vector<std::unique_ptr<lcMeshLoaderSection>>& Sections = mData[DataType].mSections;
+		for (size_t SectionIndex = SectionStarts[DataType]; SectionIndex < Sections.size(); SectionIndex++)
+		{
+			const lcMeshLoaderSection& Section = *Sections[SectionIndex];
+			if (Section.mPrimitiveType != LC_MESH_TRIANGLES)
+				continue;
+
+			SectionInfo Info = { DataType, SectionIndex, {} };
+			Info.FlatTriangles.reserve(Section.mIndices.size() / 3);
+
+			for (size_t Index = 0; Index < Section.mIndices.size(); Index += 3)
+			{
+				StudioMeshProcessor::Triangle Triangle;
+				for (int Corner = 0; Corner < 3; Corner++)
+				{
+					const quint32 VertexIndex = Section.mIndices[Index + Corner];
+					const std::pair<int, quint32> Key = { DataType, VertexIndex };
+					auto VertexIt = VertexMap.find(Key);
+					if (VertexIt == VertexMap.end())
+					{
+						const lcMeshLoaderVertex& SourceVertex = mData[DataType].mVertices[VertexIndex];
+						const int NewIndex = static_cast<int>(Input.vertices.size());
+						Input.vertices.push_back({
+							{ SourceVertex.Position.x, SourceVertex.Position.y, SourceVertex.Position.z },
+							{ SourceVertex.Normal.x, SourceVertex.Normal.y, SourceVertex.Normal.z }
+						});
+						VertexIt = VertexMap.emplace(Key, NewIndex).first;
+					}
+					Triangle.indices[Corner] = VertexIt->second;
+				}
+				Info.FlatTriangles.push_back(static_cast<int>(Input.triangles.size()));
+				Input.triangles.push_back(Triangle);
+			}
+
+			if (!Info.FlatTriangles.empty())
+				SectionInfos.push_back(std::move(Info));
+		}
+	}
+
+	// TEMP DIAGNOSTIC: how far does the decal pipeline get?
+	fprintf(stderr, "STUDIOTEXDBG apply ENTER: tex='%s' triangles=%zu\n",
+		Texture.name.c_str(), Input.triangles.size());
+	if (Input.triangles.empty())
+	{
+		fprintf(stderr, "STUDIOTEXDBG apply: EARLY RETURN - no triangles collected\n");
+		return;
+	}
+
+	const StudioMeshProcessor::Result Result = StudioMeshProcessor::assign(Input);
+	fprintf(stderr, "STUDIOTEXDBG apply: selectedTriangles=%zu sectionInfos=%zu\n",
+		Result.selectedTriangles.size(), SectionInfos.size());
+	std::vector<bool> SelectedTriangles(Input.triangles.size(), false);
+	for (const int TriangleIndex : Result.selectedTriangles)
+		SelectedTriangles[TriangleIndex] = true;
+
+	for (int DataType = 0; DataType < LC_NUM_MESHDATA_TYPES; DataType++)
+	{
+		std::vector<std::unique_ptr<lcMeshLoaderSection>>& Sections = mData[DataType].mSections;
+		std::vector<std::unique_ptr<lcMeshLoaderSection>> NewSections;
+		NewSections.reserve(Sections.size() + 1);
+
+		for (size_t SectionIndex = 0; SectionIndex < Sections.size(); SectionIndex++)
+		{
+			if (SectionIndex < SectionStarts[DataType] || Sections[SectionIndex]->mPrimitiveType != LC_MESH_TRIANGLES)
+			{
+				NewSections.push_back(std::move(Sections[SectionIndex]));
+				continue;
+			}
+
+			const auto InfoIt = std::find_if(SectionInfos.begin(), SectionInfos.end(), [DataType, SectionIndex](const SectionInfo& Info)
+			{
+				return Info.DataType == DataType && Info.SectionIndex == SectionIndex;
+			});
+
+			if (InfoIt == SectionInfos.end())
+			{
+				NewSections.push_back(std::move(Sections[SectionIndex]));
+				continue;
+			}
+
+			const lcMeshLoaderSection& SourceSection = *Sections[SectionIndex];
+			std::unique_ptr<lcMeshLoaderSection> SolidSection = std::make_unique<lcMeshLoaderSection>(LC_MESH_TRIANGLES, SourceSection.mMaterial);
+			std::unique_ptr<lcMeshLoaderSection> TexturedSection;
+
+			for (size_t Triangle = 0; Triangle < InfoIt->FlatTriangles.size(); Triangle++)
+			{
+				const int FlatTriangle = InfoIt->FlatTriangles[Triangle];
+				const size_t Index = Triangle * 3;
+
+				if (!SelectedTriangles[FlatTriangle])
+				{
+					SolidSection->mIndices.push_back(SourceSection.mIndices[Index + 0]);
+					SolidSection->mIndices.push_back(SourceSection.mIndices[Index + 1]);
+					SolidSection->mIndices.push_back(SourceSection.mIndices[Index + 2]);
+					continue;
+				}
+
+				if (!TexturedSection)
+				{
+					TexturedSection.reset(new lcMeshLoaderSection(LC_MESH_TEXTURED_TRIANGLES, GetStudioTexturedMaterial(SourceSection.mMaterial->Color, Texture.name.c_str())));
+					mHasTextures = true;
+				}
+
+				for (int Corner = 0; Corner < 3; Corner++)
+				{
+					const int VertexIndex = Input.triangles[FlatTriangle].indices[Corner];
+					const lcMeshLoaderVertex& Vertex = mData[DataType].mVertices[SourceSection.mIndices[Index + Corner]];
+					TexturedSection->mIndices.push_back(AddTexturedVertex(Vertex.Position, Vertex.Normal, lcVector2(Result.uv[VertexIndex].x, Result.uv[VertexIndex].y)));
+				}
+			}
+
+			if (!SolidSection->mIndices.empty())
+				NewSections.push_back(std::move(SolidSection));
+			if (TexturedSection)
+				NewSections.push_back(std::move(TexturedSection));
+		}
+
+		Sections = std::move(NewSections);
+	}
+}
+
 lcMeshLoaderMaterial* lcLibraryMeshData::GetTexturedMaterial(quint32 ColorCode, const lcMeshLoaderTextureMap& TextureMap)
 {
 	for (const std::unique_ptr<lcMeshLoaderMaterial>& Material : mMaterials)
@@ -591,6 +737,21 @@ lcMeshLoaderMaterial* lcLibraryMeshData::GetTexturedMaterial(quint32 ColorCode, 
 	Material->Angles[1] = TextureMap.Angles[1];
 	strcpy(Material->Name, TextureMap.Name);
 
+	return Material;
+}
+
+lcMeshLoaderMaterial* lcLibraryMeshData::GetStudioTexturedMaterial(quint32 ColorCode, const char* TextureName)
+{
+	for (const std::unique_ptr<lcMeshLoaderMaterial>& Material : mMaterials)
+		if (Material->Type == lcMeshLoaderMaterialType::Studio && Material->Color == ColorCode && !strcmp(Material->Name, TextureName))
+			return Material.get();
+
+	lcMeshLoaderMaterial* Material = new lcMeshLoaderMaterial();
+	mMaterials.emplace_back(Material);
+	Material->Type = lcMeshLoaderMaterialType::Studio;
+	Material->Color = ColorCode;
+	strncpy(Material->Name, TextureName, sizeof(Material->Name) - 1);
+	Material->Name[sizeof(Material->Name) - 1] = 0;
 	return Material;
 }
 
@@ -785,6 +946,9 @@ void lcLibraryMeshData::GenerateTexturedVertices()
 
 				case lcMeshLoaderMaterialType::Spherical:
 					GenerateSphericalTexcoords(Section.get(), Data);
+					break;
+
+				case lcMeshLoaderMaterialType::Studio:
 					break;
 			}
 		}
@@ -1293,6 +1457,52 @@ bool lcMeshLoader::ReadMeshData(lcFile& File, const lcMatrix44& CurrentTransform
 
 				continue;
 			}
+			else if (!strcmp(Token, "!STUDIO_TEXMAP"))
+			{
+				char Action[32];
+				char Method[32];
+				char TextureName[LC_MAXPATH];
+				float Values[16];
+				const int Fields = sscanf(End + 1, "%31s %31s %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %s",
+					Action, Method,
+					&Values[0], &Values[1], &Values[2], &Values[3], &Values[4], &Values[5], &Values[6], &Values[7],
+					&Values[8], &Values[9], &Values[10], &Values[11], &Values[12], &Values[13], &Values[14], &Values[15], TextureName);
+				if (Fields == 19 && !strcmp(Action, "START") && !strcmp(Method, "PLANAR"))
+				{
+					mStudioTextureMap = StudioMeshProcessor::Texture();
+					std::copy(Values, Values + 16, mStudioTextureMap.values.begin());
+					mStudioTextureMap.minU = Values[12];
+					mStudioTextureMap.minV = Values[13];
+					mStudioTextureMap.diffU = Values[14] - Values[12];
+					mStudioTextureMap.diffV = Values[15] - Values[13];
+					mStudioTextureMap.name = TextureName;
+					for (char& Ch : mStudioTextureMap.name)
+					{
+						if (Ch >= 'a' && Ch <= 'z')
+							Ch = Ch + 'A' - 'a';
+						else if (Ch == '\\')
+							Ch = '/';
+					}
+					if (mStudioTextureMap.name.size() > 4 && mStudioTextureMap.name.compare(mStudioTextureMap.name.size() - 4, 4, ".PNG") == 0)
+						mStudioTextureMap.name.resize(mStudioTextureMap.name.size() - 4);
+
+					for (int DataType = 0; DataType < LC_NUM_MESHDATA_TYPES; DataType++)
+						mStudioSectionStarts[DataType] = mMeshData.mData[DataType].mSections.size();
+					mStudioParentTransform = CurrentTransform;
+					mHasStudioTextureMap = true;
+				}
+				else if (Fields >= 1 && !strcmp(Action, "END"))
+				{
+					// TEMP DIAGNOSTIC: did the START marker parse and register a texture map?
+					fprintf(stderr, "STUDIOTEXDBG marker END: hasTextureMap=%d name='%s'\n",
+						mHasStudioTextureMap ? 1 : 0, mStudioTextureMap.name.c_str());
+					if (mHasStudioTextureMap)
+						mMeshData.ApplyStudioTextureMapToNewSections(mStudioTextureMap, mStudioSectionStarts, mStudioParentTransform);
+					mHasStudioTextureMap = false;
+				}
+
+				continue;
+			}
 			else if (!strcmp(Token, "BFC"))
 			{
 				while (!LastToken)
@@ -1423,6 +1633,7 @@ bool lcMeshLoader::ReadMeshData(lcFile& File, const lcMatrix44& CurrentTransform
 			}
 			else
 				Library->GetPieceFile(FileName, FileCallback);
+
 		} break;
 
 		case 2:

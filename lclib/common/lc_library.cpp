@@ -270,7 +270,47 @@ lcTexture* lcPiecesLibrary::FindTexture(const char* TextureName, Project* Curren
 		}
 	}
 
+	QFileInfo TextureFile(QDir::currentPath() + QDir::separator() + TextureName + ".png");
+	if (TextureFile.isFile())
+	{
+		lcTexture* Texture = lcLoadTexture(TextureFile.absoluteFilePath(), LC_TEXTURE_WRAPU | LC_TEXTURE_WRAPV);
+
+		if (Texture)
+		{
+			mTextures.push_back(Texture);
+			return Texture;
+		}
+	}
+
+	for (const QString& Directory : mTextureSearchDirs)
+	{
+		QFileInfo TextureFile(QDir(Directory).filePath(QString::fromLatin1(TextureName) + QStringLiteral(".png")));
+
+		if (TextureFile.isFile())
+		{
+			lcTexture* Texture = lcLoadTexture(TextureFile.absoluteFilePath(), LC_TEXTURE_WRAPU | LC_TEXTURE_WRAPV);
+
+			if (Texture)
+			{
+				mTextures.push_back(Texture);
+				return Texture;
+			}
+		}
+	}
+
 	return nullptr;
+}
+
+void lcPiecesLibrary::AddTextureSearchDir(const QString& Directory)
+{
+	if (Directory.isEmpty() || std::find(mTextureSearchDirs.begin(), mTextureSearchDirs.end(), Directory) != mTextureSearchDirs.end())
+		return;
+	mTextureSearchDirs.push_back(Directory);
+}
+
+void lcPiecesLibrary::ClearTextureSearchDirs()
+{
+	mTextureSearchDirs.clear();
 }
 
 bool lcPiecesLibrary::Load(const QString& LibraryPath, bool ShowProgress)

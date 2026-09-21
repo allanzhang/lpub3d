@@ -32,6 +32,7 @@
  ***************************************************************************/
 
 #include "lpub.h"
+#include "studiotexmap.h"
 #include <QtWidgets>
 #include <QGraphicsItem>
 #include <QString>
@@ -6311,6 +6312,11 @@ QStringList Gui::writeToTmp(const QString &fileName, const QStringList &contents
                   if (! buildModIgnore)
                       CsiItem::partLine(line,pla,i/*relativeTypeIndx*/,OkRc);
               } else {
+
+                  if (StudioTexMap::isStudioTextureDirective(line)) {
+                      csiParts.append(line);
+                      continue;
+                  }
 
                   Where here(fileName,i);
                   rc =  meta.parse(line,here,false);

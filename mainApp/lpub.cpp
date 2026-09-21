@@ -4946,6 +4946,12 @@ void Gui::createActions()
     lpub->actions.insert(openAct->objectName(), Action(QStringLiteral("File.Open"), openAct));
     connect(openAct, SIGNAL(triggered()), gui, SLOT(open()));
 
+    QAction *openIoAct = new QAction(QIcon(":/resources/open.png"), tr("Open &IO File..."), gui);
+    openIoAct->setObjectName("openIoAct.1");
+    openIoAct->setStatusTip(tr("Open a Studio IO project file"));
+    lpub->actions.insert(openIoAct->objectName(), Action(QStringLiteral("File.Open IO"), openIoAct));
+    connect(openIoAct, SIGNAL(triggered()), gui, SLOT(openIo()));
+
     QAction *openWithChoiceAct = new QAction(QIcon(":/resources/openwithchoice.png"),tr("Choose Application..."), this);
     openWithChoiceAct->setObjectName("openWithChoiceAct.1");
     openWithChoiceAct->setStatusTip(tr("Receive the system prompt to choose the application to open the model file with"));
@@ -6907,6 +6913,7 @@ void Gui::createMenus()
     fileMenu->setObjectName("fileMenu");
     gui->menus.insert(fileMenu->objectName(), fileMenu);
     fileMenu->addAction(gui->getAct("openAct.1"));
+    fileMenu->addAction(gui->getAct("openIoAct.1"));
 
     gui->openWithMenu = fileMenu->addMenu(tr("Open With..."));
     gui->openWithMenu->setObjectName("openWithMenu");
@@ -7266,6 +7273,7 @@ void Gui::createToolBars()
     fileToolBar->setObjectName("fileToolBar");
     gui->toolbars.insert(fileToolBar->objectName(), fileToolBar);
     fileToolBar->addAction(gui->getAct("openAct.1"));
+    fileToolBar->addAction(gui->getAct("openIoAct.1"));
     fileToolBar->addAction(gui->getAct("reloadFromDiskAct.1"));
     fileToolBar->addAction(gui->getAct("saveAct.1"));
     fileToolBar->addAction(gui->getAct("saveAsAct.1"));

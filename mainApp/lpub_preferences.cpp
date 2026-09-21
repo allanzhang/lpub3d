@@ -588,7 +588,7 @@ int     Preferences::checkUpdateFrequency       = UPDATE_CHECK_FREQUENCY_DEFAULT
 int     Preferences::gridSizeIndex              = GRID_SIZE_INDEX_DEFAULT;
 int     Preferences::pageHeight                 = PAGE_HEIGHT_DEFAULT;
 int     Preferences::pageWidth                  = PAGE_WIDTH_DEFAULT;
-int     Preferences::rendererTimeout            = RENDERER_TIMEOUT_DEFAULT;          // measured in seconds
+int     Preferences::rendererTimeout            = RENDERER_TIMEOUT_DEFAULT;          // measured in minutes; -1 = wait indefinitely
 int     Preferences::pageDisplayPause           = PAGE_DISPLAY_PAUSE_DEFAULT;        // measured in seconds
 int     Preferences::nativeImageCameraFoVAdjust = NATIVE_IMAGE_CAMERA_FOV_ADJUST;
 int     Preferences::msgBoxMinimumWidth         = DEFAULT_MSG_BOX_MIN_WIDTH;

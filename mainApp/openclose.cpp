@@ -1,4 +1,4 @@
-/**************************************************************************** 
+/****************************************************************************
 **
 ** Copyright (C) 2007-2009 Kevin Clague. All rights reserved.
 ** Copyright (C) 2015 - 2025 Trevor SANDY. All rights reserved.
@@ -29,9 +29,12 @@
 #include "threadworkers.h"
 #include "messageboxresizable.h"
 #include "separatorcombobox.h"
+#include "studioioimporter.h"
 #include "metagui.h"
 #include "lc_profile.h"
 #include "lc_previewwidget.h"
+#include "lc_application.h"
+#include "lc_library.h"
 
 
 enum FileOpts {
@@ -208,7 +211,7 @@ void Gui::setComboPattern(RegExp o)
 }
 
 void Gui::open()
-{  
+{
   if (gui->maybeSave() && gui->saveBuildModification()) {
     QString modelDir = lcGetProfileString(LC_PROFILE_PROJECTS_PATH);
     if (modelDir.isEmpty())
@@ -218,14 +221,17 @@ void Gui::open()
       this,
       tr("Open LDraw File"),
       modelDir,
-      tr("LDraw Files (*.dat *.ldr *.mpd);;All Files (*.*)"));
+      tr("Model Files (*.dat *.ldr *.mpd *.io *.mo);;LDraw Files (*.dat *.ldr *.mpd);;Studio IO Files (*.io *.mo);;All Files (*.*)"));
 
     fileLoadTimer.start();
 
     QFileInfo fileInfo(fileName);
     if (fileInfo.exists()) {
       lcSetProfileString(LC_PROFILE_PROJECTS_PATH, fileInfo.path());
-      if (!gui->openFile(fileName))
+      const bool loaded = StudioIoImporter::isStudioProject(fileName)
+                              ? gui->loadFile(fileName)
+                              : gui->openFile(fileName);
+      if (!loaded)
           return;
       Gui::displayPage();
       gui->enableActions();
@@ -240,6 +246,24 @@ void Gui::open()
   return;
 }
 
+void Gui::openIo()
+{
+  if (gui->maybeSave() && gui->saveBuildModification()) {
+    QString modelDir = lcGetProfileString(LC_PROFILE_PROJECTS_PATH);
+    if (modelDir.isEmpty())
+      modelDir = Preferences::ldrawLibPath + "/models";
+
+    const QString fileName = QFileDialog::getOpenFileName(
+      this,
+      tr("Open Studio IO File"),
+      modelDir,
+      tr("Studio IO Files (*.io *.mo);;All Files (*.*)"));
+
+    if (!fileName.isEmpty())
+      gui->loadFile(fileName);
+  }
+}
+
 void Gui::openDropFile(QString &fileName) {
 
   if (gui->maybeSave() && gui->saveBuildModification()) {
@@ -250,9 +274,13 @@ void Gui::openDropFile(QString &fileName) {
       ldr = extension == "ldr";
       mpd = extension == "mpd";
       dat = extension == "dat";
-      if (fileInfo.exists() && (ldr || mpd || dat)) {
+      const bool studioIo = extension == "io" || extension == "mo";
+      if (fileInfo.exists() && (ldr || mpd || dat || studioIo)) {
           lcSetProfileString(LC_PROFILE_PROJECTS_PATH, fileInfo.path());
-          if (!gui->openFile(fileName))
+          const bool loaded = StudioIoImporter::isStudioProject(fileName)
+                                  ? gui->loadFile(fileName)
+                                  : gui->openFile(fileName);
+          if (!loaded)
               return;
           gui->displayPage();
           gui->enableActions();
@@ -631,7 +659,21 @@ bool Gui::loadFile(const QString &file, bool console)
     QFileInfo fileInfo(fileName);
     if (fileInfo.exists()) {
         fileLoadTimer.start();
-        if (!openFile(fileName)) {
+        bool opened = false;
+        if (StudioIoImporter::isStudioProject(fileName)) {
+            const StudioIoImportResult importResult = StudioIoImporter::import(fileName);
+            if (importResult.success) {
+                opened = openFile(importResult.modelFilePath,
+                                  importResult.sourceFilePath,
+                                  importResult.customSearchDirs,
+                                  importResult.cacheDir);
+            } else {
+                emit lpub->messageSig(LOG_ERROR, importResult.errorMessage);
+            }
+        } else {
+            opened = openFile(fileName);
+        }
+        if (!opened) {
             emit gui->fileLoadedSig(false);
             Gui::m_lastDisplayedPage = false;
             return false;
@@ -812,7 +854,7 @@ void Gui::saveAs()
 
   }
   gui->enableWatcher();
-} 
+}
 
 void Gui::saveCopy()
 {
@@ -935,6 +977,13 @@ void Gui::closeFileOperations()
   Gui::pageProcessParent = PROC_NONE;
   Gui::pageProcessRunning = PROC_NONE;
   lpub->ldrawFile.empty();
+  for (const QString &searchDir : studioIoSearchDirs)
+    Preferences::ldSearchDirs.removeAll(searchDir);
+  lcGetPiecesLibrary()->ClearTextureSearchDirs();
+  if (!studioIoCacheDir.isEmpty())
+    QDir(studioIoCacheDir).removeRecursively();
+  studioIoCacheDir.clear();
+  studioIoSearchDirs.clear();
   if (Preferences::modeGUI) {
     gui->editWindow->clearWindow();
     gui->mpdCombo->clear();
@@ -1024,7 +1073,10 @@ void Gui::closeModelFile()
  * File opening closing stuff
  **************************************************************************/
 
-bool Gui::openFile(const QString &fileName)
+bool Gui::openFile(const QString &fileName,
+                   const QString &logicalFileName,
+                   const QStringList &projectSearchDirs,
+                   const QString &projectCacheDir)
 {
   if (!(gui->maybeSave() && gui->saveBuildModification())) {
     return false;
@@ -1042,7 +1094,17 @@ bool Gui::openFile(const QString &fileName)
   Gui::clearPage(true);
   gui->closeFileOperations();
   QFileInfo fileInfo(fileName);
-  emit lpub->messageSig(LOG_INFO_STATUS, tr("Loading file '%1'...").arg(fileInfo.fileName()));
+  QFileInfo logicalInfo(logicalFileName.isEmpty() ? fileName : logicalFileName);
+  QStringList addedProjectDirs;
+  for (const QString &searchDir : projectSearchDirs) {
+    if (!searchDir.isEmpty() && !Preferences::ldSearchDirs.contains(searchDir, Qt::CaseInsensitive)) {
+      Preferences::ldSearchDirs << searchDir;
+      addedProjectDirs << searchDir;
+    }
+    if (!searchDir.isEmpty())
+      lcGetPiecesLibrary()->AddTextureSearchDir(searchDir);
+  }
+  emit lpub->messageSig(LOG_INFO_STATUS, tr("Loading file '%1'...").arg(logicalInfo.fileName()));
 
   if (Preferences::modeGUI) {
     if (lcGetPreferences().mViewPieceIcons)
@@ -1056,6 +1118,13 @@ bool Gui::openFile(const QString &fileName)
     emit lpub->messageSig(LOG_INFO_STATUS, lpub->ldrawFile._loadAborted ?
                               tr("Load LDraw file '%1' aborted.").arg(fileInfo.absoluteFilePath()) :
                               tr("Load LDraw file '%1' failed.").arg(fileInfo.absoluteFilePath()));
+    for (const QString &searchDir : addedProjectDirs)
+      Preferences::ldSearchDirs.removeAll(searchDir);
+    lcGetPiecesLibrary()->ClearTextureSearchDirs();
+    if (!projectCacheDir.isEmpty())
+      QDir(projectCacheDir).removeRecursively();
+    studioIoCacheDir.clear();
+    studioIoSearchDirs.clear();
     gui->closeModelFile();
     return false;
   }
@@ -1064,8 +1133,8 @@ bool Gui::openFile(const QString &fileName)
   Paths::mkDirs();
   if (Preferences::modeGUI) {
     gui->getAct("loadStatusAct.1")->setEnabled(true);
-    gui->getAct("editModelFileAct.1")->setText(tr("Edit %1").arg(fileInfo.fileName()));
-    gui->getAct("editModelFileAct.1")->setStatusTip(tr("Edit LDraw file %1 with detached LDraw Editor").arg(fileInfo.fileName()));
+    gui->getAct("editModelFileAct.1")->setText(tr("Edit %1").arg(logicalInfo.fileName()));
+    gui->getAct("editModelFileAct.1")->setStatusTip(tr("Edit LDraw file %1 with detached LDraw Editor").arg(logicalInfo.fileName()));
 
     int unarchivedParts = lpub->ldrawFile.getSupportPartsNotInArchive();
     if (unarchivedParts) {
@@ -1092,7 +1161,7 @@ bool Gui::openFile(const QString &fileName)
                               "Parts not in the archive library will not be rendered by the "
                               "%3 Visual Editor or Native renderer.<br><br>"
                               "%3 will archive parts from your search directory paths.<br>"
-                              "%4").arg(missingParts, fileInfo.fileName(), VER_PRODUCTNAME_STR, searchDirs);
+                              "%4").arg(missingParts, logicalInfo.fileName(), VER_PRODUCTNAME_STR, searchDirs);
       box.setInformativeText (text);
       box.setStandardButtons (QMessageBox::Yes | QMessageBox::No);
       box.setDefaultButton   (QMessageBox::Yes);
@@ -1108,7 +1177,9 @@ bool Gui::openFile(const QString &fileName)
   QString previewLoadPath = QDir::toNativeSeparators(QString("%1/%2").arg(QDir::currentPath(), Paths::tmpDir));
   lcSetProfileString(LC_PROFILE_PREVIEW_LOAD_PATH, previewLoadPath);
   emit lpub->messageSig(LOG_INFO, tr("Loading user interface items..."));
-  gui->setCurrentFile(fileInfo.absoluteFilePath());
+  studioIoCacheDir = projectCacheDir;
+  studioIoSearchDirs = addedProjectDirs;
+  gui->setCurrentFile(logicalInfo.absoluteFilePath());
   gui->attitudeAdjustment();
   if (Preferences::modeGUI) {
     gui->configureMpdCombo();
@@ -1117,7 +1188,7 @@ bool Gui::openFile(const QString &fileName)
     for (int i = 0; i < gui->numPrograms; i++) {
       QFileInfo programFileInfo(gui->programEntries.at(i).split("|").last());
       gui->openWithActList[i]->setStatusTip(tr("Open %1 with %2")
-                                          .arg(fileInfo.fileName(), programFileInfo.fileName()));
+                                          .arg(logicalInfo.fileName(), programFileInfo.fileName()));
     }
   }
   gui->undoStack->setClean();
@@ -1129,7 +1200,7 @@ bool Gui::openFile(const QString &fileName)
 
   defaultResolutionType(Preferences::preferCentimeters);
 
-  emit lpub->messageSig(LOG_INFO, tr("Open file '%1' completed.").arg(fileInfo.absoluteFilePath()));
+  emit lpub->messageSig(LOG_INFO, tr("Open file '%1' completed.").arg(logicalInfo.absoluteFilePath()));
   return true;
 }
 
@@ -1267,7 +1338,10 @@ void Gui::reloadFromDisk()
   if (!QFileInfo(Gui::curFile).isReadable())
     return;
   int goToPage = Gui::displayPageNum;
-  if (!gui->openFile(Gui::curFile))
+  const bool loaded = StudioIoImporter::isStudioProject(Gui::curFile)
+                          ? gui->loadFile(Gui::curFile)
+                          : gui->openFile(Gui::curFile);
+  if (!loaded)
     return;
   Gui::displayPageNum = goToPage;
   Gui::displayPage();
@@ -1302,7 +1376,10 @@ void Gui::fileChanged(const QString &path)
     QString fileName = QFileInfo(path).fileName();
     if (lpub->ldrawFile.isIncludeFile(fileName) || static_cast<bool>(lpub->ldrawFile.isUnofficialPart(fileName)))
       absoluteFilePath = Gui::curFile;
-    if (!gui->openFile(absoluteFilePath))
+    const bool loaded = StudioIoImporter::isStudioProject(absoluteFilePath)
+                            ? gui->loadFile(absoluteFilePath)
+                            : gui->openFile(absoluteFilePath);
+    if (!loaded)
       return;
     Gui::displayPageNum = goToPage;
     Gui::displayPage();

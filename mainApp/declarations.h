@@ -1022,7 +1022,7 @@ enum ThemeColorType {
 #define NATIVE_IMAGE_CAMERA_FOV_ADJUST         15    // Native camera fov adjustment for image generation
 
 #define POVRAY_RENDER_QUALITY_DEFAULT           0    // 0=High, 1-Medium, 2=Low
-#define RENDERER_TIMEOUT_DEFAULT                6    // measured in seconds
+#define RENDERER_TIMEOUT_DEFAULT                6    // measured in minutes; -1 = no timeout
 
 #define PAGE_CYCLE_DISPLAY_DEFAULT              1    // measured in seconds
 #define PAGE_DISPLAY_PAUSE_DEFAULT              3    // measured in seconds

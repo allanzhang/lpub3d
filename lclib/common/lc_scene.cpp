@@ -299,7 +299,11 @@ void lcScene::DrawOpaqueMeshes(lcContext* Context, bool DrawLit, int PrimitiveTy
 					if (Texture->NeedsUpload())
 						Texture->Upload(Context);
 
-					Context->SetMaterial(TexturedMaterial);
+					lcMaterialType SectionTexturedMaterial = TexturedMaterial;
+					if (strncmp(Texture->mName, "DECAL_", 6) == 0)
+						SectionTexturedMaterial = DrawLit ? lcMaterialType::FakeLitTextureDecalAlpha : lcMaterialType::UnlitTextureDecalAlpha;
+
+					Context->SetMaterial(SectionTexturedMaterial);
 					Context->BindTexture2D(Texture);
 				}
 				else
@@ -439,7 +443,11 @@ void lcScene::DrawTranslucentMeshes(lcContext* Context, bool DrawLit, bool DrawF
 		{
 			if (Texture->NeedsUpload())
 				Texture->Upload(Context);
-			Context->SetMaterial(TexturedMaterial);
+			lcMaterialType SectionTexturedMaterial = TexturedMaterial;
+			if (strncmp(Texture->mName, "DECAL_", 6) == 0)
+				SectionTexturedMaterial = DrawLit ? lcMaterialType::FakeLitTextureDecalAlpha : lcMaterialType::UnlitTextureDecalAlpha;
+
+			Context->SetMaterial(SectionTexturedMaterial);
 			VertexBufferOffset += Mesh->mNumVertices * sizeof(lcVertex);
 			Context->SetVertexFormat(VertexBufferOffset, 3, 1, 2, 0, DrawLit);
 			Context->BindTexture2D(Texture);

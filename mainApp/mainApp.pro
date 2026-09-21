@@ -540,6 +540,8 @@ HEADERS += \
     sizeandorientationdialog.h \
     step.h \
     stickerparts.h \
+    studioioimporter.h \
+    studiotexmap.h \
     submodelcolordialog.h \
     submodelitem.h \
     substitutepartdialog.h \
@@ -671,6 +673,8 @@ SOURCES += \
     sizeandorientationdialog.cpp \
     step.cpp \
     stickerparts.cpp \
+    studioioimporter.cpp \
+    studiotexmap.cpp \
     submodelcolordialog.cpp \
     submodelglobals.cpp \
     submodelitem.cpp \

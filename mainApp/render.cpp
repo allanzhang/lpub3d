@@ -34,6 +34,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QImageReader>
+#include <QThread>
 #include <QtConcurrent>
 #include <algorithm>
 #include <cmath>
@@ -123,7 +124,20 @@ bool notEqual(const double v1, const double v2, int p = 4)
     return r;
 }
 
-// renderer timeout in milliseconds
+// Studio decals are exported only by the lcMesh POV writer; the LDView (LDV)
+// generator ignores them, so a page model carrying '!STUDIO_TEXMAP' renders
+// without its sticker. Detect that marker to pick the POV generator.
+static bool PovGenHasStudioDecal(const QString &ldrFile)
+{
+    QFile f(ldrFile);
+    if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
+        return false;
+    return f.readAll().contains("!STUDIO_TEXMAP");
+}
+
+// Renderer timeout in milliseconds, for QProcess::waitForFinished.
+// Preferences::rendererTimeout is in MINUTES (despite the older 'seconds' wording);
+// -1 means no timeout, i.e. wait indefinitely for the renderer to finish.
 int Render::rendererTimeout() {
     if (Preferences::rendererTimeout == -1)
         return -1;
@@ -355,6 +369,60 @@ bool Render::useLDViewSCall() {
 bool Render::useLDViewSList() {
     return (Preferences::preferredRenderer == RENDERER_LDVIEW &&
             Preferences::enableLDViewSnaphsotList);
+}
+
+// LPub3D-Trace (POV-Ray) only accepts ASCII paths. Quoting makes it tolerate
+// spaces, but a non-ASCII directory or file name is mangled into blanks and the
+// render fails ("Cannot find file '/tmp/pi/  /s.pov'"), while an unquoted space
+// aborts with "Failed to parse command-line option".
+//
+// A Studio model keeps its name in the temp path (e.g. "IO Enhancement" and
+// "测试文件 2-3_1_....png"), so both the scene file POV-Ray reads (+I) and the
+// image it writes (+O) must live somewhere ASCII-only. Rendering happens in a
+// dedicated scratch workspace under the system temp directory - which on macOS
+// contains no spaces and no non-ASCII characters - and the caller publishes the
+// result to its real name afterwards.
+static QString SafeRendererOutputName(const QString &pngName)
+{
+    const QFileInfo info(QDir::toNativeSeparators(pngName));
+    static const QString unsafe = QStringLiteral(" \t\n\r\"'`$&|;<>()[]{}!?*#~,:+=%@");
+
+    QString base = info.completeBaseName();
+    for (int i = 0; i < base.size(); i++) {
+        const QChar c = base.at(i);
+        const bool keep = (c.isLetterOrNumber() && c.unicode() < 128) ||
+                          c == QLatin1Char('-') || c == QLatin1Char('_') || c == QLatin1Char('.');
+        if (!keep || unsafe.contains(c))
+            base[i] = QLatin1Char('_');
+    }
+    while (base.contains(QLatin1String("__")))
+        base.replace(QLatin1String("__"), QLatin1String("_"));
+
+    if (base.isEmpty())
+        base = QStringLiteral("render");
+
+    // qHash keeps the name unique and deterministic within a run.
+    base += QStringLiteral("_%1").arg(qHash(info.fileName()), 0, 16);
+
+    return Paths::rendererScratchDir() + QDir::separator() + base + QLatin1Char('.') + info.suffix();
+}
+
+// The renderer process can exit before the image is fully flushed to disk.
+bool Render::WaitForRenderOutput(QString const &pngName, int timeoutMs)
+{
+    QFileInfo info(QDir::toNativeSeparators(pngName));
+
+    for (int waited = 0; waited < timeoutMs; waited += 50) {
+        if (info.exists() && info.size() > 0) {
+            QImage probe(info.absoluteFilePath());
+            if (!probe.isNull())
+                return true;
+        }
+        QThread::msleep(50);
+        info.refresh();
+    }
+
+    return false;
 }
 
 bool Render::clipImage(QString const &pngName) {
@@ -816,8 +884,13 @@ int POVRay::renderCsi(
 
   /* Create the CSI DAT file */
   QString message, newArg;
+  /*** LPub3D Mod - only the POV scene and the rendered image must live in an ASCII path
+   *** (LPub3D-Trace rejects non-ASCII). The CSI input must stay in the project
+   *** temporary folder, because that is where the Studio custom-part DAT files
+   *** are written; LDView resolves a bare part reference against the model
+   *** directory, so moving csi.ldr away from its parts produced an empty scene. ***/
   QString ldrName = QDir::currentPath() + "/" + Paths::tmpDir + "/csi.ldr";
-  QString povName = ldrName + ".pov";
+  QString povName = Paths::rendererScratchDir() + "/csi.ldr.pov";
   FloatPairMeta cameraAngles;
   cameraAngles.setValues(meta.LPub.assem.cameraAngles.value(0),
                          meta.LPub.assem.cameraAngles.value(1));
@@ -980,7 +1053,14 @@ int POVRay::renderCsi(
 
       removeEmptyStrings(arguments);
 
+      /*** LPub3D Mod - generate the POV scene from the project temporary folder
+       *** (where the CSI parts live) but write the .pov into the ASCII scratch dir ***/
       QString workingDirectory = QDir::currentPath();
+      const QString csiInputDirectory = QDir::currentPath() + "/" + Paths::tmpDir;
+      if (! QDir::setCurrent(csiInputDirectory)) {
+          emit gui->messageSig(LOG_ERROR, QObject::tr("Failed to enter the CSI input directory %1").arg(csiInputDirectory));
+          return -1;
+      }
 
       emit gui->messageSig(LOG_STATUS, QObject::tr("Native CSI POV file generation..."));
 
@@ -992,10 +1072,32 @@ int POVRay::renderCsi(
 #endif
 
       bool retError = false;
-      ldvWidget = new LDVWidget(nullptr,NativePOVIni,true);
-      if (! ldvWidget->doCommand(arguments))  {
-          emit gui->messageSig(LOG_ERROR, QObject::tr("Failed to generate CSI POV file for command: %1").arg(arguments.join(" ")));
-          retError = true;
+      if (PovGenHasStudioDecal(ldrName)) {
+          // Decal-bearing page model: the lcMesh writer emits mesh2 + uv_vectors +
+          // image_map, the LDV generator does not. Parts are already oriented by
+          // rotateParts(), so the scene's own camera is the right view here.
+          Project* Loader = new Project();
+          if (!Loader->Load(ldrName, false/*ShowErrors*/)) {
+              emit gui->messageSig(LOG_ERROR, QObject::tr("Could not load the POV-Ray export model '%1'.").arg(ldrName));
+              delete Loader;
+              retError = true;
+          } else {
+              gApplication->SetProject(Loader);
+              lcView::UpdateProjectViews(Loader);
+              auto [Success, ErrorMessage] = Loader->ExportPOVRay(povName);
+              if (!Success) {
+                  emit gui->messageSig(LOG_ERROR, ErrorMessage.isEmpty()
+                                       ? QObject::tr("POV-Ray export failed for '%1'.").arg(povName)
+                                       : ErrorMessage);
+                  retError = true;
+              }
+          }
+      } else {
+          ldvWidget = new LDVWidget(nullptr,NativePOVIni,true);
+          if (! ldvWidget->doCommand(arguments))  {
+              emit gui->messageSig(LOG_ERROR, QObject::tr("Failed to generate CSI POV file for command: %1").arg(arguments.join(" ")));
+              retError = true;
+          }
       }
 
       // ldvWidget changes the Working directory so we must reset
@@ -1067,7 +1169,8 @@ int POVRay::renderCsi(
       povArguments << QString("-d");
   }
 
-  QString O = QString("+O\"%1\"").arg(QDir::toNativeSeparators(pngName));
+  const QString renderTarget = SafeRendererOutputName(pngName);
+  QString O = QString("+O\"%1\"").arg(QDir::toNativeSeparators(renderTarget));
   QString W = QString("+W%1").arg(width);
   QString H = QString("+H%1").arg(height);
 
@@ -1142,12 +1245,35 @@ int POVRay::renderCsi(
   povray.setStandardErrorFile(QDir::currentPath() + "/stderr-povray");
   povray.setStandardOutputFile(QDir::currentPath() + "/stdout-povray");
   povray.start(Preferences::povrayExe,povArguments);
-  if ( ! povray.waitForFinished(rendererTimeout())) {
-      if (povray.exitCode() != 0) {
-          const QString result(povray.readAll());
-          emit gui->messageSig(LOG_ERROR,QObject::tr("POVRay CSI render failed with code %1\n%2").arg(povray.exitCode()) .arg(result));
-          return -1;
-        }
+
+  // A timeout leaves POV-Ray running with exitCode() still 0, so the old guard
+  // fell through to clipImage() while the output file did not exist yet. That
+  // produced a 0x0 image and an error dialog on every slow render.
+  if (!povray.waitForFinished(rendererTimeout())) {
+      emit gui->messageSig(LOG_ERROR,QObject::tr("POVRay CSI render did not finish within the renderer timeout (%1 minutes). Increase 'Renderer timeout' in Preferences > Renderers if the scene is large.")
+                                               .arg(Preferences::rendererTimeout));
+      povray.kill();
+      povray.waitForFinished(5000);
+      return -1;
+    }
+
+  if (povray.exitCode() != 0) {
+      const QString result(povray.readAll());
+      emit gui->messageSig(LOG_ERROR,QObject::tr("POVRay CSI render failed with code %1\n%2").arg(povray.exitCode()) .arg(result));
+      return -1;
+    }
+
+  if (!WaitForRenderOutput(renderTarget)) {
+      emit gui->messageSig(LOG_ERROR,QObject::tr("POVRay CSI render produced no image at '%1'.").arg(renderTarget));
+      return -1;
+    }
+
+  if (QDir::toNativeSeparators(renderTarget).compare(QDir::toNativeSeparators(pngName), Qt::CaseInsensitive) != 0) {
+      QFile::remove(pngName);
+  }
+  if (!QFile::exists(pngName) && !QFile::copy(renderTarget, pngName)) {
+      emit gui->messageSig(LOG_ERROR,QObject::tr("Could not publish the rendered CSI image to '%1'.").arg(pngName));
+      return -1;
     }
 
   if (clipImage(pngName))
@@ -1177,7 +1303,21 @@ int POVRay::renderPli(
 
   //  QStringList list;
   QString message, newArg;
-  QString povName = ldrNames.first() +".pov";
+  /*** LPub3D Mod - stage the POV scene in an ASCII path (LPub3D-Trace rejects non-ASCII) ***/
+  // The caller builds the PLI scene under the current working directory, which
+  // carries the model name. LPub3D-Trace cannot open a non-ASCII path, so the
+  // scene is generated under the scratch workspace and POV-Ray reads it there.
+  const QString pliScratchLdr = Paths::rendererScratchDir() + "/pli.ldr";
+  QString povName = pliScratchLdr +".pov";
+  // The generator reads the LDraw input itself, so stage it next to the scene.
+  if (QDir::toNativeSeparators(fileInfo.absoluteFilePath()).compare(
+          QDir::toNativeSeparators(pliScratchLdr), Qt::CaseInsensitive) != 0) {
+      QFile::remove(pliScratchLdr);
+      if (!QFile::copy(fileInfo.absoluteFilePath(), pliScratchLdr)) {
+          emit gui->messageSig(LOG_ERROR,QObject::tr("Could not stage the PLI input at '%1'.").arg(pliScratchLdr));
+          return -1;
+      }
+  }
 
   // Populate render attributes
   QStringList ldviewParmslist = splitParms(metaType.ldviewParms.value());
@@ -1373,10 +1513,31 @@ int POVRay::renderPli(
 #endif
 
       bool retError = false;
-      ldvWidget = new LDVWidget(nullptr,NativePOVIni,true);
-      if (! ldvWidget->doCommand(arguments)) {
-          emit gui->messageSig(LOG_ERROR, QObject::tr("Failed to generate PLI POV file for command: %1").arg(arguments.join(" ")));
-          retError = true;
+      if (PovGenHasStudioDecal(ldrNames.first())) {
+          // Decal-bearing PLI model: the lcMesh writer emits mesh2 + uv_vectors +
+          // image_map, the LDV generator does not.
+          Project* Loader = new Project();
+          if (!Loader->Load(ldrNames.first(), false/*ShowErrors*/)) {
+              emit gui->messageSig(LOG_ERROR, QObject::tr("Could not load the POV-Ray export model '%1'.").arg(ldrNames.first()));
+              delete Loader;
+              retError = true;
+          } else {
+              gApplication->SetProject(Loader);
+              lcView::UpdateProjectViews(Loader);
+              auto [Success, ErrorMessage] = Loader->ExportPOVRay(povName);
+              if (!Success) {
+                  emit gui->messageSig(LOG_ERROR, ErrorMessage.isEmpty()
+                                       ? QObject::tr("POV-Ray export failed for '%1'.").arg(povName)
+                                       : ErrorMessage);
+                  retError = true;
+              }
+          }
+      } else {
+          ldvWidget = new LDVWidget(nullptr,NativePOVIni,true);
+          if (! ldvWidget->doCommand(arguments)) {
+              emit gui->messageSig(LOG_ERROR, QObject::tr("Failed to generate PLI POV file for command: %1").arg(arguments.join(" ")));
+              retError = true;
+          }
       }
 
       // ldvWidget changes the Working directory so we must reset
@@ -1446,7 +1607,8 @@ int POVRay::renderPli(
       povArguments << QString("-d");
   }
 
-  QString O = QString("+O\"%1\"").arg(QDir::toNativeSeparators(cleanPngName));
+  const QString renderTarget = SafeRendererOutputName(cleanPngName);
+  QString O = QString("+O\"%1\"").arg(QDir::toNativeSeparators(renderTarget));
   QString W = QString("+W%1").arg(width);
   QString H = QString("+H%1").arg(height);
 
@@ -1531,6 +1693,19 @@ int POVRay::renderPli(
           return -1;
       }
   }
+
+  if (!WaitForRenderOutput(renderTarget)) {
+      emit gui->messageSig(LOG_ERROR,QObject::tr("POVRay PLI render produced no image at '%1'.").arg(renderTarget));
+      return -1;
+    }
+
+  if (QDir::toNativeSeparators(renderTarget).compare(QDir::toNativeSeparators(cleanPngName), Qt::CaseInsensitive) != 0) {
+      QFile::remove(cleanPngName);
+  }
+  if (!QFile::exists(cleanPngName) && !QFile::copy(renderTarget, cleanPngName)) {
+      emit gui->messageSig(LOG_ERROR,QObject::tr("Could not publish the rendered PLI image to '%1'.").arg(cleanPngName));
+      return -1;
+    }
 
   if (clipImage(cleanPngName))
     return 0;
@@ -3058,6 +3233,29 @@ int Native::renderCsi(
               int rc;
               if ((rc = rotateParts(addLine, meta.rotStep, csiParts, ldrName, QString(),cameraAngles,ldvExport,Options::CSI)) < 0) {
                   return rc;
+              }
+
+              if (Options->ExportMode == EXPORT_POVRAY) {
+                  QString csiName = gui->getStudioIoCacheDir().isEmpty()
+                                        ? QString()
+                                        : gui->getStudioIoCacheDir() + QStringLiteral("/studio-io-import.ldr");
+                  if (csiName.isEmpty() || !QFileInfo::exists(csiName))
+                      csiName = QDir::currentPath() + "/" + Paths::tmpDir + "/csi.ldr";
+                  Project* Loader = new Project();
+                  if (!Loader->Load(csiName, false/*ShowErrors*/)) {
+                      delete Loader;
+                      emit gui->messageSig(LOG_ERROR, QObject::tr("Could not load the POV-Ray export model."));
+                      return -1;
+                  }
+                  gApplication->SetProject(Loader);
+                  lcView::UpdateProjectViews(Loader);
+                  auto [Success, ErrorMessage] = Loader->ExportPOVRay(Options->ExportFileName);
+                  if (!Success) {
+                      emit gui->messageSig(LOG_ERROR, ErrorMessage.isEmpty() ? QObject::tr("POV-Ray export failed.") : ErrorMessage);
+                      return -1;
+                  }
+                  emit gui->messageSig(LOG_INFO_STATUS, QObject::tr("POV-Ray export completed. File: '%1'").arg(Options->ExportFileName));
+                  return 0;
               }
 
               /* determine camera distance */
@@ -5215,15 +5413,11 @@ bool Render::LoadViewer(const NativeOptions *Options) {
 
     if(Options->AutoEdgeColor != lpub->GetAutomateEdgeColor()) {
         if (Options->AutoEdgeColor && IsHighContrastStudStyle) {
-            QString message = QObject::tr("High contrast stud and edge color settings are ignored when automate edge color is enabled.");
-            if (Preferences::getShowMessagePreference(Preferences::ParseErrors)) {
-                Where file(QFileInfo(lpub->ldrawFile.getViewerStepFilePath(Options->ViewerStepKey)).fileName());
-                QString parseMessage = QString("%1<br>(file: %2)").arg(message, file.modelName);
-                Preferences::MsgID msgID(Preferences::AnnotationErrors,file.nameToString());
-                Preferences::showMessage(msgID, parseMessage, "Model File", QObject::tr("parse model file warning"));
-            } else {
-                emit gui->messageSig(LOG_NOTICE,message);
-            }
+            // Informational only: nothing here needs a user decision, and an Abort/Ignore
+            // modal over a "setting is ignored" notice invites aborting the render by mistake.
+            // AutoEdgeColor is a POV-Ray setting, so this only fires for the POV renderer.
+            emit gui->messageSig(LOG_NOTICE,
+                                 QObject::tr("High contrast stud and edge color settings are ignored when automate edge color is enabled."));
         }
 
         lpub->SetAutomateEdgeColor(Options);
