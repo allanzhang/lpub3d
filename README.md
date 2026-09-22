@@ -8,7 +8,7 @@ This fork is maintained as a **single version** project: the `master` branch alw
 
 - **Open `.io` / `.mo` from Open.** The archive is parsed into a temporary MPD and shown with the native renderer. There is no separate Open IO command, and the source archive is left unchanged.
 - **Open With** on macOS and Windows includes the system application chooser.
-- **Chinese copy and left-aligned forms** for message options, themes, the status-bar position, POV-Ray export settings, and Blender render/add-on settings. Product terms stay in English. Buttons sit below the fields, and the custom aspect ratio is no longer cramped onto one row. These screens have not been visually reviewed.
+- **Chinese copy and left-aligned forms** for message options, themes, the status-bar position, POV-Ray export settings, and Blender render/add-on settings. Product terms stay in English. Buttons sit below the fields, and the custom aspect ratio is no longer cramped onto one row.
 - **macOS POV-Ray libraries** are copied into the app bundle so the renderer does not depend on Homebrew at runtime. The install list no longer names the missing `colors_ral.inc`.
 
 Not in this version: transparent parts and stickers on the page, fully working setup for every third-party renderer, or a Windows package. Those three items are independent and tracked in [docs/TODO.md](docs/TODO.md). No installer has been built for v2.7.1; the download below is still v2.7.0.
