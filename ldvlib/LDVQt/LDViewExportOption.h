@@ -110,6 +110,8 @@ private slots:
 protected:
 	PovLight getLight(void) const;
 	void colorButtonClicked(void);
+	void showEvent(QShowEvent *event) override;
+	void revealIniPathStart(void);
 	void populateExportSettings(void);
 	void resetSettings(SettingsMap &settings);
 

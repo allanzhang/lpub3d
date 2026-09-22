@@ -9936,6 +9936,22 @@ Restart continuous processing ?</source>
         <translation>使用下拉列表选择页面</translation>
     </message>
     <message>
+        <location filename="../lpub.cpp" line="4009" />
+        <source>Front Cover</source>
+        <translation>封面</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="4012" />
+        <source>Back Cover</source>
+        <translation>封底</translation>
+    </message>
+    <message>
+        <location filename="../lpub.cpp" line="4015" />
+        <source>Page %1</source>
+        <comment>go to page</comment>
+        <translation>第 %1 页</translation>
+    </message>
+    <message>
         <location filename="../lpub.cpp" line="3720" />
         <source>85% - %1 initialization...</source>
         <translation>85% - 正在初始化 %1...</translation>
@@ -19737,6 +19753,21 @@ Are you sure you want to continue ? </source>
         <translation>重置</translation>
     </message>
     <message>
+        <location filename="../metagui.cpp" line="8996" />
+        <source>High</source>
+        <translation>高</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8997" />
+        <source>Medium</source>
+        <translation>中</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8998" />
+        <source>Low</source>
+        <translation>低</translation>
+    </message>
+    <message>
         <location filename="../metagui.cpp" line="8976" />
         <source>...</source>
         <translation type="unfinished" />
@@ -21654,6 +21685,7 @@ Archived %3 %4</source>
         <location filename="../preferences.ui" line="1117" />
         <location filename="../preferences.ui" line="1146" />
         <location filename="../preferencesdialog.cpp" line="3439" />
+        <location filename="../preferencesdialog.cpp" line="186" />
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -23425,7 +23457,12 @@ Are you sure you want to continue? </source>
         <translation>已清除</translation>
     </message>
     <message>
-        <location filename="../preferencesdialog.cpp" line="1883" />
+        <location filename="../preferencesdialog.cpp" line="1882" />
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="1884" />
         <source>%1 all %2 errors</source>
         <translation>%1 全部 %2 错误</translation>
     </message>
@@ -23700,6 +23737,16 @@ Are you sure you want to continue? </source>
         <location filename="../preferencesdialog.cpp" line="1853" />
         <source>Cleared %1 model line parse errors</source>
         <translation>已清除 %1 模型行解析错误</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="187" />
+        <source>Dark</source>
+        <translation>深色</translation>
+    </message>
+    <message>
+        <location filename="../preferencesdialog.cpp" line="188" />
+        <source>System</source>
+        <translation>跟随系统</translation>
     </message>
 </context>
 <context>
@@ -32998,6 +33045,10 @@ You can edit the library path in the Preferences dialogue.
         <source>Reserve Rectangle [%1 x %2 px]</source>
         <translation>预留矩形 [%1 x %2 px]</translation>
     </message>
+    <message>
+        <source>%1 - Setting (%2)</source>
+        <translation>%1 - 设置 (%2)</translation>
+    </message>
 </context>
 <context>
     <name>QuaGzipFile</name>
@@ -35499,7 +35550,7 @@ You can edit the library path in the Preferences dialogue.
     <message>
         <location filename="../metagui.cpp" line="8301" />
         <source>Step Rotation</source>
-        <translation>Step 旋转</translation>
+        <translation>步骤旋转</translation>
     </message>
     <message>
         <location filename="../metagui.cpp" line="8302" />
@@ -35510,6 +35561,36 @@ You can edit the library path in the Preferences dialogue.
         <location filename="../metagui.cpp" line="8353" />
         <source>Transform:</source>
         <translation>变换：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8279" />
+        <source>X Position:</source>
+        <translation>X 位置：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8280" />
+        <source>Y Position:</source>
+        <translation>Y 位置：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8281" />
+        <source>Z Position:</source>
+        <translation>Z 位置：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8331" />
+        <source>X Angle:</source>
+        <translation>X 角度：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8332" />
+        <source>Y Angle:</source>
+        <translation>Y 角度：</translation>
+    </message>
+    <message>
+        <location filename="../metagui.cpp" line="8333" />
+        <source>Z Angle:</source>
+        <translation>Z 角度：</translation>
     </message>
 </context>
 <context>
@@ -37866,6 +37947,11 @@ BlendFuncSeparate：%4
         <location filename="../../lclib/common/lc_mainwindow.cpp" line="2693" />
         <source> in group '%1'</source>
         <translation> 在组 '%1' 中</translation>
+    </message>
+    <message>
+        <location filename="../../lclib/common/lc_mainwindow.cpp" line="2703" />
+        <source>Position X: %1 Y: %2 Z: %3</source>
+        <translation>位置 X: %1 Y: %2 Z: %3</translation>
     </message>
     <message>
         <location filename="../../lclib/common/lc_mainwindow.cpp" line="2771" />

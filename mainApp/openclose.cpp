@@ -228,40 +228,11 @@ void Gui::open()
     QFileInfo fileInfo(fileName);
     if (fileInfo.exists()) {
       lcSetProfileString(LC_PROFILE_PROJECTS_PATH, fileInfo.path());
-      const bool loaded = StudioIoImporter::isStudioProject(fileName)
-                              ? gui->loadFile(fileName)
-                              : gui->openFile(fileName);
-      if (!loaded)
-          return;
-      Gui::displayPage();
-      gui->enableActions();
-      emit lpub->messageSig(LOG_STATUS, tr("Loaded LDraw file %1 (%2 pages, %3 parts). %4")
-                                           .arg(fileInfo.fileName())
-                                           .arg(Gui::maxPages)
-                                           .arg(lpub->ldrawFile.getPartCount())
-                                           .arg(Gui::elapsedTime(fileLoadTimer.elapsed())));
+      gui->loadFile(fileName);
       return;
     }
   }
   return;
-}
-
-void Gui::openIo()
-{
-  if (gui->maybeSave() && gui->saveBuildModification()) {
-    QString modelDir = lcGetProfileString(LC_PROFILE_PROJECTS_PATH);
-    if (modelDir.isEmpty())
-      modelDir = Preferences::ldrawLibPath + "/models";
-
-    const QString fileName = QFileDialog::getOpenFileName(
-      this,
-      tr("Open Studio IO File"),
-      modelDir,
-      tr("Studio IO Files (*.io *.mo);;All Files (*.*)"));
-
-    if (!fileName.isEmpty())
-      gui->loadFile(fileName);
-  }
 }
 
 void Gui::openDropFile(QString &fileName) {
@@ -277,22 +248,11 @@ void Gui::openDropFile(QString &fileName) {
       const bool studioIo = extension == "io" || extension == "mo";
       if (fileInfo.exists() && (ldr || mpd || dat || studioIo)) {
           lcSetProfileString(LC_PROFILE_PROJECTS_PATH, fileInfo.path());
-          const bool loaded = StudioIoImporter::isStudioProject(fileName)
-                                  ? gui->loadFile(fileName)
-                                  : gui->openFile(fileName);
-          if (!loaded)
-              return;
-          gui->displayPage();
-          gui->enableActions();
-          emit lpub->messageSig(LOG_STATUS, tr("Loaded LDraw file %1 (%2 pages, %3 parts). %4")
-                                               .arg(fileInfo.fileName())
-                                               .arg(Gui::maxPages)
-                                               .arg(lpub->ldrawFile.getPartCount())
-                                               .arg(Gui::elapsedTime(fileLoadTimer.elapsed())));
+          gui->loadFile(fileName);
         } else {
           QString noExtension;
           if (extension.isEmpty())
-              noExtension = tr("<br>No file exension specified. Set the file extension to .mpd,.ldr, or .dat.");
+              noExtension = tr("<br>No file exension specified. Set the file extension to .mpd,.ldr, .dat, .io, or .mo.");
           emit gui->messageSig(LOG_ERROR, tr("File not supported!<br>%1%2")
                                              .arg(fileName, noExtension));
         }
@@ -401,6 +361,20 @@ void Gui::openWorkingFolder() {
 
 void Gui::updateOpenWithActions()
 {
+    auto isLaunchableProgram = [](const QFileInfo &info)
+    {
+        if (!info.exists())
+            return false;
+        if (info.isFile())
+            return true;
+#ifdef Q_OS_MACOS
+        return info.isDir() &&
+               info.suffix().compare(QLatin1String("app"), Qt::CaseInsensitive) == 0;
+#else
+        return false;
+#endif
+    };
+
     QSettings Settings;
     QString const openWithProgramListKey("OpenWithProgramList");
     if (Settings.contains(QString("%1/%2").arg(SETTINGS,openWithProgramListKey))) {
@@ -439,7 +413,7 @@ void Gui::updateOpenWithActions()
         if (!programData.isEmpty())
           gui->setOpenWithProgramAndArgs(programPath,arguments);
         QFileInfo fileInfo(programPath);
-        if (fileInfo.exists() && fileInfo.isFile()) {
+        if (isLaunchableProgram(fileInfo)) {
           programName = gui->programEntries.at(i).split("|").first();
           QString text = programName;
           if (text.isEmpty())
@@ -462,7 +436,7 @@ void Gui::updateOpenWithActions()
       // add system editor if exits
       if (!Preferences::systemEditor.isEmpty()) {
         QFileInfo fileInfo(Preferences::systemEditor);
-        if (fileInfo.exists() && fileInfo.isFile()) {
+        if (isLaunchableProgram(fileInfo)) {
           QString arguments;
           if (Preferences::usingNPP)
             arguments = QLatin1String(WINDOWS_NPP_LPUB3D_UDL_ARG);
@@ -496,7 +470,7 @@ void Gui::updateOpenWithActions()
         // clear old menu actions
         if (gui->openWithMenu->actions().size())
           gui->openWithMenu->clear();
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
         // add open with choice menu action first
         openWithMenu->addAction(getAct("openWithChoiceAct.1"));
         openWithMenu->addSeparator();
@@ -514,6 +488,35 @@ void Gui::openWithSetup()
     OpenWithProgramDialogGui openWithProgramDialogGui;
     openWithProgramDialogGui.setOpenWithProgram();
     updateOpenWithActions();
+}
+
+static void normalizeOpenWithProgram(QString &program, QStringList &arguments)
+{
+#ifdef Q_OS_MACOS
+    const QFileInfo programInfo(program);
+    const bool isAppBundle = programInfo.exists() && programInfo.isDir() &&
+            programInfo.suffix().compare(QLatin1String("app"), Qt::CaseInsensitive) == 0;
+    if (isAppBundle) {
+        QString targetFile;
+        if (!arguments.isEmpty())
+            targetFile = arguments.takeLast();
+        QStringList launchArguments;
+        launchArguments << QStringLiteral("-a") << programInfo.absoluteFilePath();
+        if (!targetFile.isEmpty())
+            launchArguments << targetFile;
+        if (!arguments.isEmpty()) {
+            launchArguments << QStringLiteral("--args");
+            launchArguments << arguments;
+        }
+        program = QStringLiteral("/usr/bin/open");
+        arguments = launchArguments;
+    } else if (program == QLatin1String("open")) {
+        program = QStringLiteral("/usr/bin/open");
+    }
+#else
+    Q_UNUSED(program);
+    Q_UNUSED(arguments);
+#endif
 }
 
 void Gui::setOpenWithProgramAndArgs(QString &program, QStringList &arguments)
@@ -548,6 +551,48 @@ void Gui::openWithChoice()
     if (!GetSystemDirectory(sysdir, MAX_PATH)) return;
     std::wstring argwstr = L"shell32.dll,OpenAs_RunDLL " + QDir::toNativeSeparators(curFile).toStdWString();
     ShellExecute(::GetDesktopWindow(), 0, L"RUNDLL32.EXE", (LPCWSTR)argwstr.c_str(), sysdir, SW_SHOWNORMAL);
+#elif defined(Q_OS_MACOS)
+    QString file = Gui::curFile;
+    if (whichFile(OPT_OPEN_WITH) == OPT_USE_INCLUDE)
+        file = Gui::curSubFile;
+    if (file.isEmpty())
+        return;
+
+    bool chooserFinished = false;
+    QEventLoop loop;
+    QProcess chooser;
+    QObject::connect(&chooser,
+                     static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                     &chooser,
+                     [&chooserFinished, &loop](int, QProcess::ExitStatus) {
+                         chooserFinished = true;
+                         loop.quit();
+                     });
+    QStringList scriptArguments;
+    scriptArguments << QStringLiteral("-e")
+                    << QStringLiteral("POSIX path of (choose application as alias)");
+    chooser.start(QStringLiteral("/usr/bin/osascript"), scriptArguments);
+    if (!chooser.waitForStarted(3000))
+        return;
+    if (!chooserFinished)
+        loop.exec();
+    if (chooser.exitCode() != 0)
+        return;
+
+    const QString appPath = QString::fromUtf8(chooser.readAllStandardOutput()).trimmed();
+    if (appPath.isEmpty() || !QFileInfo(appPath).exists())
+        return;
+
+    QStringList arguments = QStringList() << file;
+    QString program = appPath;
+    normalizeOpenWithProgram(program, arguments);
+    qint64 pid = 0;
+    const QString workingDirectory = QDir::currentPath() + QDir::separator();
+    QProcess::startDetached(program, arguments, workingDirectory, &pid);
+    emit lpub->messageSig(LOG_INFO, tr("Launched %1 with pid=%2 %3%4")
+                                        .arg(QFileInfo(file).fileName()).arg(pid)
+                                        .arg(QFileInfo(program).fileName(),
+                                             arguments.size() ? " "+arguments.join(" ") : ""));
 #endif
 }
 
@@ -568,7 +613,7 @@ void Gui::openWith(const QString &filePath)
         }
 #ifdef Q_OS_MACOS
         else {
-            program = QString("open");
+            program = QStringLiteral("/usr/bin/open");
             arguments.prepend("-e");
         }
 #else
@@ -580,6 +625,7 @@ void Gui::openWith(const QString &filePath)
         gui->setOpenWithProgramAndArgs(program,arguments);
     }
 
+    normalizeOpenWithProgram(program, arguments);
     qint64 pid;
     QString workingDirectory = QDir::currentPath() + QDir::separator();
     QProcess::startDetached(program, arguments, workingDirectory, &pid);
@@ -1184,7 +1230,11 @@ bool Gui::openFile(const QString &fileName,
   if (Preferences::modeGUI) {
     gui->configureMpdCombo();
     gui->connect(gui->setGoToPageCombo,SIGNAL(activated(int)), gui, SLOT(setGoToPage(int)));
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+    gui->openWithMenu->setEnabled(gui->numPrograms || gui->getAct("openWithChoiceAct.1"));
+#else
     gui->openWithMenu->setEnabled(gui->numPrograms);
+#endif
     for (int i = 0; i < gui->numPrograms; i++) {
       QFileInfo programFileInfo(gui->programEntries.at(i).split("|").last());
       gui->openWithActList[i]->setStatusTip(tr("Open %1 with %2")
@@ -1338,10 +1388,7 @@ void Gui::reloadFromDisk()
   if (!QFileInfo(Gui::curFile).isReadable())
     return;
   int goToPage = Gui::displayPageNum;
-  const bool loaded = StudioIoImporter::isStudioProject(Gui::curFile)
-                          ? gui->loadFile(Gui::curFile)
-                          : gui->openFile(Gui::curFile);
-  if (!loaded)
+  if (!gui->loadFile(Gui::curFile))
     return;
   Gui::displayPageNum = goToPage;
   Gui::displayPage();
@@ -1376,10 +1423,7 @@ void Gui::fileChanged(const QString &path)
     QString fileName = QFileInfo(path).fileName();
     if (lpub->ldrawFile.isIncludeFile(fileName) || static_cast<bool>(lpub->ldrawFile.isUnofficialPart(fileName)))
       absoluteFilePath = Gui::curFile;
-    const bool loaded = StudioIoImporter::isStudioProject(absoluteFilePath)
-                            ? gui->loadFile(absoluteFilePath)
-                            : gui->openFile(absoluteFilePath);
-    if (!loaded)
+    if (!gui->loadFile(absoluteFilePath))
       return;
     Gui::displayPageNum = goToPage;
     Gui::displayPage();

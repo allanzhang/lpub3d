@@ -333,6 +333,20 @@ void EditWindow::previewCurrentModel()
 
 void EditWindow::updateOpenWithActions()
 {
+    auto isLaunchableProgram = [](const QFileInfo &info)
+    {
+        if (!info.exists())
+            return false;
+        if (info.isFile())
+            return true;
+#ifdef Q_OS_MACOS
+        return info.isDir() &&
+               info.suffix().compare(QLatin1String("app"), Qt::CaseInsensitive) == 0;
+#else
+        return false;
+#endif
+    };
+
     numOpenWithPrograms = 0;
     QSettings Settings;
     QString const openWithProgramListKey("OpenWithProgramList");
@@ -371,7 +385,7 @@ void EditWindow::updateOpenWithActions()
             if (!programData.isEmpty())
                 setOpenWithProgramAndArgs(programPath,arguments);
             QFileInfo fileInfo(programPath);
-            if (fileInfo.exists() && fileInfo.isFile()) {
+            if (isLaunchableProgram(fileInfo)) {
                 programName = programEntries.at(i).split("|").first();
                 QString text = programName;
                 if (text.isEmpty())
@@ -391,7 +405,7 @@ void EditWindow::updateOpenWithActions()
         // add system editor if exits
         if (!Preferences::systemEditor.isEmpty()) {
           QFileInfo fileInfo(Preferences::systemEditor);
-          if (fileInfo.exists() && fileInfo.isFile()) {
+          if (isLaunchableProgram(fileInfo)) {
             QString arguments;
             if (Preferences::usingNPP)
               arguments = QLatin1String(WINDOWS_NPP_LPUB3D_UDL_ARG);
@@ -420,6 +434,35 @@ void EditWindow::updateOpenWithActions()
             openWithActList[j]->setVisible(false);
         }
     }
+}
+
+static void normalizeEditOpenWithProgram(QString &program, QStringList &arguments)
+{
+#ifdef Q_OS_MACOS
+    const QFileInfo programInfo(program);
+    const bool isAppBundle = programInfo.exists() && programInfo.isDir() &&
+            programInfo.suffix().compare(QLatin1String("app"), Qt::CaseInsensitive) == 0;
+    if (isAppBundle) {
+        QString targetFile;
+        if (!arguments.isEmpty())
+            targetFile = arguments.takeLast();
+        QStringList launchArguments;
+        launchArguments << QStringLiteral("-a") << programInfo.absoluteFilePath();
+        if (!targetFile.isEmpty())
+            launchArguments << targetFile;
+        if (!arguments.isEmpty()) {
+            launchArguments << QStringLiteral("--args");
+            launchArguments << arguments;
+        }
+        program = QStringLiteral("/usr/bin/open");
+        arguments = launchArguments;
+    } else if (program == QLatin1String("open")) {
+        program = QStringLiteral("/usr/bin/open");
+    }
+#else
+    Q_UNUSED(program);
+    Q_UNUSED(arguments);
+#endif
 }
 
 void EditWindow::setOpenWithProgramAndArgs(QString &program, QStringList &arguments)
@@ -454,6 +497,46 @@ void EditWindow::openWithChoice()
     if (!GetSystemDirectory(sysdir, MAX_PATH)) return;
     std::wstring argwstr = L"shell32.dll,OpenAs_RunDLL " + QDir::toNativeSeparators(curFile).toStdWString();
     ShellExecute(::GetDesktopWindow(), 0, L"RUNDLL32.EXE", (LPCWSTR)argwstr.c_str(), sysdir, SW_SHOWNORMAL);
+#elif defined(Q_OS_MACOS)
+    const QString curFile = QDir::currentPath() + QDir::separator() + Paths::tmpDir + QDir::separator() + fileName;
+    if (fileName.isEmpty() || !QFileInfo::exists(curFile))
+        return;
+
+    bool chooserFinished = false;
+    QEventLoop loop;
+    QProcess chooser;
+    QObject::connect(&chooser,
+                     static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                     &chooser,
+                     [&chooserFinished, &loop](int, QProcess::ExitStatus) {
+                         chooserFinished = true;
+                         loop.quit();
+                     });
+    QStringList scriptArguments;
+    scriptArguments << QStringLiteral("-e")
+                    << QStringLiteral("POSIX path of (choose application as alias)");
+    chooser.start(QStringLiteral("/usr/bin/osascript"), scriptArguments);
+    if (!chooser.waitForStarted(3000))
+        return;
+    if (!chooserFinished)
+        loop.exec();
+    if (chooser.exitCode() != 0)
+        return;
+
+    const QString appPath = QString::fromUtf8(chooser.readAllStandardOutput()).trimmed();
+    if (appPath.isEmpty() || !QFileInfo(appPath).exists())
+        return;
+
+    QStringList arguments = QStringList() << curFile;
+    QString program = appPath;
+    normalizeEditOpenWithProgram(program, arguments);
+    qint64 pid = 0;
+    const QString workingDirectory = QDir::currentPath() + QDir::separator();
+    QProcess::startDetached(program, arguments, workingDirectory, &pid);
+    emit lpub->messageSig(LOG_INFO, tr("Launched %1 with pid=%2 %3%4...")
+                                       .arg(QFileInfo(fileName).fileName()).arg(pid)
+                                       .arg(QFileInfo(program).fileName(),
+                                            arguments.size() ? QString(" %1").arg(arguments.join(" ")) : ""));
 #endif
 }
 
@@ -471,7 +554,7 @@ void EditWindow::openWith()
             }
 #ifdef Q_OS_MACOS
             else {
-                program = QString("open");
+                program = QStringLiteral("/usr/bin/open");
                 arguments.prepend("-e");
             }
 #else
@@ -483,6 +566,7 @@ void EditWindow::openWith()
         } else {
             setOpenWithProgramAndArgs(program,arguments);
         }
+        normalizeEditOpenWithProgram(program, arguments);
         qint64 pid;
         QString workingDirectory = QDir::currentPath() + QDir::separator();
         QProcess::startDetached(program, arguments, workingDirectory, &pid);

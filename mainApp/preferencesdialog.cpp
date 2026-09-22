@@ -183,9 +183,9 @@ PreferencesDialog::PreferencesDialog(QWidget* _parent) :
   setBlenderAddonPreferences();
 
   /* Themes */
-  ui.themeCombo->addItem(THEME_DEFAULT);
-  ui.themeCombo->addItem(THEME_DARK);
-  ui.themeCombo->addItem(THEME_SYSTEM);
+  ui.themeCombo->addItem(tr("Default"), QString(THEME_DEFAULT));
+  ui.themeCombo->addItem(tr("Dark"), QString(THEME_DARK));
+  ui.themeCombo->addItem(tr("System"), QString(THEME_SYSTEM));
 
   resetSceneColorsFlag = false;
 
@@ -596,7 +596,11 @@ void PreferencesDialog::setPreferences()
 
   ui.ldvPreferencesBtn->setEnabled(Preferences::preferredRenderer == RENDERER_LDVIEW);
 
-  ui.themeCombo->setCurrentText(Preferences::displayTheme);
+  const QString themeKey = Preferences::useSystemTheme ? QString(THEME_SYSTEM)
+                                                       : Preferences::displayTheme;
+  const int themeIndex = ui.themeCombo->findData(themeKey);
+  if (themeIndex >= 0)
+      ui.themeCombo->setCurrentIndex(themeIndex);
 
   QPixmap colorPix(12, 12);
 
@@ -1879,7 +1883,7 @@ void PreferencesDialog::messageManagement()
         countErrors();
     } else {
         countErrors();
-        clearDetailText = QString("Clear");
+        clearDetailText = tr("Clear");
     }
     clearDetailErrorsLbl->setText(tr("%1 all %2 errors")
                                   .arg(clearDetailText)
@@ -2200,7 +2204,8 @@ bool  PreferencesDialog::doNotShowPageProcessDlg()
 
 QString const PreferencesDialog::displayTheme()
 {
-  return ui.themeCombo->currentText();
+  const QString theme = ui.themeCombo->currentData().toString();
+  return theme.isEmpty() ? ui.themeCombo->currentText() : theme;
 }
 
 QMap<int, QString> const PreferencesDialog::themeColours()

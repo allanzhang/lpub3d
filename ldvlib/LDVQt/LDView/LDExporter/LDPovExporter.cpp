@@ -425,7 +425,7 @@ void LDPovExporter::initSettings(void) const
 	{
 		LDExporterSetting &setting = m_settings.back();
 
-		setting.addOption(-1, _UC("Automatic"));
+		setting.addOption(-1, ls(_UC("PovAutomatic")));
 		setting.addOption(0, _UC("5:4"));
 		setting.addOption(1, _UC("4:3"));
 		setting.addOption(2, _UC("3:2"));

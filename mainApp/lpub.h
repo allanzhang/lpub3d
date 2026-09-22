@@ -1862,7 +1862,6 @@ private slots:
     void finishedCountingPages();
     void pagesCounted();
     void open();
-    void openIo();
     void openWith();
     void save();
     void saveAs();

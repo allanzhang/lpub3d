@@ -2700,7 +2700,7 @@ void lcMainWindow::UpdateSelectedObjects(bool SelectionChanged, int SelectionTyp
 
 /*** LPub3D Mod - Switch Y and Z axis with -Y(LC -Z) in the up direction and add Position label ***/
 	Position = lcVector3LeoCADToLDraw(Position);
-	QString Label("Position X: %1 Y: %2 Z: %3");
+	QString Label(tr("Position X: %1 Y: %2 Z: %3"));
 /*** LPub3D Mod end ***/
 	Label = Label.arg(QLocale::system().toString(Position[0], 'f', 2), QLocale::system().toString(Position[1], 'f', 2), QLocale::system().toString(Position[2], 'f', 2));
 	mStatusPositionLabel->setText(Label);

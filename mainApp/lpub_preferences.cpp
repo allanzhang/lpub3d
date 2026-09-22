@@ -4233,16 +4233,44 @@ void Preferences::userInterfacePreferences()
       removeChildSubmodelFormat = Settings.value(QString("%1/%2").arg(SETTINGS,removeChildSubmodelFormatKey)).toBool();
   }
 
+  auto isLaunchableProgram = [](const QFileInfo &info)
+  {
+      if (!info.exists())
+          return false;
+      if (info.isFile())
+          return true;
+#ifdef Q_OS_MACOS
+      // TextEdit.app is a bundle directory, not a regular file.
+      return info.isDir() &&
+             info.suffix().compare(QLatin1String("app"), Qt::CaseInsensitive) == 0;
+#else
+      return false;
+#endif
+  };
+
   QString const systemEditorKey("SystemEditor");
   systemEditor = Settings.value(QString("%1/%2").arg(SETTINGS,systemEditorKey)).toString();
   QFileInfo systemEditorInfo(systemEditor);
   usingNPP = systemEditorInfo.fileName().endsWith(WINDOWS_NPP_EDITOR, Qt::CaseInsensitive);
-  if (!systemEditorInfo.exists() || !systemEditorInfo.isFile()) {
+  if (!isLaunchableProgram(systemEditorInfo)) {
       bool found = false;
       QString command = "which";
       QStringList arguments;
 #ifdef Q_OS_MACOS
-      arguments << MACOS_SYS_EDITOR;
+      QStringList textEditCandidates;
+      textEditCandidates << QStringLiteral("/System/Applications/TextEdit.app")
+                         << QStringLiteral("/Applications/TextEdit.app");
+      for (const QString &candidate : textEditCandidates) {
+          QFileInfo candidateInfo(candidate);
+          if (candidateInfo.exists() && candidateInfo.isDir()) {
+              systemEditor = candidateInfo.absoluteFilePath();
+              systemEditorInfo.setFile(systemEditor);
+              found = true;
+              break;
+          }
+      }
+      if (!found)
+          arguments << MACOS_SYS_EDITOR;
 #elif defined Q_OS_LINUX
       arguments << LINUX_SYS_EDITOR;
 #elif defined Q_OS_WIN
@@ -4269,10 +4297,10 @@ void Preferences::userInterfacePreferences()
           systemEditorInfo.setFile(systemEditor);
         }
       }
-      if ((found = systemEditorInfo.isFile())) {
+      found = isLaunchableProgram(systemEditorInfo);
+      if (found) {
         Settings.setValue(QString("%1/%2").arg(SETTINGS,systemEditorKey),systemEditor);
-      }
-      if (!found) {
+      } else {
         systemEditor.clear();
         Settings.remove(QString("%1/%2").arg(SETTINGS,systemEditorKey));
       }
@@ -5905,17 +5933,24 @@ bool Preferences::getPreferences()
         }
 
         bool useSystemThemeChanged = false;
-        bool displayThemeChanged = displayTheme != dialog->displayTheme();
+        const QString selectedTheme = dialog->displayTheme();
+        const bool selectedSystemTheme = selectedTheme == THEME_SYSTEM;
+        // Stored displayTheme is the resolved Default/Dark value. Selecting
+        // System must compare against useSystemTheme, not that resolved value,
+        // otherwise opening Preferences and accepting it reloads the theme.
+        bool displayThemeChanged = selectedSystemTheme
+                ? !useSystemTheme
+                : useSystemTheme || displayTheme != selectedTheme;
         if (displayThemeChanged) {
 
-            if (dialog->displayTheme() == THEME_SYSTEM) {
+            if (selectedSystemTheme) {
                 useSystemThemeChanged = useSystemTheme == false;
                 useSystemTheme = true;
                 displayTheme = systemTheme;
             } else {
                 useSystemThemeChanged = useSystemTheme == true;
                 useSystemTheme = false;
-                displayTheme = dialog->displayTheme();
+                displayTheme = selectedTheme;
             }
 
             darkTheme  = displayTheme == THEME_DARK;

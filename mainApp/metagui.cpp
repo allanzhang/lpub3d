@@ -8275,9 +8275,9 @@ void TargetRotateDialogGui::getTargetAndRotateValues(QStringList &keyList) {
 
     QList<QLabel *> targetLabelList;
     QStringList targetLabels = QStringList()
-            << QString("X Position:")
-            << QString("Y Position:")
-            << QString("Z Position:");
+            << tr("X Position:")
+            << tr("Y Position:")
+            << tr("Z Position:");
 
     for(int i = 0; i < static_cast<int>(TR_NUM_AXIS); ++i) {
         QLabel *label = new QLabel(targetLabels[i], dialog);
@@ -8325,9 +8325,9 @@ void TargetRotateDialogGui::getTargetAndRotateValues(QStringList &keyList) {
 
     QList<QLabel *> rotateLabelList;
     QStringList rotateLabels = QStringList()
-            << QString("X Angle:   ")
-            << QString("Y Angle:   ")
-            << QString("Z Angle:   ");
+            << tr("X Angle:")
+            << tr("Y Angle:")
+            << tr("Z Angle:");
 
     for(int i = 0; i < static_cast<int>(TR_NUM_AXIS); ++i) {
         QLabel *label = new QLabel(rotateLabels[i], dialog);
@@ -8900,20 +8900,20 @@ void BuildModDialogGui::getBuildMod(QStringList & buildModKeys, int action) {
 */
 
 POVRayRenderDialogGui::PovraySettings POVRayRenderDialogGui::povraySettings[] = {
-/* 0  LBL_ALPHA                0   QCheckBox   */ {QObject::tr("Transparent Background   "), QObject::tr("Specify whether to render a background")},
-/* 1  LBL_ASPECT               1   QCheckBox   */ {QObject::tr("Maintain Aspect Ratio    "), QObject::tr("Specify whether maintain a one to one image aspect ratio")},
-/* 2  LBL_WIDTH                2/0 QLineEdit   */ {QObject::tr("Width                    "), QObject::tr("Specify the image width in pixels")},
-/* 3  LBL_HEIGHT               3/1 QLineEdit   */ {QObject::tr("Height                   "), QObject::tr("Specify the image height in pixels")},
-/* 4  LBL_LATITUDE             4/2 QLineEdit   */ {QObject::tr("Camera Anlge - Latitude  "), QObject::tr("Set the longitudinal camera angle for the rendered image")},
-/* 5  LBL_LONGITUDE            5/3 QLineEdit   */ {QObject::tr("Camera Anlge - Longitude "), QObject::tr("Set the latitudinal camera angle for the rendered image")},
-/* 6  LBL_RESOLUTION           6/4 QLineEdit   */ {QObject::tr("Resolution               "), QObject::tr("Specify the resolution in pixels per inch")},
-/* 7  LBL_SCALE                7/5 QLineEdit   */ {QObject::tr("Scale                    "), QObject::tr("Specify the output image scale")},
+/* 0  LBL_ALPHA                0   QCheckBox   */ {QT_TRANSLATE_NOOP("QObject", "Transparent Background   "), QT_TRANSLATE_NOOP("QObject", "Specify whether to render a background")},
+/* 1  LBL_ASPECT               1   QCheckBox   */ {QT_TRANSLATE_NOOP("QObject", "Maintain Aspect Ratio    "), QT_TRANSLATE_NOOP("QObject", "Specify whether maintain a one to one image aspect ratio")},
+/* 2  LBL_WIDTH                2/0 QLineEdit   */ {QT_TRANSLATE_NOOP("QObject", "Width                    "), QT_TRANSLATE_NOOP("QObject", "Specify the image width in pixels")},
+/* 3  LBL_HEIGHT               3/1 QLineEdit   */ {QT_TRANSLATE_NOOP("QObject", "Height                   "), QT_TRANSLATE_NOOP("QObject", "Specify the image height in pixels")},
+/* 4  LBL_LATITUDE             4/2 QLineEdit   */ {QT_TRANSLATE_NOOP("QObject", "Camera Anlge - Latitude  "), QT_TRANSLATE_NOOP("QObject", "Set the longitudinal camera angle for the rendered image")},
+/* 5  LBL_LONGITUDE            5/3 QLineEdit   */ {QT_TRANSLATE_NOOP("QObject", "Camera Anlge - Longitude "), QT_TRANSLATE_NOOP("QObject", "Set the latitudinal camera angle for the rendered image")},
+/* 6  LBL_RESOLUTION           6/4 QLineEdit   */ {QT_TRANSLATE_NOOP("QObject", "Resolution               "), QT_TRANSLATE_NOOP("QObject", "Specify the resolution in pixels per inch")},
+/* 7  LBL_SCALE                7/5 QLineEdit   */ {QT_TRANSLATE_NOOP("QObject", "Scale                    "), QT_TRANSLATE_NOOP("QObject", "Specify the output image scale")},
 
-/* 8  LBL_QUALITY              8   QComboBox   */ {QObject::tr("Quality                  "), QObject::tr("Select the POV-Ray render level of quality")},
+/* 8  LBL_QUALITY              8   QComboBox   */ {QT_TRANSLATE_NOOP("QObject", "Quality                  "), QT_TRANSLATE_NOOP("QObject", "Select the POV-Ray render level of quality")},
 
-/* 9  LBL_TARGET_AND_ROTATE    9/0 QPushButton */ {QObject::tr("LookAt Target and Rotstep"), QObject::tr("Specify the target 'Look At' position and/or apply ROTSTEP angles")},
-/* 10 LBL_LDV_EXPORT_SETTINGS 10/1 QPushButton */ {QObject::tr("Export Settings          "), QObject::tr("Specify LDView POV-Ray export settings")},
-/* 11 LBL_LDV_LDRAW_SETTINGS  11/2 QPushButton */ {QObject::tr("LDraw Preferences        "), QObject::tr("Specify LDView LDraw preferences")}
+/* 9  LBL_TARGET_AND_ROTATE    9/0 QPushButton */ {QT_TRANSLATE_NOOP("QObject", "LookAt Target and Rotstep"), QT_TRANSLATE_NOOP("QObject", "Specify the target 'Look At' position and/or apply ROTSTEP angles")},
+/* 10 LBL_LDV_EXPORT_SETTINGS 10/1 QPushButton */ {QT_TRANSLATE_NOOP("QObject", "Export Settings          "), QT_TRANSLATE_NOOP("QObject", "Specify LDView POV-Ray export settings")},
+/* 11 LBL_LDV_LDRAW_SETTINGS  11/2 QPushButton */ {QT_TRANSLATE_NOOP("QObject", "LDraw Preferences        "), QT_TRANSLATE_NOOP("QObject", "Specify LDView LDraw preferences")}
 };
 
 void POVRayRenderDialogGui::getRenderSettings(
@@ -8930,9 +8930,12 @@ void POVRayRenderDialogGui::getRenderSettings(
     dialog->setWhatsThis(lpubWT(WT_DIALOG_POVRAY_RENDER_SETTINGS,dialog->windowTitle()));
 
     QFormLayout *form = new QFormLayout(dialog);
+    form->setFormAlignment(Qt::AlignLeft | Qt::AlignTop);
     QGroupBox *settingsBox = new QGroupBox(tr("Select Rendered Image Settings"),dialog);
     form->addWidget(settingsBox);
     QFormLayout *settingsSubform = new QFormLayout(settingsBox);
+    settingsSubform->setFormAlignment(Qt::AlignLeft | Qt::AlignTop);
+    settingsSubform->setLabelAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
     mWidth      = width;
     mHeight     = height;
@@ -8940,17 +8943,24 @@ void POVRayRenderDialogGui::getRenderSettings(
     mCsiKeyList = csiKeyList;
     editedCsiKeyList = csiKeyList;
 
+    // Labels are stored untranslated. QObject::tr() at static init runs
+    // before the translator is installed, so translate when the dialog opens.
+    const auto translateSetting = [](const QString &source) {
+        const QByteArray utf8 = source.toUtf8();
+        return QObject::tr(utf8.constData());
+    };
+
     for(int i = 0; i < numSettings(); ++i) {
 
         QLabel *label = new QLabel(dialog);
-        label->setText(povraySettings[i].label);
-        label->setToolTip(povraySettings[i].tooltip);
+        label->setText(translateSetting(povraySettings[i].label));
+        label->setToolTip(translateSetting(povraySettings[i].tooltip));
         settingLabelList << label;
 
         if (i < LBL_WIDTH) {
             QCheckBox *checkBox = new QCheckBox(dialog);
             checkBox->setChecked(true);
-            checkBox->setToolTip(povraySettings[i].tooltip);
+            checkBox->setToolTip(translateSetting(povraySettings[i].tooltip));
             checkBoxList << checkBox;
             settingsSubform->addRow(label,checkBox);
         } else if (i < LBL_QUALITY) {
@@ -8973,7 +8983,7 @@ void POVRayRenderDialogGui::getRenderSettings(
                 lineEdit->setValidator(new QIntValidator(50, INT_MAX));
             else                         // scale
                 lineEdit->setValidator(new QDoubleValidator(0.1,1000.0,1));
-            lineEdit->setToolTip(povraySettings[i].tooltip);
+            lineEdit->setToolTip(translateSetting(povraySettings[i].tooltip));
             lineEditList << lineEdit;
             connect(lineEdit, SIGNAL( textEdited(const QString&)),
                     this,     SLOT(  enableReset(const QString&)));
@@ -8985,11 +8995,12 @@ void POVRayRenderDialogGui::getRenderSettings(
                     this,         SLOT(  editReset()));
             settingsSubform->addRow(label,lineEdit);
         } else if (i < LBL_TARGET_AND_ROTATE) {
-            QString items = QString("High|Medium|Low");
             qualityCombo = new QComboBox(dialog);
+            qualityCombo->addItem(tr("High"));
+            qualityCombo->addItem(tr("Medium"));
+            qualityCombo->addItem(tr("Low"));
             qualityCombo->setCurrentIndex(mQuality);
-            qualityCombo->addItems(items.split("|"));
-            qualityCombo->setToolTip(povraySettings[i].tooltip);
+            qualityCombo->setToolTip(translateSetting(povraySettings[i].tooltip));
             settingsSubform->addRow(label,qualityCombo);
         } else {
             QPushButton *toolButton = new QPushButton(dialog);
@@ -9003,7 +9014,7 @@ void POVRayRenderDialogGui::getRenderSettings(
             else if (i == LBL_LDV_LDRAW_SETTINGS)
                 connect(toolButton,SIGNAL(clicked()),
                               this,SLOT  (setLdvLDrawPreferences()));
-            toolButton->setToolTip(povraySettings[i].tooltip);
+            toolButton->setToolTip(translateSetting(povraySettings[i].tooltip));
             toolButtonList << toolButton;
             settingsSubform->addRow(label,toolButton);
         }

@@ -52,6 +52,16 @@ install3rdexe {
         CONFIG                  += raytracer_install
 
         message("~~~ $${LPUB3D} 3 OF 3 $$upper($${VER_POVRAY}) RENDERER INSTALLED ~~~")
+
+        # The macOS arm64 POV-Ray bundle is self-contained. Its executable
+        # resolves bundled OpenEXR/Imath/Boost libraries relative to
+        # Contents/3rdParty/$$VER_POVRAY/bin, so install those dylibs beside
+        # the renderer instead of relying on Homebrew paths at runtime.
+        macx:exists($${RAYTRACE_INS_LIB}/*.dylib) {
+            raytracer_ins_lib.files = $$files($${RAYTRACE_INS_LIB}/*.dylib)
+            raytracer_ins_lib.path  = $$RAYTRACE_INS_LIB_DIR
+            QMAKE_BUNDLE_DATA += raytracer_ins_lib
+        }
     } else {
         message("~~~ NOTICE 3 OF 3 $$upper($${VER_POVRAY}) RENDERER NOT FOUND ~~~")
     }
@@ -182,7 +192,6 @@ install3rdcontent {
             $$RAYTRACE_INS_RES/include/cedar.map \
             $$RAYTRACE_INS_RES/include/chars.inc \
             $$RAYTRACE_INS_RES/include/colors.inc \
-            $$RAYTRACE_INS_RES/include/colors_ral.inc \
             $$RAYTRACE_INS_RES/include/consts.inc \
             $$RAYTRACE_INS_RES/include/crystal.ttf \
             $$RAYTRACE_INS_RES/include/cyrvetic.ttf \

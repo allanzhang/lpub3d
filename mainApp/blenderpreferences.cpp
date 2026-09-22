@@ -54,6 +54,17 @@
 
 #include "parmswindow.h"
 
+// Labels and tooltips are stored untranslated. QObject::tr() in the static
+// tables runs before the translator is installed, so translate when shown.
+static QString translateBlenderText(const QString &source)
+{
+    const QByteArray utf8 = source.toUtf8();
+    QString translated = QObject::tr(utf8.constData());
+    if (source.contains(QLatin1String("%1")))
+        translated = translated.arg(VER_PRODUCTNAME_STR);
+    return translated;
+}
+
 BlenderPreferences *gBlenderAddonPreferences;
 
 #ifdef Q_OS_WIN
@@ -142,7 +153,7 @@ BlenderPreferences::BlenderPaths  BlenderPreferences::mDefaultPaths [NUM_PATHS] 
     /* 0   PATH_BLENDER        */ {"blenderpath",        "blenderpath",        "",    QObject::tr("Blender Path"),             QObject::tr("Full file path to Blender application executable")},
     /* 1   PATH_BLENDFILE      */ {"blendfile",          "blendfile",          "",    QObject::tr("Blendfile Path"),           QObject::tr("Full file path to a supplement .blend file - specify to append additional settings")},
     /* 2   PATH_ENVIRONMENT    */ {"environmentfile",    "environmentfile",    "",    QObject::tr("Environment Texture Path"), QObject::tr("Full file path to .exr environment texture file - specify if not using default bundled in addon")},
-    /* 3   PATH_LDCONFIG       */ {"customldconfigfile", "customldconfigfile", "",    QObject::tr("Custom LDConfig Path"),     QObject::tr("Full file path to custom LDConfig file - specify if not %1 alternate LDConfig file").arg(VER_PRODUCTNAME_STR)},
+    /* 3   PATH_LDCONFIG       */ {"customldconfigfile", "customldconfigfile", "",    QObject::tr("Custom LDConfig Path"),     QObject::tr("Full file path to custom LDConfig file - specify if not %1 alternate LDConfig file")},
     /* 4   PATH_LDRAW          */ {"ldrawdirectory",     "ldrawpath",          "",    QObject::tr("LDraw Directory"),          QObject::tr("Full directory path to the LDraw parts library (download from https://library.ldraw.org)")},
     /* 5   PATH_LSYNTH         */ {"lsynthdirectory",    "",                   "",    QObject::tr("LSynth Directory"),         QObject::tr("Full directory path to LSynth primitives - specify if not using default bundled in addon")},
     /* 6   PATH_STUD_LOGO      */ {"studlogodirectory",  "",                   "",    QObject::tr("Stud Logo Directory"),      QObject::tr("Full directory path to stud logo primitives - if stud logo enabled, specify if unofficial parts not used or not using default bundled in addon")},
@@ -161,8 +172,8 @@ BlenderPreferences::BlenderSettings  BlenderPreferences::mDefaultSettings [NUM_S
     /* 4   LBL_CROP_IMAGE            */ {"cropimage",                      "0",        QObject::tr("Crop Image"),             QObject::tr("Crop the image border at opaque content. Requires transparent background set to True")},
     /* 5   LBL_CURVED_WALLS          */ {"curvedwalls",                    "1",        QObject::tr("Curved Walls"),           QObject::tr("Makes surfaces look slightly concave, for interesting reflections")},
     /* 6   LBL_FLATTEN_HIERARCHY     */ {"flattenhierarchy",               "0",        QObject::tr("Flatten Hierarchy"),      QObject::tr("In Scene Outline, all parts are placed directly below the root - there's no tree of submodels")},
-    /* 7   LBL_IMPORT_CAMERAS        */ {"importcameras",                  "1",        QObject::tr("Import Cameras"),         QObject::tr("%1 can specify camera definitions within the ldraw data. Choose to load them or ignore them.").arg(VER_PRODUCTNAME_STR)},
-    /* 8   LBL_IMPORT_LIGHTS         */ {"importlights",                   "1",        QObject::tr("Import Lights"),          QObject::tr("%1 can specify point and sunlight definitions within the ldraw data. Choose to load them or ignore them.").arg(VER_PRODUCTNAME_STR)},
+    /* 7   LBL_IMPORT_CAMERAS        */ {"importcameras",                  "1",        QObject::tr("Import Cameras"),         QObject::tr("%1 can specify camera definitions within the ldraw data. Choose to load them or ignore them.")},
+    /* 8   LBL_IMPORT_LIGHTS         */ {"importlights",                   "1",        QObject::tr("Import Lights"),          QObject::tr("%1 can specify point and sunlight definitions within the ldraw data. Choose to load them or ignore them.")},
     /* 9   LBL_INSTANCE_STUDS        */ {"instancestuds",                  "0",        QObject::tr("Instance Studs"),         QObject::tr("Creates a Blender Object for each and every stud (WARNING: can be slow to import and edit in Blender if there are lots of studs)")},
     /*10   LBL_KEEP_ASPECT_RATIO     */ {"keepaspectratio",                "1",        QObject::tr("Keep Aspect Ratio"),      QObject::tr("Maintain the aspect ratio when resizing the output image - this attribute is not passed to Blender")},
     /*11   LBL_LINK_PARTS            */ {"linkparts",                      "1",        QObject::tr("Link Like Parts"),        QObject::tr("Identical parts (of the same type and colour) share the same mesh")},
@@ -226,9 +237,9 @@ BlenderPreferences::BlenderSettings  BlenderPreferences::mDefaultSettingsMM [NUM
 #endif
     /* 04 LBL_CROP_IMAGE_MM                       */ {"cropimage",                     "0",          QObject::tr("Crop Image"),               QObject::tr("Crop the image border at opaque content. Requires transparent background set to True")},
     /* 05 LBL_DISPLAY_LOGO                        */ {"displaylogo",                   "1",          QObject::tr("Display Logo"),             QObject::tr("Display the logo on the stud")},
-    /* 06 LBL_IMPORT_CAMERAS_MM                   */ {"importcameras",                 "1",          QObject::tr("Import Cameras"),           QObject::tr("%1 can specify camera definitions within the ldraw data. Choose to load them or ignore them.").arg(VER_PRODUCTNAME_STR)},
+    /* 06 LBL_IMPORT_CAMERAS_MM                   */ {"importcameras",                 "1",          QObject::tr("Import Cameras"),           QObject::tr("%1 can specify camera definitions within the ldraw data. Choose to load them or ignore them.")},
     /* 07 LBL_IMPORT_EDGES                        */ {"importedges",                   "0",          QObject::tr("Import Edges"),             QObject::tr("Import LDraw edges as edges")},
-    /* 08 LBL_IMPORT_LIGHTS_MM                    */ {"importlights",                  "1",          QObject::tr("Import Lights"),            QObject::tr("%1 can specify point and sunlight definitions within the ldraw data. Choose to load them or ignore them.").arg(VER_PRODUCTNAME_STR)},
+    /* 08 LBL_IMPORT_LIGHTS_MM                    */ {"importlights",                  "1",          QObject::tr("Import Lights"),            QObject::tr("%1 can specify point and sunlight definitions within the ldraw data. Choose to load them or ignore them.")},
     /* 09 LBL_KEEP_ASPECT_RATIO_MM                */ {"keepaspectratio",               "1",          QObject::tr("Keep Aspect Ratio"),        QObject::tr("Maintain the aspect ratio when resizing the output image - this attribute is not passed to Blender")},
     /* 10 LBL_MAKE_GAPS                           */ {"makegaps",                      "1",          QObject::tr("Make Gaps"),                QObject::tr("Make small gaps between bricks. A small gap is more realistic")},
     /* 11 LBL_META_BFC                            */ {"metabfc",                       "1",          QObject::tr("BFC"),                      QObject::tr("Process LDraw Back Face Culling meta commands")},
@@ -572,11 +583,11 @@ BlenderPreferences::BlenderPreferences(
     mConfigured = !Preferences::blenderImportModule.isEmpty();
 
     const int i = PATH_BLENDER;
-    pathLabel->setText(BlenderPreferences::mBlenderPaths[i].label);
-    pathLabel->setToolTip(BlenderPreferences::mBlenderPaths[i].tooltip);
+    pathLabel->setText(translateBlenderText(BlenderPreferences::mBlenderPaths[i].label));
+    pathLabel->setToolTip(translateBlenderText(BlenderPreferences::mBlenderPaths[i].tooltip));
 
     pathLineEdit->setText(BlenderPreferences::mBlenderPaths[i].value);
-    pathLineEdit->setToolTip(BlenderPreferences::mBlenderPaths[i].tooltip);
+    pathLineEdit->setToolTip(translateBlenderText(BlenderPreferences::mBlenderPaths[i].tooltip));
 
     if (mAddonVersion.isEmpty()) {
         mModulesBox->setEnabled(false);
@@ -683,15 +694,15 @@ void BlenderPreferences::initPathsAndSettings()
     for(int i = 1/*skip blender executable*/; i < numPaths(); ++i) {
         int j = i - 1; // adjust for skipping first item - blender executable
         bool isVisible = i != PATH_STUDIO_LDRAW;
-        QLabel *pathLabel = new QLabel(BlenderPreferences::mBlenderPaths[i].label, mPathsBox);
-        pathLabel->setToolTip(BlenderPreferences::mBlenderPaths[i].tooltip);
+        QLabel *pathLabel = new QLabel(translateBlenderText(BlenderPreferences::mBlenderPaths[i].label), mPathsBox);
+        pathLabel->setToolTip(translateBlenderText(BlenderPreferences::mBlenderPaths[i].tooltip));
         mPathsGridLayout->addWidget(pathLabel,j,0);
         pathLabel->setVisible(isVisible);
 
         QLineEdit *pathLineEdit = new QLineEdit(mPathsBox);
         pathLineEdit->setProperty("ControlID",QVariant(i));
         pathLineEdit->setText(BlenderPreferences::mBlenderPaths[i].value);
-        pathLineEdit->setToolTip(BlenderPreferences::mBlenderPaths[i].tooltip);
+        pathLineEdit->setToolTip(translateBlenderText(BlenderPreferences::mBlenderPaths[i].tooltip));
         if (mPathLineEditList.size() > i)
             mPathLineEditList.replace(i, pathLineEdit);
         else
@@ -722,6 +733,7 @@ void BlenderPreferences::initPathsAndSettings()
     mSettingsBox = new QGroupBox(mContent);
     mSettingsSubform = new QFormLayout(mSettingsBox);
     mSettingsBox->setLayout(mSettingsSubform);
+    mSettingsSubform->setLabelAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     mForm->addRow(mSettingsBox);
 
     mSettingsBox->setTitle(tr("LDraw Import TN Addon Settings"));
@@ -732,17 +744,27 @@ void BlenderPreferences::initPathsAndSettings()
 
     int comboBoxItemsIndex = 0;
 
+    QWidget *checkHost = new QWidget(mSettingsBox);
+    QGridLayout *checkGrid = new QGridLayout(checkHost);
+    checkGrid->setContentsMargins(0, 2, 0, 2);
+    checkGrid->setHorizontalSpacing(12);
+    checkGrid->setVerticalSpacing(8);
+    checkGrid->setColumnMinimumWidth(2, 28);
+    checkGrid->setColumnStretch(5, 1);
+    mSettingsSubform->addRow(checkHost);
+    int checkCount = 0;
+
     for(int i = 0; i < numSettings(); i++) {
         QLabel *label = new QLabel(mSettingsBox);
-        label->setText(BlenderPreferences::mBlenderSettings[i].label);
-        label->setToolTip(BlenderPreferences::mBlenderSettings[i].tooltip);
+        label->setText(translateBlenderText(BlenderPreferences::mBlenderSettings[i].label));
+        label->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettings[i].tooltip));
         mSettingLabelList << label;
 
         if (i < LBL_BEVEL_WIDTH){           // QCheckBoxes
             QCheckBox *checkBox = new QCheckBox(mSettingsBox);
             checkBox->setProperty("ControlID",QVariant(i));
             checkBox->setChecked(BlenderPreferences::mBlenderSettings[i].value.toInt());
-            checkBox->setToolTip(BlenderPreferences::mBlenderSettings[i].tooltip);
+            checkBox->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettings[i].tooltip));
             if (mDocumentRender &&
                 (i == LBL_ADD_ENVIRONMENT ||
                  i == LBL_CROP_IMAGE ||
@@ -758,7 +780,13 @@ void BlenderPreferences::initPathsAndSettings()
                         this,    SLOT  (settingChanged()));
             }
             mCheckBoxList << checkBox;
-            mSettingsSubform->addRow(label,checkBox);
+            const int gridRow = checkCount / 2;
+            const int gridCol = (checkCount % 2) * 3;
+            label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+            checkBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+            checkGrid->addWidget(label, gridRow, gridCol, Qt::AlignLeft | Qt::AlignVCenter);
+            checkGrid->addWidget(checkBox, gridRow, gridCol + 1, Qt::AlignLeft | Qt::AlignVCenter);
+            ++checkCount;
         } else if (i < LBL_COLOUR_SCHEME) { // QLineEdits
             QLineEdit *lineEdit = new QLineEdit(mSettingsBox);
             lineEdit->setProperty("ControlID",QVariant(i));
@@ -783,7 +811,7 @@ void BlenderPreferences::initPathsAndSettings()
                 connect(lineEdit, SIGNAL(textEdited(const QString&)),
                         this,     SLOT  (settingChanged(const QString&)));
             }
-            lineEdit->setToolTip(BlenderPreferences::mBlenderSettings[i].tooltip);
+            lineEdit->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettings[i].tooltip));
             mLineEditList << lineEdit;
             if (i == LBL_DEFAULT_COLOUR)
                 gBlenderAddonPreferences->setDefaultColor(lcGetColorIndex(BlenderPreferences::mBlenderSettings[LBL_DEFAULT_COLOUR].value.toInt()));
@@ -793,11 +821,11 @@ void BlenderPreferences::initPathsAndSettings()
             comboBox->setProperty("ControlID",QVariant(i));
             QString const value = BlenderPreferences::mBlenderSettings[i].value;
             QStringList const dataList = BlenderPreferences::mComboItems[comboBoxItemsIndex].dataList.split("|");
-            QStringList const itemList = BlenderPreferences::mComboItems[comboBoxItemsIndex].itemList.split("|");
+            QStringList const itemList = translateBlenderText(BlenderPreferences::mComboItems[comboBoxItemsIndex].itemList).split("|");
             comboBox->addItems(itemList);
             for (int j = 0; j < comboBox->count(); j++)
                 comboBox->setItemData(j, dataList.at(j));
-            comboBox->setToolTip(BlenderPreferences::mBlenderSettings[i].tooltip);
+            comboBox->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettings[i].tooltip));
             int currentIndex = int(comboBox->findData(QVariant::fromValue(value)));
             comboBox->setCurrentIndex(currentIndex);
             if (i == LBL_COLOUR_SCHEME)
@@ -836,15 +864,15 @@ void BlenderPreferences::initPathsAndSettingsMM()
     for(int i = 1/*skip blender executable*/; i < numPaths(); ++i) {
         int j = i - 1; // adjust for skipping first item - blender executable
         bool isVisible = i != PATH_LSYNTH && i != PATH_STUD_LOGO;
-        QLabel *pathLabel = new QLabel(BlenderPreferences::mBlenderPaths[i].label, mPathsBox);
-        pathLabel->setToolTip(BlenderPreferences::mBlenderPaths[i].tooltip);
+        QLabel *pathLabel = new QLabel(translateBlenderText(BlenderPreferences::mBlenderPaths[i].label), mPathsBox);
+        pathLabel->setToolTip(translateBlenderText(BlenderPreferences::mBlenderPaths[i].tooltip));
         mPathsGridLayout->addWidget(pathLabel,j,0);
         pathLabel->setVisible(isVisible);
 
         QLineEdit *pathLineEdit = new QLineEdit(mPathsBox);
         pathLineEdit->setProperty("ControlID",QVariant(i));
         pathLineEdit->setText(BlenderPreferences::mBlenderPaths[i].value);
-        pathLineEdit->setToolTip(BlenderPreferences::mBlenderPaths[i].tooltip);
+        pathLineEdit->setToolTip(translateBlenderText(BlenderPreferences::mBlenderPaths[i].tooltip));
         if (mPathLineEditList.size() > i)
             mPathLineEditList.replace(i, pathLineEdit);
         else
@@ -875,6 +903,7 @@ void BlenderPreferences::initPathsAndSettingsMM()
     mSettingsBox = new QGroupBox(mContent);
     mSettingsSubform = new QFormLayout(mSettingsBox);
     mSettingsBox->setLayout(mSettingsSubform);
+    mSettingsSubform->setLabelAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     mForm->addRow(mSettingsBox);
 
     mSettingsBox->setTitle(tr("LDraw Import MM Addon Settings"));
@@ -885,17 +914,27 @@ void BlenderPreferences::initPathsAndSettingsMM()
 
     int comboBoxItemsIndex = 0;
 
+    QWidget *checkHost = new QWidget(mSettingsBox);
+    QGridLayout *checkGrid = new QGridLayout(checkHost);
+    checkGrid->setContentsMargins(0, 2, 0, 2);
+    checkGrid->setHorizontalSpacing(12);
+    checkGrid->setVerticalSpacing(8);
+    checkGrid->setColumnMinimumWidth(2, 28);
+    checkGrid->setColumnStretch(5, 1);
+    mSettingsSubform->addRow(checkHost);
+    int checkCount = 0;
+
     for(int i = 0; i < numSettingsMM(); i++) {
         QLabel *label = new QLabel(mSettingsBox);
-        label->setText(BlenderPreferences::mBlenderSettingsMM[i].label);
-        label->setToolTip(BlenderPreferences::mBlenderSettingsMM[i].tooltip);
+        label->setText(translateBlenderText(BlenderPreferences::mBlenderSettingsMM[i].label));
+        label->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettingsMM[i].tooltip));
         mSettingLabelList << label;
 
         if (i < LBL_BEVEL_SEGMENTS) { // QCheckBoxes
             QCheckBox *checkBox = new QCheckBox(mSettingsBox);
             checkBox->setProperty("ControlID",QVariant(i));
             checkBox->setChecked(BlenderPreferences::mBlenderSettingsMM[i].value.toInt());
-            checkBox->setToolTip(BlenderPreferences::mBlenderSettingsMM[i].tooltip);
+            checkBox->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettingsMM[i].tooltip));
             if (mDocumentRender &&
                 (i == LBL_ADD_ENVIRONMENT_MM ||
                  i == LBL_CROP_IMAGE_MM ||
@@ -911,7 +950,13 @@ void BlenderPreferences::initPathsAndSettingsMM()
                         this,    SLOT  (settingChanged()));
             }
             mCheckBoxList << checkBox;
-            mSettingsSubform->addRow(label,checkBox);
+            const int gridRow = checkCount / 2;
+            const int gridCol = (checkCount % 2) * 3;
+            label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+            checkBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+            checkGrid->addWidget(label, gridRow, gridCol, Qt::AlignLeft | Qt::AlignVCenter);
+            checkGrid->addWidget(checkBox, gridRow, gridCol + 1, Qt::AlignLeft | Qt::AlignVCenter);
+            ++checkCount;
         } else if (i < LBL_CHOSEN_LOGO) { // QLineEdits
             QLineEdit *lineEdit = new QLineEdit(mSettingsBox);
             lineEdit->setProperty("ControlID",QVariant(i));
@@ -934,7 +979,7 @@ void BlenderPreferences::initPathsAndSettingsMM()
                 connect(lineEdit, SIGNAL(textEdited(const QString&)),
                         this,     SLOT  (settingChanged(const QString&)));
             }
-            lineEdit->setToolTip(BlenderPreferences::mBlenderSettingsMM[i].tooltip);
+            lineEdit->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettingsMM[i].tooltip));
             mLineEditList << lineEdit;
             mSettingsSubform->addRow(label,lineEdit);
         } else {                            // QComboBoxes
@@ -942,11 +987,11 @@ void BlenderPreferences::initPathsAndSettingsMM()
             comboBox->setProperty("ControlID",QVariant(i));
             QString const value = BlenderPreferences::mBlenderSettingsMM[i].value;
             QStringList const dataList = BlenderPreferences::mComboItemsMM[comboBoxItemsIndex].dataList.split("|");
-            QStringList const itemList = BlenderPreferences::mComboItemsMM[comboBoxItemsIndex].itemList.split("|");
+            QStringList const itemList = translateBlenderText(BlenderPreferences::mComboItemsMM[comboBoxItemsIndex].itemList).split("|");
             comboBox->addItems(itemList);
             for (int j = 0; j < comboBox->count(); j++)
                 comboBox->setItemData(j, dataList.at(j));
-            comboBox->setToolTip(BlenderPreferences::mBlenderSettingsMM[i].tooltip);
+            comboBox->setToolTip(translateBlenderText(BlenderPreferences::mBlenderSettingsMM[i].tooltip));
             int currentIndex = int(comboBox->findData(QVariant::fromValue(value)));
             comboBox->setCurrentIndex(currentIndex);
             if (i == LBL_COLOUR_SCHEME_MM)
@@ -2566,8 +2611,8 @@ void BlenderPreferences::loadSettings()
                     BlenderPreferences::mBlenderSettings[i].value = value == "True" ? "1" : value == "False" ? "0" : value;
             }
             if (i == LBL_IMAGE_WIDTH || i == LBL_IMAGE_HEIGHT || i == LBL_RENDER_PERCENTAGE) {
-                QString const &label = BlenderPreferences::mDefaultSettings[i].label;
-                BlenderPreferences::mBlenderSettings[i].label = QString("%1 - Setting (%2)").arg(label, value);
+                const QString label = translateBlenderText(BlenderPreferences::mDefaultSettings[i].label);
+                BlenderPreferences::mBlenderSettings[i].label = QObject::tr("%1 - Setting (%2)").arg(label, value);
             }
         }
 
@@ -2581,8 +2626,8 @@ void BlenderPreferences::loadSettings()
                     BlenderPreferences::mBlenderSettingsMM[i].value = value == "True" ? "1" : value == "False" ? "0" : value;
             }
             if (i == LBL_RENDER_PERCENTAGE_MM || i == LBL_RESOLUTION_WIDTH || i == LBL_RESOLUTION_HEIGHT) {
-                QString const &label = BlenderPreferences::mDefaultSettingsMM[i].label;
-                BlenderPreferences::mBlenderSettingsMM[i].label = QString("%1 - Setting (%2)").arg(label, value);
+                const QString label = translateBlenderText(BlenderPreferences::mDefaultSettingsMM[i].label);
+                BlenderPreferences::mBlenderSettingsMM[i].label = QObject::tr("%1 - Setting (%2)").arg(label, value);
             }
         }
     } else {
@@ -2864,7 +2909,7 @@ void BlenderPreferences::browseBlender(bool)
         if (sender() == mPathBrowseButtonList.at(i)) {
             QString const blenderPath = QDir::toNativeSeparators(BlenderPreferences::mBlenderPaths[i].value).toLower();
             QFileDialog fileDialog(nullptr);
-            fileDialog.setWindowTitle(tr("Locate %1").arg(BlenderPreferences::mBlenderPaths[i].label));
+            fileDialog.setWindowTitle(tr("Locate %1").arg(translateBlenderText(BlenderPreferences::mBlenderPaths[i].label)));
             if (i < PATH_LDRAW)
                 fileDialog.setFileMode(QFileDialog::ExistingFile);
             else

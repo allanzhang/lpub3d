@@ -4,6 +4,15 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
+## v2.7.1 (2026-09-22)
+
+- **Open `.io` / `.mo` from Open.** The archive is parsed into a temporary MPD and shown with the native renderer. There is no separate Open IO command, and the source archive is left unchanged.
+- **Open With** on macOS and Windows includes the system application chooser.
+- **Chinese copy and left-aligned forms** for message options, themes, the status-bar position, POV-Ray export settings, and Blender render/add-on settings. Product terms stay in English. Buttons sit below the fields, and the custom aspect ratio is no longer cramped onto one row. These screens have not been visually reviewed.
+- **macOS POV-Ray libraries** are copied into the app bundle so the renderer does not depend on Homebrew at runtime. The install list no longer names the missing `colors_ral.inc`.
+
+Not in this version: transparent parts and stickers on the page, fully working setup for every third-party renderer, or a Windows package. Those three items are independent and tracked in [docs/TODO.md](docs/TODO.md). No installer has been built for v2.7.1; the download below is still v2.7.0.
+
 ## v2.7.0 (2026-09-18)
 
 - **Callout pointers**: pointer tips now project the referenced submodel instance into the rendered CSI and stop on its real visible outline instead of using a fixed normalized point.
@@ -39,6 +48,7 @@ This fork is maintained as a **single version** project: the `master` branch alw
 - **Product identity**: renamed to myLPub3D with DoubleEagle application identity.
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
+
 
 ## Download
 

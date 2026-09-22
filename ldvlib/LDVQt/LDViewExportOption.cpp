@@ -14,9 +14,12 @@
 
 #include <QFileDialog>
 #include <QCheckBox>
+#include <QShowEvent>
+#include <QTimer>
 #include <QToolTip>
 #include <TCFoundation/TCStringArray.h>
 #include <TCFoundation/TCUserDefaults.h>
+#include <TCFoundation/TCLocalStrings.h>
 #include <TCFoundation/mystring.h>
 #include <LDLib/LDUserDefaultsKeys.h>
 #include <LDExporter/LDExporter.h>
@@ -32,6 +35,14 @@
 #include "lpub_preferences.h"
 #include "declarations.h"
 #include "commonmenus.h"
+
+
+static void configureExportLabel(QLabel *label)
+{
+	label->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+	label->setWordWrap(true);
+	label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+}
 
 TCStringArray* LDViewExportOption::extraSearchDirs = nullptr;
 
@@ -79,7 +90,10 @@ LDViewExportOption::LDViewExportOption(LDVWidget *modelWidget, QWidget *parent)
 
 	populateExportSettings();
 
-	this->setWindowTitle(modelWidget->getIniTitle().append(" Export Options"));
+	const QString exportOptionsSuffix =
+		QString::fromWCharArray(TCLocalStrings::get(L"ExportOptionsSuffix"));
+	this->setWindowTitle(modelWidget->getIniTitle().append(
+		exportOptionsSuffix.isEmpty() ? QStringLiteral(" Export Options") : exportOptionsSuffix));
 
 	this->setWhatsThis(lpubWT(WT_DIALOG_LDVIEW_POV_EXPORT_OPTIONS,windowTitle()));
 
@@ -100,22 +114,39 @@ LDViewExportOption::LDViewExportOption(LDVWidget *modelWidget, QWidget *parent)
 	if (TCUserDefaults::isIniFileSet()) {
 		QString prefSet = TCUserDefaults::getSessionName();
 		iniFileMessage = QString("%1").arg(modelWidget->getIniFile());
-		iniBox->setTitle(QString("INI file using '%1' preference set")
-						 .arg(prefSet.isEmpty() ? "Default" : prefSet));
+		const QString iniTitleFormat =
+			QString::fromWCharArray(TCLocalStrings::get(L"IniFilePrefSet"));
+		const QString defaultSet =
+			QString::fromWCharArray(TCLocalStrings::get(L"IniFileDefault"));
+		const QString setName = prefSet.isEmpty()
+			? (defaultSet.isEmpty() ? QStringLiteral("Default") : defaultSet)
+			: prefSet;
+		iniBox->setTitle(iniTitleFormat.isEmpty()
+			? QStringLiteral("INI file using '%1' preference set").arg(setName)
+			: iniTitleFormat.arg(setName));
 	} else {
-		iniFileMessage = QString("INI file not specified. Using built-in default settings.");
+		const QString notSet =
+			QString::fromWCharArray(TCLocalStrings::get(L"IniNotSpecifiedNotice"));
+		iniFileMessage = notSet.isEmpty()
+			? QStringLiteral("INI file not specified. Using built-in default settings.")
+			: notSet;
 		iniFileEdit->setStyleSheet("QLineEdit { background-color : red; color : white; }");
 	}
 
 	iniFileEdit->setReadOnly(true);
 	iniFileEdit->setPalette(readOnlyPalette);
+	iniFileEdit->setAlignment(Qt::AlignLeft);
 	iniFileEdit->setText(iniFileMessage);
+	iniFileEdit->setToolTip(iniFileMessage);
+	iniFileEdit->setCursorPosition(0);
 
 	applyButton->setEnabled(false);
 
-	setFixedWidth(width());
-	setMinimumSize(50,50);
-	adjustSize();
+	// The .ui width is too narrow for the Chinese labels, and locking it
+	// together with a disabled horizontal scrollbar clips both labels and the INI path.
+	setMinimumWidth(640);
+	resize(720, qMax(height(), 640));
+	setSizeGripEnabled(true);
 }
 
 LDViewExportOption::~LDViewExportOption()
@@ -127,6 +158,24 @@ void LDViewExportOption::show(void)
 	applyButton->setEnabled(false);
 	QDialog::show();
 	raise();
+	revealIniPathStart();
+}
+
+void LDViewExportOption::showEvent(QShowEvent *event)
+{
+	QDialog::showEvent(event);
+	revealIniPathStart();
+}
+
+void LDViewExportOption::revealIniPathStart(void)
+{
+	// QLineEdit keeps the cursor at the end, so a long path looks right-cropped.
+	iniFileEdit->setCursorPosition(0);
+	iniFileEdit->deselect();
+	QTimer::singleShot(0, iniFileEdit, [this]() {
+		iniFileEdit->setCursorPosition(0);
+		iniFileEdit->deselect();
+	});
 }
 
 void LDViewExportOption::populateExportSettings(void)
@@ -135,15 +184,18 @@ void LDViewExportOption::populateExportSettings(void)
 		return;
 
 	QHash<QString, WT_Type> whatsThisMap;
-	whatsThisMap["General"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_GENERAL;
-	whatsThisMap["Geometry"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_GEOMETRY;
-	whatsThisMap["Native POV Geometry"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_POV_GEOMETRY;
-	whatsThisMap["Lighting"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_LIGHTING;
-	whatsThisMap["POV-Ray Lights"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_POVRAY_LIGHTS;
-	whatsThisMap["Material Properties"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_MATERIAL;
-	whatsThisMap["Transparent Material Properties"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_TRANSPARENT_MATERIAL;
-	whatsThisMap["Rubber Material Properties"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_RUBBER_MATERIAL;
-	whatsThisMap["Chrome Material Properties"] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_CHROME_MATERIAL;
+	auto localName = [](const wchar_t *key) {
+		return QString::fromWCharArray(TCLocalStrings::get(key));
+	};
+	whatsThisMap[localName(L"PovGeneral")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_GENERAL;
+	whatsThisMap[localName(L"LDXGeometry")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_GEOMETRY;
+	whatsThisMap[localName(L"PovNativeGeometry")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_POV_GEOMETRY;
+	whatsThisMap[localName(L"PovLighting")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_LIGHTING;
+	whatsThisMap[localName(L"PovLights")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_POVRAY_LIGHTS;
+	whatsThisMap[localName(L"PovMaterialProps")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_MATERIAL;
+	whatsThisMap[localName(L"PovTransMaterialProps")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_TRANSPARENT_MATERIAL;
+	whatsThisMap[localName(L"PovRubberMaterialProps")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_RUBBER_MATERIAL;
+	whatsThisMap[localName(L"PovChromeMaterialProps")] = WT_CONTROL_LDVIEW_POV_EXPORT_OPTIONS_CHROME_MATERIAL;
 
 	QWidget *parent;
 	parent = m_box;
@@ -168,6 +220,26 @@ void LDViewExportOption::populateExportSettings(void)
 	std::stack<int> groupSizes;
 	std::stack<QWidget *> parents;
 	int groupSize = 0;
+	QVBoxLayout *povLightsLayout = nullptr;
+	auto addGroupResetRow = [&](QVBoxLayout *groupLayout) {
+		if (!groupLayout)
+			return;
+		QHBoxLayout *resetRow = new QHBoxLayout();
+		resetRow->setSpacing(12);
+		QPushButton *rg = new QPushButton(tr("Reset Group"));
+		rg->setObjectName("Reset Group");
+		resetRow->addWidget(rg);
+		connect(rg, SIGNAL(clicked()), this, SLOT(doResetGroup()));
+		if (groupLayout == povLightsLayout && m_addPovLightBtn && m_updatePovLightBtn && m_removePovLightBtn) {
+			resetRow->addWidget(m_addPovLightBtn);
+			resetRow->addWidget(m_updatePovLightBtn);
+			resetRow->addWidget(m_removePovLightBtn);
+			povLightsLayout = nullptr;
+		}
+		resetRow->addStretch(1);
+		groupLayout->addLayout(resetRow);
+	};
+
 
 	for (it = settings.begin(); it != settings.end(); it++) {
 		bool inGroup = groupSize > 0;
@@ -204,18 +276,8 @@ void LDViewExportOption::populateExportSettings(void)
 				connect( check, SIGNAL( toggled(bool) ), this, SLOT( enableApply() ) );
 			} else {
 				// Top level group; use a group setting.
-				if (vbl) {
-					QHBoxLayout *hbox;
-					QPushButton *rg;
-					hbox = new QHBoxLayout();
-					rg = new QPushButton(tr("Reset Group"));
-					sp = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-					hbox->addItem(sp);
-					hbox->addWidget(rg);
-					rg->setObjectName("Reset Group");
-					vbl->addLayout(hbox);
-					connect( rg, SIGNAL( clicked() ), this, SLOT( doResetGroup() ) );
-				}
+				if (vbl)
+					addGroupResetRow(vbl);
 				QString qstmp;
 				ucstringtoqstring(qstmp,it->getName());
 				QGroupBox *gb;
@@ -269,9 +331,17 @@ void LDViewExportOption::populateExportSettings(void)
 				// Long and float are intentionally handled the same.
 				label = new QLabel(qstmp);
 				label->setObjectName(qstmp);
-				hbox->addWidget(label);
+				configureExportLabel(label);
+				// Word wrap inside this horizontal row reports a one-line height,
+				// so a long Chinese caption is painted on top of itself.
+				label->setWordWrap(false);
+				label->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+				hbox->addWidget(label, 0, Qt::AlignLeft | Qt::AlignVCenter);
 				li = new QLineEdit(qstmp);
 				li->setObjectName(qstmp);
+				li->setMinimumWidth(72);
+				li->setMaximumWidth(180);
+				li->setAlignment(Qt::AlignLeft);
 				hbox->addWidget(li);
 				sp = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 				hbox->addSpacerItem(sp);
@@ -288,6 +358,7 @@ void LDViewExportOption::populateExportSettings(void)
 				vbox->setSpacing(4);
 				hbox->addLayout(vbox);
 				label = new QLabel(qstmp);
+				configureExportLabel(label);
 				vbox->addWidget(label);
 				hbox2 = new QHBoxLayout();
 				hbox2->setSpacing(4);
@@ -317,248 +388,262 @@ void LDViewExportOption::populateExportSettings(void)
 					label->hide();
 					li->hide();
 					li->setObjectName(label->text());
+					hbox->setStretch(0, 1);
+					povLightsLayout = vbl;
 
 					m_PovLightList = qstmp.split(";");
 
 					QGridLayout *grid = new QGridLayout();
-					grid->setSpacing(4);
-					vbox->addLayout(grid);
-					QLabel *label;
+					grid->setHorizontalSpacing(16);
+					grid->setVerticalSpacing(4);
+					grid->setContentsMargins(0, 4, 0, 8);
+					for (int column = 0; column < 4; ++column)
+					grid->setColumnStretch(column, 1);
+					QWidget *lightForm = new QWidget(this);
+					lightForm->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+					lightForm->setLayout(grid);
+					vbox->addWidget(lightForm, 1);
+
+					auto expandHorizontally = [](QWidget *widget) {
+					QSizePolicy policy = widget->sizePolicy();
+					policy.setHorizontalPolicy(QSizePolicy::Expanding);
+					policy.setVerticalPolicy(QSizePolicy::Fixed);
+					widget->setSizePolicy(policy);
+					};
+					auto addCaption = [&](const char *key, int captionRow, int captionColumn) {
+					QLabel *caption = new QLabel(TCObject::ls(key), this);
+					grid->addWidget(caption, captionRow, captionColumn, Qt::AlignLeft | Qt::AlignBottom);
+					};
+					auto addSection = [&](const char *key, int sectionRow) {
+					QLabel *section = new QLabel(TCObject::ls(key), this);
+					grid->addWidget(section, sectionRow, 0, 1, 4, Qt::AlignLeft | Qt::AlignVCenter);
+					};
 
 					QPalette readOnlyPalette = QApplication::palette();
 					if (Preferences::darkTheme)
-						readOnlyPalette.setColor(QPalette::Base,QColor(Preferences::themeColors[THEME_DARK_PALETTE_MIDLIGHT]));
+					readOnlyPalette.setColor(QPalette::Base,QColor(Preferences::themeColors[THEME_DARK_PALETTE_MIDLIGHT]));
 					else
-						readOnlyPalette.setColor(QPalette::Base,QColor(Preferences::themeColors[THEME_DEFAULT_PALETTE_LIGHT]));
+					readOnlyPalette.setColor(QPalette::Base,QColor(Preferences::themeColors[THEME_DEFAULT_PALETTE_LIGHT]));
 					readOnlyPalette.setColor(QPalette::Text,QColor(LPUB3D_DISABLED_TEXT_COLOUR));
 
-					// row 0
-					label = new QLabel(TCObject::ls("PovLightNum"),this);
-					grid->addWidget(label,0,0);
-					label = new QLabel(TCObject::ls("PovLightOptLatitude"),this);
-					grid->addWidget(label,0,1);
-					label = new QLabel(TCObject::ls("PovLightOptLongitude"),this);
-					grid->addWidget(label,0,2);
-					label = new QLabel(TCObject::ls("PovLightOptIntensity"),this);
-					grid->addWidget(label,0,3);
+					int row = 0;
+					addCaption("PovLightNum", row, 0);
+					addCaption("PovLightOptLatitude", row, 1);
+					addCaption("PovLightOptLongitude", row, 2);
+					addCaption("PovLightOptIntensity", row, 3);
 
-					// row 1
-					m_PovLightNumEdit =  new QLineEdit(this);
+					row = 1;
+					m_PovLightNumEdit = new QLineEdit(this);
 					m_PovLightNumEdit->setPalette(readOnlyPalette);
 					m_PovLightNumEdit->setReadOnly(true);
-					grid->addWidget(m_PovLightNumEdit,1,0);
+					expandHorizontally(m_PovLightNumEdit);
+					grid->addWidget(m_PovLightNumEdit, row, 0);
 
-					m_PovLightOptLatitudeDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptLatitudeDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptLatitudeDSpin->setRange(-360.0, 360.0);
 					m_PovLightOptLatitudeDSpin->setDecimals(1);
 					m_PovLightOptLatitudeDSpin->setSingleStep(1);
 					m_PovLightOptLatitudeDSpin->setToolTip(TCObject::ls("PovLightLatitudeTT"));
-					grid->addWidget(m_PovLightOptLatitudeDSpin,1,1);
+					expandHorizontally(m_PovLightOptLatitudeDSpin);
+					grid->addWidget(m_PovLightOptLatitudeDSpin, row, 1);
 
-					m_PovLightOptLongitudeDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptLongitudeDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptLongitudeDSpin->setRange(-360.0, 360.0);
 					m_PovLightOptLongitudeDSpin->setDecimals(1);
 					m_PovLightOptLongitudeDSpin->setSingleStep(1);
 					m_PovLightOptLongitudeDSpin->setToolTip(TCObject::ls("PovLightLongitudeTT"));
-					grid->addWidget(m_PovLightOptLongitudeDSpin,1,2);
+					expandHorizontally(m_PovLightOptLongitudeDSpin);
+					grid->addWidget(m_PovLightOptLongitudeDSpin, row, 2);
 
-					m_PovLightOptIntensityDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptIntensityDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptIntensityDSpin->setRange(0.0,100);
 					m_PovLightOptIntensityDSpin->setDecimals(2);
 					m_PovLightOptIntensityDSpin->setSingleStep(0.1);
 					m_PovLightOptIntensityDSpin->setToolTip(TCObject::ls("PovLightIntensityTT"));
-					grid->addWidget(m_PovLightOptIntensityDSpin,1,3);
+					expandHorizontally(m_PovLightOptIntensityDSpin);
+					grid->addWidget(m_PovLightOptIntensityDSpin, row, 3);
 
-					// row 2
-					label = new QLabel(TCObject::ls("PovLightOptType"),this);
-					grid->addWidget(label,2,0);
-					label = new QLabel(TCObject::ls("PovLightOptTargetX"),this);
-					grid->addWidget(label,2,1);
-					label = new QLabel(TCObject::ls("PovLightOptTargetY"),this);
-					grid->addWidget(label,2,2);
-					label = new QLabel(TCObject::ls("PovLightOptTargetZ"),this);
-					grid->addWidget(label,2,3);
+					row = 3;
+					addCaption("PovLightOptType", row, 0);
+					addCaption("PovLightOptTargetX", row, 1);
+					addCaption("PovLightOptTargetY", row, 2);
+					addCaption("PovLightOptTargetZ", row, 3);
 
-					// row 3
+					row = 4;
 					m_PovLightOptTypeCombo = new QComboBox(this);
 					m_PovLightOptTypeCombo->addItems({TCObject::ls("PovLightPoint"),TCObject::ls("PovLightArea"),TCObject::ls("PovLightSun"),TCObject::ls("PovLightSpot")});
 					m_PovLightOptTypeCombo->setToolTip(TCObject::ls("PovLightTypeTT"));
-					grid->addWidget(m_PovLightOptTypeCombo,3,0);
+					expandHorizontally(m_PovLightOptTypeCombo);
+					grid->addWidget(m_PovLightOptTypeCombo, row, 0);
 
-					m_PovLightOptTargetXDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptTargetXDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptTargetXDSpin->setDecimals(1);
 					m_PovLightOptTargetXDSpin->setSingleStep(1);
 					m_PovLightOptTargetXDSpin->setToolTip(TCObject::ls("PovLightTargetXTT"));
-					grid->addWidget(m_PovLightOptTargetXDSpin,3,1);
+					expandHorizontally(m_PovLightOptTargetXDSpin);
+					grid->addWidget(m_PovLightOptTargetXDSpin, row, 1);
 
-					m_PovLightOptTargetYDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptTargetYDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptTargetYDSpin->setDecimals(1);
 					m_PovLightOptTargetYDSpin->setSingleStep(1);
 					m_PovLightOptTargetYDSpin->setToolTip(TCObject::ls("PovLightTargetYTT"));
-					grid->addWidget(m_PovLightOptTargetYDSpin,3,2);
+					expandHorizontally(m_PovLightOptTargetYDSpin);
+					grid->addWidget(m_PovLightOptTargetYDSpin, row, 2);
 
-					m_PovLightOptTargetZDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptTargetZDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptTargetZDSpin->setDecimals(1);
 					m_PovLightOptTargetZDSpin->setSingleStep(1);
 					m_PovLightOptTargetZDSpin->setToolTip(TCObject::ls("PovLightTargetZTT"));
-					grid->addWidget(m_PovLightOptTargetZDSpin,3,3);
+					expandHorizontally(m_PovLightOptTargetZDSpin);
+					grid->addWidget(m_PovLightOptTargetZDSpin, row, 3);
 
-					// row 4
-					m_PovLightOptShadowlessChk = new QCheckBox(TCObject::ls("PovLightOptShadowless"),this);
+					row = 5;
+					grid->setRowMinimumHeight(row, 12);
+					row = 6;
+					m_PovLightOptShadowlessChk = new QCheckBox(TCObject::ls("PovLightOptShadowless"), this);
 					m_PovLightOptShadowlessChk->setToolTip(TCObject::ls("PovLightShadowlessTT"));
-					grid->addWidget(m_PovLightOptShadowlessChk,4,0);
+					grid->addWidget(m_PovLightOptShadowlessChk, row, 0, 1, 4, Qt::AlignLeft | Qt::AlignVCenter);
 
-					label = new QLabel(TCObject::ls("PovLightOptColor"),this);
-					grid->addWidget(label,4,1);
-					label = new QLabel(TCObject::ls("PovLightOptFadeDistance"),this);
-					grid->addWidget(label,4,2);
-					label = new QLabel(TCObject::ls("PovLightOptFadePower"),this);
-					grid->addWidget(label,4,3);
+					row = 8;
+					addCaption("PovLightOptColor", row, 0);
+					addCaption("PovLightOptFadeDistance", row, 1);
+					addCaption("PovLightOptFadePower", row, 2);
 
-					// row 5
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,5,0);
+					row = 9;
 					m_PovLightOptColorBtn = new QPushButton(this);
 					m_PovLightOptColorBtn->setToolTip(TCObject::ls("PovLightColorTT"));
-					grid->addWidget(m_PovLightOptColorBtn,5,1);
+					expandHorizontally(m_PovLightOptColorBtn);
+					grid->addWidget(m_PovLightOptColorBtn, row, 0);
 
 					m_PovLightOptFadeDistanceDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptFadeDistanceDSpin->setRange(0.0, 1.0);
 					m_PovLightOptFadeDistanceDSpin->setDecimals(1);
 					m_PovLightOptFadeDistanceDSpin->setSingleStep(1);
 					m_PovLightOptFadeDistanceDSpin->setToolTip(TCObject::ls("PovLightFadeDistanceTT"));
-					grid->addWidget(m_PovLightOptFadeDistanceDSpin,5,2);
+					expandHorizontally(m_PovLightOptFadeDistanceDSpin);
+					grid->addWidget(m_PovLightOptFadeDistanceDSpin, row, 1);
 
 					m_PovLightOptFadePowerDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptFadePowerDSpin->setRange(0.0, 1.0);
 					m_PovLightOptFadePowerDSpin->setDecimals(1);
 					m_PovLightOptFadePowerDSpin->setSingleStep(1);
 					m_PovLightOptFadePowerDSpin->setToolTip(TCObject::ls("PovLightFadePowerTT"));
-					grid->addWidget(m_PovLightOptFadePowerDSpin,5,3);
+					expandHorizontally(m_PovLightOptFadePowerDSpin);
+					grid->addWidget(m_PovLightOptFadePowerDSpin, row, 2);
 
-					// row 6
-					label = new QLabel(TCObject::ls("PovLightSpotOptionsLbl"),this);
-					grid->addWidget(label,6,0);
-					label = new QLabel(TCObject::ls("PovLightOptSpotRadius"),this);
-					grid->addWidget(label,6,1);
-					label = new QLabel(TCObject::ls("PovLightOptSpotFalloff"),this);
-					grid->addWidget(label,6,2);
-					label = new QLabel(TCObject::ls("PovLightOptSpotTightness"),this);
-					grid->addWidget(label,6,3);
+					row = 10;
+					grid->setRowMinimumHeight(row, 12);
+					row = 11;
+					addSection("PovLightSpotOptionsLbl", row);
 
-					// row 7
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,7,0);
-					m_PovLightOptSpotRadiusDSpin =  new QDoubleSpinBox(this);
+					row = 12;
+					addCaption("PovLightOptSpotRadius", row, 0);
+					addCaption("PovLightOptSpotFalloff", row, 1);
+					addCaption("PovLightOptSpotTightness", row, 2);
+
+					row = 13;
+					m_PovLightOptSpotRadiusDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptSpotRadiusDSpin->setDecimals(1);
 					m_PovLightOptSpotRadiusDSpin->setSingleStep(1);
 					m_PovLightOptSpotRadiusDSpin->setToolTip(TCObject::ls("PovLightSpotRadiusTT"));
-					grid->addWidget(m_PovLightOptSpotRadiusDSpin,7,1);
+					expandHorizontally(m_PovLightOptSpotRadiusDSpin);
+					grid->addWidget(m_PovLightOptSpotRadiusDSpin, row, 0);
 
-					m_PovLightOptSpotFalloffDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptSpotFalloffDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptSpotFalloffDSpin->setRange(-180.0, 180.0);
 					m_PovLightOptSpotFalloffDSpin->setDecimals(1);
 					m_PovLightOptSpotFalloffDSpin->setSingleStep(1);
 					m_PovLightOptSpotFalloffDSpin->setToolTip(TCObject::ls("PovLightSpotFalloffTT"));
-					grid->addWidget(m_PovLightOptSpotFalloffDSpin,7,2);
+					expandHorizontally(m_PovLightOptSpotFalloffDSpin);
+					grid->addWidget(m_PovLightOptSpotFalloffDSpin, row, 1);
 
-					m_PovLightOptSpotTightnessDSpin =  new QDoubleSpinBox(this);
+					m_PovLightOptSpotTightnessDSpin = new QDoubleSpinBox(this);
 					m_PovLightOptSpotTightnessDSpin->setDecimals(1);
 					m_PovLightOptSpotTightnessDSpin->setSingleStep(1);
 					m_PovLightOptSpotTightnessDSpin->setToolTip(TCObject::ls("PovLightSpotTightnessTT"));
-					grid->addWidget(m_PovLightOptSpotTightnessDSpin,7,3);
+					expandHorizontally(m_PovLightOptSpotTightnessDSpin);
+					grid->addWidget(m_PovLightOptSpotTightnessDSpin, row, 2);
 
-					// row 8
-					label = new QLabel(TCObject::ls("PovLightAreaOptionsLbl"),this);
-					grid->addWidget(label,8,0);
-					label = new QLabel(TCObject::ls("PovLightOptAreaWidth"),this);
-					grid->addWidget(label,8,1);
-					label = new QLabel(TCObject::ls("PovLightOptAreaHeight"),this);
-					grid->addWidget(label,8,2);
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,8,3);
+					row = 14;
+					grid->setRowMinimumHeight(row, 12);
+					row = 15;
+					addSection("PovLightAreaOptionsLbl", row);
 
-					// row 9
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,9,0);
+					row = 16;
+					addCaption("PovLightOptAreaWidth", row, 0);
+					addCaption("PovLightOptAreaHeight", row, 1);
 
-					m_PovLightOptAreaWidthSpin =  new QSpinBox(this);
+					row = 17;
+					m_PovLightOptAreaWidthSpin = new QSpinBox(this);
 					m_PovLightOptAreaWidthSpin->setRange(0,10000);
 					m_PovLightOptAreaWidthSpin->setSingleStep(1);
 					m_PovLightOptAreaWidthSpin->setToolTip(TCObject::ls("PovLightAreaWidthTT"));
-					grid->addWidget(m_PovLightOptAreaWidthSpin,9,1);
+					expandHorizontally(m_PovLightOptAreaWidthSpin);
+					grid->addWidget(m_PovLightOptAreaWidthSpin, row, 0);
 
-					m_PovLightOptAreaHeightSpin =  new QSpinBox(this);
+					m_PovLightOptAreaHeightSpin = new QSpinBox(this);
 					m_PovLightOptAreaHeightSpin->setRange(0,10000);
 					m_PovLightOptAreaHeightSpin->setSingleStep(1);
 					m_PovLightOptAreaHeightSpin->setToolTip(TCObject::ls("PovLightAreaHeightTT"));
-					grid->addWidget(m_PovLightOptAreaHeightSpin,9,2);
+					expandHorizontally(m_PovLightOptAreaHeightSpin);
+					grid->addWidget(m_PovLightOptAreaHeightSpin, row, 1);
 
-					m_PovLightOptAreaCircleChk = new QCheckBox(TCObject::ls("PovLightOptAreaCircle"),this);
+					m_PovLightOptAreaCircleChk = new QCheckBox(TCObject::ls("PovLightOptAreaCircle"), this);
 					m_PovLightOptAreaCircleChk->setToolTip(TCObject::ls("PovLightAreaCircleTT"));
-					grid->addWidget(m_PovLightOptAreaCircleChk,9,3);
+					grid->addWidget(m_PovLightOptAreaCircleChk, row, 2, Qt::AlignLeft | Qt::AlignVCenter);
 
-					// row 10
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,10,0);
-					label = new QLabel(TCObject::ls("PovLightOptAreaRows"),this);
-					grid->addWidget(label,10,1);
-					label = new QLabel(TCObject::ls("PovLightOptAreaColumns"),this);
-					grid->addWidget(label,10,2);
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,10,3);
+					row = 18;
+					grid->setRowMinimumHeight(row, 6);
+					row = 19;
+					addCaption("PovLightOptAreaRows", row, 0);
+					addCaption("PovLightOptAreaColumns", row, 1);
 
-					// row 11
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,11,0);
-					m_PovLightOptAreaRowsSpin =  new QSpinBox(this);
+					row = 20;
+					m_PovLightOptAreaRowsSpin = new QSpinBox(this);
 					m_PovLightOptAreaRowsSpin->setRange(0,1000);
 					m_PovLightOptAreaRowsSpin->setSingleStep(1);
 					m_PovLightOptAreaRowsSpin->setToolTip(TCObject::ls("PovLightAreaRowsTT"));
-					grid->addWidget(m_PovLightOptAreaRowsSpin,11,1);
+					expandHorizontally(m_PovLightOptAreaRowsSpin);
+					grid->addWidget(m_PovLightOptAreaRowsSpin, row, 0);
 
-					m_PovLightOptAreaColumnsSpin =  new QSpinBox(this);
+					m_PovLightOptAreaColumnsSpin = new QSpinBox(this);
 					m_PovLightOptAreaColumnsSpin->setRange(0,1000);
 					m_PovLightOptAreaColumnsSpin->setSingleStep(1);
 					m_PovLightOptAreaColumnsSpin->setToolTip(TCObject::ls("PovLightAreaColumnsTT"));
-					grid->addWidget(m_PovLightOptAreaColumnsSpin,11,2);
+					expandHorizontally(m_PovLightOptAreaColumnsSpin);
+					grid->addWidget(m_PovLightOptAreaColumnsSpin, row, 1);
 
-					sp = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-					grid->addItem(sp,11,3);
-
+					row = 21;
+					grid->setRowMinimumHeight(row, 12);
+					row = 22;
 					m_PovLightCombo = new QComboBox(this);
-					grid->addWidget(m_PovLightCombo,12,0,1,4);
+					m_PovLightCombo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
+					m_PovLightCombo->setMinimumContentsLength(24);
+					m_PovLightCombo->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+					grid->addWidget(m_PovLightCombo, row, 0, 1, 4);
 
+					row = 23;
 					m_messageLabel = new QLabel(this);
-					grid->addWidget(m_messageLabel,13,0,1,5);
-
-					// right side panel
-					vbox = new QVBoxLayout();
-					grid->addItem(vbox,0,4,12);
+					m_messageLabel->setWordWrap(true);
+					grid->addWidget(m_messageLabel, row, 0, 1, 4);
 
 					m_addPovLightBtn = new QPushButton(this);
 					m_addPovLightBtn->setText(TCObject::ls("PovLightAdd"));
 					m_addPovLightBtn->setToolTip(TCObject::ls("PovLightAddTT"));
 					m_addPovLightBtn->setEnabled(false);
-					vbox->addWidget(m_addPovLightBtn);
-					connect( m_addPovLightBtn, SIGNAL( clicked() ), this, SLOT( addLight()));
 
 					m_updatePovLightBtn = new QPushButton(this);
 					m_updatePovLightBtn->setText(TCObject::ls("PovLightUpdate"));
 					m_updatePovLightBtn->setToolTip(TCObject::ls("PovLightUpdateTT"));
 					m_updatePovLightBtn->setEnabled(false);
-					vbox->addWidget(m_updatePovLightBtn);
-					connect( m_updatePovLightBtn, SIGNAL( clicked() ), this, SLOT( updateLight()));
 
 					m_removePovLightBtn = new QPushButton(this);
 					m_removePovLightBtn->setText(TCObject::ls("PovLightRemove"));
 					m_removePovLightBtn->setToolTip(TCObject::ls("PovLightRemoveTT"));
 					m_removePovLightBtn->setEnabled(false);
-					vbox->addWidget(m_removePovLightBtn);
+					connect( m_addPovLightBtn, SIGNAL( clicked() ), this, SLOT( addLight()));
+					connect( m_updatePovLightBtn, SIGNAL( clicked() ), this, SLOT( updateLight()));
 					connect( m_removePovLightBtn, SIGNAL( clicked() ), this, SLOT( removeLight()));
-
-					sp = new QSpacerItem(20, 1000, QSizePolicy::Expanding, QSizePolicy::Expanding);
-					vbox->addSpacerItem(sp);
 
 					setLights();
 
@@ -587,13 +672,15 @@ void LDViewExportOption::populateExportSettings(void)
 			case LDExporterSetting::TEnum:
 				vbox = new QVBoxLayout();
 				vbox->setSpacing(4);
-				hbox->addLayout(vbox);
-				sp = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-				hbox->addSpacerItem(sp);
+				hbox->addLayout(vbox, 1);
 				label = new QLabel(qstmp);
+				configureExportLabel(label);
 				vbox->addWidget(label);
 				QComboBox *combo;
 				combo = new QComboBox();
+				combo->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
+				combo->setMinimumContentsLength(12);
+				combo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 				vbox->addWidget(combo);
 				for (size_t i = 0; i < it->getOptions().size(); i++) {
 					ucstringtoqstring(qstmp,it->getOptions()[i]);
@@ -617,18 +704,8 @@ void LDViewExportOption::populateExportSettings(void)
 		}
 	} // Settings
 
-	if (vbl) {
-		QSpacerItem *sp = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-		QHBoxLayout *hbox;
-		QPushButton *rg;
-		hbox = new QHBoxLayout();
-		rg = new QPushButton(tr("Reset Group"));
-		rg->setObjectName("Reset Group");
-		hbox->addItem(sp);
-		hbox->addWidget(rg);
-		vbl->addLayout(hbox);
-		connect( rg, SIGNAL( clicked() ), this, SLOT( doResetGroup() ) );
-	}
+	if (vbl)
+		addGroupResetRow(vbl);
 }
 
 void LDViewExportOption::enableApply(void)

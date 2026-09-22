@@ -4006,13 +4006,13 @@ void Gui::updateGoToPage(bool frontCoverPageExist, bool backCoverPageExist) {
       pageNum++;
       if (frontCoverPageExist && i == 1) {
           pageNum--;
-          gui->setGoToPageCombo->addItem(QString("Front Cover"));
+          gui->setGoToPageCombo->addItem(tr("Front Cover"));
       }
       else if (backCoverPageExist && i == Gui::maxPages) {
-          gui->setGoToPageCombo->addItem(QString("Back Cover"));
+          gui->setGoToPageCombo->addItem(tr("Back Cover"));
       }
       else
-          gui->setGoToPageCombo->addItem(QString("Page %1").arg(QString::number(pageNum)));
+          gui->setGoToPageCombo->addItem(tr("Page %1", "go to page").arg(QString::number(pageNum)));
   }
 
   gui->setGoToPageCombo->setCurrentIndex(Gui::displayPageNum - 1 - Gui::pa);
@@ -4945,12 +4945,6 @@ void Gui::createActions()
     openAct->setStatusTip(tr("Open an existing file"));
     lpub->actions.insert(openAct->objectName(), Action(QStringLiteral("File.Open"), openAct));
     connect(openAct, SIGNAL(triggered()), gui, SLOT(open()));
-
-    QAction *openIoAct = new QAction(QIcon(":/resources/open.png"), tr("Open &IO File..."), gui);
-    openIoAct->setObjectName("openIoAct.1");
-    openIoAct->setStatusTip(tr("Open a Studio IO project file"));
-    lpub->actions.insert(openIoAct->objectName(), Action(QStringLiteral("File.Open IO"), openIoAct));
-    connect(openIoAct, SIGNAL(triggered()), gui, SLOT(openIo()));
 
     QAction *openWithChoiceAct = new QAction(QIcon(":/resources/openwithchoice.png"),tr("Choose Application..."), this);
     openWithChoiceAct->setObjectName("openWithChoiceAct.1");
@@ -6913,7 +6907,6 @@ void Gui::createMenus()
     fileMenu->setObjectName("fileMenu");
     gui->menus.insert(fileMenu->objectName(), fileMenu);
     fileMenu->addAction(gui->getAct("openAct.1"));
-    fileMenu->addAction(gui->getAct("openIoAct.1"));
 
     gui->openWithMenu = fileMenu->addMenu(tr("Open With..."));
     gui->openWithMenu->setObjectName("openWithMenu");
@@ -6921,6 +6914,10 @@ void Gui::createMenus()
     gui->menus.insert(gui->openWithMenu->objectName(), gui->openWithMenu);
     gui->openWithMenu->setIcon(QIcon(":/resources/openwith.png"));
     gui->openWithMenu->setStatusTip(tr("Open model file with selected application"));
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+    gui->openWithMenu->addAction(gui->getAct("openWithChoiceAct.1"));
+    gui->openWithMenu->addSeparator();
+#endif
     const int systemEditor = Preferences::systemEditor.isEmpty() ? 0 : 1;
     const int maxOpenWithPrograms = Preferences::maxOpenWithPrograms + systemEditor;
     for (int i = 0; i < maxOpenWithPrograms; i++) {
@@ -7273,7 +7270,6 @@ void Gui::createToolBars()
     fileToolBar->setObjectName("fileToolBar");
     gui->toolbars.insert(fileToolBar->objectName(), fileToolBar);
     fileToolBar->addAction(gui->getAct("openAct.1"));
-    fileToolBar->addAction(gui->getAct("openIoAct.1"));
     fileToolBar->addAction(gui->getAct("reloadFromDiskAct.1"));
     fileToolBar->addAction(gui->getAct("saveAct.1"));
     fileToolBar->addAction(gui->getAct("saveAsAct.1"));

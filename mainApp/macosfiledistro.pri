@@ -129,6 +129,7 @@ macx:contains(QT_ARCH, arm64) { LP3D_RAY_ARCH = aarch64 } else { LP3D_RAY_ARCH =
 isEmpty(LDGLITE_INS_EXE):LDGLITE_INS_EXE   = $$THIRD_PARTY_SRC/$$VER_LDGLITE/bin/$$QT_ARCH/ldglite
 isEmpty(LDVIEW_INS_EXE):LDVIEW_INS_EXE     = $$THIRD_PARTY_SRC/$$VER_LDVIEW/bin/$$QT_ARCH/ldview
 isEmpty(RAYTRACE_INS_EXE):RAYTRACE_INS_EXE = $$THIRD_PARTY_SRC/$$VER_POVRAY/bin/$$LP3D_RAY_ARCH/lpub3d_trace_cui
+isEmpty(RAYTRACE_INS_LIB):RAYTRACE_INS_LIB = $$THIRD_PARTY_SRC/$$VER_POVRAY/lib
 
 # source directories - 3rd party components
 isEmpty(LDGLITE_INS_DOC):LDGLITE_INS_DOC   = $$THIRD_PARTY_SRC/$$VER_LDGLITE/docs
@@ -149,6 +150,7 @@ isEmpty(LDVIEW_INS_RES_DIR):LDVIEW_INS_RES_DIR     = Contents/3rdParty/$$VER_LDV
 isEmpty(RAYTRACE_INS_DIR):RAYTRACE_INS_DIR         = Contents/3rdParty/$$VER_POVRAY/bin
 isEmpty(RAYTRACE_INS_DOC_DIR):RAYTRACE_INS_DOC_DIR = Contents/3rdParty/$$VER_POVRAY/docs
 isEmpty(RAYTRACE_INS_RES_DIR):RAYTRACE_INS_RES_DIR = Contents/3rdParty/$$VER_POVRAY/resources
+isEmpty(RAYTRACE_INS_LIB_DIR):RAYTRACE_INS_LIB_DIR = Contents/3rdParty/$$VER_POVRAY/lib
 
 # install 3rd party content
 include(install3rdpartyassets.pri)
