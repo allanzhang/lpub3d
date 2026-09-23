@@ -43,7 +43,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
 
     ui->version->setText(tr("%1 <b>%2</b> %3Build <b>%4</b> SHA <b>%5</b>")
                          .arg(
-#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
+#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD
                               buildTypeDisplayString() + QStringLiteral(" "),
 #else
                               QString(),

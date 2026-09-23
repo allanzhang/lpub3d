@@ -35,6 +35,7 @@
 #include "reserve.h"
 #include "meta.h"
 #include "commonmenus.h"
+#include "lpub.h"
 #include "lpub_object.h"
 
 Range::Range(

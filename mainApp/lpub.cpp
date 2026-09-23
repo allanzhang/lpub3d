@@ -7542,6 +7542,12 @@ void Gui::createToolBars()
 
     gui->create3DToolBars();
 
+    const bool toolbarText = Settings.value(QString("%1/%2").arg(SETTINGS, VIEW_TOOLBAR_TEXT_KEY)).toString()
+                             == QLatin1String("textunder");
+    for (QToolBar *toolBar : gui->toolbars)
+        toolBar->setToolButtonStyle(toolbarText ? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
+    gui->getAct(toolbarText ? "toolbarTextUnderIconAct.1" : "toolbarTextIconOnlyAct.1")->setChecked(true);
+
     for (QToolBar* toolBar : gui->toolbars)
         lcSetSimpleToolBarToolTips(toolBar);
 }
@@ -7563,12 +7569,6 @@ void Gui::createDockWindows()
     gui->connect(gui->commandEditDockWindow, SIGNAL (topLevelChanged(bool)), gui, SLOT (enableWindowFlags(bool)));
 
     gui->create3DDockWindows();
-
-    const bool toolbarText = Settings.value(QString("%1/%2").arg(SETTINGS, VIEW_TOOLBAR_TEXT_KEY)).toString()
-                             == QLatin1String("textunder");
-    for (QToolBar *toolBar : gui->toolbars)
-        toolBar->setToolButtonStyle(toolbarText ? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
-    gui->getAct(toolbarText ? "toolbarTextUnderIconAct.1" : "toolbarTextIconOnlyAct.1")->setChecked(true);
 }
 
 void Gui::importToolBarVisibilityChanged(bool visible)

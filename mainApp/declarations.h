@@ -48,8 +48,6 @@ inline QString buildTypeDisplayString()
   static const char *const values[] = {
     QT_TRANSLATE_NOOP("BuildMetadata", "Dev-debug"),
     QT_TRANSLATE_NOOP("BuildMetadata", "Dev-release"),
-    QT_TRANSLATE_NOOP("BuildMetadata", "Next-debug"),
-    QT_TRANSLATE_NOOP("BuildMetadata", "Next-release"),
     QT_TRANSLATE_NOOP("BuildMetadata", "Release"),
     QT_TRANSLATE_NOOP("BuildMetadata", "Version"),
   };
@@ -66,7 +64,7 @@ inline QString buildTypeDisplayString()
 inline QString versionDisplayString(const QString &productVersion,
                                     const QString &revision = QString())
 {
-#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
+#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD
   return QStringLiteral("%1%2 (%3)").arg(productVersion, revision,
                                           buildTypeDisplayString());
 #else

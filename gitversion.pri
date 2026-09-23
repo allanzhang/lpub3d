@@ -206,13 +206,10 @@ contains(BUILD_TYPE,continuous) {
     DEFINES += LP3D_CONTINUOUS_BUILD
 }
 
-if (contains(VER_BASE_NAME, $$lower($${TARGET}))) {
-    message("~~~ $${LPUB3D} USING RELEASE BUILD VER_BASE_NAME: $$VER_BASE_NAME ~~~")
-} else:contains(VER_BASE_NAME, $$lower("$${TARGET}next")) {
-    message("~~~ $${LPUB3D} USING NEXT DEVEL BUILD VER_BASE_NAME: $$VER_BASE_NAME ~~~")
-    DEFINES += LP3D_NEXT_BUILD
+if (equals($$(GITHUB), true)) {
+    message("~~~ $${LPUB3D} USING RELEASE BUILD (GITHUB) ~~~")
 } else {
-    message("~~~ $${LPUB3D} USING CI DEVEL BUILD VER_BASE_NAME: $$VER_BASE_NAME ~~~")
+    message("~~~ $${LPUB3D} USING DEV BUILD (not a GitHub release) ~~~")
     DEFINES += LP3D_DEVOPS_BUILD
 }
 

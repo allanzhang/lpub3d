@@ -22,6 +22,7 @@
 #include "step.h"
 #include "ranges.h"
 #include "declarations.h"
+#include "lpub.h"
 #include "lpub_object.h"
 
 PageAttributePixmapItem::PageAttributePixmapItem(

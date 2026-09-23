@@ -73,19 +73,11 @@
      #else
          #define    VER_BUILD_TYPE_STR      "Dev-release"
      #endif
-  #elif defined LP3D_NEXT_BUILD
-     #ifdef QT_DEBUG_MODE
-         #define    VER_BUILD_TYPE_STR      "Next-debug"
-     #else
-         #define    VER_BUILD_TYPE_STR      "Next-release"
-     #endif
   #else
      #define    VER_BUILD_TYPE_STR          "Release"
   #endif
 #elif defined LP3D_DEVOPS_BUILD
   #define    VER_BUILD_TYPE_STR             "Dev-release"
-#elif defined LP3D_NEXT_BUILD
-  #define    VER_BUILD_TYPE_STR             "Next-release"
 #else
   #define    VER_BUILD_TYPE_STR             "Version"
 #endif

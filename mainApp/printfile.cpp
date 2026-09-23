@@ -2335,8 +2335,6 @@ void Gui::Print(QPrinter* Printer)
             Gui::clearPage();
 
             if (PageCopy < PageCopies - 1) {
-
-            if (PageCopy < PageCopies - 1) {
               Printer->newPage();
             }
           }
