@@ -2,7 +2,6 @@
 
 #include "lc_math.h"
 #include "lc_mesh.h"
-#include "studio_mesh_processor.h"
 
 class lcLibraryMeshData;
 class lcMeshLoader;
@@ -39,8 +38,7 @@ enum class lcMeshLoaderMaterialType
 	Solid,
 	Planar,
 	Cylindrical,
-	Spherical,
-	Studio
+	Spherical
 };
 
 struct lcMeshLoaderMaterial
@@ -185,8 +183,6 @@ public:
 
 	lcMeshLoaderMaterial* GetMaterial(quint32 ColorCode);
 	lcMeshLoaderMaterial* GetTexturedMaterial(quint32 ColorCode, const lcMeshLoaderTextureMap& TextureMap);
-	lcMeshLoaderMaterial* GetStudioTexturedMaterial(quint32 ColorCode, const char* TextureName);
-	void ApplyStudioTextureMapToNewSections(const StudioMeshProcessor::Texture& Texture, const std::array<size_t, LC_NUM_MESHDATA_TYPES>& SectionStarts, const lcMatrix44& ParentMatrix);
 
 	std::array<lcMeshLoaderTypeData, LC_NUM_MESHDATA_TYPES> mData;
 	bool mHasTextures;
@@ -225,10 +221,6 @@ protected:
 	bool ReadMeshData(lcFile& File, const lcMatrix44& CurrentTransform, quint32 CurrentColorCode, bool InvertWinding, lcMeshDataType MeshDataType);
 
 	std::vector<lcMeshLoaderTextureMap> mTextureStack;
-	StudioMeshProcessor::Texture mStudioTextureMap;
-	std::array<size_t, LC_NUM_MESHDATA_TYPES> mStudioSectionStarts = {};
-	lcMatrix44 mStudioParentTransform;
-	bool mHasStudioTextureMap = false;
 
 	lcLibraryMeshData& mMeshData;
 	bool mOptimize;

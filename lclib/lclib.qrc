@@ -134,14 +134,12 @@
         <file alias="shaders/fakelit_color_ps.glsl">resources/shaders/fakelit_color_ps.glsl</file>
         <file alias="shaders/fakelit_color_vs.glsl">resources/shaders/fakelit_color_vs.glsl</file>
         <file alias="shaders/fakelit_texture_decal_ps.glsl">resources/shaders/fakelit_texture_decal_ps.glsl</file>
-        <file alias="shaders/fakelit_texture_decal_alpha_ps.glsl">resources/shaders/fakelit_texture_decal_alpha_ps.glsl</file>
         <file alias="shaders/fakelit_texture_decal_vs.glsl">resources/shaders/fakelit_texture_decal_vs.glsl</file>
         <file alias="shaders/unlit_color_conditional_ps.glsl">resources/shaders/unlit_color_conditional_ps.glsl</file>
         <file alias="shaders/unlit_color_conditional_vs.glsl">resources/shaders/unlit_color_conditional_vs.glsl</file>
         <file alias="shaders/unlit_color_ps.glsl">resources/shaders/unlit_color_ps.glsl</file>
         <file alias="shaders/unlit_color_vs.glsl">resources/shaders/unlit_color_vs.glsl</file>
         <file alias="shaders/unlit_texture_decal_ps.glsl">resources/shaders/unlit_texture_decal_ps.glsl</file>
-        <file alias="shaders/unlit_texture_decal_alpha_ps.glsl">resources/shaders/unlit_texture_decal_alpha_ps.glsl</file>
         <file alias="shaders/unlit_texture_decal_vs.glsl">resources/shaders/unlit_texture_decal_vs.glsl</file>
         <file alias="shaders/unlit_texture_modulate_ps.glsl">resources/shaders/unlit_texture_modulate_ps.glsl</file>
         <file alias="shaders/unlit_texture_modulate_vs.glsl">resources/shaders/unlit_texture_modulate_vs.glsl</file>

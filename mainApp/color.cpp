@@ -394,12 +394,7 @@ QString LDrawColor::code(const QString& name)
       //qDebug() << qUtf8Printable(QString("CREATED Color OBJECT [%1] ALPHA [%2] for valid HEX(%3) VALUE [%4]").arg(color.name(QColor::HexRgb).toUpper()).arg(color.alpha()).arg(match.captured(1)).arg(name));
       QString const code = QString::number(*std::max_element(value2code.begin(), value2code.end()) + 1);
       QString const edge = QLatin1String("#333333");
-      // Register as native so the synthesized code is NOT added to userdefinedcolors.
-      // A direct (0xRRGGBB) colour is referenced by this code from the loaded model
-      // for the rest of the session; removeUserDefinedColors() runs on every open
-      // and close (openclose.cpp) and would otherwise delete it, leaving the model's
-      // colour unresolvable -> fallback value/alpha/edge plus a warning per lookup.
-      AddColor(color, name, code, edge, true /*native*/);
+      AddColor(color, name, code, edge, false /*native*/);
       //qDebug() << qUtf8Printable(QString("RETURNED Color CODE [%1] for valid HEX(%2) VALUE [%3]").arg(code).arg(match.captured(1)).arg(name));
       return code;
     }

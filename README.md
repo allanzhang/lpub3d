@@ -4,6 +4,14 @@
 
 This fork is maintained as a **single version** project: the `master` branch always tracks the current release, and all DoubleEagle customizations are folded into it (no parallel feature/release branches).
 
+## v2.7.1 (2026-09-23)
+
+- **Open Studio projects**: `.io` / `.mo` files open, drop, reload, and appear in Recent Files through the normal open path. The importer unpacks a temporary LDraw model and keeps the original archive as the current file. There is no separate “Open IO” command.
+- **Open With**: macOS and Windows gain a system application chooser. On macOS, a chosen `.app` is launched with `/usr/bin/open -a`.
+- **Settings copy**: message options, theme, POV-Ray export, and Blender preference pages use Chinese for ordinary text and keep technical terms in English. Related forms are left-aligned with buttons below the fields. Renderer configuration itself is not finished and is not separately accepted.
+- **macOS POV-Ray bundle**: the app carries the POV-Ray dylibs it needs, and the missing `colors_ral.inc` is no longer installed.
+- **Not in this release**: transparent-part / sticker rendering was stopped and its experiment code removed. Third-party renderer setup and Windows compatibility remain open.
+
 ## v2.7.0 (2026-09-18)
 
 - **Callout pointers**: pointer tips now project the referenced submodel instance into the rendered CSI and stop on its real visible outline instead of using a fixed normalized point.
@@ -40,11 +48,12 @@ This fork is maintained as a **single version** project: the `master` branch alw
 
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
-当前已发布版本仍是 v2.7.0。本地提交暂不发版。后续三件需求互相独立，见 [docs/TODO.md](docs/TODO.md)。
+当前已发布版本是 v2.7.1。第三方渲染器配置和 Windows 平台兼容仍未完成，见 [docs/TODO.md](docs/TODO.md)。
 
 
 ## Download
 
+- [myLPub3D-v2.7.1-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.7.1/myLPub3D-v2.7.1-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.7.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.7.0/myLPub3D-v2.7.0-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.6.1-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.1/myLPub3D-v2.6.1-macOS.zip) (macOS, Apple Silicon)
 - [myLPub3D-v2.6.0-macOS.zip](https://github.com/allanzhang/lpub3d/releases/download/v2.6.0/myLPub3D-v2.6.0-macOS.zip) (macOS, Apple Silicon)

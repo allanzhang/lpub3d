@@ -273,12 +273,10 @@ void lcContext::CreateShaderPrograms()
 		":/resources/shaders/unlit_color_conditional_vs.glsl", // UnlitColorConditional
 		":/resources/shaders/unlit_texture_modulate_vs.glsl",  // UnlitTextureModulate
 		":/resources/shaders/unlit_texture_decal_vs.glsl",     // UnlitTextureDecal
-		":/resources/shaders/unlit_texture_decal_vs.glsl",     // UnlitTextureDecalAlpha
 		":/resources/shaders/unlit_vertex_color_vs.glsl",      // UnlitVertexColor
 		":/resources/shaders/unlit_view_sphere_vs.glsl",       // UnlitViewSphere
 		":/resources/shaders/fakelit_color_vs.glsl",           // FakeLitColor
-		":/resources/shaders/fakelit_texture_decal_vs.glsl",   // FakeLitTextureDecal
-		":/resources/shaders/fakelit_texture_decal_vs.glsl"    // FakeLitTextureDecalAlpha
+		":/resources/shaders/fakelit_texture_decal_vs.glsl"    // FakeLitTextureDecal
 	};
 
 	LC_ARRAY_SIZE_CHECK(VertexShaders, lcMaterialType::Count);
@@ -289,12 +287,10 @@ void lcContext::CreateShaderPrograms()
 		":/resources/shaders/unlit_color_conditional_ps.glsl", // UnlitColorConditional
 		":/resources/shaders/unlit_texture_modulate_ps.glsl",  // UnlitTextureModulate
 		":/resources/shaders/unlit_texture_decal_ps.glsl",     // UnlitTextureDecal
-		":/resources/shaders/unlit_texture_decal_alpha_ps.glsl",// UnlitTextureDecalAlpha
 		":/resources/shaders/unlit_vertex_color_ps.glsl",      // UnlitVertexColor
 		":/resources/shaders/unlit_view_sphere_ps.glsl",       // UnlitViewSphere
 		":/resources/shaders/fakelit_color_ps.glsl",           // FakeLitColor
-		":/resources/shaders/fakelit_texture_decal_ps.glsl",   // FakeLitTextureDecal
-		":/resources/shaders/fakelit_texture_decal_alpha_ps.glsl" // FakeLitTextureDecalAlpha
+		":/resources/shaders/fakelit_texture_decal_ps.glsl"    // FakeLitTextureDecal
 	};
 
 	LC_ARRAY_SIZE_CHECK(FragmentShaders, lcMaterialType::Count);
@@ -592,9 +588,7 @@ void lcContext::SetMaterial(lcMaterialType MaterialType)
 			break;
 
 		case lcMaterialType::FakeLitTextureDecal:
-		case lcMaterialType::FakeLitTextureDecalAlpha:
 		case lcMaterialType::UnlitTextureDecal:
-		case lcMaterialType::UnlitTextureDecalAlpha:
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
 			if (!mTextureEnabled)

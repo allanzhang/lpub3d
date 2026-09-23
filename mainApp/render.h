@@ -56,7 +56,6 @@ public:
   static int             getDistanceRendererIndex();
   static void            setRenderer(int);
   static bool            clipImage(QString const &);
-  static bool            WaitForRenderOutput(QString const &, int timeoutMs = 15000);
   static QString const   getRotstepMeta(RotStepMeta &, bool isKey = false);
   static QString const   getPovrayRenderQuality(int quality = -1);
   static int             executeLDViewProcess(QStringList &, QStringList &, Options::Mt);

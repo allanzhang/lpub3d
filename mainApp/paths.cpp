@@ -48,22 +48,6 @@ QString Paths::submodelDir      = lpubDir + QDir::separator() + QLatin1String("s
 QString Paths::povrayRenderDir  = lpubDir + QDir::separator() + QLatin1String("povray");
 QString Paths::blenderRenderDir = lpubDir + QDir::separator() + QLatin1String("blender");
 QString Paths::htmlStepsDir     = lpubDir + QDir::separator() + QLatin1String("htmlsteps");
-/*** LPub3D Mod - ASCII scratch for POV-Ray (LPub3D-Trace rejects non-ASCII paths) ***/
-// LPub3D-Trace opens +I/+O paths itself and only accepts ASCII. A Studio model
-// leaves its name in the working directory ("IO Enhancement", "测试文件 2"),
-// which made every render fail, so scene files and rendered images are staged
-// under the system temp directory, which contains no spaces and no non-ASCII
-// characters on macOS. RendererScratchDir() is shared by the scene writers
-// (step.cpp, pli.cpp) and the renderers (render.cpp) so both sides agree on the
-// location without changing the working directory everything else relies on.
-QString Paths::rendererScratchDir()
-{
-    static const QString dir = QDir::tempPath() + QDir::separator() + QLatin1String("myLPub3D-render");
-    QDir().mkpath(dir);
-    return dir;
-}
-/*** LPub3D Mod end ***/
-
 QString Paths::logsDir          = QLatin1String("logs");
 QString Paths::extrasDir        = QLatin1String("extras");
 QString Paths::libraryDir       = QLatin1String("libraries");

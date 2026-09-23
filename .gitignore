@@ -200,11 +200,6 @@ Makefile*.qt
 Makefile.3ds
 Makefile.tinyxml
 
-# Studio IO import unit-test build products
-tests/studio_io_import/moc_predefs.h
-tests/studio_io_import/*.moc
-tests/studio_io_import/studio_io_import_test
-
 # Local agent config, not part of the project
 .claude/
 .mcp.json

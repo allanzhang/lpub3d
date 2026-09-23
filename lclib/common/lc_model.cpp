@@ -1,4 +1,3 @@
-#include <unordered_set>
 #include "lc_global.h"
 #include "lc_model.h"
 #include <locale.h>
@@ -318,7 +317,7 @@ void lcModel::CreatePieceInfo(Project* Project)
 
 void lcModel::UpdateMesh()
 {
-	mPieceInfo->SetModel(this, true, mProject, true);
+	mPieceInfo->SetModel(this, true, nullptr, false);
 }
 
 void lcModel::UpdateAllViews() const
@@ -642,7 +641,6 @@ void lcModel::LoadLDraw(QIODevice& Device, Project* Project)
 
 	bool ReadingHeader = true;
 	bool FirstLine = true;
-	bool StudioTextureMesh = false;
 
 	while (!Device.atEnd())
 	{
@@ -689,12 +687,6 @@ void lcModel::LoadLDraw(QIODevice& Device, Project* Project)
 					if (mLPubFade && Preferences.mFadeSteps)
 						Preferences.mFadeSteps = false;
 				}
-			}
-			else if (Token == QLatin1String("!STUDIO_TEXMAP"))
-			{
-				mFileLines.append(OriginalLine);
-				StudioTextureMesh = !Line.contains(QLatin1String("END"));
-				continue;
 			}
 			else if (Token == QLatin1String("!SILHOUETTE"))
 			{
@@ -884,9 +876,6 @@ void lcModel::LoadLDraw(QIODevice& Device, Project* Project)
 
 			if (PartId.isEmpty())
 				continue;
-
-			if (StudioTextureMesh)
-				mFileLines.append(OriginalLine);
 
 			QByteArray CleanId = PartId.toLatin1().toUpper().replace('\\', '/');
 
@@ -1913,81 +1902,8 @@ bool lcModel::SubModelBoxTest(const lcVector4 Planes[6]) const
 	return false;
 }
 
-namespace
-{
-/*** LPub3D Mod - cycle-safe submodel bounding-box traversal ***/
-// A self-referencing (or mutually referencing) submodel graph used to send the
-// bounding-box traversal into unbounded recursion and overflow the stack
-// (SIGSEGV). Studio projects that collapse a custom part onto the model which
-// contains it can produce such a cycle.
-//
-// Detection is per ancestor chain: a model already being visited higher up the
-// current chain is skipped, which breaks the cycle without dropping geometry.
-// The same part reached through a sibling branch is still visited, so repeated
-// instances keep contributing their extents. The depth cap remains only as a
-// last-resort backstop against an unexpected shape.
-const int kSubModelBoundingBoxMaxDepth = 512;
-
-class lcSubModelBoundingBoxGuard
-{
-public:
-	explicit lcSubModelBoundingBoxGuard(const lcModel* Model)
-		: mModel(Model)
-		, mDepth(0)
-		, mValid(false)
-		, mInserted(false)
-	{
-		if (sDepth == 0)
-			sChain.clear();
-
-		mDepth = ++sDepth;
-
-		if (mDepth > kSubModelBoundingBoxMaxDepth)
-			return;
-
-		mValid = true;
-		mInserted = sChain.insert(Model).second;
-	}
-
-	~lcSubModelBoundingBoxGuard()
-	{
-		if (mInserted)
-			sChain.erase(mModel);
-
-		--sDepth;
-	}
-
-	// False when this model already exists in the current ancestor chain (a
-	// cycle) or when the depth backstop tripped.
-	bool IsValid() const
-	{
-		return mValid && mInserted;
-	}
-
-private:
-	static thread_local std::unordered_set<const lcModel*> sChain;
-	static thread_local int sDepth;
-
-	const lcModel* const mModel;
-	int mDepth;
-	bool mValid;
-	bool mInserted;
-};
-
-thread_local std::unordered_set<const lcModel*> lcSubModelBoundingBoxGuard::sChain;
-thread_local int lcSubModelBoundingBoxGuard::sDepth = 0;
-/*** LPub3D Mod end ***/
-}
-
 void lcModel::SubModelCompareBoundingBox(const lcMatrix44& WorldMatrix, lcVector3& Min, lcVector3& Max) const
 {
-/*** LPub3D Mod - guard cyclic submodel references ***/
-	const lcSubModelBoundingBoxGuard Guard(this);
-
-	if (!Guard.IsValid())
-		return;
-/*** LPub3D Mod end ***/
-
 	for (const std::unique_ptr<lcPiece>& Piece : mPieces)
 		if (Piece->IsVisibleInSubModel())
 			Piece->SubModelCompareBoundingBox(WorldMatrix, Min, Max);
@@ -1995,15 +1911,6 @@ void lcModel::SubModelCompareBoundingBox(const lcMatrix44& WorldMatrix, lcVector
 
 void lcModel::SubModelAddBoundingBoxPoints(const lcMatrix44& WorldMatrix, std::vector<lcVector3>& Points) const
 {
-/*** LPub3D Mod - guard cyclic submodel references ***/
-	const lcSubModelBoundingBoxGuard Guard(this);
-
-	// Break the cycle. Returning the extents collected so far is preferable to
-	// overflowing the stack; the caller still gets a usable bounding box.
-	if (!Guard.IsValid())
-		return;
-/*** LPub3D Mod end ***/
-
 	for (const std::unique_ptr<lcPiece>& Piece : mPieces)
 		if (Piece->IsVisibleInSubModel())
 			Piece->SubModelAddBoundingBoxPoints(WorldMatrix, Points);

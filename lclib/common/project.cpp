@@ -1,10 +1,8 @@
 #include "lc_global.h"
 #include "lc_math.h"
 #include "lc_mesh.h"
-#include "lc_meshloader.h"
 #include <locale.h>
 #include "pieceinf.h"
-#include "piece.h"
 #include "camera.h"
 #include "project.h"
 #include "lc_instructions.h"
@@ -744,8 +742,8 @@ bool Project::Load(const QString& LoadFileName, const QString& StepKey, int Type
 
 	for (const std::unique_ptr<lcModel>& Model : mModels)
 	{
-		Model->UpdatePieceInfo(UpdatedModels);
 		Model->UpdateMesh();
+		Model->UpdatePieceInfo(UpdatedModels);
 	}
 
 	mModified = false;
@@ -2171,111 +2169,6 @@ std::pair<bool, QString> Project::ExportPOVRay(const QString& FileName)
 {
 	std::vector<lcModelPartsEntry> ModelParts = GetModelParts();
 
-	std::vector<lcModelPartsEntry> StudioModelParts;
-	std::vector<std::unique_ptr<lcMesh>> StudioMeshes;
-	if (!mModels.empty())
-	{
-		for (const std::unique_ptr<lcPiece>& CustomPiece : mModels[0]->GetPieces())
-		{
-			if (!CustomPiece->mPieceInfo)
-				continue;
-
-			const lcModel* CustomModel = nullptr;
-			for (const std::unique_ptr<lcModel>& Model : mModels)
-			{
-				if (QString::fromLatin1(CustomPiece->mPieceInfo->mFileName).compare(Model->GetProperties().mFileName, Qt::CaseInsensitive) == 0)
-				{
-					CustomModel = Model.get();
-					break;
-				}
-			}
-
-			if (!CustomModel)
-				continue;
-
-			QString TextureDirective;
-			QString BasePartName;
-			bool InStudioTexture = false;
-
-			for (const QString& Line : CustomModel->GetFileLines())
-			{
-				const QString Trimmed = Line.trimmed();
-				if (Trimmed.startsWith(QLatin1String("0 !STUDIO_TEXMAP START"), Qt::CaseInsensitive))
-				{
-					InStudioTexture = true;
-					TextureDirective = Line;
-					continue;
-				}
-
-				if (InStudioTexture && Trimmed.startsWith(QLatin1String("1 ")))
-				{
-					const QStringList Tokens = Trimmed.split(QLatin1Char(' '), Qt::SkipEmptyParts);
-					if (Tokens.size() == 15)
-					{
-						BasePartName = Tokens.at(14);
-						break;
-					}
-				}
-			}
-
-			if (TextureDirective.isEmpty() || BasePartName.isEmpty())
-				continue;
-
-			const lcModel* BaseModel = nullptr;
-			const lcPiece* BasePiece = nullptr;
-
-			for (const std::unique_ptr<lcModel>& Model : mModels)
-			{
-				if (QString::fromLatin1(BasePartName.toLatin1()).compare(Model->GetProperties().mFileName, Qt::CaseInsensitive) == 0)
-				{
-					BaseModel = Model.get();
-					break;
-				}
-			}
-
-			for (const std::unique_ptr<lcPiece>& Piece : CustomModel->GetPieces())
-			{
-				if (Piece->mPieceInfo && QString::fromLatin1(Piece->mPieceInfo->mFileName).compare(BasePartName, Qt::CaseInsensitive) == 0)
-				{
-					BasePiece = Piece.get();
-					break;
-				}
-			}
-
-			if (!BaseModel || !BasePiece)
-				continue;
-
-			lcMemFile PieceFile;
-			const QByteArray Directive = TextureDirective.toUtf8() + "\r\n";
-			PieceFile.WriteBuffer(Directive.constData(), Directive.size());
-			for (const QString& Line : BaseModel->GetFileLines())
-			{
-				const QByteArray Buffer = Line.toUtf8() + "\r\n";
-				PieceFile.WriteBuffer(Buffer.constData(), Buffer.size());
-			}
-			const char EndDirective[] = "0 !STUDIO_TEXMAP END\r\n";
-			PieceFile.WriteBuffer(EndDirective, sizeof(EndDirective) - 1);
-			PieceFile.Seek(0, SEEK_SET);
-
-			lcLibraryMeshData MeshData;
-			lcMeshLoader Loader(MeshData, true, this, true);
-			if (!Loader.LoadMesh(PieceFile, LC_MESHDATA_SHARED) || MeshData.IsEmpty())
-				continue;
-
-			std::unique_ptr<lcMesh> Mesh(MeshData.CreateMesh());
-			if (!(Mesh->mFlags & lcMeshFlag::HasTexture))
-				continue;
-
-			const lcMatrix44 WorldMatrix = lcMul(CustomPiece->mModelWorld, BasePiece->mModelWorld);
-			PieceInfo* Info = BasePiece->mPieceInfo ? BasePiece->mPieceInfo : CustomPiece->mPieceInfo;
-			StudioModelParts.emplace_back(lcModelPartsEntry{ WorldMatrix, Info, Mesh.get(), CustomPiece->GetColorIndex() });
-			StudioMeshes.emplace_back(std::move(Mesh));
-		}
-	}
-
-	if (!StudioModelParts.empty())
-		ModelParts = std::move(StudioModelParts);
-
 	if (ModelParts.empty())
 		return { false, tr("Nothing to export.") };
 
@@ -2339,43 +2232,15 @@ std::pair<bool, QString> Project::ExportPOVRay(const QString& FileName)
 	std::vector<std::string> LgeoColorTable(NumColors);
 	std::vector<std::array<char, LC_MAX_COLOR_NAME + 3>> ColorTable(NumColors);
 
-	const lcModel* ActiveModel = gMainWindow ? gMainWindow->GetActiveModel() : mModels[0].get();
-	const std::vector<std::unique_ptr<lcLight>>& Lights = ActiveModel->GetLights();
-
-	lcCamera DefaultCamera(false);
-	const lcCamera* Camera = nullptr;
-
-	if (gMainWindow && gMainWindow->GetActiveView())
-		Camera = gMainWindow->GetActiveView()->GetCamera();
-	else if (!ActiveModel->GetCameras().empty())
-		Camera = ActiveModel->GetCameras().front().get();
-	else
-	{
-		DefaultCamera.mPosition.SetValue(lcVector3(0.0f, -1000.0f, 500.0f));
-		DefaultCamera.mTargetPosition.SetValue(lcVector3(0.0f, 0.0f, 0.0f));
-		DefaultCamera.mUpVector.SetValue(lcVector3(0.0f, 0.0f, 1.0f));
-		DefaultCamera.m_fovy = 30.0f;
-		Camera = &DefaultCamera;
-	}
+	const std::vector<std::unique_ptr<lcLight>>& Lights = gMainWindow->GetActiveModel()->GetLights();
+	const lcCamera* Camera = gMainWindow->GetActiveView()->GetCamera();
 	const QString CameraName = QString(Camera->GetName()).replace(" ","_");
 	const lcVector3& Position = Camera->mPosition;
 	const lcVector3& Target = Camera->mTargetPosition;
 	const lcVector3& Up = Camera->mUpVector;
 	const lcVector3 BackgroundColor = lcVector3FromColor(lcGetPreferences().mBackgroundSolidColor);
 	const lcPOVRayOptions& POVRayOptions = mModels[0]->GetPOVRayOptions();
-	QString TopModelSafeName;
-	for (const QChar Character : mModels[0]->GetFileName())
-	{
-		if (Character.unicode() < 128 && (Character.isLetterOrNumber() || Character == QLatin1Char('_')))
-			TopModelSafeName.append(Character);
-		else if (Character == QLatin1Char('.'))
-			TopModelSafeName.append(QLatin1String("_dot_"));
-		else
-			TopModelSafeName.append(QLatin1Char('_'));
-	}
-	if (TopModelSafeName.isEmpty())
-		TopModelSafeName = QStringLiteral("model");
-	const QString TopModelName = QStringLiteral("LC_%1").arg(TopModelSafeName);
+	const QString TopModelName = QString("LC_%1").arg(QString(mModels[0]->GetFileName()).replace(" ","_").replace(".","_dot_"));
 	const QString LGEOPath = lcGetProfileString(LC_PROFILE_POVRAY_LGEO_PATH);
 	const bool UseLGEO = POVRayOptions.UseLGEO && !LGEOPath.isEmpty();
 	const int TopModelColorCode = 7;
@@ -2549,21 +2414,6 @@ std::pair<bool, QString> Project::ExportPOVRay(const QString& FileName)
 			"#end\n"
 			"#end\n\n",
 			static_cast<int>(lcLightType::Point), static_cast<int>(lcLightType::Spot), static_cast<int>(lcLightType::Directional), static_cast<int>(lcLightType::Area));
-	POVFile.WriteLine(Line);
-
-	sprintf(Line,
-			"#ifndef (SkipOpaqueColorMacro)\n"
-			"#macro OpaqueColor(r, g, b)\n"
-			"#if (LgeoLibrary) material { #end\n"
-			"  texture {\n"
-			"    pigment { srgbf <r,g,b,0> }\n"
-			"    finish { emission 0 ambient Ambient diffuse Diffuse }\n"
-			"    finish { phong Phong phong_size PhongSize reflection Reflection }\n"
-			"    normal { OpaqueNormal }\n"
-			"  }\n"
-			"#if (LgeoLibrary) } #end\n"
-			"#end\n"
-			"#end\n\n");
 	POVFile.WriteLine(Line);
 
 	for (const lcModelPartsEntry& ModelPart : ModelParts)

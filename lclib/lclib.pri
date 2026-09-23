@@ -43,7 +43,6 @@ HEADERS += \
     common/lc_math.h \
     common/lc_mesh.h \
     common/lc_meshloader.h \
-    common/studio_mesh_processor.h \
     common/lc_minifigdialog.h \
     common/lc_model.h \
     common/lc_modellistdialog.h \
@@ -120,7 +119,6 @@ SOURCES += \
     common/lc_mainwindow.cpp \
     common/lc_mesh.cpp \
     common/lc_meshloader.cpp \
-    common/studio_mesh_processor.cpp \
     common/lc_minifigdialog.cpp \
     common/lc_model.cpp \
     common/lc_modellistdialog.cpp \
