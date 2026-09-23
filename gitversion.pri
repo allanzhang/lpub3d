@@ -1,5 +1,5 @@
 # If no version info can be determined, VERSION (in LP3D_VERSION_INFO format) will be used
-VERSION = 2.4.9
+VERSION = 2.7.1
 
 # Need to discard STDERR so get path to NULL device
 if (mingw:ide_qtcreator)|win32-arm64-msvc|win32-msvc* {
