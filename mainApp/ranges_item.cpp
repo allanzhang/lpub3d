@@ -104,6 +104,13 @@ void MultiStepRangesBackgroundItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *ev
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
+void MultiStepRangesBackgroundItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    if (event->button() == Qt::LeftButton)
+        gui->multiStepSetup();
+}
+
 void MultiStepRangesBackgroundItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPen pen;

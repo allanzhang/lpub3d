@@ -358,6 +358,13 @@ void InsertPixmapItem::change()
   }
 }
 
+void InsertPixmapItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+  if (event->button() == Qt::LeftButton)
+    gui->pageSetup();
+}
+
 void InsertPixmapItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
   QMenu menu;

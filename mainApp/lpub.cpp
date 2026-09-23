@@ -230,6 +230,22 @@ void Gui::fullScreenView()
     }
 }
 
+void Gui::toolbarTextStyleChanged()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (!action)
+        return;
+
+    const Qt::ToolButtonStyle style = action->data().toString() == QLatin1String("textunder")
+        ? Qt::ToolButtonTextUnderIcon
+        : Qt::ToolButtonIconOnly;
+    for (QToolBar *toolBar : gui->toolbars)
+        toolBar->setToolButtonStyle(style);
+
+    QSettings Settings;
+    Settings.setValue(QString("%1/%2").arg(SETTINGS, VIEW_TOOLBAR_TEXT_KEY), action->data().toString());
+}
+
 /****************************************************************************
  *
  * The Gui constructor and destructor are at the bottom of the file with
@@ -5449,6 +5465,27 @@ void Gui::createActions()
     lpub->actions.insert(fullScreenViewAct->objectName(), Action(QStringLiteral("View.Full Screen View"), fullScreenViewAct));
     connect(fullScreenViewAct, SIGNAL(triggered()), gui, SLOT(fullScreenView()));
 
+    QAction *toolbarTextIconOnlyAct = new QAction(tr("Icon Only"), gui);
+    toolbarTextIconOnlyAct->setObjectName("toolbarTextIconOnlyAct.1");
+    toolbarTextIconOnlyAct->setCheckable(true);
+    toolbarTextIconOnlyAct->setData(QStringLiteral("icononly"));
+    toolbarTextIconOnlyAct->setStatusTip(tr("Show toolbar buttons as icons"));
+    lpub->actions.insert(toolbarTextIconOnlyAct->objectName(), Action(QStringLiteral("View.Toolbar Text Icon Only"), toolbarTextIconOnlyAct));
+    connect(toolbarTextIconOnlyAct, SIGNAL(triggered()), gui, SLOT(toolbarTextStyleChanged()));
+
+    QAction *toolbarTextUnderIconAct = new QAction(tr("Icon with Text Below"), gui);
+    toolbarTextUnderIconAct->setObjectName("toolbarTextUnderIconAct.1");
+    toolbarTextUnderIconAct->setCheckable(true);
+    toolbarTextUnderIconAct->setData(QStringLiteral("textunder"));
+    toolbarTextUnderIconAct->setStatusTip(tr("Show the button name under each toolbar icon"));
+    lpub->actions.insert(toolbarTextUnderIconAct->objectName(), Action(QStringLiteral("View.Toolbar Text Under Icon"), toolbarTextUnderIconAct));
+    connect(toolbarTextUnderIconAct, SIGNAL(triggered()), gui, SLOT(toolbarTextStyleChanged()));
+
+    QActionGroup *toolbarTextGroup = new QActionGroup(gui);
+    toolbarTextGroup->addAction(toolbarTextIconOnlyAct);
+    toolbarTextGroup->addAction(toolbarTextUnderIconAct);
+    toolbarTextIconOnlyAct->setChecked(true);
+
     zoomSliderAct = new QWidgetAction(nullptr);
     zoomSliderWidget = new QSlider();
     zoomSliderWidget->setSingleStep(1);
@@ -7065,6 +7102,13 @@ void Gui::createMenus()
     gui->viewMenu->addSeparator();
     gui->viewMenu->addAction(gui->getAct("fullScreenViewAct.1"));
 
+    QMenu *toolbarTextMenu = gui->viewMenu->addMenu(tr("Toolbar Text"));
+    toolbarTextMenu->setObjectName("toolbarTextMenu");
+    gui->menus.insert(toolbarTextMenu->objectName(), toolbarTextMenu);
+    toolbarTextMenu->setStatusTip(tr("Choose whether toolbar buttons show their names"));
+    toolbarTextMenu->addAction(gui->getAct("toolbarTextIconOnlyAct.1"));
+    toolbarTextMenu->addAction(gui->getAct("toolbarTextUnderIconAct.1"));
+
     QMenu *navigationMenu = menuBar()->addMenu(tr("&Navigation"));
     navigationMenu->setObjectName("navigationMenu");
     gui->menus.insert(navigationMenu->objectName(), navigationMenu);
@@ -7272,14 +7316,7 @@ void Gui::createToolBars()
     fileToolBar->addAction(gui->getAct("openAct.1"));
     fileToolBar->addAction(gui->getAct("reloadFromDiskAct.1"));
     fileToolBar->addAction(gui->getAct("saveAct.1"));
-    fileToolBar->addAction(gui->getAct("saveAsAct.1"));
-    //fileToolBar->addAction(gui->getAct("saveCopyAct.1"));
     fileToolBar->addAction(gui->getAct("closeFileAct.1"));
-
-    fileToolBar->addAction(gui->getAct("printToFilePreviewAct.1"));
-    fileToolBar->addAction(gui->getAct("printToFileAct.1"));
-    fileToolBar->addAction(gui->getAct("exportAsPdfPreviewAct.1"));
-    fileToolBar->addAction(gui->getAct("exportAsPdfAct.1"));
 
     QToolBar *importToolBar = addToolBar(tr("Import Toolbar"));
     importToolBar->setObjectName("importToolBar");
@@ -7364,14 +7401,9 @@ void Gui::createToolBars()
     setupToolBar->addAction(gui->getAct("pageSetupAct.1"));
     setupToolBar->addAction(gui->getAct("assemSetupAct.1"));
     setupToolBar->addAction(gui->getAct("pliSetupAct.1"));
-    setupToolBar->addAction(gui->getAct("bomSetupAct.1"));
-    setupToolBar->addAction(gui->getAct("calloutSetupAct.1"));
     setupToolBar->addAction(gui->getAct("multiStepSetupAct.1"));
-    setupToolBar->addAction(gui->getAct("subModelSetupAct.1"));
-    setupToolBar->addAction(gui->getAct("projectSetupAct.1"));
-    setupToolBar->addAction(gui->getAct("fadeStepsSetupAct.1"));
-    setupToolBar->addAction(gui->getAct("highlightStepSetupAct.1"));
-    visible = false;
+    setupToolBar->addAction(gui->getAct("calloutSetupAct.1"));
+    visible = true;
     if (Settings.contains(QString("%1/%2").arg(SETTINGS,VIEW_SETUP_TOOLBAR_KEY)))
         visible = Settings.value(QString("%1/%2").arg(SETTINGS,VIEW_SETUP_TOOLBAR_KEY)).toBool();
     gui->getMenu("setupMenu")->addAction(setupToolBar->toggleViewAction());
@@ -7490,8 +7522,6 @@ void Gui::createToolBars()
     navigationToolBar->addAction(gui->getAct("lastPageAct.1"));
     navigationToolBar->addSeparator();
     navigationToolBar->addWidget(gui->setGoToPageCombo);
-    navigationToolBar->addSeparator();
-    navigationToolBar->addWidget(gui->mpdCombo);
 
     QToolBar *zoomToolBar = addToolBar(tr("Zoom Toolbar"));
     zoomToolBar->setObjectName("zoomToolBar");
@@ -7501,25 +7531,14 @@ void Gui::createToolBars()
     zoomToolBar->addAction(gui->getAct("fitSceneAct.1"));
     zoomToolBar->addAction(gui->getAct("actualSizeAct.1"));
 
-    zoomToolBar->addAction(gui->getAct("bringToFrontAct.1"));
-    zoomToolBar->addAction(gui->getAct("sendToBackAct.1"));
-
     gui->getAct("zoomInComboAct.1")->setMenu(getMenu("zoomSliderMenu"));
     zoomToolBar->addAction(gui->getAct("zoomInComboAct.1"));
     gui->getAct("zoomOutComboAct.1")->setMenu(getMenu("zoomSliderMenu"));
     zoomToolBar->addAction(gui->getAct("zoomOutComboAct.1"));
 
     gui->getAct("sceneRulerComboAct.1")->setMenu(getMenu("sceneRulerTrackingMenu"));
-    zoomToolBar->addAction(gui->getAct("sceneRulerComboAct.1"));
-
     gui->getAct("sceneGuidesComboAct.1")->setMenu(getMenu("sceneGuidesMenu"));
-    zoomToolBar->addAction(gui->getAct("sceneGuidesComboAct.1"));
-
     gui->getAct("snapToGridComboAct.1")->setMenu(getMenu("snapToGridMenu"));
-    zoomToolBar->addAction(gui->getAct("snapToGridComboAct.1"));
-
-    zoomToolBar->addSeparator();
-    zoomToolBar->addAction(gui->getAct("fullScreenViewAct.1"));
 
     gui->create3DToolBars();
 
@@ -7544,6 +7563,12 @@ void Gui::createDockWindows()
     gui->connect(gui->commandEditDockWindow, SIGNAL (topLevelChanged(bool)), gui, SLOT (enableWindowFlags(bool)));
 
     gui->create3DDockWindows();
+
+    const bool toolbarText = Settings.value(QString("%1/%2").arg(SETTINGS, VIEW_TOOLBAR_TEXT_KEY)).toString()
+                             == QLatin1String("textunder");
+    for (QToolBar *toolBar : gui->toolbars)
+        toolBar->setToolButtonStyle(toolbarText ? Qt::ToolButtonTextUnderIcon : Qt::ToolButtonIconOnly);
+    gui->getAct(toolbarText ? "toolbarTextUnderIconAct.1" : "toolbarTextIconOnlyAct.1")->setChecked(true);
 }
 
 void Gui::importToolBarVisibilityChanged(bool visible)

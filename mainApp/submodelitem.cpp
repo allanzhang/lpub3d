@@ -1507,15 +1507,8 @@ void SMGraphicsPixmapItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void SMGraphicsPixmapItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseDoubleClickEvent(event);
-    if ( event->button() == Qt::LeftButton )
-    {
-        lcPreferences& Preferences = lcGetPreferences();
-        if (Preferences.mPreviewEnabled && Preferences.mPreviewPosition == lcPreviewPosition::Floating)
-        {
-            previewSubModel();
-            canUpdatePreview = true;
-        }
-    }
+    if (event->button() == Qt::LeftButton)
+        gui->subModelSetup();
 }
 
 void SMGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -1995,6 +1988,13 @@ void SubModelBackgroundItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
   isHovered = false;
   QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void SubModelBackgroundItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+  if (event->button() == Qt::LeftButton)
+    gui->subModelSetup();
 }
 
 void SubModelBackgroundItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

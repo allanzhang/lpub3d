@@ -55,6 +55,7 @@ class PageBackgroundItem : public BackgroundItem
 //      delete pixmap;
     }
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+    void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif

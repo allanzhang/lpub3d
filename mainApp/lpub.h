@@ -1871,6 +1871,7 @@ private slots:
     void sendToBack();
 
     void fullScreenView();
+    void toolbarTextStyleChanged();
     void openWithSetup();
     void openWithChoice();
     void openWorkingFolder();

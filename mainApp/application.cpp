@@ -899,14 +899,11 @@ int Application::initialize(lcCommandLineOptions &Options)
     const int NumArgsIdx = arguments().size() - 1;
 
 int REV = QString::fromLatin1(VER_REVISION_STR).toInt();
-#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
-    hdr = QString("%1 v%2%3 (%4) for %5")
-                 .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), buildTypeDisplayString(), QString::fromLatin1(VER_COMPILED_FOR));
-#else
-
-    hdr = QString("%1 v%2%3 for %4")
-                 .arg(QString::fromLatin1(VER_PRODUCTNAME_STR), QString::fromLatin1(VER_PRODUCTVERSION_STR), REV ? QString(" r%1").arg(VER_REVISION_STR) : QString(), QString::fromLatin1(VER_COMPILED_FOR));
-#endif
+    hdr = QString("%1 v%2 for %3")
+                 .arg(QString::fromLatin1(VER_PRODUCTNAME_STR),
+                      versionDisplayString(QString::fromLatin1(VER_PRODUCTVERSION_STR),
+                                           REV ? QString(" r%1").arg(VER_REVISION_STR) : QString()),
+                      QString::fromLatin1(VER_COMPILED_FOR));
 
     for (int i = 1; i < arguments().size(); i++)
         args.append(" " + arguments().at(i));

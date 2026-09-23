@@ -42,7 +42,12 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui->version->setTextFormat(Qt::RichText);
 
     ui->version->setText(tr("%1 <b>%2</b> %3Build <b>%4</b> SHA <b>%5</b>")
-                         .arg(buildTypeDisplayString(),
+                         .arg(
+#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
+                              buildTypeDisplayString() + QStringLiteral(" "),
+#else
+                              QString(),
+#endif
                               QString::fromLatin1(VER_PRODUCTVERSION_STR),
                               QString::fromLatin1(VER_REVISION_STR).toInt() ? tr("Revision <b>%1</b> ").arg(QString::fromLatin1(VER_REVISION_STR)) : QString(),
                               QString::fromLatin1(VER_COMMIT_STR),

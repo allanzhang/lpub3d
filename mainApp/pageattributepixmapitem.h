@@ -44,6 +44,7 @@ protected:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     bool isHovered;
     bool mouseIsDown;

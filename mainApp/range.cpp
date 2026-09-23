@@ -684,6 +684,13 @@ void MultiStepStepBackgroundItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *even
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
+void MultiStepStepBackgroundItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    if (event->button() == Qt::LeftButton)
+        gui->multiStepSetup();
+}
+
 void MultiStepStepBackgroundItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     mouseIsDown = true;

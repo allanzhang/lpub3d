@@ -33,7 +33,7 @@
 #include <QGraphicsTextItem>
 #include "where.h"
 #include "placement.h"
-#include "metaitem.h"
+#include "metaitem.h"
 #include <QCoreApplication>
 
 class Where;
@@ -142,6 +142,7 @@ protected:
   void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
   virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
   virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
   virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
   virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -168,6 +169,7 @@ protected:
   void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
   virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
   virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
   virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
   virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -198,6 +200,7 @@ protected:
   virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
   virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event);
   virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
+  virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
   virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
   virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   bool isHovered;

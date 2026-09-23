@@ -2178,8 +2178,6 @@ void Gui::Print(QPrinter* Printer)
           gui->KexportScene.render(&Painter);
           Gui::clearPage();
 
-          // TODO: export header and footer
-
           if (PageCopy < PageCopies - 1) {
             Printer->newPage();
           }
@@ -2336,7 +2334,7 @@ void Gui::Print(QPrinter* Printer)
             gui->KexportScene.render(&Painter);
             Gui::clearPage();
 
-            // TODO: export header and footer
+            if (PageCopy < PageCopies - 1) {
 
             if (PageCopy < PageCopies - 1) {
               Printer->newPage();

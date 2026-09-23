@@ -41921,7 +41921,7 @@ BlendFuncSeparate：%4
     <message>
         <location filename="../application.cpp" line="704" />
         <source>LDRAW Building Instructions</source>
-        <translation>LDRAW 拼搭说明书</translation>
+        <translation>LDraw 积木拼搭说明书编辑器</translation>
     </message>
     <message>
         <location filename="../application.cpp" line="721" />
@@ -41932,6 +41932,33 @@ BlendFuncSeparate：%4
         <location filename="../application.cpp" line="730" />
         <source>© %1 DoubleEagle · Based on LPub3D © 2015-2025 Trevor Sandy</source>
         <translation>© %1 DoubleEagle · 基于 LPub3D © 2015-2025 Trevor Sandy</translation>
+    </message>
+</context>
+<context>
+    <name>Gui</name>
+    <message>
+        <source>Toolbar Text</source>
+        <translation>工具栏文字</translation>
+    </message>
+    <message>
+        <source>Choose whether toolbar buttons show their names</source>
+        <translation>选择工具栏按钮是否显示名称</translation>
+    </message>
+    <message>
+        <source>Icon Only</source>
+        <translation>仅图标</translation>
+    </message>
+    <message>
+        <source>Show toolbar buttons as icons</source>
+        <translation>工具栏按钮只显示图标</translation>
+    </message>
+    <message>
+        <source>Icon with Text Below</source>
+        <translation>图标下方显示文字</translation>
+    </message>
+    <message>
+        <source>Show the button name under each toolbar icon</source>
+        <translation>在每个工具栏图标下方显示按钮名称</translation>
     </message>
 </context>
 </TS>

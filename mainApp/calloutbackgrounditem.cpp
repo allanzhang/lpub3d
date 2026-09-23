@@ -331,6 +331,13 @@ void CalloutBackgroundItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
   QGraphicsItem::hoverLeaveEvent(event);
 }
 
+void CalloutBackgroundItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+  if (event->button() == Qt::LeftButton)
+    gui->calloutSetup();
+}
+
 void CalloutBackgroundItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
   QPen pen;

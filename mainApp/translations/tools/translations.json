@@ -11094,10 +11094,40 @@
 "t": "用户零件元素参考"
 },
 "7f6f2df404dd": {
-"t": "LDRAW 拼搭说明书"
+"t": "LDraw 积木拼搭说明书编辑器"
 },
 "7f7e949684ca": {
 "t": "自动"
+},
+"1b62a40a06a2": {
+"c": "Gui",
+"s": "Toolbar Text",
+"t": "工具栏文字"
+},
+"c4d0b3f9b5c7": {
+"c": "Gui",
+"s": "Icon Only",
+"t": "仅图标"
+},
+"9a7bd44640de": {
+"c": "Gui",
+"s": "Icon with Text Below",
+"t": "图标下方显示文字"
+},
+"80a6ae873518": {
+"c": "Gui",
+"s": "Choose whether toolbar buttons show their names",
+"t": "选择工具栏按钮是否显示名称"
+},
+"a79e19c890c4": {
+"c": "Gui",
+"s": "Show toolbar buttons as icons",
+"t": "工具栏按钮只显示图标"
+},
+"6d970cb5bc1b": {
+"c": "Gui",
+"s": "Show the button name under each toolbar icon",
+"t": "在每个工具栏图标下方显示按钮名称"
 },
 "7f857dfd6965": {
 "t": "所有文件 (*.*)"

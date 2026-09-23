@@ -884,14 +884,8 @@ void CsiItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void CsiItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseDoubleClickEvent(event);
-    if ( event->button() == Qt::LeftButton )
-    {
-        lcPreferences& Preferences = lcGetPreferences();
-        if (Preferences.mPreviewEnabled && Preferences.mPreviewPosition == lcPreviewPosition::Floating)
-        {
-            previewCsi();
-        }
-    }
+    if (event->button() == Qt::LeftButton)
+        gui->assemSetup();
 }
 
 void CsiItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

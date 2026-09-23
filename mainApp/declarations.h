@@ -59,6 +59,22 @@ inline QString buildTypeDisplayString()
   return QString::fromLatin1(VER_BUILD_TYPE_STR);
 }
 
+// Window title, startup banner and the About dialog use this. A shipped build
+// shows only the version; development builds still show their build type.
+// ponytail: compiled in, no runtime switch — flip this if a build type should
+// appear in a shipped title.
+inline QString versionDisplayString(const QString &productVersion,
+                                    const QString &revision = QString())
+{
+#if defined LP3D_CONTINUOUS_BUILD || defined LP3D_DEVOPS_BUILD || defined LP3D_NEXT_BUILD
+  return QStringLiteral("%1%2 (%3)").arg(productVersion, revision,
+                                          buildTypeDisplayString());
+#else
+  Q_UNUSED(revision)
+  return productVersion;
+#endif
+}
+
 #define LPUB3D_OPACITY_TO_ALPHA(o,a)(((o * a) + (100 - 1)) / 100)
 
 class Gui;
@@ -864,6 +880,8 @@ enum ThemeColorType {
 #define VIEW_EDIT_TOOLBAR_KEY                   "ViewEditToolbar"
 #define VIEW_REMOVE_LPUB_FORMAT_TOOLBAR_KEY     "ViewRemoveLPubFormatToolBar"
 #define VIEW_EDITPARAMS_TOOLBAR_KEY             "ViewEditParamsToolbar"
+// "icononly" (default) or "textunder" — the View menu's toolbar-text choice.
+#define VIEW_TOOLBAR_TEXT_KEY                   "ViewToolbarText"
 
 #define CASE_CHECK                              "CaseCheck"
 #define WORD_CHECK                              "WordCheck"

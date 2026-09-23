@@ -934,10 +934,6 @@ void Gui::create3DToolBars()
     /*
      * These toolbars are displayed on the Visual Editor tab
      */
-    gMainWindow->GetStandardToolBar()->addAction(gMainWindow->mActions[LC_EDIT_CUT]);
-    gMainWindow->GetStandardToolBar()->addAction(gMainWindow->mActions[LC_EDIT_COPY]);
-    gMainWindow->GetStandardToolBar()->addAction(gMainWindow->mActions[LC_EDIT_PASTE]);
-    gMainWindow->GetStandardToolBar()->addSeparator();
     gMainWindow->GetStandardToolBar()->addAction(SelectGroupAct);
     gMainWindow->GetStandardToolBar()->addAction(FindAndReplaceGroupAct);
     gMainWindow->GetStandardToolBar()->addSeparator();

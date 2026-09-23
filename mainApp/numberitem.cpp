@@ -289,6 +289,13 @@ void GroupStepNumberItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
+void GroupStepNumberItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    if (event->button() == Qt::LeftButton)
+        gui->multiStepSetup();
+}
+
 void GroupStepNumberItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     mouseIsDown = true;
@@ -436,6 +443,13 @@ void PageNumberItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     isHovered = false;
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void PageNumberItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    if (event->button() == Qt::LeftButton)
+        gui->pageSetup();
 }
 
 void PageNumberItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -587,6 +601,13 @@ void StepNumberItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     isHovered = false;
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void StepNumberItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    if (event->button() == Qt::LeftButton)
+        parentRelativeType == StepGroupType ? gui->multiStepSetup() : gui->pageSetup();
 }
 
 void StepNumberItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

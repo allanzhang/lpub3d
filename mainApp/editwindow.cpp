@@ -1017,34 +1017,9 @@ void EditWindow::createToolBars()
         fileToolBar->addSeparator();
         fileToolBar->addAction(exitAct);
         fileToolBar->addAction(saveAct);
-        fileToolBar->addAction(saveCopyAct);
         fileToolBar->addSeparator();
         fileToolBar->addAction(undoAct);
         fileToolBar->addAction(redoAct);
-
-#ifndef QT_NO_CLIPBOARD
-        fileToolBar->addSeparator();
-        fileToolBar->addAction(copyFileNameToClipboardAct);
-        fileToolBar->addAction(copyFullPathToClipboardAct);
-#endif
-        fileToolBar->addSeparator();
-        fileToolBar->addAction(openFolderAct);
-        QMenu *openWithMenu = new QMenu(tr("Open With Menu"), this);
-#ifdef Q_OS_WIN
-        openWithMenu->addAction(openWithChoiceAct);
-#endif
-        openWithToolbarAct->setMenu(openWithMenu);
-        if (numOpenWithPrograms) {
-            openWithMenu->addSeparator();
-            const int systemEditor = Preferences::systemEditor.isEmpty() ? 0 : 1;
-            const int maxOpenWithPrograms = Preferences::maxOpenWithPrograms + systemEditor;
-            for (int i = 0; i < maxOpenWithPrograms; i++) {
-                if (i == Preferences::maxOpenWithPrograms)
-                    openWithMenu->addSeparator();
-                openWithMenu->addAction(openWithActList.at(i));
-            }
-        }
-        fileToolBar->addAction(openWithToolbarAct);
     }
 
     editToolBar = addToolBar(tr("Editor Edit Toolbar"));
@@ -1077,25 +1052,11 @@ void EditWindow::createToolBars()
     editToolBar->addAction(updateAct);
     editToolBar->addAction(redrawAct);
     editToolBar->addAction(toggleCmmentAct);
-    editToolBar->addAction(gotoLineAct);
     editToolBar->addAction(delAct);
     if (!isReadOnly) {
         editToolBar->addAction(moveUpAct);
         editToolBar->addAction(moveDownAct);
     }
-    editToolBar->addAction(topAct);
-    editToolBar->addAction(bottomAct);
-
-    standardToolBar = addToolBar(tr("Editor Standard Toolbar"));
-    standardToolBar->setObjectName("editorStandardToolbar");
-    standardToolBar->addAction(cutAct);
-    standardToolBar->addAction(copyAct);
-    standardToolBar->addAction(pasteAct);
-    standardToolBar->addAction(findAct);
-    standardToolBar->addAction(selLineAct);
-    standardToolBar->addAction(selAllAct);
-    standardToolBar->addAction(showAllCharsAct);
-    standardToolBar->addAction(preferencesAct);
 
     toolsToolBar = addToolBar(tr("Editor Tools Toolbar"));
     toolsToolBar->setObjectName("editorToolsToolbar");
@@ -1116,7 +1077,6 @@ void EditWindow::createToolBars()
 
     lcSetSimpleToolBarToolTips(fileToolBar);
     lcSetSimpleToolBarToolTips(editToolBar);
-    lcSetSimpleToolBarToolTips(standardToolBar);
     lcSetSimpleToolBarToolTips(toolsToolBar);
 
     disableActions();

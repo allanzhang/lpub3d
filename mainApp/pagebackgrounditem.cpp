@@ -75,6 +75,13 @@ PageBackgroundItem::PageBackgroundItem(
   delete pixmap;
 }
 
+void PageBackgroundItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+  if (event->button() == Qt::LeftButton)
+    gui->pageSetup();
+}
+
 void PageBackgroundItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
   QMenu menu;

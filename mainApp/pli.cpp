@@ -3458,6 +3458,13 @@ void PliBackgroundItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
+void PliBackgroundItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    if (event->button() == Qt::LeftButton)
+        pli->bom ? gui->bomSetup() : gui->pliSetup();
+}
+
 void PliBackgroundItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPen pen;
@@ -3978,15 +3985,8 @@ void PGraphicsPixmapItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void PGraphicsPixmapItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsItem::mouseDoubleClickEvent(event);
-    if ( event->button() == Qt::LeftButton )
-    {
-        lcPreferences& Preferences = lcGetPreferences();
-        if (Preferences.mPreviewEnabled && Preferences.mPreviewPosition == lcPreviewPosition::Floating)
-        {
-            previewPart();
-            canUpdatePreview = true;
-        }
-    }
+    if (event->button() == Qt::LeftButton)
+        pli->bom ? gui->bomSetup() : gui->pliSetup();
 }
 
 void PGraphicsPixmapItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -456,6 +456,13 @@ void PageAttributeTextItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
   QGraphicsItem::hoverLeaveEvent(event);
 }
 
+void PageAttributeTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+  QGraphicsItem::mouseDoubleClickEvent(event);
+  if (event->button() == Qt::LeftButton)
+    gui->pageSetup();
+}
+
 void PageAttributeTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
   QPen pen;
